@@ -11,7 +11,7 @@ import javax.persistence.metamodel.EntityType;
 
 import java.util.Map;
 
-public class Main {
+public class DataSourceFactory {
     private static final SessionFactory ourSessionFactory;
 
     static {
