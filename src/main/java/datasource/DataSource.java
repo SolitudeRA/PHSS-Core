@@ -6,4 +6,5 @@ import javax.persistence.PersistenceUnit;
 public class DataSource {
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
+
 }
