@@ -1,20 +1,24 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 import javax.persistence.*;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
  */
 
 @Entity
+@DynamicInsert
 @Table(name = "album_music_inf")
 public class MusicAlbumInfEntity {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_music_id")
-    private MusicAlbumEntity albumId;
+    @Column(name = "album_id")
+    private UUID albumId;
 
     @Column(name = "artist")
     private String artist;
@@ -29,52 +33,95 @@ public class MusicAlbumInfEntity {
     private String genre;
 
     @Column(name = "playback_count")
+    @ColumnDefault("0")
     private Integer playbackCount;
 
-    public MusicAlbumInfEntity() {
+    @Column(name = "gmt_create")
+    private Date gmtCreate;
+
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
+
+    @OneToOne
+    @MapsId
+    private MusicAlbumEntity musicAlbumEntity;
+
+    public MusicAlbumInfEntity(){ }
+
+    public MusicAlbumInfEntity(Date gmtCreate, Date gmtModified){
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
-    public MusicAlbumEntity getAlbumId() {
+    public UUID getAlbumId(){
         return albumId;
     }
 
-    public String getArtist() {
+    public void setAlbumId(UUID albumId){
+        this.albumId = albumId;
+    }
+
+    public String getArtist(){
         return artist;
     }
 
-    public void setArtist(String artist) {
+    public void setArtist(String artist){
         this.artist = artist;
     }
 
-    public String getAlbumArtist() {
+    public String getAlbumArtist(){
         return albumArtist;
     }
 
-    public void setAlbumArtist(String albumArtist) {
+    public void setAlbumArtist(String albumArtist){
         this.albumArtist = albumArtist;
     }
 
-    public String getComposer() {
+    public String getComposer(){
         return composer;
     }
 
-    public void setComposer(String composer) {
+    public void setComposer(String composer){
         this.composer = composer;
     }
 
-    public String getGenre() {
+    public String getGenre(){
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(String genre){
         this.genre = genre;
     }
 
-    public Integer getPlaybackCount() {
+    public Integer getPlaybackCount(){
         return playbackCount;
     }
 
-    public void setPlaybackCount(Integer playbackCount) {
+    public void setPlaybackCount(Integer playbackCount){
         this.playbackCount = playbackCount;
+    }
+
+    public Date getGmtCreate(){
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate){
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified(){
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified){
+        this.gmtModified = gmtModified;
+    }
+
+    public MusicAlbumEntity getMusicAlbumEntity(){
+        return musicAlbumEntity;
+    }
+
+    public void setMusicAlbumEntity(MusicAlbumEntity musicAlbumEntity){
+        this.musicAlbumEntity = musicAlbumEntity;
     }
 }

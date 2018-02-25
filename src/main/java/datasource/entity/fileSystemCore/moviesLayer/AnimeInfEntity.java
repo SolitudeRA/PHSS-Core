@@ -1,9 +1,155 @@
 package datasource.entity.fileSystemCore.moviesLayer;
 
-/**
- * @author SolitudeRA
- * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
- */
+import javax.persistence.*;
+import java.util.Date;
+import java.util.UUID;
+
+@Entity
+@Table(name = "anime_inf")
 public class AnimeInfEntity {
+    @Id
+    @Column(name = "anime_id")
+    private UUID animeId;
+
+    @Column(name = "gensaku")
+    private String gensaku;
+
+    @Column(name = "gensaku_irasuto")
+    private String gensakuIrasuto;
+
+    @Column(name = "seiyuu")
+    private String seiyuu;
+
+    @Column(name = "kantoku")
+    private String kantoku;
+
+    @Column(name = "ongaku")
+    private String ongaku;
+
+    @Column(name = "release_year")
+    private Date releaseYear;
+
+    @Column(name = "season_time")
+    private String season_time;
+
+    @Column(name = "season_anime")
+    private String seasonAnime;
+
+    @Column(name = "gmt_create")
+    private Date gmtCreate;
+
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
+
+    @OneToOne
+    @MapsId
+    private AnimeEntity animeEntity;
+
+    public AnimeInfEntity(){
+    }
+
+    public AnimeInfEntity(String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime, Date gmtCreate, Date gmtModified){
+        this.gensaku = gensaku;
+        this.gensakuIrasuto = gensakuIrasuto;
+        this.seiyuu = seiyuu;
+        this.kantoku = kantoku;
+        this.ongaku = ongaku;
+        this.releaseYear = releaseYear;
+        this.season_time = season_time;
+        this.seasonAnime = seasonAnime;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
+    }
+
+    public UUID getAnimeId(){
+        return animeId;
+    }
+
+    public void setAnimeId(UUID animeId){
+        this.animeId = animeId;
+    }
+
+    public String getGensaku(){
+        return gensaku;
+    }
+
+    public void setGensaku(String gensaku){
+        this.gensaku = gensaku;
+    }
+
+    public String getGensakuIrasuto(){
+        return gensakuIrasuto;
+    }
+
+    public void setGensakuIrasuto(String gensakuIrasuto){
+        this.gensakuIrasuto = gensakuIrasuto;
+    }
+
+    public String getSeiyuu(){
+        return seiyuu;
+    }
+
+    public void setSeiyuu(String seiyuu){
+        this.seiyuu = seiyuu;
+    }
+
+    public String getKantoku(){
+        return kantoku;
+    }
+
+    public void setKantoku(String kantoku){
+        this.kantoku = kantoku;
+    }
+
+    public String getOngaku(){
+        return ongaku;
+    }
+
+    public void setOngaku(String ongaku){
+        this.ongaku = ongaku;
+    }
+
+    public Date getReleaseYear(){
+        return releaseYear;
+    }
+
+    public void setReleaseYear(Date releaseYear){
+        this.releaseYear = releaseYear;
+    }
+
+    public String getSeason_time(){
+        return season_time;
+    }
+
+    public void setSeason_time(String season_time){
+        this.season_time = season_time;
+    }
+
+    public String getSeasonAnime(){
+        return seasonAnime;
+    }
+
+    public void setSeasonAnime(String seasonAnime){
+        this.seasonAnime = seasonAnime;
+    }
+
+    public Date getGmtCreate(){
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate){
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified(){
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified){
+        this.gmtModified = gmtModified;
+    }
+
+    public AnimeEntity getAnimeEntity(){
+        return animeEntity;
+    }
 }

@@ -1,13 +1,11 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
  */
 
 @Entity
@@ -15,44 +13,44 @@ import java.util.List;
 public class MusicAlbumEntity {
     @Id
     @GeneratedValue
-    private Integer id;
+    private UUID id;
 
     @Column(name = "album_name")
     private String albumName;
 
-    @OneToOne(mappedBy = "albumId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private MusicAlbumInfEntity musicAlbumInfEntity;
 
-    @OneToOne(mappedBy = "albumId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private MusicAlbumInfStaticEntity musicAlbumInfStaticEntity;
 
-    @OneToMany(mappedBy = "albumId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MusicTrackEntity> musicTracks = new ArrayList<>();
+    public MusicAlbumEntity(){ }
 
-    public MusicAlbumEntity() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getAlbumName() {
-        return albumName;
-    }
-
-    public void setAlbumName(String albumName) {
+    public MusicAlbumEntity(String albumName){
         this.albumName = albumName;
     }
 
-    public MusicAlbumInfEntity getMusicAlbumInfEntity() {
+    public UUID getId(){
+        return id;
+    }
+
+    public void setId(UUID id){
+        this.id = id;
+    }
+
+    public String getAlbumName(){
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName){
+        this.albumName = albumName;
+    }
+
+    public MusicAlbumInfEntity getMusicAlbumInfEntity(){
         return musicAlbumInfEntity;
     }
 
-    public MusicAlbumInfStaticEntity getMusicAlbumInfStaticEntity() {
+    public MusicAlbumInfStaticEntity getMusicAlbumInfStaticEntity(){
         return musicAlbumInfStaticEntity;
-    }
-
-    public List<MusicTrackEntity> getMusicTracks() {
-        return musicTracks;
     }
 }

@@ -1,50 +1,90 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
  */
 
 @Entity
-@Table(name = "tracks")
+@Table(name = "track")
 public class MusicTrackEntity {
     @Id
-    private Integer id;
+    @GeneratedValue
+    private UUID id;
 
     @ManyToOne
-    @Column(name = "album_id")
-    private MusicAlbumEntity albumId;
+    @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_ALBUM_MUSIC_ID"))
+    private MusicAlbumEntity musicAlbumEntity;
 
     @Column(name = "track_name")
     private String trackName;
 
-    @OneToMany(mappedBy = "trackId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MusicTrackInfEntity> musicTrackInfEntities;
+    @Column(name = "gmt_create")
+    private Date gmtCreate;
 
-    public MusicTrackEntity() {
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
+
+    @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private MusicTrackInfEntity musicTrackInfEntity;
+
+    @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private MusicTrackInfStaticEntity musicTrackInfStaticEntity;
+
+    public MusicTrackEntity(){
     }
 
-    public Integer getId() {
+    public MusicTrackEntity(String trackName, Date gmtCreate, Date gmtModified){
+        this.trackName = trackName;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
+    }
+
+    public UUID getId(){
         return id;
     }
 
-    public MusicAlbumEntity getAlbumId() {
-        return albumId;
+    public void setId(UUID id){
+        this.id = id;
     }
 
-    public String getTrackName() {
+    public MusicAlbumEntity getMusicAlbumEntity(){
+        return musicAlbumEntity;
+    }
+
+    public String getTrackName(){
         return trackName;
     }
 
-    public void setTrackName(String trackName) {
+    public void setTrackName(String trackName){
         this.trackName = trackName;
     }
 
-    public List<MusicTrackInfEntity> getMusicTrackInfEntities() {
-        return musicTrackInfEntities;
+    public Date getGmtCreate(){
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate){
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified(){
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified){
+        this.gmtModified = gmtModified;
+    }
+
+    public MusicTrackInfEntity getMusicTrackInfEntity(){
+        return musicTrackInfEntity;
+    }
+
+    public MusicTrackInfStaticEntity getMusicTrackInfStaticEntity(){
+        return musicTrackInfStaticEntity;
     }
 }

@@ -2,26 +2,26 @@ package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
  */
 
 @Entity
 @Table(name = "album_music_inf_static")
 public class MusicAlbumInfStaticEntity {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_music_id")
-    private MusicAlbumEntity albumId;
+    @Column(name = "album_id")
+    private UUID albumId;
 
     @Column(name = "album_artwork")
     private Blob albumArtwork;
 
     @Column(name = "release_year")
-    private Integer releaseYear;
+    private Date releaseYear;
 
     @Column(name = "tracks")
     private Integer tracks;
@@ -30,63 +30,108 @@ public class MusicAlbumInfStaticEntity {
     private Integer discNumber;
 
     @Column(name = "rating")
-    private Double rating;
+    private Float rating;
 
     @Column(name = "comments")
     private String comments;
 
-    public MusicAlbumInfStaticEntity() {
+    @Column(name = "gmt_create")
+    private Date gmtCreate;
+
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
+
+    @OneToOne
+    @MapsId
+    private MusicAlbumEntity musicAlbumEntity;
+
+    public MusicAlbumInfStaticEntity(){
     }
 
-    public MusicAlbumEntity getAlbumId() {
+    public MusicAlbumInfStaticEntity(Blob albumArtwork, Date releaseYear, Integer tracks, Integer discNumber, Float rating, String comments, Date gmtCreate, Date gmtModified){
+        this.albumArtwork = albumArtwork;
+        this.releaseYear = releaseYear;
+        this.tracks = tracks;
+        this.discNumber = discNumber;
+        this.rating = rating;
+        this.comments = comments;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
+    }
+
+    public UUID getAlbumId(){
         return albumId;
     }
 
-    public Blob getAlbumArtwork() {
+    public void setAlbumId(UUID albumId){
+        this.albumId = albumId;
+    }
+
+    public Blob getAlbumArtwork(){
         return albumArtwork;
     }
 
-    public void setAlbumArtwork(Blob albumArtwork) {
+    public void setAlbumArtwork(Blob albumArtwork){
         this.albumArtwork = albumArtwork;
     }
 
-    public Integer getReleaseYear() {
+    public Date getReleaseYear(){
         return releaseYear;
     }
 
-    public void setReleaseYear(Integer releaseYear) {
+    public void setReleaseYear(Date releaseYear){
         this.releaseYear = releaseYear;
     }
 
-    public Integer getTracks() {
+    public Integer getTracks(){
         return tracks;
     }
 
-    public void setTracks(Integer tracks) {
+    public void setTracks(Integer tracks){
         this.tracks = tracks;
     }
 
-    public Integer getDiscNumber() {
+    public Integer getDiscNumber(){
         return discNumber;
     }
 
-    public void setDiscNumber(Integer discNumber) {
+    public void setDiscNumber(Integer discNumber){
         this.discNumber = discNumber;
     }
 
-    public Double getRating() {
+    public Float getRating(){
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Float rating){
         this.rating = rating;
     }
 
-    public String getComments() {
+    public String getComments(){
         return comments;
     }
 
-    public void setComments(String comments) {
+    public void setComments(String comments){
         this.comments = comments;
+    }
+
+    public Date getGmtCreate(){
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate){
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified(){
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified){
+        this.gmtModified = gmtModified;
+    }
+
+    public MusicAlbumEntity getMusicAlbumEntity(){
+        return musicAlbumEntity;
     }
 }

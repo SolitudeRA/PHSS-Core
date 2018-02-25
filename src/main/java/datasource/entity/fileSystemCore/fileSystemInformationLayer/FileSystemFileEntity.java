@@ -1,24 +1,24 @@
 package datasource.entity.fileSystemCore.fileSystemInformationLayer;
 
+import datasource.entity.userManagementCore.UserEntity;
+
 import javax.persistence.*;
 import java.util.Date;
-
-/**
- * @author SolitudeRA
- * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
- */
+import java.util.UUID;
 
 @Entity
 @Table(name = "filesystem_file")
-public class FileSystemFileEntity {
+public class FilesystemFileEntity {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    private FileSystemInfMainEntity ownerId;
+    @GeneratedValue
+    private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_USER_ID"))
+    private UserEntity userEntity;
 
     @Column(name = "name")
-    private String fileName;
+    private String name;
 
     @Column(name = "type")
     private String type;
@@ -29,46 +29,57 @@ public class FileSystemFileEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public FileSystemFileEntity(String fileName, String type, Date gmtCreate, Date gmtModified) {
-        this.fileName = fileName;
+    public FilesystemFileEntity(){
+    }
+
+    public FilesystemFileEntity(String name, String type, Date gmtCreate, Date gmtModified){
+        this.name = name;
         this.type = type;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    public FileSystemInfMainEntity getOwnerId() {
-        return ownerId;
+    public UUID getId(){
+        return id;
     }
 
-    public String getFileName() {
-        return fileName;
+    public void setId(UUID id){
+        this.id = id;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public UserEntity getUserEntity(){
+        return userEntity;
     }
 
-    public String getType() {
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getType(){
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(String type){
         this.type = type;
     }
 
-    public Date getGmtCreate() {
+    public Date getGmtCreate(){
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(Date gmtCreate){
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public Date getGmtModified(){
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
+    public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
     }
 }

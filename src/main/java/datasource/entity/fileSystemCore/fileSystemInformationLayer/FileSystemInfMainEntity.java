@@ -4,20 +4,14 @@ import datasource.entity.userManagementCore.UserEntity;
 
 import javax.persistence.*;
 import java.util.Date;
-
-/**
- * @author SolitudeRA
- * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
- */
+import java.util.UUID;
 
 @Entity
 @Table(name = "filesystem_inf_main")
-public class FileSystemInfMainEntity {
+public class FilesystemInfMainEntity {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private UserEntity user;
+    @Column(name = "owner_id")
+    private UUID ownerId;
 
     @Column(name = "album_count")
     private Integer albumCount;
@@ -43,17 +37,14 @@ public class FileSystemInfMainEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne(mappedBy = "filesystemInfMain", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private FileSystemInfSpaceEntity fileSystemInfSpaceEntity;
+    @OneToOne
+    @MapsId
+    private UserEntity userEntity;
 
-    @OneToOne(mappedBy = "filesystemInfMain", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private FileSystemFileEntity fileSystemFileEntity;
-
-    public FileSystemInfMainEntity() {
+    public FilesystemInfMainEntity(){
     }
 
-    public FileSystemInfMainEntity(UserEntity user, Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount, Date gmtCreate, Date gmtModified) {
-        this.user = user;
+    public FilesystemInfMainEntity(Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount, Date gmtCreate, Date gmtModified){
         this.albumCount = albumCount;
         this.trackCount = trackCount;
         this.bookCount = bookCount;
@@ -64,79 +55,79 @@ public class FileSystemInfMainEntity {
         this.gmtModified = gmtModified;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public UUID getOwnerId(){
+        return ownerId;
     }
 
-    public Integer getAlbumCount() {
+    public void setOwnerId(UUID ownerId){
+        this.ownerId = ownerId;
+    }
+
+    public Integer getAlbumCount(){
         return albumCount;
     }
 
-    public void setAlbumCount(Integer albumCount) {
+    public void setAlbumCount(Integer albumCount){
         this.albumCount = albumCount;
     }
 
-    public Integer getTrackCount() {
+    public Integer getTrackCount(){
         return trackCount;
     }
 
-    public void setTrackCount(Integer trackCount) {
+    public void setTrackCount(Integer trackCount){
         this.trackCount = trackCount;
     }
 
-    public Integer getBookCount() {
+    public Integer getBookCount(){
         return bookCount;
     }
 
-    public void setBookCount(Integer bookCount) {
+    public void setBookCount(Integer bookCount){
         this.bookCount = bookCount;
     }
 
-    public Integer getIllustrationCount() {
+    public Integer getIllustrationCount(){
         return illustrationCount;
     }
 
-    public void setIllustrationCount(Integer illustrationCount) {
+    public void setIllustrationCount(Integer illustrationCount){
         this.illustrationCount = illustrationCount;
     }
 
-    public Integer getMovieCount() {
+    public Integer getMovieCount(){
         return movieCount;
     }
 
-    public void setMovieCount(Integer movieCount) {
+    public void setMovieCount(Integer movieCount){
         this.movieCount = movieCount;
     }
 
-    public Integer getPhotoCount() {
+    public Integer getPhotoCount(){
         return photoCount;
     }
 
-    public void setPhotoCount(Integer photoCount) {
+    public void setPhotoCount(Integer photoCount){
         this.photoCount = photoCount;
     }
 
-    public Date getGmtCreate() {
+    public Date getGmtCreate(){
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(Date gmtCreate){
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public Date getGmtModified(){
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
+    public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
     }
 
-    public FileSystemInfSpaceEntity getFileSystemInfSpaceEntity() {
-        return fileSystemInfSpaceEntity;
-    }
-
-    public FileSystemFileEntity getFileSystemFileEntity() {
-        return fileSystemFileEntity;
+    public UserEntity getUserEntity(){
+        return userEntity;
     }
 }

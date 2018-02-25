@@ -2,26 +2,26 @@ package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
- * TODO: 2018/1/26 Entity Design
  */
 
 @Entity
 @Table(name = "track_inf_static")
 public class MusicTrackInfStaticEntity {
     @Id
-    @ManyToOne
-    @Column(name = "tracks_id")
-    private MusicTrackEntity trackId;
+    @Column(name = "track_id")
+    private UUID id;
 
     @Column(name = "album_artwork")
     private Blob albumArtwork;
 
     @Column(name = "release_year")
-    private Integer releaseYear;
+    private Date releaseYear;
 
     @Column(name = "disc_number")
     private Integer discNumber;
@@ -30,74 +30,96 @@ public class MusicTrackInfStaticEntity {
     private Float rating;
 
     @Column(name = "comments")
-    private String commnets;
+    private String comments;
 
     @Column(name = "lyrics")
-    private String lyric;
+    private String lyrics;
 
     @Column(name = "mv")
     private String mv;
 
-    public MusicTrackInfStaticEntity() {
+    @OneToOne
+    @MapsId
+    private MusicTrackEntity musicTrackEntity;
+
+    public MusicTrackInfStaticEntity(){
     }
 
-    public MusicTrackEntity getTrackId() {
-        return trackId;
+    public MusicTrackInfStaticEntity(Blob albumArtwork, Date releaseYear, Integer discNumber, Float rating, String comments, String lyrics, String mv){
+        this.albumArtwork = albumArtwork;
+        this.releaseYear = releaseYear;
+        this.discNumber = discNumber;
+        this.rating = rating;
+        this.comments = comments;
+        this.lyrics = lyrics;
+        this.mv = mv;
     }
 
-    public Blob getAlbumArtwork() {
+    public UUID getId(){
+        return id;
+    }
+
+    public void setId(UUID id){
+        this.id = id;
+    }
+
+    public Blob getAlbumArtwork(){
         return albumArtwork;
     }
 
-    public void setAlbumArtwork(Blob albumArtwork) {
+    public void setAlbumArtwork(Blob albumArtwork){
         this.albumArtwork = albumArtwork;
     }
 
-    public Integer getReleaseYear() {
+    public Date getReleaseYear(){
         return releaseYear;
     }
 
-    public void setReleaseYear(Integer releaseYear) {
+    public void setReleaseYear(Date releaseYear){
         this.releaseYear = releaseYear;
     }
 
-    public Integer getDiscNumber() {
+    public Integer getDiscNumber(){
         return discNumber;
     }
 
-    public void setDiscNumber(Integer discNumber) {
+    public void setDiscNumber(Integer discNumber){
         this.discNumber = discNumber;
     }
 
-    public Float getRating() {
+    public Float getRating(){
         return rating;
     }
 
-    public void setRating(Float rating) {
+    public void setRating(Float rating){
         this.rating = rating;
     }
 
-    public String getCommnets() {
-        return commnets;
+    public String getComments(){
+        return comments;
     }
 
-    public void setCommnets(String commnets) {
-        this.commnets = commnets;
+    public void setComments(String comments){
+        this.comments = comments;
     }
 
-    public String getLyric() {
-        return lyric;
+    public String getLyrics(){
+        return lyrics;
     }
 
-    public void setLyric(String lyric) {
-        this.lyric = lyric;
+    public void setLyrics(String lyrics){
+        this.lyrics = lyrics;
     }
 
-    public String getMv() {
+    public String getMv(){
         return mv;
     }
 
-    public void setMv(String mv) {
+    public void setMv(String mv){
         this.mv = mv;
+    }
+
+    public MusicTrackEntity getMusicTrackEntity(){
+        return musicTrackEntity;
     }
 }
