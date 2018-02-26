@@ -15,6 +15,7 @@ public class BookInfEntity {
     @Column(name = "author")
     private String author;
 
+    @Lob
     @Column(name = "illustrator")
     private Blob illustrator;
 

@@ -1,6 +1,7 @@
 package datasource.entity.fileSystemCore.moviesLayer;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,6 +11,10 @@ public class AnimeInfEntity {
     @Id
     @Column(name = "anime_id")
     private UUID animeId;
+
+    @Lob
+    @Column(name = "poster")
+    private Blob poster;
 
     @Column(name = "gensaku")
     private String gensaku;
@@ -48,7 +53,8 @@ public class AnimeInfEntity {
     public AnimeInfEntity(){
     }
 
-    public AnimeInfEntity(String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime, Date gmtCreate, Date gmtModified){
+    public AnimeInfEntity(Blob poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime, Date gmtCreate, Date gmtModified){
+        this.poster = poster;
         this.gensaku = gensaku;
         this.gensakuIrasuto = gensakuIrasuto;
         this.seiyuu = seiyuu;
@@ -67,6 +73,14 @@ public class AnimeInfEntity {
 
     public void setAnimeId(UUID animeId){
         this.animeId = animeId;
+    }
+
+    public Blob getPoster(){
+        return poster;
+    }
+
+    public void setPoster(Blob poster){
+        this.poster = poster;
     }
 
     public String getGensaku(){

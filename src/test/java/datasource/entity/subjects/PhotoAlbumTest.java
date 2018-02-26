@@ -1,13 +1,13 @@
 package datasource.entity.subjects;
 
-import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicAlbumEntity;
+import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoAlbumEntity;
 
 import javax.persistence.EntityManager;
 
-public class MusicAlbumTest {
+public class PhotoAlbumTest {
     public void beginTest(EntityManager entityManager){
         entityManager.getTransaction().begin();
-        entityManager.persist(new MusicAlbumEntity());
+        entityManager.persist(new PhotoAlbumEntity());
         entityManager.getTransaction().commit();
         entityManager.close();
     }

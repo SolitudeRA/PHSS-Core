@@ -24,6 +24,7 @@ public class MovieInfEntity {
     @Column(name = "release_date")
     private Date releaseDate;
 
+    @Lob
     @Column(name = "poster")
     private Blob poster;
 

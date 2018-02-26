@@ -17,6 +17,7 @@ public class MusicAlbumInfStaticEntity {
     @Column(name = "album_id")
     private UUID albumId;
 
+    @Lob
     @Column(name = "album_artwork")
     private Blob albumArtwork;
 
