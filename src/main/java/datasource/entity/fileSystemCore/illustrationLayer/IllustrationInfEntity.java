@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.illustrationLayer;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -26,7 +28,9 @@ public class IllustrationInfEntity {
     @Column(name = "pixiv_link")
     private String pixivLink;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")

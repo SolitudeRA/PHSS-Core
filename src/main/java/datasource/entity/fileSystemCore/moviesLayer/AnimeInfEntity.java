@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.moviesLayer;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
@@ -40,7 +42,9 @@ public class AnimeInfEntity {
     @Column(name = "season_anime")
     private String seasonAnime;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")

@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.photoAlbumsLayer;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -11,7 +13,9 @@ public class PhotoAlbumInfEntity {
     @Column(name = "album_id")
     private UUID albumId;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")

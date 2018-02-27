@@ -1,6 +1,7 @@
 package datasource.entity.fileSystemCore.illustrationLayer;
 
 import datasource.entity.userManagementCore.UserEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,7 +21,9 @@ public class IllustrationEntity {
     @Column(name = "illustration_name")
     private String illustrationName;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")

@@ -1,7 +1,16 @@
 package datasource.entity;
 
 import datasource.DataSource;
-import datasource.entity.subjects.*;
+import datasource.entity.fileSystemCore.booksLayer.BookEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
+import datasource.entity.fileSystemCore.illustrationLayer.IllustrationEntity;
+import datasource.entity.fileSystemCore.moviesLayer.AnimeEntity;
+import datasource.entity.fileSystemCore.moviesLayer.MovieEntity;
+import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicAlbumEntity;
+import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackEntity;
+import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoAlbumEntity;
+import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoEntity;
+import datasource.entity.userManagementCore.UserEntity;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
 
@@ -14,77 +23,72 @@ import javax.persistence.*;
  */
 
 @DisplayName("Entity test bench")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class entityTestBench {
     private DataSource dataSource = new DataSource();
+    private EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
 
     @Test
     public void userTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        UserTest userTest = new UserTest();
-        userTest.beginTest(entityManager);
-    }
-
-    @Test
-    public void fileSystemInfMainTeatCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        FilesystemInfMainTest filesystemInfMainTest = new FilesystemInfMainTest();
-        filesystemInfMainTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new UserEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void musicAlbumTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        MusicAlbumTest musicAlbumTest = new MusicAlbumTest();
-        musicAlbumTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new MusicAlbumEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void musicTrackTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        MusicTrackTest musicTrackTest = new MusicTrackTest();
-        musicTrackTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new MusicTrackEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void bookTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        BookTest bookTest = new BookTest();
-        bookTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new BookEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void movieTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        MovieTest movieTest = new MovieTest();
-        movieTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new MovieEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void animeTestCate(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        AnimeTest animeTest = new AnimeTest();
-        animeTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new AnimeEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void illustrationTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        IllustrationTest illustrationTest = new IllustrationTest();
-        illustrationTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new IllustrationEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void photoAlbumTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        PhotoAlbumTest photoAlbumTest = new PhotoAlbumTest();
-        photoAlbumTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new PhotoAlbumEntity());
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void photoTestCase(){
-        EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        PhotoTest photoTest = new PhotoTest();
-        photoTest.beginTest(entityManager);
+        entityManager.getTransaction().begin();
+        entityManager.persist(new PhotoEntity());
+        entityManager.getTransaction().commit();
     }
 
     @AfterAll

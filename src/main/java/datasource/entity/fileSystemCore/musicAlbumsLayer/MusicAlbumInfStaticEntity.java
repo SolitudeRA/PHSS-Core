@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
@@ -36,7 +38,9 @@ public class MusicAlbumInfStaticEntity {
     @Column(name = "comments")
     private String comments;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")

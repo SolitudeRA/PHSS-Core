@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.booksLayer;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
@@ -25,7 +27,9 @@ public class BookInfEntity {
     @Column(name = "isbn")
     private Integer isbn;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")

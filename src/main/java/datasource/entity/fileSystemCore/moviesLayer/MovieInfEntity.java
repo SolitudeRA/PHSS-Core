@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.moviesLayer;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
@@ -43,6 +45,14 @@ public class MovieInfEntity {
     @Column(name = "metascore")
     private Integer metascore;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "gmt_create")
+    @CreationTimestamp
+    private Date gmtCreate;
+
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
+
     @OneToOne
     @MapsId
     private MovieEntity movieEntity;
@@ -50,7 +60,8 @@ public class MovieInfEntity {
     public MovieInfEntity(){
     }
 
-    public MovieInfEntity(Float contentRating, String movieTime, String genre, Date releaseDate, Blob poster, Float rating, String director, String writers, String stars, Integer metascore){
+    public MovieInfEntity(UUID movieId, Float contentRating, String movieTime, String genre, Date releaseDate, Blob poster, Float rating, String director, String writers, String stars, Integer metascore, Date gmtCreate, Date gmtModified){
+        this.movieId = movieId;
         this.contentRating = contentRating;
         this.movieTime = movieTime;
         this.genre = genre;
@@ -61,6 +72,8 @@ public class MovieInfEntity {
         this.writers = writers;
         this.stars = stars;
         this.metascore = metascore;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
     public UUID getMovieId(){
@@ -149,6 +162,22 @@ public class MovieInfEntity {
 
     public void setMetascore(Integer metascore){
         this.metascore = metascore;
+    }
+
+    public Date getGmtCreate(){
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate){
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified(){
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified){
+        this.gmtModified = gmtModified;
     }
 
     public MovieEntity getMovieEntity(){

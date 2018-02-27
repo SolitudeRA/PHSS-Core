@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
@@ -39,6 +41,14 @@ public class MusicTrackInfStaticEntity {
     @Column(name = "mv")
     private String mv;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "gmt_create")
+    @CreationTimestamp
+    private Date gmtCreate;
+
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
+
     @OneToOne
     @MapsId
     private MusicTrackEntity musicTrackEntity;
@@ -46,7 +56,7 @@ public class MusicTrackInfStaticEntity {
     public MusicTrackInfStaticEntity(){
     }
 
-    public MusicTrackInfStaticEntity(Blob albumArtwork, Date releaseYear, Integer discNumber, Float rating, String comments, String lyrics, String mv){
+    public MusicTrackInfStaticEntity(Blob albumArtwork, Date releaseYear, Integer discNumber, Float rating, String comments, String lyrics, String mv, Date gmtCreate, Date gmtModified){
         this.albumArtwork = albumArtwork;
         this.releaseYear = releaseYear;
         this.discNumber = discNumber;
@@ -54,6 +64,8 @@ public class MusicTrackInfStaticEntity {
         this.comments = comments;
         this.lyrics = lyrics;
         this.mv = mv;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
     public UUID getId(){
@@ -118,6 +130,22 @@ public class MusicTrackInfStaticEntity {
 
     public void setMv(String mv){
         this.mv = mv;
+    }
+
+    public Date getGmtCreate(){
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate){
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified(){
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified){
+        this.gmtModified = gmtModified;
     }
 
     public MusicTrackEntity getMusicTrackEntity(){

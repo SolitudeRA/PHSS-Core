@@ -1,9 +1,10 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.UUID;
 
@@ -36,7 +37,9 @@ public class MusicTrackInfEntity {
     @ColumnDefault("0")
     private Integer playbackCount;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")

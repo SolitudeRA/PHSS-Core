@@ -1,8 +1,10 @@
 package datasource.entity.userManagementCore;
 
 import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -27,23 +29,31 @@ public class UserEntity {
     @Column(name = "password_ext3")
     private String passwordExt3;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "gmt_create")
+    @CreationTimestamp
+    private Date gmtCreate;
+
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
+
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private FilesystemInfMainEntity filesystemInfMainEntity;
 
     public UserEntity(){
     }
 
-    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3){
+    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Date gmtCreate, Date gmtModified){
         this.username = username;
         this.password = password;
         this.passwordExt1 = passwordExt1;
         this.passwordExt2 = passwordExt2;
         this.passwordExt3 = passwordExt3;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
-    public UUID getId(){
-        return id;
-    }
+
 
     public String getUsername(){
         return username;
@@ -83,6 +93,22 @@ public class UserEntity {
 
     public void setPasswordExt3(String passwordExt3){
         this.passwordExt3 = passwordExt3;
+    }
+
+    public Date getGmtCreate(){
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate){
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified(){
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified){
+        this.gmtModified = gmtModified;
     }
 
     public FilesystemInfMainEntity getFilesystemInfMainEntity(){
