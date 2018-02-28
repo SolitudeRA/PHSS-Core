@@ -1,5 +1,6 @@
 package datasource.entity.fileSystemCore.illustrationLayer;
 
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
 import datasource.entity.userManagementCore.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -9,14 +10,15 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "illustration")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class IllustrationEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_USER_ID"))
-    private UserEntity userEntity;
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_ILLUSTRATION"))
+    private FilesystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "illustration_name")
     private String illustrationName;
@@ -28,12 +30,6 @@ public class IllustrationEntity {
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
-
-    @OneToOne(mappedBy = "illustrationEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private IllustrationInfGenreEntity illustrationInfGenreEntity;
-
-    @OneToOne(mappedBy = "illustrationEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private IllustrationInfEntity illustrationInfEntity;
 
     public IllustrationEntity(){
     }
@@ -52,9 +48,7 @@ public class IllustrationEntity {
         this.id = id;
     }
 
-    public UserEntity getUserEntity(){
-        return userEntity;
-    }
+    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
 
     public String getIllustrationName(){
         return illustrationName;
@@ -78,13 +72,5 @@ public class IllustrationEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public IllustrationInfGenreEntity getIllustrationInfGenreEntity(){
-        return illustrationInfGenreEntity;
-    }
-
-    public IllustrationInfEntity getIllustrationInfEntity(){
-        return illustrationInfEntity;
     }
 }

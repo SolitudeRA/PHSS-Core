@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "track")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class MusicTrackEntity {
     @Id
     @GeneratedValue
@@ -28,12 +29,6 @@ public class MusicTrackEntity {
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
-
-    @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private MusicTrackInfEntity musicTrackInfEntity;
-
-    @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private MusicTrackInfStaticEntity musicTrackInfStaticEntity;
 
     public MusicTrackEntity(){
     }
@@ -78,13 +73,5 @@ public class MusicTrackEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public MusicTrackInfEntity getMusicTrackInfEntity(){
-        return musicTrackInfEntity;
-    }
-
-    public MusicTrackInfStaticEntity getMusicTrackInfStaticEntity(){
-        return musicTrackInfStaticEntity;
     }
 }

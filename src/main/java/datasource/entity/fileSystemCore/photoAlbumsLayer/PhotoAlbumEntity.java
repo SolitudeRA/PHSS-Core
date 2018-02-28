@@ -1,5 +1,6 @@
 package datasource.entity.fileSystemCore.photoAlbumsLayer;
 
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
 import datasource.entity.userManagementCore.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -9,14 +10,15 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "album_phpto")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class PhotoAlbumEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_USER_ID"))
-    private UserEntity userEntity;
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_PHOTO"))
+    private FilesystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "album_name")
     private String albumName;
@@ -28,9 +30,6 @@ public class PhotoAlbumEntity {
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
-
-    @OneToOne(mappedBy = "photoAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private PhotoAlbumInfEntity photoAlbumInfEntity;
 
     public PhotoAlbumEntity(){
     }
@@ -49,9 +48,7 @@ public class PhotoAlbumEntity {
         this.id = id;
     }
 
-    public UserEntity getUserEntity(){
-        return userEntity;
-    }
+    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
 
     public String getAlbumName(){
         return albumName;
@@ -75,9 +72,5 @@ public class PhotoAlbumEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public PhotoAlbumInfEntity getPhotoAlbumInfEntity(){
-        return photoAlbumInfEntity;
     }
 }

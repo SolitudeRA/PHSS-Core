@@ -9,11 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "movie_inf")
-public class MovieInfEntity {
-    @Id
-    @Column(name = "movie_id")
-    private UUID movieId;
-
+@PrimaryKeyJoinColumn(name = "movie_id")
+public class MovieInfEntity extends MovieEntity {
     @Column(name = "content_rating")
     private Float contentRating;
 
@@ -53,15 +50,10 @@ public class MovieInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private MovieEntity movieEntity;
-
     public MovieInfEntity(){
     }
 
-    public MovieInfEntity(UUID movieId, Float contentRating, String movieTime, String genre, Date releaseDate, Blob poster, Float rating, String director, String writers, String stars, Integer metascore, Date gmtCreate, Date gmtModified){
-        this.movieId = movieId;
+    public MovieInfEntity(Float contentRating, String movieTime, String genre, Date releaseDate, Blob poster, Float rating, String director, String writers, String stars, Integer metascore, Date gmtCreate, Date gmtModified){
         this.contentRating = contentRating;
         this.movieTime = movieTime;
         this.genre = genre;
@@ -74,14 +66,6 @@ public class MovieInfEntity {
         this.metascore = metascore;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getMovieId(){
-        return movieId;
-    }
-
-    public void setMovieId(UUID movieId){
-        this.movieId = movieId;
     }
 
     public Float getContentRating(){
@@ -178,9 +162,5 @@ public class MovieInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public MovieEntity getMovieEntity(){
-        return movieEntity;
     }
 }

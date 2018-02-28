@@ -9,11 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "anime_inf")
-public class AnimeInfEntity {
-    @Id
-    @Column(name = "anime_id")
-    private UUID animeId;
-
+@PrimaryKeyJoinColumn(name = "anime_id")
+public class AnimeInfEntity extends AnimeEntity {
     @Lob
     @Column(name = "poster")
     private Blob poster;
@@ -50,10 +47,6 @@ public class AnimeInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private AnimeEntity animeEntity;
-
     public AnimeInfEntity(){
     }
 
@@ -69,14 +62,6 @@ public class AnimeInfEntity {
         this.seasonAnime = seasonAnime;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getAnimeId(){
-        return animeId;
-    }
-
-    public void setAnimeId(UUID animeId){
-        this.animeId = animeId;
     }
 
     public Blob getPoster(){
@@ -165,9 +150,5 @@ public class AnimeInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public AnimeEntity getAnimeEntity(){
-        return animeEntity;
     }
 }

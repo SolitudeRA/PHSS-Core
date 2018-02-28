@@ -16,11 +16,8 @@ import java.util.UUID;
 @Entity
 @DynamicInsert
 @Table(name = "track_inf")
-public class MusicTrackInfEntity {
-    @Id
-    @Column(name = "track_id")
-    private UUID id;
-
+@PrimaryKeyJoinColumn(name = "track_id")
+public class MusicTrackInfEntity extends MusicTrackEntity {
     @Column(name = "artist")
     private String artist;
 
@@ -45,10 +42,6 @@ public class MusicTrackInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private MusicTrackEntity musicTrackEntity;
-
     public MusicTrackInfEntity(){
     }
 
@@ -60,14 +53,6 @@ public class MusicTrackInfEntity {
         this.playbackCount = playbackCount;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getId(){
-        return id;
-    }
-
-    public void setId(UUID id){
-        this.id = id;
     }
 
     public String getArtist(){
@@ -124,9 +109,5 @@ public class MusicTrackInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public MusicTrackEntity getMusicTrackEntity(){
-        return musicTrackEntity;
     }
 }

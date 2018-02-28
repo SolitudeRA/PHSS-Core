@@ -1,15 +1,15 @@
-package datasource.entity.settingsCore;
+package datasource.entity.settingsCore.runtimeLayer;
 
-import datasource.entity.userManagementCore.UserEntity;
+import datasource.entity.settingsCore.SettingMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "setting_main")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class SettingMainEntity extends UserEntity {
+@Table(name = "setting_runtime")
+@PrimaryKeyJoinColumn(name = "setting_owner_id")
+public class SettingRuntimeEntity extends SettingMainEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -18,10 +18,10 @@ public class SettingMainEntity extends UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public SettingMainEntity(){
+    public SettingRuntimeEntity(){
     }
 
-    public SettingMainEntity(Date gmtCreate, Date gmtModified){
+    public SettingRuntimeEntity(Date gmtCreate, Date gmtModified){
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }

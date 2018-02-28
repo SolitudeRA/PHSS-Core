@@ -1,18 +1,16 @@
 package datasource.entity.fileSystemCore.fileSystemInformationLayer;
 
 import datasource.entity.userManagementCore.UserEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "filesystem_inf_main")
-public class FilesystemInfMainEntity {
-    @Id
-    @Column(name = "owner_id")
-    private UUID ownerId;
-
+@Inheritance(strategy = InheritanceType.JOINED)
+@PrimaryKeyJoinColumn(name = "owner_id")
+public class FilesystemInfMainEntity extends UserEntity {
     @Column(name = "album_count")
     private Integer albumCount;
 
@@ -31,15 +29,13 @@ public class FilesystemInfMainEntity {
     @Column(name = "photo_count")
     private Integer photoCount;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
-
-    @OneToOne
-    @MapsId
-    private UserEntity userEntity;
 
     public FilesystemInfMainEntity(){
     }
@@ -53,14 +49,6 @@ public class FilesystemInfMainEntity {
         this.photoCount = photoCount;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getOwnerId(){
-        return ownerId;
-    }
-
-    public void setOwnerId(UUID ownerId){
-        this.ownerId = ownerId;
     }
 
     public Integer getAlbumCount(){
@@ -125,9 +113,5 @@ public class FilesystemInfMainEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public UserEntity getUserEntity(){
-        return userEntity;
     }
 }

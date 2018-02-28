@@ -14,11 +14,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "track_inf_static")
-public class MusicTrackInfStaticEntity {
-    @Id
-    @Column(name = "track_id")
-    private UUID id;
-
+@PrimaryKeyJoinColumn(name = "album_id")
+public class MusicTrackInfStaticEntity extends MusicTrackEntity {
     @Lob
     @Column(name = "album_artwork")
     private Blob albumArtwork;
@@ -49,10 +46,6 @@ public class MusicTrackInfStaticEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private MusicTrackEntity musicTrackEntity;
-
     public MusicTrackInfStaticEntity(){
     }
 
@@ -66,14 +59,6 @@ public class MusicTrackInfStaticEntity {
         this.mv = mv;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getId(){
-        return id;
-    }
-
-    public void setId(UUID id){
-        this.id = id;
     }
 
     public Blob getAlbumArtwork(){
@@ -146,9 +131,5 @@ public class MusicTrackInfStaticEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public MusicTrackEntity getMusicTrackEntity(){
-        return musicTrackEntity;
     }
 }

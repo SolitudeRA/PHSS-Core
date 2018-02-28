@@ -8,11 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "photo_inf")
-public class PhotoInfEntity {
-    @Id
-    @Column(name = "photo_inf")
-    private UUID photoId;
-
+@PrimaryKeyJoinColumn(name = "photo_id")
+public class PhotoInfEntity extends PhotoEntity {
     @Column(name = "x_resolution")
     private Integer xResolution;
 
@@ -54,10 +51,6 @@ public class PhotoInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private PhotoEntity photoEntity;
-
     public PhotoInfEntity(){
     }
 
@@ -75,14 +68,6 @@ public class PhotoInfEntity {
         this.colorSpace = colorSpace;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getPhotoId(){
-        return photoId;
-    }
-
-    public void setPhotoId(UUID photoId){
-        this.photoId = photoId;
     }
 
     public Integer getxResolution(){
@@ -187,9 +172,5 @@ public class PhotoInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public PhotoEntity getPhotoEntity(){
-        return photoEntity;
     }
 }

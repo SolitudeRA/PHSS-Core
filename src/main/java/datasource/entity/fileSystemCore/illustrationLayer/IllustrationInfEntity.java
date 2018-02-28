@@ -8,11 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "illustration_inf")
-public class IllustrationInfEntity {
-    @Id
-    @Column(name = "illustration_id")
-    private UUID illustrationId;
-
+@PrimaryKeyJoinColumn(name = "illustration_id")
+public class IllustrationInfEntity extends IllustrationEntity {
     @Column(name = "x_resolution")
     private Integer xResolution;
 
@@ -36,10 +33,6 @@ public class IllustrationInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private IllustrationEntity illustrationEntity;
-
     public IllustrationInfEntity(){
     }
 
@@ -51,14 +44,6 @@ public class IllustrationInfEntity {
         this.pixivLink = pixivLink;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getIllustrationId(){
-        return illustrationId;
-    }
-
-    public void setIllustrationId(UUID illustrationId){
-        this.illustrationId = illustrationId;
     }
 
     public Integer getxResolution(){
@@ -115,9 +100,5 @@ public class IllustrationInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public IllustrationEntity getIllustrationEntity(){
-        return illustrationEntity;
     }
 }

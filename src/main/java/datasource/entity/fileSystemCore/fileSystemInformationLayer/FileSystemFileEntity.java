@@ -1,6 +1,6 @@
 package datasource.entity.fileSystemCore.fileSystemInformationLayer;
 
-import datasource.entity.userManagementCore.UserEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,8 +14,8 @@ public class FilesystemFileEntity {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_USER_ID"))
-    private UserEntity userEntity;
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_FILE"))
+    private FilesystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "name")
     private String name;
@@ -23,7 +23,9 @@ public class FilesystemFileEntity {
     @Column(name = "type")
     private String type;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")
@@ -47,9 +49,7 @@ public class FilesystemFileEntity {
         this.id = id;
     }
 
-    public UserEntity getUserEntity(){
-        return userEntity;
-    }
+    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
 
     public String getName(){
         return name;

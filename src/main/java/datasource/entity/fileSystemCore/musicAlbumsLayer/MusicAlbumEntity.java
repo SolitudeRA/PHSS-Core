@@ -1,5 +1,7 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -10,19 +12,18 @@ import java.util.*;
 
 @Entity
 @Table(name = "album_music")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class MusicAlbumEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_MUSIC"))
+    private FilesystemInfMainEntity filesystemInfMainEntity;
+
     @Column(name = "album_name")
     private String albumName;
-
-    @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private MusicAlbumInfEntity musicAlbumInfEntity;
-
-    @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private MusicAlbumInfStaticEntity musicAlbumInfStaticEntity;
 
     public MusicAlbumEntity(){ }
 
@@ -38,19 +39,13 @@ public class MusicAlbumEntity {
         this.id = id;
     }
 
+    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+
     public String getAlbumName(){
         return albumName;
     }
 
     public void setAlbumName(String albumName){
         this.albumName = albumName;
-    }
-
-    public MusicAlbumInfEntity getMusicAlbumInfEntity(){
-        return musicAlbumInfEntity;
-    }
-
-    public MusicAlbumInfStaticEntity getMusicAlbumInfStaticEntity(){
-        return musicAlbumInfStaticEntity;
     }
 }

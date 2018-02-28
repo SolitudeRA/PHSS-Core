@@ -8,11 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "album_photo_inf")
-public class PhotoAlbumInfEntity {
-    @Id
-    @Column(name = "album_id")
-    private UUID albumId;
-
+@PrimaryKeyJoinColumn(name = "album_id")
+public class PhotoAlbumInfEntity extends PhotoAlbumEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -21,24 +18,12 @@ public class PhotoAlbumInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private PhotoAlbumEntity photoAlbumEntity;
-
     public PhotoAlbumInfEntity(){
     }
 
     public PhotoAlbumInfEntity(Date gmtCreate, Date gmtModified){
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getAlbumId(){
-        return albumId;
-    }
-
-    public void setAlbumId(UUID albumId){
-        this.albumId = albumId;
     }
 
     public Date getGmtCreate(){
@@ -55,9 +40,5 @@ public class PhotoAlbumInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public PhotoAlbumEntity getPhotoAlbumEntity(){
-        return photoAlbumEntity;
     }
 }

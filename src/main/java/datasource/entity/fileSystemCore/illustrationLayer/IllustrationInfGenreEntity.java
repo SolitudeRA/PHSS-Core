@@ -8,11 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "illustration_inf_genre")
-public class IllustrationInfGenreEntity {
-    @Id
-    @Column(name = "illustration_id")
-    private UUID illustrationId;
-
+@PrimaryKeyJoinColumn(name = "illustration_id")
+public class IllustrationInfGenreEntity extends IllustrationEntity {
     @Column(name = "genre_1")
     private String genre_1;
 
@@ -51,10 +48,6 @@ public class IllustrationInfGenreEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private IllustrationEntity illustrationEntity;
-
     public IllustrationInfGenreEntity(){
     }
 
@@ -71,14 +64,6 @@ public class IllustrationInfGenreEntity {
         this.genre_10 = genre_10;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getIllustrationId(){
-        return illustrationId;
-    }
-
-    public void setIllustrationId(UUID illustrationId){
-        this.illustrationId = illustrationId;
     }
 
     public String getGenre_1(){
@@ -175,9 +160,5 @@ public class IllustrationInfGenreEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public IllustrationEntity getIllustrationEntity(){
-        return illustrationEntity;
     }
 }

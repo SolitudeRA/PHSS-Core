@@ -1,15 +1,14 @@
-package datasource.entity.settingsCore;
+package datasource.entity.fileSystemCore.documentsLayer;
 
-import datasource.entity.userManagementCore.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "setting_main")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class SettingMainEntity extends UserEntity {
+@Table(name = "document_inf")
+@PrimaryKeyJoinColumn(name = "document_id")
+public class DocumentInfEntity extends DocumentEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -18,26 +17,30 @@ public class SettingMainEntity extends UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public SettingMainEntity(){
+    public DocumentInfEntity(){
     }
 
-    public SettingMainEntity(Date gmtCreate, Date gmtModified){
+    public DocumentInfEntity(Date gmtCreate, Date gmtModified){
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
+    @Override
     public Date getGmtCreate(){
         return gmtCreate;
     }
 
+    @Override
     public void setGmtCreate(Date gmtCreate){
         this.gmtCreate = gmtCreate;
     }
 
+    @Override
     public Date getGmtModified(){
         return gmtModified;
     }
 
+    @Override
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
     }

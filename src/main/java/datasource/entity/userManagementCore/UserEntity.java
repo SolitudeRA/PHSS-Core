@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UserEntity {
     @Id
     @GeneratedValue
@@ -37,9 +38,6 @@ public class UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private FilesystemInfMainEntity filesystemInfMainEntity;
-
     public UserEntity(){
     }
 
@@ -52,7 +50,6 @@ public class UserEntity {
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
-
 
 
     public String getUsername(){
@@ -109,9 +106,5 @@ public class UserEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){
-        return filesystemInfMainEntity;
     }
 }

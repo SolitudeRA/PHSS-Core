@@ -16,11 +16,8 @@ import java.util.UUID;
 @Entity
 @DynamicInsert
 @Table(name = "album_music_inf")
-public class MusicAlbumInfEntity {
-    @Id
-    @Column(name = "album_id")
-    private UUID albumId;
-
+@PrimaryKeyJoinColumn(name = "album_id")
+public class MusicAlbumInfEntity extends MusicAlbumEntity {
     @Column(name = "artist")
     private String artist;
 
@@ -45,23 +42,16 @@ public class MusicAlbumInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private MusicAlbumEntity musicAlbumEntity;
-
     public MusicAlbumInfEntity(){ }
 
-    public MusicAlbumInfEntity(Date gmtCreate, Date gmtModified){
+    public MusicAlbumInfEntity(String artist, String albumArtist, String composer, String genre, Integer playbackCount, Date gmtCreate, Date gmtModified){
+        this.artist = artist;
+        this.albumArtist = albumArtist;
+        this.composer = composer;
+        this.genre = genre;
+        this.playbackCount = playbackCount;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getAlbumId(){
-        return albumId;
-    }
-
-    public void setAlbumId(UUID albumId){
-        this.albumId = albumId;
     }
 
     public String getArtist(){
@@ -118,13 +108,5 @@ public class MusicAlbumInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public MusicAlbumEntity getMusicAlbumEntity(){
-        return musicAlbumEntity;
-    }
-
-    public void setMusicAlbumEntity(MusicAlbumEntity musicAlbumEntity){
-        this.musicAlbumEntity = musicAlbumEntity;
     }
 }

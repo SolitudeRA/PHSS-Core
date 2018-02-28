@@ -1,5 +1,6 @@
 package datasource.entity.fileSystemCore.moviesLayer;
 
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
 import datasource.entity.userManagementCore.UserEntity;
 
 import javax.persistence.*;
@@ -7,14 +8,15 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "anime")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class AnimeEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_USER_ID"))
-    private UserEntity userEntity;
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_ANIME"))
+    private FilesystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "anime_name")
     private String animeName;
@@ -34,8 +36,8 @@ public class AnimeEntity {
         this.id = id;
     }
 
-    public UserEntity getUserEntity(){
-        return userEntity;
+    public FilesystemInfMainEntity getFilesystemInfMainEntity(){
+        return filesystemInfMainEntity;
     }
 
     public String getAnimeName(){

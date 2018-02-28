@@ -9,11 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "book_inf")
-public class BookInfEntity {
-    @Id
-    @Column(name = "book_id")
-    private UUID bookId;
-
+@PrimaryKeyJoinColumn(name = "book_id")
+public class BookInfEntity extends BookEntity {
     @Column(name = "author")
     private String author;
 
@@ -35,10 +32,6 @@ public class BookInfEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    @OneToOne
-    @MapsId
-    private BookEntity bookEntity;
-
     public BookInfEntity(){
     }
 
@@ -49,10 +42,6 @@ public class BookInfEntity {
         this.isbn = isbn;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-    }
-
-    public UUID getBookId(){
-        return bookId;
     }
 
     public String getAuthor(){
@@ -101,9 +90,5 @@ public class BookInfEntity {
 
     public void setGmtModified(Date gmtModified){
         this.gmtModified = gmtModified;
-    }
-
-    public BookEntity getBookEntity(){
-        return bookEntity;
     }
 }

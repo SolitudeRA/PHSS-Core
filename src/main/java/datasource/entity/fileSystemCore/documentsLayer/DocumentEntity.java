@@ -1,38 +1,44 @@
-package datasource.entity.fileSystemCore.booksLayer;
+package datasource.entity.fileSystemCore.documentsLayer;
 
 import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
-import datasource.entity.userManagementCore.UserEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "book")
+@Table(name = "document")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class BookEntity {
+public class DocumentEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_BOOK"))
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT"))
     private FilesystemInfMainEntity filesystemInfMainEntity;
 
-    @Column(name = "book_name")
-    private String bookName;
+    @Column(name = "document_name")
+    private String documentName;
 
+    @Column(name = "type")
+    private String type;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public BookEntity(){
+    public DocumentEntity(){
     }
 
-    public BookEntity(String bookName, Date gmtCreate, Date gmtModified){
-        this.bookName = bookName;
+    public DocumentEntity(String documentName, String type, Date gmtCreate, Date gmtModified){
+        this.documentName = documentName;
+        this.type = type;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
@@ -49,12 +55,20 @@ public class BookEntity {
         return filesystemInfMainEntity;
     }
 
-    public String getBookName(){
-        return bookName;
+    public String getDocumentName(){
+        return documentName;
     }
 
-    public void setBookName(String bookName){
-        this.bookName = bookName;
+    public void setDocumentName(String documentName){
+        this.documentName = documentName;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public void setType(String type){
+        this.type = type;
     }
 
     public Date getGmtCreate(){

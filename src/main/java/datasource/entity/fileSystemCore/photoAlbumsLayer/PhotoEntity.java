@@ -5,20 +5,18 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "photo")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class PhotoEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "album_id")
+    @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_ALBUM_ID"))
     private PhotoAlbumEntity photoAlbumEntity;
 
     @Column(name = "photo_name")
     private String photoName;
-
-    @OneToOne(mappedBy = "photoEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private PhotoInfEntity photoInfEntity;
 
     public PhotoEntity(){
     }
@@ -45,9 +43,5 @@ public class PhotoEntity {
 
     public void setPhotoName(String photoName){
         this.photoName = photoName;
-    }
-
-    public PhotoInfEntity getPhotoInfEntity(){
-        return photoInfEntity;
     }
 }
