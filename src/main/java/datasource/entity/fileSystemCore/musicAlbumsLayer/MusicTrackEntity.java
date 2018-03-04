@@ -33,6 +33,10 @@ public class MusicTrackEntity {
     public MusicTrackEntity(){
     }
 
+    public MusicTrackEntity(String trackName){
+        this.trackName = trackName;
+    }
+
     public MusicTrackEntity(String trackName, Date gmtCreate, Date gmtModified){
         this.trackName = trackName;
         this.gmtCreate = gmtCreate;

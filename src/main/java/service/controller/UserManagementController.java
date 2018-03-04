@@ -13,6 +13,21 @@ public class UserManagementController {
         return "hello world";
     }
 
+    @RequestMapping("/logout")
+    public String logout(){
+        return "logout";
+    }
+
+    @RequestMapping("signin")
+    public String signin(){
+        return "signin";
+    }
+
+    @RequestMapping("/signout")
+    public String signout(){
+        return "signout";
+    }
+
     public static void main(String args[]) throws Exception{
         SpringApplication.run(UserManagementController.class, args);
     }
