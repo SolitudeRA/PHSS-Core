@@ -114,30 +114,6 @@
 |    lyrics     | LONGTEXT |    |    |    |                    |         |
 |      mv       | VARCHAR  |    |    |    |                    |         |
 
-## Books Layer
-
-### book
-
-|     Name     |   Type   | NN | UQ | UN | Default/Expression | Comment |
-|:------------:|:--------:|:--:|:--:|:--:|:------------------:|:-------:|
-|      id      |   UUID   | *  |    |    |                    |   PK    |
-|   owner_id   |   UUID   | *  |    |    |                    |  PK/FK  |
-|  book_name   | VARCHAR  | *  |    |    |                    |         |
-|  gmt_create  | DATETIME | *  |    |    |                    |         |
-| gmt_modified | DATETIME | *  |    |    |                    |         |
-
-### book_inf
-
-|     Name     |   Type   | NN | UQ | UN | Default/Expression | Comment |
-|:------------:|:--------:|:--:|:--:|:--:|:------------------:|:-------:|
-|   book_id    |   UUID   |    |    |    |                    |  PK/FK  |
-|    author    | VARCHAR  |    |    |    |                    |         |
-| illustrator  | VARCHAR  |    |    |    |                    |         |
-| release_date | DATETIME |    |    |    |                    |         |
-|     ISBN     |   INT    |    |    |    |                    |         |
-|  gmt_create  | DATETIME | *  |    |    |                    |         |
-| gmt_modified | DATETIME | *  |    |    |                    |         |
-
 ## Movies Layer
 
 ### movie
@@ -185,6 +161,103 @@
 |      year       | VARCHAR |    |    |    |                    |         |
 |   season_time   | VARCHAR |    |    |    |                    |         |
 |  season_anime   | VARCHAR |    |    |    |                    |         |
+
+### video
+
+|    Name    |  Type   | NN | UQ | UN | Default/Expression | Comment |
+|:----------:|:-------:|:--:|:--:|:--:|:------------------:|:-------:|
+|     id     |  UUID   | *  |    |    |                    |   PK    |
+|  owner_id  |  UUID   | *  |    |    |                    |   FK    |
+| video_name | VARCHAR |    |    |    |                    |         |
+|    type    | VARCHAR |    |    |    |                    |         |
+
+### video_inf
+
+|     Name     | Type | NN | UQ | UN | Default/Expression | Comment |
+|:------------:|:----:|:--:|:--:|:--:|:------------------:|:-------:|
+|   video_id   | UUID |    |    |    |                    |  PK/FK  |
+| x_resolution | INT  |    |    |    |                    |         |
+| y_resolution | INT  |    |    |    |                    |         |
+
+## Books Layer
+
+### book
+
+|     Name     |   Type   | NN | UQ | UN | Default/Expression | Comment |
+|:------------:|:--------:|:--:|:--:|:--:|:------------------:|:-------:|
+|      id      |   UUID   | *  |    |    |                    |   PK    |
+|   owner_id   |   UUID   | *  |    |    |                    |  PK/FK  |
+|  book_name   | VARCHAR  | *  |    |    |                    |         |
+|  gmt_create  | DATETIME | *  |    |    |                    |         |
+| gmt_modified | DATETIME | *  |    |    |                    |         |
+
+### book_inf
+
+|     Name     |   Type   | NN | UQ | UN | Default/Expression | Comment |
+|:------------:|:--------:|:--:|:--:|:--:|:------------------:|:-------:|
+|   book_id    |   UUID   |    |    |    |                    |  PK/FK  |
+|    author    | VARCHAR  |    |    |    |                    |         |
+| illustrator  | VARCHAR  |    |    |    |                    |         |
+| release_date | DATETIME |    |    |    |                    |         |
+|     ISBN     |   INT    |    |    |    |                    |         |
+|  gmt_create  | DATETIME | *  |    |    |                    |         |
+| gmt_modified | DATETIME | *  |    |    |                    |         |
+
+## Photo Albums Layer
+
+### album_photo
+
+|     Name     |   Type   | NN | UQ | UN | Default/Expression | Comment |
+|:------------:|:--------:|:--:|:--:|:--:|:------------------:|:-------:|
+|      id      |   UUID   | *  |    |    |                    |   PK    |
+|   owner_id   |   UUID   |    |    |    |                    |   FK    |
+|  album_name  | VARCHAR  | *  |    |    |                    |         |
+|  gmt_create  | DATETIME |    |    |    |                    |         |
+| gmt_modified | DATETIME |    |    |    |                    |         |
+
+
+### album_photo_inf
+
+|     Name     |   Type   | NN | UQ | UN | Default/Expression | Comment |
+|:------------:|:--------:|:--:|:--:|:--:|:------------------:|:-------:|
+|   album_id   |   UUID   | *  |    |    |                    |  PK/FK  |
+|  gmt_create  | DATETIME |    |    |    |                    |         |
+| gmt_modified | DATETIME |    |    |    |                    |         |
+
+### photo
+
+|    Name    |  Type   | NN | UQ | UN | Default/Expression | Comment |
+|:----------:|:-------:|:--:|:--:|:--:|:------------------:|:-------:|
+|     id     |  UUID   | *  |    |    |                    |   PK    |
+|  album_id  |  UUID   |    |    |    |                    |         |
+| photo_name | VARCHAR |    |    |    |                    |         |
+
+### photo_inf
+
+|     Name      |   Type    | NN | UQ | UN | Default/Expression | Comment |
+|:-------------:|:---------:|:--:|:--:|:--:|:------------------:|:-------:|
+|   photo_id    |   UUID    | *  |    |    |                    |  PK/FK  |
+| x_resolution  |    INT    |    |    |    |                    |         |
+| y_resolution  |    INT    |    |    |    |                    |         |
+| manufacturer  |  VARCHAR  |    |    |    |                    |         |
+|     model     |  VARCHAR  |    |    |    |                    |         |
+|   date_time   | TIMESTAMP |    |    |    |                    |         |
+|  compression  |  VARCHAR  |    |    |    |                    |         |
+| exposure_time |    INT    |    |    |    |                    |         |
+|   f_number    |  VARCHAR  |    |    |    |                    |         |
+|     flash     |  VARCHAR  |    |    |    |                    |         |
+| focal_length  |   FLOAT   |    |    |    |                    |         |
+|  color_space  |  VARCHAR  |    |    |    |                    |         |
+|  gmt_create   | DATETIME  |    |    |    |                    |         |
+| gmt_modified  | DATETIME  |    |    |    |                    |         |
+
+
+
+
+
+
+
+
 
 
 
