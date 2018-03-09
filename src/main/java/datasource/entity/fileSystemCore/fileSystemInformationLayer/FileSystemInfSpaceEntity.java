@@ -1,11 +1,9 @@
 package datasource.entity.fileSystemCore.fileSystemInformationLayer;
 
-import datasource.entity.userManagementCore.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "filesystem_inf_space")
