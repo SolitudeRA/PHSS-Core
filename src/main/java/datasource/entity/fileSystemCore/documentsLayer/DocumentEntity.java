@@ -1,6 +1,6 @@
 package datasource.entity.fileSystemCore.documentsLayer;
 
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class DocumentEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT"))
-    private FilesystemInfMainEntity filesystemInfMainEntity;
+    private FileSystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "document_name")
     private String documentName;
@@ -51,7 +51,7 @@ public class DocumentEntity {
         this.id = id;
     }
 
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){
+    public FileSystemInfMainEntity getFilesystemInfMainEntity(){
         return filesystemInfMainEntity;
     }
 

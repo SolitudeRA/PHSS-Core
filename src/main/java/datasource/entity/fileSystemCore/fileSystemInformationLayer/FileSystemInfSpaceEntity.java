@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "filesystem_inf_space")
-public class FilesystemInfSpaceEntity extends FilesystemInfMainEntity{
+public class FileSystemInfSpaceEntity extends FileSystemInfMainEntity {
     @Column(name = "space")
     private Integer space;
 
@@ -22,10 +22,10 @@ public class FilesystemInfSpaceEntity extends FilesystemInfMainEntity{
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public FilesystemInfSpaceEntity(){
+    public FileSystemInfSpaceEntity(){
     }
 
-    public FilesystemInfSpaceEntity(Integer space, Integer fileCount, Date gmtCreate, Date gmtModified){
+    public FileSystemInfSpaceEntity(Integer space, Integer fileCount, Date gmtCreate, Date gmtModified){
         this.space = space;
         this.fileCount = fileCount;
         this.gmtCreate = gmtCreate;

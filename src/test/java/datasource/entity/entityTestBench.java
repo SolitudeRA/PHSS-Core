@@ -63,7 +63,7 @@ public class entityTestBench {
     }
 
     @Test
-    public void animeTestCate(){
+    public void animeTestCase(){
         entityManager.getTransaction().begin();
         entityManager.persist(new AnimeEntity());
         entityManager.getTransaction().commit();

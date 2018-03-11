@@ -1,7 +1,6 @@
 package datasource.entity.fileSystemCore.photoAlbumsLayer;
 
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
-import datasource.entity.userManagementCore.UserEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public class PhotoAlbumEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_PHOTO"))
-    private FilesystemInfMainEntity filesystemInfMainEntity;
+    private FileSystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "album_name")
     private String albumName;
@@ -48,7 +47,7 @@ public class PhotoAlbumEntity {
         this.id = id;
     }
 
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
 
     public String getAlbumName(){
         return albumName;

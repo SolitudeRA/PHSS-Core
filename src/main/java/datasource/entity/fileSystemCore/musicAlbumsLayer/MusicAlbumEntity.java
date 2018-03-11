@@ -1,6 +1,6 @@
 package datasource.entity.fileSystemCore.musicAlbumsLayer;
 
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
 
 import javax.persistence.*;
 import java.util.*;
@@ -20,7 +20,7 @@ public class MusicAlbumEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_MUSIC"))
-    private FilesystemInfMainEntity filesystemInfMainEntity;
+    private FileSystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "album_name")
     private String albumName;
@@ -39,7 +39,7 @@ public class MusicAlbumEntity {
         this.id = id;
     }
 
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
 
     public String getAlbumName(){
         return albumName;

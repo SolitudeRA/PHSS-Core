@@ -1,7 +1,6 @@
 package datasource.entity.fileSystemCore.booksLayer;
 
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
-import datasource.entity.userManagementCore.UserEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,7 +16,7 @@ public class BookEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_BOOK"))
-    private FilesystemInfMainEntity filesystemInfMainEntity;
+    private FileSystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "book_name")
     private String bookName;
@@ -45,7 +44,7 @@ public class BookEntity {
         this.id = id;
     }
 
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){
+    public FileSystemInfMainEntity getFilesystemInfMainEntity(){
         return filesystemInfMainEntity;
     }
 

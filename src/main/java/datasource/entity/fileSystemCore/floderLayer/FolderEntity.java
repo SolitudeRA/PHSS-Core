@@ -1,6 +1,6 @@
 package datasource.entity.fileSystemCore.floderLayer;
 
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,7 +16,7 @@ public class FolderEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_FOLDER"))
-    private FilesystemInfMainEntity filesystemInfMainEntity;
+    private FileSystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "access_level")
     private Integer accessLevel;
@@ -39,7 +39,7 @@ public class FolderEntity {
     public FolderEntity(){
     }
 
-    public FolderEntity(FilesystemInfMainEntity filesystemInfMainEntity, Integer accessLevel, String folderName, Integer space, Integer fileCount, Date gmtCreate, Date gmtModified){
+    public FolderEntity(FileSystemInfMainEntity filesystemInfMainEntity, Integer accessLevel, String folderName, Integer space, Integer fileCount, Date gmtCreate, Date gmtModified){
         this.filesystemInfMainEntity = filesystemInfMainEntity;
         this.accessLevel = accessLevel;
         this.folderName = folderName;
@@ -57,7 +57,7 @@ public class FolderEntity {
         this.id = id;
     }
 
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){
+    public FileSystemInfMainEntity getFilesystemInfMainEntity(){
         return filesystemInfMainEntity;
     }
 

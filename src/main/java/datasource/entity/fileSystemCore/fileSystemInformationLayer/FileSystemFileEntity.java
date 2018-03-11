@@ -8,14 +8,14 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "filesystem_file")
-public class FilesystemFileEntity {
+public class FileSystemFileEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_FILE"))
-    private FilesystemInfMainEntity filesystemInfMainEntity;
+    private FileSystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "name")
     private String name;
@@ -31,10 +31,10 @@ public class FilesystemFileEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public FilesystemFileEntity(){
+    public FileSystemFileEntity(){
     }
 
-    public FilesystemFileEntity(String name, String type, Date gmtCreate, Date gmtModified){
+    public FileSystemFileEntity(String name, String type, Date gmtCreate, Date gmtModified){
         this.name = name;
         this.type = type;
         this.gmtCreate = gmtCreate;
@@ -49,7 +49,7 @@ public class FilesystemFileEntity {
         this.id = id;
     }
 
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
 
     public String getName(){
         return name;

@@ -1,7 +1,6 @@
 package datasource.entity.fileSystemCore.illustrationLayer;
 
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
-import datasource.entity.userManagementCore.UserEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public class IllustrationEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_ILLUSTRATION"))
-    private FilesystemInfMainEntity filesystemInfMainEntity;
+    private FileSystemInfMainEntity filesystemInfMainEntity;
 
     @Column(name = "illustration_name")
     private String illustrationName;
@@ -48,7 +47,7 @@ public class IllustrationEntity {
         this.id = id;
     }
 
-    public FilesystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
 
     public String getIllustrationName(){
         return illustrationName;

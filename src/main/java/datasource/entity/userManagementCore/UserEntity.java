@@ -1,6 +1,5 @@
 package datasource.entity.userManagementCore;
 
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FilesystemInfMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

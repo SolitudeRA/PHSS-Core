@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "filesystem_inf_main")
 @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "owner_id")
-public class FilesystemInfMainEntity extends UserEntity {
+public class FileSystemInfMainEntity extends UserEntity {
     @Column(name = "album_count")
     private Integer albumCount;
 
@@ -37,10 +37,10 @@ public class FilesystemInfMainEntity extends UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public FilesystemInfMainEntity(){
+    public FileSystemInfMainEntity(){
     }
 
-    public FilesystemInfMainEntity(Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount, Date gmtCreate, Date gmtModified){
+    public FileSystemInfMainEntity(Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount, Date gmtCreate, Date gmtModified){
         this.albumCount = albumCount;
         this.trackCount = trackCount;
         this.bookCount = bookCount;
