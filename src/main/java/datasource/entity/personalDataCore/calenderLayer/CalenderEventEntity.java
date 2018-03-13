@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "calender_eventes")
-public class CalenderEventsEntity {
+@Table(name = "calender_event")
+public class CalenderEventEntity {
     @Id
     @GeneratedValue
     private UUID id;
@@ -33,10 +33,10 @@ public class CalenderEventsEntity {
     @Column(name = "file_attachment")
     private String fileAttachment;
 
-    public CalenderEventsEntity(){
+    public CalenderEventEntity(){
     }
 
-    public CalenderEventsEntity(CalenderEntity calenderEntity, String eventName, String content, String timeRange, Date alarm, String alarmRange, String fileAttachment){
+    public CalenderEventEntity(CalenderEntity calenderEntity, String eventName, String content, String timeRange, Date alarm, String alarmRange, String fileAttachment){
         this.calenderEntity = calenderEntity;
         this.eventName = eventName;
         this.content = content;

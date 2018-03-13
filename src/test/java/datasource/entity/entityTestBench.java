@@ -2,6 +2,8 @@ package datasource.entity;
 
 import datasource.DataSource;
 import datasource.entity.fileSystemCore.booksLayer.BookEntity;
+import datasource.entity.fileSystemCore.documentsLayer.DocumentEntity;
+import datasource.entity.fileSystemCore.floderLayer.FolderEntity;
 import datasource.entity.fileSystemCore.illustrationLayer.IllustrationEntity;
 import datasource.entity.fileSystemCore.moviesLayer.AnimeEntity;
 import datasource.entity.fileSystemCore.moviesLayer.MovieEntity;
@@ -9,6 +11,7 @@ import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicAlbumEntity;
 import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackEntity;
 import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoAlbumEntity;
 import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoEntity;
+import datasource.entity.personalDataCore.calenderLayer.CalenderEntity;
 import datasource.entity.userManagementCore.UserEntity;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
@@ -28,70 +31,91 @@ public class entityTestBench {
     private EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
 
     @Test
-    public void userTestCase(){
+    public void userTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new UserEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void musicAlbumTestCase(){
+    public void musicAlbumTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new MusicAlbumEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void musicTrackTestCase(){
+    public void musicTrackTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new MusicTrackEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void bookTestCase(){
+    public void bookTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new BookEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void movieTestCase(){
+    public void documentTestCase() {
+        entityManager.getTransaction().begin();
+        entityManager.persist(new DocumentEntity());
+        entityManager.getTransaction().commit();
+    }
+
+    @Test
+    public void movieTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new MovieEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void animeTestCase(){
+    public void animeTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new AnimeEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void illustrationTestCase(){
+    public void illustrationTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new IllustrationEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void photoAlbumTestCase(){
+    public void photoAlbumTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new PhotoAlbumEntity());
         entityManager.getTransaction().commit();
     }
 
     @Test
-    public void photoTestCase(){
+    public void photoTestCase() {
         entityManager.getTransaction().begin();
         entityManager.persist(new PhotoEntity());
         entityManager.getTransaction().commit();
     }
 
+    @Test
+    public void folderTestCase() {
+        entityManager.getTransaction().begin();
+        entityManager.persist(new FolderEntity());
+        entityManager.getTransaction().commit();
+    }
+
+    @Test
+    public void calenderEventTestCase() {
+        entityManager.getTransaction().begin();
+        entityManager.persist(new CalenderEntity());
+        entityManager.getTransaction().commit();
+    }
+
     @AfterAll
-    public void tearDownAll(){
+    public void tearDownAll() {
         dataSource.close();
     }
 }

@@ -37,10 +37,15 @@ public class UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public UserEntity(){
+    public UserEntity() {
     }
 
-    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Date gmtCreate, Date gmtModified){
+    public UserEntity(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Date gmtCreate, Date gmtModified) {
         this.username = username;
         this.password = password;
         this.passwordExt1 = passwordExt1;
@@ -51,59 +56,59 @@ public class UserEntity {
     }
 
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getPasswordExt1(){
+    public String getPasswordExt1() {
         return passwordExt1;
     }
 
-    public void setPasswordExt1(String passwordExt1){
+    public void setPasswordExt1(String passwordExt1) {
         this.passwordExt1 = passwordExt1;
     }
 
-    public String getPasswordExt2(){
+    public String getPasswordExt2() {
         return passwordExt2;
     }
 
-    public void setPasswordExt2(String passwordExt2){
+    public void setPasswordExt2(String passwordExt2) {
         this.passwordExt2 = passwordExt2;
     }
 
-    public String getPasswordExt3(){
+    public String getPasswordExt3() {
         return passwordExt3;
     }
 
-    public void setPasswordExt3(String passwordExt3){
+    public void setPasswordExt3(String passwordExt3) {
         this.passwordExt3 = passwordExt3;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 }
