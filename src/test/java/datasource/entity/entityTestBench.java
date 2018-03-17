@@ -2,19 +2,25 @@ package datasource.entity;
 
 import datasource.DataSource;
 import datasource.entity.fileSystemCore.booksLayer.BookEntity;
+import datasource.entity.fileSystemCore.booksLayer.BookInfEntity;
 import datasource.entity.fileSystemCore.documentsLayer.DocumentEntity;
 import datasource.entity.fileSystemCore.floderLayer.FolderEntity;
 import datasource.entity.fileSystemCore.illustrationLayer.IllustrationEntity;
-import datasource.entity.fileSystemCore.moviesLayer.AnimeEntity;
-import datasource.entity.fileSystemCore.moviesLayer.MovieEntity;
+import datasource.entity.fileSystemCore.moviesLayer.*;
 import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicAlbumEntity;
+import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicAlbumInfEntity;
 import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackEntity;
+import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackInfEntity;
 import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoAlbumEntity;
 import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoEntity;
 import datasource.entity.personalDataCore.calenderLayer.CalenderEntity;
 import datasource.entity.userManagementCore.UserEntity;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import javax.persistence.*;
 
@@ -26,96 +32,103 @@ import javax.persistence.*;
 
 @DisplayName("Entity test bench")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class entityTestBench {
+class entityTestBench {
     private DataSource dataSource = new DataSource();
     private EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
 
-    @Test
-    public void userTestCase() {
+    @BeforeAll
+    void initAll() {
         entityManager.getTransaction().begin();
-        entityManager.persist(new UserEntity());
-        entityManager.getTransaction().commit();
     }
 
-    @Test
-    public void musicAlbumTestCase() {
-        entityManager.getTransaction().begin();
-        entityManager.persist(new MusicAlbumEntity());
-        entityManager.getTransaction().commit();
+    @DisplayName("User test case")
+    @ParameterizedTest
+    @CsvSource({"Alpha,sol123456", "Beta,#$%&!@#", "Charlie,test", "Delta,test"})
+    void userTestCase(String username, String password) {
+        entityManager.persist(new UserEntity(username, password));
     }
 
-    @Test
-    public void musicTrackTestCase() {
-        entityManager.getTransaction().begin();
-        entityManager.persist(new MusicTrackEntity());
-        entityManager.getTransaction().commit();
+    @DisplayName("Music_Album test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/music-album.csv")
+    void musicAlbumTestCase(String albumName, String artist, String albumArtist, String composer) {
+        MusicAlbumEntity musicAlbumEntity = new MusicAlbumEntity(albumName);
+        entityManager.persist(musicAlbumEntity);
     }
 
-    @Test
-    public void bookTestCase() {
-        entityManager.getTransaction().begin();
-        entityManager.persist(new BookEntity());
-        entityManager.getTransaction().commit();
+    @DisplayName("Music_Track test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/music-track.csv")
+    void musicTrackTestCase(String trackName, String totalTime, String artist, String albumName, String genre, int playbackCount) {
+        entityManager.persist(new MusicTrackEntity(trackName, albumName));
     }
 
-    @Test
-    public void documentTestCase() {
-        entityManager.getTransaction().begin();
-        entityManager.persist(new DocumentEntity());
-        entityManager.getTransaction().commit();
+    @DisplayName("Book test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/book.csv")
+    void bookTestCase(String bookName, String author) {
+        entityManager.persist(new BookEntity(bookName));
     }
 
-    @Test
-    public void movieTestCase() {
-        entityManager.getTransaction().begin();
-        entityManager.persist(new MovieEntity());
-        entityManager.getTransaction().commit();
+    @DisplayName("Document test case")
+    @ParameterizedTest
+    @ValueSource(strings = {"doc1", "doc2", "doc3"})
+    void documentTestCase(String documentName) {
+        entityManager.persist(new DocumentEntity(documentName));
     }
 
-    @Test
-    public void animeTestCase() {
-        entityManager.getTransaction().begin();
+    @DisplayName("Movie test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/movie.csv")
+    void movieTestCase(String movieName, String director) {
+        entityManager.persist(new MovieEntity(movieName));
+    }
+
+    @DisplayName("Video test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/video.csv")
+    void videoTestCase() {
+        entityManager.persist(new VideoEntity());
+    }
+
+    @DisplayName("Anime test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/anime.csv")
+    void animeTestCase() {
         entityManager.persist(new AnimeEntity());
-        entityManager.getTransaction().commit();
     }
 
-    @Test
-    public void illustrationTestCase() {
-        entityManager.getTransaction().begin();
+    @DisplayName("Illustration test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/illustration.csv")
+    void illustrationTestCase() {
         entityManager.persist(new IllustrationEntity());
-        entityManager.getTransaction().commit();
     }
 
-    @Test
-    public void photoAlbumTestCase() {
-        entityManager.getTransaction().begin();
-        entityManager.persist(new PhotoAlbumEntity());
-        entityManager.getTransaction().commit();
-    }
-
-    @Test
-    public void photoTestCase() {
-        entityManager.getTransaction().begin();
+    @DisplayName("Photo test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/photo.csv")
+    void photoTestCase() {
         entityManager.persist(new PhotoEntity());
-        entityManager.getTransaction().commit();
     }
 
-    @Test
-    public void folderTestCase() {
-        entityManager.getTransaction().begin();
+    @DisplayName("Folder test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/folder.csv")
+    void folderTestCase() {
         entityManager.persist(new FolderEntity());
-        entityManager.getTransaction().commit();
     }
 
-    @Test
-    public void calenderEventTestCase() {
-        entityManager.getTransaction().begin();
+    @DisplayName("Calender test case")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/valuesources/calender.csv")
+    void calenderEventTestCase() {
         entityManager.persist(new CalenderEntity());
-        entityManager.getTransaction().commit();
     }
 
     @AfterAll
-    public void tearDownAll() {
+    void tearDownAll() {
+        entityManager.getTransaction().commit();
         dataSource.close();
     }
 }

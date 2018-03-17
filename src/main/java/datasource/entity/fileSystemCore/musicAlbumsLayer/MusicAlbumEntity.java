@@ -12,7 +12,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "album_music")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class MusicAlbumEntity {
     @Id
     @GeneratedValue
@@ -25,27 +25,30 @@ public class MusicAlbumEntity {
     @Column(name = "album_name")
     private String albumName;
 
-    public MusicAlbumEntity(){ }
+    public MusicAlbumEntity() {
+    }
 
-    public MusicAlbumEntity(String albumName){
+    public MusicAlbumEntity(String albumName) {
         this.albumName = albumName;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id){
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public FileSystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemInfMainEntity getFilesystemInfMainEntity() {
+        return filesystemInfMainEntity;
+    }
 
-    public String getAlbumName(){
+    public String getAlbumName() {
         return albumName;
     }
 
-    public void setAlbumName(String albumName){
+    public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/users")
 public class UserController {
     @GetMapping("/{user}")
-    public UserEntity getUser(@PathVariable Long user) {
+    public void getUser(@PathVariable Long user) {
 
     }
 
@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{user}")
-    public UserEntity deleteUser(@PathVariable Long user) {
+    public void deleteUser(@PathVariable Long user) {
 
     }
 }

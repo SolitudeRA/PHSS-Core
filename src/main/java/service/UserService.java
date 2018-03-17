@@ -14,7 +14,7 @@ public class UserService {
     private EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
 
     @Autowired
-    public UserEntity userAdd(String username, String password) {
+    public void userAdd(String username, String password) {
         entityManager.getTransaction().begin();
         entityManager.persist(new UserEntity(username, password));
         entityManager.getTransaction().commit();

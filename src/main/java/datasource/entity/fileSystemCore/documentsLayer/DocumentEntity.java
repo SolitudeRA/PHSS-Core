@@ -33,57 +33,61 @@ public class DocumentEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public DocumentEntity(){
+    public DocumentEntity() {
     }
 
-    public DocumentEntity(String documentName, String type, Date gmtCreate, Date gmtModified){
+    public DocumentEntity(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public DocumentEntity(String documentName, String type, Date gmtCreate, Date gmtModified) {
         this.documentName = documentName;
         this.type = type;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id){
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public FileSystemInfMainEntity getFilesystemInfMainEntity(){
+    public FileSystemInfMainEntity getFilesystemInfMainEntity() {
         return filesystemInfMainEntity;
     }
 
-    public String getDocumentName(){
+    public String getDocumentName() {
         return documentName;
     }
 
-    public void setDocumentName(String documentName){
+    public void setDocumentName(String documentName) {
         this.documentName = documentName;
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
-    public void setType(String type){
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 }

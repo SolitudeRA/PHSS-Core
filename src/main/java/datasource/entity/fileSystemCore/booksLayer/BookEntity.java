@@ -30,6 +30,10 @@ public class BookEntity {
     public BookEntity(){
     }
 
+    public BookEntity(String bookName) {
+        this.bookName = bookName;
+    }
+
     public BookEntity(String bookName, Date gmtCreate, Date gmtModified){
         this.bookName = bookName;
         this.gmtCreate = gmtCreate;

@@ -24,6 +24,9 @@ public class MusicTrackEntity {
     @Column(name = "track_name")
     private String trackName;
 
+    @Column(name = "album_name")
+    private String albumName;
+
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
@@ -37,10 +40,9 @@ public class MusicTrackEntity {
         this.trackName = trackName;
     }
 
-    public MusicTrackEntity(String trackName, Date gmtCreate, Date gmtModified){
+    public MusicTrackEntity(String trackName, String albumName) {
         this.trackName = trackName;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
+        this.albumName = albumName;
     }
 
     public UUID getId(){
@@ -61,6 +63,14 @@ public class MusicTrackEntity {
 
     public void setTrackName(String trackName){
         this.trackName = trackName;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
     }
 
     public Date getGmtCreate(){

@@ -18,6 +18,9 @@ import java.util.UUID;
 @Table(name = "track_inf")
 @PrimaryKeyJoinColumn(name = "track_id")
 public class MusicTrackInfEntity extends MusicTrackEntity {
+    @Column(name = "total_time")
+    private String totalTime;
+
     @Column(name = "artist")
     private String artist;
 
@@ -42,72 +45,79 @@ public class MusicTrackInfEntity extends MusicTrackEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public MusicTrackInfEntity(){
+    public MusicTrackInfEntity() {
     }
 
-    public MusicTrackInfEntity(String artist, String albumArtist, String composer, String genre, Integer playbackCount, Date gmtCreate, Date gmtModified){
+    public MusicTrackInfEntity(String totalTime, String artist, String albumArtist, String composer, String genre, Integer playbackCount) {
+        this.totalTime = totalTime;
         this.artist = artist;
         this.albumArtist = albumArtist;
         this.composer = composer;
         this.genre = genre;
         this.playbackCount = playbackCount;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
-    public String getArtist(){
+    public String getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(String totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    public String getArtist() {
         return artist;
     }
 
-    public void setArtist(String artist){
+    public void setArtist(String artist) {
         this.artist = artist;
     }
 
-    public String getAlbumArtist(){
+    public String getAlbumArtist() {
         return albumArtist;
     }
 
-    public void setAlbumArtist(String albumArtist){
+    public void setAlbumArtist(String albumArtist) {
         this.albumArtist = albumArtist;
     }
 
-    public String getComposer(){
+    public String getComposer() {
         return composer;
     }
 
-    public void setComposer(String composer){
+    public void setComposer(String composer) {
         this.composer = composer;
     }
 
-    public String getGenre(){
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre){
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
-    public Integer getPlaybackCount(){
+    public Integer getPlaybackCount() {
         return playbackCount;
     }
 
-    public void setPlaybackCount(Integer playbackCount){
+    public void setPlaybackCount(Integer playbackCount) {
         this.playbackCount = playbackCount;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 }
