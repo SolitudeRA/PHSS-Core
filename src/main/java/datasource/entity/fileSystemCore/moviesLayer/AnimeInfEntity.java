@@ -9,8 +9,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "anime_inf")
-@PrimaryKeyJoinColumn(name = "anime_id")
-public class AnimeInfEntity extends AnimeEntity {
+public class AnimeInfEntity {
+    @Id
+    private UUID animeId;
+
     @Lob
     @Column(name = "poster")
     private Blob poster;
@@ -47,10 +49,15 @@ public class AnimeInfEntity extends AnimeEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public AnimeInfEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "anime_id")
+    private AnimeEntity animeEntity;
+
+    public AnimeInfEntity() {
     }
 
-    public AnimeInfEntity(Blob poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime, Date gmtCreate, Date gmtModified){
+    public AnimeInfEntity(Blob poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime) {
         this.poster = poster;
         this.gensaku = gensaku;
         this.gensakuIrasuto = gensakuIrasuto;
@@ -60,95 +67,109 @@ public class AnimeInfEntity extends AnimeEntity {
         this.releaseYear = releaseYear;
         this.season_time = season_time;
         this.seasonAnime = seasonAnime;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
-    public Blob getPoster(){
+    public UUID getAnimeId() {
+        return animeId;
+    }
+
+    public void setAnimeId(UUID animeId) {
+        this.animeId = animeId;
+    }
+
+    public Blob getPoster() {
         return poster;
     }
 
-    public void setPoster(Blob poster){
+    public void setPoster(Blob poster) {
         this.poster = poster;
     }
 
-    public String getGensaku(){
+    public String getGensaku() {
         return gensaku;
     }
 
-    public void setGensaku(String gensaku){
+    public void setGensaku(String gensaku) {
         this.gensaku = gensaku;
     }
 
-    public String getGensakuIrasuto(){
+    public String getGensakuIrasuto() {
         return gensakuIrasuto;
     }
 
-    public void setGensakuIrasuto(String gensakuIrasuto){
+    public void setGensakuIrasuto(String gensakuIrasuto) {
         this.gensakuIrasuto = gensakuIrasuto;
     }
 
-    public String getSeiyuu(){
+    public String getSeiyuu() {
         return seiyuu;
     }
 
-    public void setSeiyuu(String seiyuu){
+    public void setSeiyuu(String seiyuu) {
         this.seiyuu = seiyuu;
     }
 
-    public String getKantoku(){
+    public String getKantoku() {
         return kantoku;
     }
 
-    public void setKantoku(String kantoku){
+    public void setKantoku(String kantoku) {
         this.kantoku = kantoku;
     }
 
-    public String getOngaku(){
+    public String getOngaku() {
         return ongaku;
     }
 
-    public void setOngaku(String ongaku){
+    public void setOngaku(String ongaku) {
         this.ongaku = ongaku;
     }
 
-    public Date getReleaseYear(){
+    public Date getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Date releaseYear){
+    public void setReleaseYear(Date releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public String getSeason_time(){
+    public String getSeason_time() {
         return season_time;
     }
 
-    public void setSeason_time(String season_time){
+    public void setSeason_time(String season_time) {
         this.season_time = season_time;
     }
 
-    public String getSeasonAnime(){
+    public String getSeasonAnime() {
         return seasonAnime;
     }
 
-    public void setSeasonAnime(String seasonAnime){
+    public void setSeasonAnime(String seasonAnime) {
         this.seasonAnime = seasonAnime;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public AnimeEntity getAnimeEntity() {
+        return animeEntity;
+    }
+
+    public void setAnimeEntity(AnimeEntity animeEntity) {
+        this.animeEntity = animeEntity;
     }
 }

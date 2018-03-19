@@ -5,7 +5,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "photo")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class PhotoEntity {
     @Id
     @GeneratedValue
@@ -18,30 +17,30 @@ public class PhotoEntity {
     @Column(name = "photo_name")
     private String photoName;
 
-    public PhotoEntity(){
+    public PhotoEntity() {
     }
 
-    public PhotoEntity(String photoName){
+    public PhotoEntity(String photoName) {
         this.photoName = photoName;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id){
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public PhotoAlbumEntity getPhotoAlbumEntity(){
+    public PhotoAlbumEntity getPhotoAlbumEntity() {
         return photoAlbumEntity;
     }
 
-    public String getPhotoName(){
+    public String getPhotoName() {
         return photoName;
     }
 
-    public void setPhotoName(String photoName){
+    public void setPhotoName(String photoName) {
         this.photoName = photoName;
     }
 }

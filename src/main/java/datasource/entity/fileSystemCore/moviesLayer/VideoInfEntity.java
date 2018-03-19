@@ -1,14 +1,14 @@
 package datasource.entity.fileSystemCore.moviesLayer;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "video_inf")
-@PrimaryKeyJoinColumn(name = "video_id")
-public class VideoInfEntity extends VideoEntity {
+public class VideoInfEntity {
+    @Id
+    private UUID videoId;
+
     @Column(name = "type")
     private String type;
 
@@ -33,6 +33,11 @@ public class VideoInfEntity extends VideoEntity {
     @Column(name = "genre_5")
     private String genre5;
 
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "video_id")
+    private VideoEntity videoEntity;
+
     public VideoInfEntity() {
     }
 
@@ -45,6 +50,14 @@ public class VideoInfEntity extends VideoEntity {
         this.genre3 = genre3;
         this.genre4 = genre4;
         this.genre5 = genre5;
+    }
+
+    public UUID getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(UUID videoId) {
+        this.videoId = videoId;
     }
 
     public String getType() {
@@ -109,5 +122,13 @@ public class VideoInfEntity extends VideoEntity {
 
     public void setGenre5(String genre5) {
         this.genre5 = genre5;
+    }
+
+    public VideoEntity getVideoEntity() {
+        return videoEntity;
+    }
+
+    public void setVideoEntity(VideoEntity videoEntity) {
+        this.videoEntity = videoEntity;
     }
 }

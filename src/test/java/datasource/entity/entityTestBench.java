@@ -4,6 +4,7 @@ import datasource.DataSource;
 import datasource.entity.fileSystemCore.booksLayer.BookEntity;
 import datasource.entity.fileSystemCore.booksLayer.BookInfEntity;
 import datasource.entity.fileSystemCore.documentsLayer.DocumentEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
 import datasource.entity.fileSystemCore.floderLayer.FolderEntity;
 import datasource.entity.fileSystemCore.illustrationLayer.IllustrationEntity;
 import datasource.entity.fileSystemCore.moviesLayer.*;
@@ -13,7 +14,9 @@ import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackEntity;
 import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackInfEntity;
 import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoAlbumEntity;
 import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoEntity;
+import datasource.entity.personalDataCore.PersonalDataInfEntity;
 import datasource.entity.personalDataCore.calenderLayer.CalenderEntity;
+import datasource.entity.settingsCore.SettingMainEntity;
 import datasource.entity.userManagementCore.UserEntity;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
@@ -45,7 +48,11 @@ class entityTestBench {
     @ParameterizedTest
     @CsvSource({"Alpha,sol123456", "Beta,#$%&!@#", "Charlie,test", "Delta,test"})
     void userTestCase(String username, String password) {
-        entityManager.persist(new UserEntity(username, password));
+        UserEntity userEntity = new UserEntity(username, password);
+        entityManager.persist(userEntity);
+        entityManager.persist(new FileSystemInfMainEntity(userEntity));
+        entityManager.persist(new PersonalDataInfEntity(userEntity));
+        entityManager.persist(new SettingMainEntity(userEntity));
     }
 
     @DisplayName("Music_Album test case")
@@ -60,7 +67,7 @@ class entityTestBench {
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-track.csv")
     void musicTrackTestCase(String trackName, String totalTime, String artist, String albumName, String genre, int playbackCount) {
-        entityManager.persist(new MusicTrackEntity(trackName, albumName));
+
     }
 
     @DisplayName("Book test case")

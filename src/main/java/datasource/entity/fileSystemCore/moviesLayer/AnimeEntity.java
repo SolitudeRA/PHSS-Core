@@ -7,7 +7,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "anime")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class AnimeEntity {
     @Id
     @GeneratedValue

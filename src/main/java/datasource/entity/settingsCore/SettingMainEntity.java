@@ -5,11 +5,14 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "setting_main")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class SettingMainEntity extends UserEntity {
+public class SettingMainEntity {
+    @Id
+    private UUID ownerId;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -18,27 +21,52 @@ public class SettingMainEntity extends UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public SettingMainEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "setting_owner_id")
+    private UserEntity userEntity;
+
+    public SettingMainEntity() {
     }
 
-    public SettingMainEntity(Date gmtCreate, Date gmtModified){
+    public SettingMainEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public SettingMainEntity(Date gmtCreate, Date gmtModified) {
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    public Date getGmtCreate(){
+    public UUID getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(UUID ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }

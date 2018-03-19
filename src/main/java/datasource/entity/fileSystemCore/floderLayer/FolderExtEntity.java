@@ -2,16 +2,24 @@ package datasource.entity.fileSystemCore.floderLayer;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "folder_ext")
-@PrimaryKeyJoinColumn(name = "folder_id")
-public class FolderExtEntity extends FolderEntity {
+public class FolderExtEntity{
+    @Id
+    private UUID folderId;
+
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "folder_id")
+    private FolderEntity folderEntity;
 
     public FolderExtEntity(){
     }

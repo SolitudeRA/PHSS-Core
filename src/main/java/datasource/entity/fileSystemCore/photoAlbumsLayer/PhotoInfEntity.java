@@ -8,8 +8,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "photo_inf")
-@PrimaryKeyJoinColumn(name = "photo_id")
-public class PhotoInfEntity extends PhotoEntity {
+public class PhotoInfEntity {
+    @Id
+    private UUID photoId;
+
     @Column(name = "x_resolution")
     private Integer xResolution;
 
@@ -51,10 +53,15 @@ public class PhotoInfEntity extends PhotoEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public PhotoInfEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "photo_id")
+    private PhotoEntity photoEntity;
+
+    public PhotoInfEntity() {
     }
 
-    public PhotoInfEntity(Integer xResolution, Integer yResolution, String manufacturer, String model, Date dateTime, String compression, String exposureTime, Float fNumber, Float flash, String focalLength, String colorSpace, Date gmtCreate, Date gmtModified){
+    public PhotoInfEntity(Integer xResolution, Integer yResolution, String manufacturer, String model, Date dateTime, String compression, String exposureTime, Float fNumber, Float flash, String focalLength, String colorSpace) {
         this.xResolution = xResolution;
         this.yResolution = yResolution;
         this.manufacturer = manufacturer;
@@ -66,111 +73,125 @@ public class PhotoInfEntity extends PhotoEntity {
         this.flash = flash;
         this.focalLength = focalLength;
         this.colorSpace = colorSpace;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
-    public Integer getxResolution(){
+    public UUID getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(UUID photoId) {
+        this.photoId = photoId;
+    }
+
+    public Integer getxResolution() {
         return xResolution;
     }
 
-    public void setxResolution(Integer xResolution){
+    public void setxResolution(Integer xResolution) {
         this.xResolution = xResolution;
     }
 
-    public Integer getyResolution(){
+    public Integer getyResolution() {
         return yResolution;
     }
 
-    public void setyResolution(Integer yResolution){
+    public void setyResolution(Integer yResolution) {
         this.yResolution = yResolution;
     }
 
-    public String getManufacturer(){
+    public String getManufacturer() {
         return manufacturer;
     }
 
-    public void setManufacturer(String manufacturer){
+    public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
 
-    public String getModel(){
+    public String getModel() {
         return model;
     }
 
-    public void setModel(String model){
+    public void setModel(String model) {
         this.model = model;
     }
 
-    public Date getDateTime(){
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime){
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
-    public String getCompression(){
+    public String getCompression() {
         return compression;
     }
 
-    public void setCompression(String compression){
+    public void setCompression(String compression) {
         this.compression = compression;
     }
 
-    public String getExposureTime(){
+    public String getExposureTime() {
         return exposureTime;
     }
 
-    public void setExposureTime(String exposureTime){
+    public void setExposureTime(String exposureTime) {
         this.exposureTime = exposureTime;
     }
 
-    public Float getfNumber(){
+    public Float getfNumber() {
         return fNumber;
     }
 
-    public void setfNumber(Float fNumber){
+    public void setfNumber(Float fNumber) {
         this.fNumber = fNumber;
     }
 
-    public Float getFlash(){
+    public Float getFlash() {
         return flash;
     }
 
-    public void setFlash(Float flash){
+    public void setFlash(Float flash) {
         this.flash = flash;
     }
 
-    public String getFocalLength(){
+    public String getFocalLength() {
         return focalLength;
     }
 
-    public void setFocalLength(String focalLength){
+    public void setFocalLength(String focalLength) {
         this.focalLength = focalLength;
     }
 
-    public String getColorSpace(){
+    public String getColorSpace() {
         return colorSpace;
     }
 
-    public void setColorSpace(String colorSpace){
+    public void setColorSpace(String colorSpace) {
         this.colorSpace = colorSpace;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public PhotoEntity getPhotoEntity() {
+        return photoEntity;
+    }
+
+    public void setPhotoEntity(PhotoEntity photoEntity) {
+        this.photoEntity = photoEntity;
     }
 }

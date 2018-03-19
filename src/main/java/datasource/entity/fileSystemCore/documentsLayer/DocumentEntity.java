@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "document")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class DocumentEntity {
     @Id
     @GeneratedValue

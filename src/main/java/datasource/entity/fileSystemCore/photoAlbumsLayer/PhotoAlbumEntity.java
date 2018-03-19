@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "album_phpto")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class PhotoAlbumEntity {
     @Id
     @GeneratedValue
@@ -30,46 +29,46 @@ public class PhotoAlbumEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public PhotoAlbumEntity(){
+    public PhotoAlbumEntity() {
     }
 
-    public PhotoAlbumEntity(String albumName, Date gmtCreate, Date gmtModified){
+    public PhotoAlbumEntity(String albumName) {
         this.albumName = albumName;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id){
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public FileSystemInfMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemInfMainEntity getFilesystemInfMainEntity() {
+        return filesystemInfMainEntity;
+    }
 
-    public String getAlbumName(){
+    public String getAlbumName() {
         return albumName;
     }
 
-    public void setAlbumName(String albumName){
+    public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 }

@@ -4,11 +4,14 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "document_inf")
-@PrimaryKeyJoinColumn(name = "document_id")
-public class DocumentInfEntity extends DocumentEntity {
+public class DocumentInfEntity {
+    @Id
+    private UUID documentId;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -17,31 +20,44 @@ public class DocumentInfEntity extends DocumentEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public DocumentInfEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "document_id")
+    private DocumentEntity documentEntity;
+
+    public DocumentInfEntity() {
     }
 
-    public DocumentInfEntity(Date gmtCreate, Date gmtModified){
+    public DocumentInfEntity(Date gmtCreate, Date gmtModified) {
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    @Override
-    public Date getGmtCreate(){
+    public UUID getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(UUID documentId) {
+        this.documentId = documentId;
+    }
+
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    @Override
-    public void setGmtCreate(Date gmtCreate){
-        this.gmtCreate = gmtCreate;
-    }
-
-    @Override
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    @Override
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public DocumentEntity getDocumentEntity() {
+        return documentEntity;
+    }
+
+    public void setDocumentEntity(DocumentEntity documentEntity) {
+        this.documentEntity = documentEntity;
     }
 }

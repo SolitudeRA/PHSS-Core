@@ -8,8 +8,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "album_photo_inf")
-@PrimaryKeyJoinColumn(name = "album_id")
-public class PhotoAlbumInfEntity extends PhotoAlbumEntity {
+public class PhotoAlbumInfEntity {
+    @Id
+    private UUID albumId;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -18,27 +20,48 @@ public class PhotoAlbumInfEntity extends PhotoAlbumEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public PhotoAlbumInfEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "album_id")
+    private PhotoAlbumEntity photoAlbumEntity;
+
+    public PhotoAlbumInfEntity() {
     }
 
-    public PhotoAlbumInfEntity(Date gmtCreate, Date gmtModified){
+    public PhotoAlbumInfEntity(Date gmtCreate, Date gmtModified) {
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    public Date getGmtCreate(){
+    public UUID getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(UUID albumId) {
+        this.albumId = albumId;
+    }
+
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public PhotoAlbumEntity getPhotoAlbumEntity() {
+        return photoAlbumEntity;
+    }
+
+    public void setPhotoAlbumEntity(PhotoAlbumEntity photoAlbumEntity) {
+        this.photoAlbumEntity = photoAlbumEntity;
     }
 }

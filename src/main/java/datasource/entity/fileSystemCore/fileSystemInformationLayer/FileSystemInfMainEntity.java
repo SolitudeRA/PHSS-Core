@@ -5,12 +5,14 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "filesystem_inf_main")
-@Inheritance(strategy = InheritanceType.JOINED)
-@PrimaryKeyJoinColumn(name = "owner_id")
-public class FileSystemInfMainEntity extends UserEntity {
+public class FileSystemInfMainEntity {
+    @Id
+    private UUID ownerId;
+
     @Column(name = "album_count")
     private Integer albumCount;
 
@@ -37,81 +39,92 @@ public class FileSystemInfMainEntity extends UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public FileSystemInfMainEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "owner_id")
+    private UserEntity userEntity;
+
+    public FileSystemInfMainEntity() {
     }
 
-    public FileSystemInfMainEntity(Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount, Date gmtCreate, Date gmtModified){
+    public FileSystemInfMainEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public FileSystemInfMainEntity(Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount) {
         this.albumCount = albumCount;
         this.trackCount = trackCount;
         this.bookCount = bookCount;
         this.illustrationCount = illustrationCount;
         this.movieCount = movieCount;
         this.photoCount = photoCount;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
-    public Integer getAlbumCount(){
+    public Integer getAlbumCount() {
         return albumCount;
     }
 
-    public void setAlbumCount(Integer albumCount){
+    public void setAlbumCount(Integer albumCount) {
         this.albumCount = albumCount;
     }
 
-    public Integer getTrackCount(){
+    public Integer getTrackCount() {
         return trackCount;
     }
 
-    public void setTrackCount(Integer trackCount){
+    public void setTrackCount(Integer trackCount) {
         this.trackCount = trackCount;
     }
 
-    public Integer getBookCount(){
+    public Integer getBookCount() {
         return bookCount;
     }
 
-    public void setBookCount(Integer bookCount){
+    public void setBookCount(Integer bookCount) {
         this.bookCount = bookCount;
     }
 
-    public Integer getIllustrationCount(){
+    public Integer getIllustrationCount() {
         return illustrationCount;
     }
 
-    public void setIllustrationCount(Integer illustrationCount){
+    public void setIllustrationCount(Integer illustrationCount) {
         this.illustrationCount = illustrationCount;
     }
 
-    public Integer getMovieCount(){
+    public Integer getMovieCount() {
         return movieCount;
     }
 
-    public void setMovieCount(Integer movieCount){
+    public void setMovieCount(Integer movieCount) {
         this.movieCount = movieCount;
     }
 
-    public Integer getPhotoCount(){
+    public Integer getPhotoCount() {
         return photoCount;
     }
 
-    public void setPhotoCount(Integer photoCount){
+    public void setPhotoCount(Integer photoCount) {
         this.photoCount = photoCount;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }

@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "illustration")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class IllustrationEntity {
     @Id
     @GeneratedValue

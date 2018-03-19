@@ -4,10 +4,14 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "filesystem_inf_space")
-public class FileSystemInfSpaceEntity extends FileSystemInfMainEntity {
+public class FileSystemInfSpaceEntity {
+    @Id
+    private UUID fileSystemId;
+
     @Column(name = "space")
     private Integer space;
 
@@ -22,45 +26,54 @@ public class FileSystemInfSpaceEntity extends FileSystemInfMainEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public FileSystemInfSpaceEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "filesystem_id")
+    private FileSystemInfMainEntity fileSystemInfMainEntity;
+
+    public FileSystemInfSpaceEntity() {
     }
 
-    public FileSystemInfSpaceEntity(Integer space, Integer fileCount, Date gmtCreate, Date gmtModified){
+    public FileSystemInfSpaceEntity(Integer space, Integer fileCount, Date gmtCreate, Date gmtModified) {
         this.space = space;
         this.fileCount = fileCount;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    public Integer getSpace(){
+    public Integer getSpace() {
         return space;
     }
 
-    public void setSpace(Integer space){
+    public void setSpace(Integer space) {
         this.space = space;
     }
 
-    public Integer getFileCount(){
+    public Integer getFileCount() {
         return fileCount;
     }
 
-    public void setFileCount(Integer fileCount){
+    public void setFileCount(Integer fileCount) {
         this.fileCount = fileCount;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public void setFileSystemInfMainEntity(FileSystemInfMainEntity fileSystemInfMainEntity) {
+        this.fileSystemInfMainEntity = fileSystemInfMainEntity;
     }
 }

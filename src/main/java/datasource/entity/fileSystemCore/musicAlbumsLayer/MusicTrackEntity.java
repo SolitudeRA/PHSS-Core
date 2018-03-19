@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "track")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class MusicTrackEntity {
     @Id
     @GeneratedValue
@@ -33,10 +32,10 @@ public class MusicTrackEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public MusicTrackEntity(){
+    public MusicTrackEntity() {
     }
 
-    public MusicTrackEntity(String trackName){
+    public MusicTrackEntity(String trackName) {
         this.trackName = trackName;
     }
 
@@ -45,23 +44,23 @@ public class MusicTrackEntity {
         this.albumName = albumName;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id){
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public MusicAlbumEntity getMusicAlbumEntity(){
+    public MusicAlbumEntity getMusicAlbumEntity() {
         return musicAlbumEntity;
     }
 
-    public String getTrackName(){
+    public String getTrackName() {
         return trackName;
     }
 
-    public void setTrackName(String trackName){
+    public void setTrackName(String trackName) {
         this.trackName = trackName;
     }
 
@@ -73,19 +72,19 @@ public class MusicTrackEntity {
         this.albumName = albumName;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 }

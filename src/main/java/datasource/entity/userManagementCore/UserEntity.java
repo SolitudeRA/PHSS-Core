@@ -1,5 +1,8 @@
 package datasource.entity.userManagementCore;
 
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
+import datasource.entity.personalDataCore.PersonalDataInfEntity;
+import datasource.entity.settingsCore.SettingMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -8,7 +11,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class UserEntity {
     @Id
     @GeneratedValue
@@ -37,6 +39,15 @@ public class UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
+    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private FileSystemInfMainEntity fileSystemInfMainEntity;
+
+    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private PersonalDataInfEntity personalDataInfEntity;
+
+    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private SettingMainEntity settingMainEntity;
+
     public UserEntity() {
     }
 
@@ -45,16 +56,17 @@ public class UserEntity {
         this.password = password;
     }
 
-    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Date gmtCreate, Date gmtModified) {
+    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3) {
         this.username = username;
         this.password = password;
         this.passwordExt1 = passwordExt1;
         this.passwordExt2 = passwordExt2;
         this.passwordExt3 = passwordExt3;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
+    public UUID getId() {
+        return id;
+    }
 
     public String getUsername() {
         return username;
@@ -100,15 +112,19 @@ public class UserEntity {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
     public Date getGmtModified() {
         return gmtModified;
     }
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public FileSystemInfMainEntity getFileSystemInfMainEntity() {
+        return fileSystemInfMainEntity;
+    }
+
+    public void setFileSystemInfMainEntity(FileSystemInfMainEntity fileSystemInfMainEntity) {
+        this.fileSystemInfMainEntity = fileSystemInfMainEntity;
     }
 }

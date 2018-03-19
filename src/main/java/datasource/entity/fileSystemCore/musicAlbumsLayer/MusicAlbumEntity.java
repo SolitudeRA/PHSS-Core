@@ -12,7 +12,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "album_music")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class MusicAlbumEntity {
     @Id
     @GeneratedValue

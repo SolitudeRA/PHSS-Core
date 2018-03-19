@@ -8,8 +8,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "illustration_inf")
-@PrimaryKeyJoinColumn(name = "illustration_id")
-public class IllustrationInfEntity extends IllustrationEntity {
+public class IllustrationInfEntity {
+    @Id
+    private UUID illustrationId;
+
     @Column(name = "x_resolution")
     private Integer xResolution;
 
@@ -33,72 +35,91 @@ public class IllustrationInfEntity extends IllustrationEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public IllustrationInfEntity(){
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "illustration_id")
+    private IllustrationEntity illustrationEntity;
+
+    public IllustrationInfEntity() {
     }
 
-    public IllustrationInfEntity(Integer xResolution, Integer yResolution, String illustrator, Float rating, String pixivLink, Date gmtCreate, Date gmtModified){
+    public IllustrationInfEntity(Integer xResolution, Integer yResolution, String illustrator, Float rating, String pixivLink) {
         this.xResolution = xResolution;
         this.yResolution = yResolution;
         this.illustrator = illustrator;
         this.rating = rating;
         this.pixivLink = pixivLink;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
-    public Integer getxResolution(){
+    public UUID getIllustrationId() {
+        return illustrationId;
+    }
+
+    public void setIllustrationId(UUID illustrationId) {
+        this.illustrationId = illustrationId;
+    }
+
+    public Integer getxResolution() {
         return xResolution;
     }
 
-    public void setxResolution(Integer xResolution){
+    public void setxResolution(Integer xResolution) {
         this.xResolution = xResolution;
     }
 
-    public Integer getyResolution(){
+    public Integer getyResolution() {
         return yResolution;
     }
 
-    public void setyResolution(Integer yResolution){
+    public void setyResolution(Integer yResolution) {
         this.yResolution = yResolution;
     }
 
-    public String getIllustrator(){
+    public String getIllustrator() {
         return illustrator;
     }
 
-    public void setIllustrator(String illustrator){
+    public void setIllustrator(String illustrator) {
         this.illustrator = illustrator;
     }
 
-    public Float getRating(){
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Float rating){
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
-    public String getPixivLink(){
+    public String getPixivLink() {
         return pixivLink;
     }
 
-    public void setPixivLink(String pixivLink){
+    public void setPixivLink(String pixivLink) {
         this.pixivLink = pixivLink;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public IllustrationEntity getIllustrationEntity() {
+        return illustrationEntity;
+    }
+
+    public void setIllustrationEntity(IllustrationEntity illustrationEntity) {
+        this.illustrationEntity = illustrationEntity;
     }
 }

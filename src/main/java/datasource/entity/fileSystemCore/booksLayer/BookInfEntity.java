@@ -9,8 +9,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "book_inf")
-@PrimaryKeyJoinColumn(name = "book_id")
-public class BookInfEntity extends BookEntity {
+public class BookInfEntity {
+    @Id
+    private UUID uuid;
+
     @Column(name = "author")
     private String author;
 
@@ -32,11 +34,12 @@ public class BookInfEntity extends BookEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public BookInfEntity() {
-    }
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "book_id")
+    private BookEntity bookEntity;
 
-    public BookInfEntity(String author) {
-        this.author = author;
+    public BookInfEntity() {
     }
 
     public BookInfEntity(String author, Blob illustrator, Date releaseDate, Integer isbn) {
@@ -44,15 +47,6 @@ public class BookInfEntity extends BookEntity {
         this.illustrator = illustrator;
         this.releaseDate = releaseDate;
         this.isbn = isbn;
-    }
-
-    public BookInfEntity(String author, Blob illustrator, Date releaseDate, Integer isbn, Date gmtCreate, Date gmtModified) {
-        this.author = author;
-        this.illustrator = illustrator;
-        this.releaseDate = releaseDate;
-        this.isbn = isbn;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
     }
 
     public String getAuthor() {
@@ -101,5 +95,9 @@ public class BookInfEntity extends BookEntity {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public void setBookEntity(BookEntity bookEntity) {
+        this.bookEntity = bookEntity;
     }
 }
