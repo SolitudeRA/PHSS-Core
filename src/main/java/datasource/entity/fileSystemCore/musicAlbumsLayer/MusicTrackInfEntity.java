@@ -55,13 +55,12 @@ public class MusicTrackInfEntity {
     public MusicTrackInfEntity() {
     }
 
-    public MusicTrackInfEntity(String totalTime, String artist, String albumArtist, String composer, String genre, Integer playbackCount) {
+    public MusicTrackInfEntity(String totalTime, String artist, String albumArtist, String composer, String genre) {
         this.totalTime = totalTime;
         this.artist = artist;
         this.albumArtist = albumArtist;
         this.composer = composer;
         this.genre = genre;
-        this.playbackCount = playbackCount;
     }
 
     public UUID getTrackId() {
@@ -122,10 +121,6 @@ public class MusicTrackInfEntity {
 
     public Date getGmtCreate() {
         return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified() {

@@ -71,10 +71,6 @@ public class FileSystemFileEntity {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
-        this.gmtCreate = gmtCreate;
-    }
-
     public Date getGmtModified(){
         return gmtModified;
     }

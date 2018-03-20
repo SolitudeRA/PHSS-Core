@@ -20,9 +20,6 @@ public class MusicAlbumInfEntity {
     @Id
     private UUID albumId;
 
-    @Column(name = "artist")
-    private String artist;
-
     @Column(name = "album_artist")
     private String albumArtist;
 
@@ -52,12 +49,10 @@ public class MusicAlbumInfEntity {
     public MusicAlbumInfEntity() {
     }
 
-    public MusicAlbumInfEntity(String artist, String albumArtist, String composer, String genre, Integer playbackCount) {
-        this.artist = artist;
+    public MusicAlbumInfEntity(String albumArtist, String composer, String genre) {
         this.albumArtist = albumArtist;
         this.composer = composer;
         this.genre = genre;
-        this.playbackCount = playbackCount;
     }
 
     public UUID getAlbumId() {
@@ -66,14 +61,6 @@ public class MusicAlbumInfEntity {
 
     public void setAlbumId(UUID albumId) {
         this.albumId = albumId;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
     }
 
     public String getAlbumArtist() {
@@ -110,10 +97,6 @@ public class MusicAlbumInfEntity {
 
     public Date getGmtCreate() {
         return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified() {

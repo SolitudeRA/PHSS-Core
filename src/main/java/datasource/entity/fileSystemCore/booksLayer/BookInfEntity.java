@@ -23,9 +23,6 @@ public class BookInfEntity {
     @Column(name = "release_date")
     private Date releaseDate;
 
-    @Column(name = "isbn")
-    private Integer isbn;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -42,11 +39,10 @@ public class BookInfEntity {
     public BookInfEntity() {
     }
 
-    public BookInfEntity(String author, Blob illustrator, Date releaseDate, Integer isbn) {
+    public BookInfEntity(String author, Blob illustrator, Date releaseDate) {
         this.author = author;
         this.illustrator = illustrator;
         this.releaseDate = releaseDate;
-        this.isbn = isbn;
     }
 
     public String getAuthor() {
@@ -73,20 +69,8 @@ public class BookInfEntity {
         this.releaseDate = releaseDate;
     }
 
-    public Integer getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(Integer isbn) {
-        this.isbn = isbn;
-    }
-
     public Date getGmtCreate() {
         return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified() {

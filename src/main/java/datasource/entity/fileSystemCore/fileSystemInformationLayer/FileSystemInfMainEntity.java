@@ -1,34 +1,43 @@
 package datasource.entity.fileSystemCore.fileSystemInformationLayer;
 
 import datasource.entity.userManagementCore.UserEntity;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@DynamicInsert
 @Table(name = "filesystem_inf_main")
 public class FileSystemInfMainEntity {
     @Id
     private UUID ownerId;
 
     @Column(name = "album_count")
+    @ColumnDefault("0")
     private Integer albumCount;
 
     @Column(name = "track_count")
+    @ColumnDefault("0")
     private Integer trackCount;
 
     @Column(name = "book_count")
+    @ColumnDefault("0")
     private Integer bookCount;
 
     @Column(name = "illustration_count")
+    @ColumnDefault("0")
     private Integer illustrationCount;
 
     @Column(name = "movie_count")
+    @ColumnDefault("0")
     private Integer movieCount;
 
     @Column(name = "photo_count")
+    @ColumnDefault("0")
     private Integer photoCount;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -110,10 +119,6 @@ public class FileSystemInfMainEntity {
 
     public Date getGmtCreate() {
         return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified() {

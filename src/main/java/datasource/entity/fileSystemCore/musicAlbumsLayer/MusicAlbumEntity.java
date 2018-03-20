@@ -24,11 +24,19 @@ public class MusicAlbumEntity {
     @Column(name = "album_name")
     private String albumName;
 
+    @Column(name = "artist")
+    private String artist;
+
     public MusicAlbumEntity() {
     }
 
     public MusicAlbumEntity(String albumName) {
         this.albumName = albumName;
+    }
+
+    public MusicAlbumEntity(String albumName, String artist) {
+        this.albumName = albumName;
+        this.artist = artist;
     }
 
     public UUID getId() {
@@ -43,11 +51,23 @@ public class MusicAlbumEntity {
         return filesystemInfMainEntity;
     }
 
+    public void setFilesystemInfMainEntity(FileSystemInfMainEntity filesystemInfMainEntity) {
+        this.filesystemInfMainEntity = filesystemInfMainEntity;
+    }
+
     public String getAlbumName() {
         return albumName;
     }
 
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 }

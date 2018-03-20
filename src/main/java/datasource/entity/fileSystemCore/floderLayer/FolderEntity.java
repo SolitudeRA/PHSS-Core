@@ -1,12 +1,15 @@
 package datasource.entity.fileSystemCore.floderLayer;
 
 import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@DynamicInsert
 @Table(name = "folder")
 public class FolderEntity {
     @Id
@@ -24,9 +27,11 @@ public class FolderEntity {
     private String folderName;
 
     @Column(name = "space")
+    @ColumnDefault("0")
     private Integer space;
 
     @Column(name = "file_count")
+    @ColumnDefault("0")
     private Integer fileCount;
 
     @Column(name = "gmt_create")
@@ -94,10 +99,6 @@ public class FolderEntity {
 
     public Date getGmtCreate(){
         return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate){
-        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified(){

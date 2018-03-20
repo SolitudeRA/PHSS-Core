@@ -1,21 +1,26 @@
 package datasource.entity.fileSystemCore.fileSystemInformationLayer;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@DynamicInsert
 @Table(name = "filesystem_inf_space")
 public class FileSystemInfSpaceEntity {
     @Id
     private UUID fileSystemId;
 
     @Column(name = "space")
+    @ColumnDefault("0")
     private Integer space;
 
     @Column(name = "file_count")
+    @ColumnDefault("0")
     private Integer fileCount;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -32,6 +37,10 @@ public class FileSystemInfSpaceEntity {
     private FileSystemInfMainEntity fileSystemInfMainEntity;
 
     public FileSystemInfSpaceEntity() {
+    }
+
+    public FileSystemInfSpaceEntity(FileSystemInfMainEntity fileSystemInfMainEntity) {
+        this.fileSystemInfMainEntity = fileSystemInfMainEntity;
     }
 
     public FileSystemInfSpaceEntity(Integer space, Integer fileCount, Date gmtCreate, Date gmtModified) {
@@ -59,10 +68,6 @@ public class FileSystemInfSpaceEntity {
 
     public Date getGmtCreate() {
         return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified() {

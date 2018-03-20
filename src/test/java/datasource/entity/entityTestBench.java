@@ -5,6 +5,7 @@ import datasource.entity.fileSystemCore.booksLayer.BookEntity;
 import datasource.entity.fileSystemCore.booksLayer.BookInfEntity;
 import datasource.entity.fileSystemCore.documentsLayer.DocumentEntity;
 import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
+import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfSpaceEntity;
 import datasource.entity.fileSystemCore.floderLayer.FolderEntity;
 import datasource.entity.fileSystemCore.illustrationLayer.IllustrationEntity;
 import datasource.entity.fileSystemCore.moviesLayer.*;
@@ -50,7 +51,9 @@ class entityTestBench {
     void userTestCase(String username, String password) {
         UserEntity userEntity = new UserEntity(username, password);
         entityManager.persist(userEntity);
-        entityManager.persist(new FileSystemInfMainEntity(userEntity));
+        FileSystemInfMainEntity fileSystemInfMainEntity = new FileSystemInfMainEntity(userEntity);
+        entityManager.persist(fileSystemInfMainEntity);
+        entityManager.persist(new FileSystemInfSpaceEntity(fileSystemInfMainEntity));
         entityManager.persist(new PersonalDataInfEntity(userEntity));
         entityManager.persist(new SettingMainEntity(userEntity));
     }
@@ -59,22 +62,33 @@ class entityTestBench {
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-album.csv")
     void musicAlbumTestCase(String albumName, String artist, String albumArtist, String composer) {
-        MusicAlbumEntity musicAlbumEntity = new MusicAlbumEntity(albumName);
+        MusicAlbumEntity musicAlbumEntity = new MusicAlbumEntity(albumName, artist);
         entityManager.persist(musicAlbumEntity);
+        MusicAlbumInfEntity musicAlbumInfEntity = new MusicAlbumInfEntity(albumArtist, composer, "");
+        musicAlbumInfEntity.setMusicAlbumEntity(musicAlbumEntity);
+        entityManager.persist(musicAlbumInfEntity);
     }
 
     @DisplayName("Music_Track test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-track.csv")
     void musicTrackTestCase(String trackName, String totalTime, String artist, String albumName, String genre, int playbackCount) {
-
+        MusicTrackEntity musicTrackEntity = new MusicTrackEntity(trackName);
+        entityManager.persist(musicTrackEntity);
+        MusicTrackInfEntity musicTrackInfEntity = new MusicTrackInfEntity(totalTime, artist, artist, artist, genre);
+        musicTrackInfEntity.setMusicTrackEntity(musicTrackEntity);
+        entityManager.persist(musicTrackInfEntity);
     }
 
     @DisplayName("Book test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/book.csv")
     void bookTestCase(String bookName, String author) {
-        entityManager.persist(new BookEntity(bookName));
+        BookEntity bookEntity = new BookEntity(bookName);
+        entityManager.persist(bookEntity);
+        BookInfEntity bookInfEntity = new BookInfEntity(author, null, null);
+        bookInfEntity.setBookEntity(bookEntity);
+        entityManager.persist(bookInfEntity);
     }
 
     @DisplayName("Document test case")
@@ -91,6 +105,7 @@ class entityTestBench {
         entityManager.persist(new MovieEntity(movieName));
     }
 
+    @Disabled
     @DisplayName("Video test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/video.csv")
@@ -98,6 +113,7 @@ class entityTestBench {
         entityManager.persist(new VideoEntity());
     }
 
+    @Disabled
     @DisplayName("Anime test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/anime.csv")
@@ -105,6 +121,7 @@ class entityTestBench {
         entityManager.persist(new AnimeEntity());
     }
 
+    @Disabled
     @DisplayName("Illustration test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/illustration.csv")
@@ -112,6 +129,7 @@ class entityTestBench {
         entityManager.persist(new IllustrationEntity());
     }
 
+    @Disabled
     @DisplayName("Photo test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/photo.csv")
@@ -119,6 +137,7 @@ class entityTestBench {
         entityManager.persist(new PhotoEntity());
     }
 
+    @Disabled
     @DisplayName("Folder test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/folder.csv")
@@ -126,6 +145,7 @@ class entityTestBench {
         entityManager.persist(new FolderEntity());
     }
 
+    @Disabled
     @DisplayName("Calender test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/calender.csv")

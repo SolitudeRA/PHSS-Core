@@ -1,6 +1,7 @@
 package datasource.entity.fileSystemCore.booksLayer;
 
 import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,58 +21,61 @@ public class BookEntity {
     @Column(name = "book_name")
     private String bookName;
 
+    @NaturalId
+    @Column(name = "isbn")
+    private Integer isbn;
+
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public BookEntity(){
+    public BookEntity() {
     }
 
     public BookEntity(String bookName) {
         this.bookName = bookName;
     }
 
-    public BookEntity(String bookName, Date gmtCreate, Date gmtModified){
+    public BookEntity(String bookName, Integer isbn) {
         this.bookName = bookName;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
+        this.isbn = isbn;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id){
-        this.id = id;
-    }
-
-    public FileSystemInfMainEntity getFilesystemInfMainEntity(){
+    public FileSystemInfMainEntity getFilesystemInfMainEntity() {
         return filesystemInfMainEntity;
     }
 
-    public String getBookName(){
+    public String getBookName() {
         return bookName;
     }
 
-    public void setBookName(String bookName){
+    public void setBookName(String bookName) {
         this.bookName = bookName;
     }
 
-    public Date getGmtCreate(){
+    public Integer getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(Integer isbn) {
+        this.isbn = isbn;
+    }
+
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate){
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 }

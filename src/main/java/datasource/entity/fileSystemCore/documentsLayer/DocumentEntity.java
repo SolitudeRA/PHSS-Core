@@ -78,10 +78,6 @@ public class DocumentEntity {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
     public Date getGmtModified() {
         return gmtModified;
     }
