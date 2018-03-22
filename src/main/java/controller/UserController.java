@@ -1,6 +1,6 @@
 package controller;
 
-import datasource.entity.userManagementCore.UserEntity;
+import datasource.entity.core.user.UserEntity;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

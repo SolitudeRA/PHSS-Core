@@ -1,25 +1,20 @@
 package datasource.entity;
 
 import datasource.DataSource;
-import datasource.entity.fileSystemCore.booksLayer.BookEntity;
-import datasource.entity.fileSystemCore.booksLayer.BookInfEntity;
-import datasource.entity.fileSystemCore.documentsLayer.DocumentEntity;
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfMainEntity;
-import datasource.entity.fileSystemCore.fileSystemInformationLayer.FileSystemInfSpaceEntity;
-import datasource.entity.fileSystemCore.floderLayer.FolderEntity;
-import datasource.entity.fileSystemCore.illustrationLayer.IllustrationEntity;
-import datasource.entity.fileSystemCore.moviesLayer.*;
-import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicAlbumEntity;
-import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicAlbumInfEntity;
-import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackEntity;
-import datasource.entity.fileSystemCore.musicAlbumsLayer.MusicTrackInfEntity;
-import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoAlbumEntity;
-import datasource.entity.fileSystemCore.photoAlbumsLayer.PhotoEntity;
-import datasource.entity.personalDataCore.PersonalDataInfEntity;
-import datasource.entity.personalDataCore.calenderLayer.CalenderEntity;
-import datasource.entity.settingsCore.SettingMainEntity;
-import datasource.entity.userManagementCore.UserEntity;
-import org.junit.Test;
+import datasource.entity.core.filesystem.album.music.*;
+import datasource.entity.core.filesystem.book.BookEntity;
+import datasource.entity.core.filesystem.book.BookInfEntity;
+import datasource.entity.core.filesystem.document.DocumentEntity;
+import datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import datasource.entity.core.filesystem.main.FileSystemSpaceEntity;
+import datasource.entity.core.filesystem.folder.FolderEntity;
+import datasource.entity.core.filesystem.illustration.IllustrationEntity;
+import datasource.entity.core.filesystem.movie.*;
+import datasource.entity.core.filesystem.album.photo.PhotoEntity;
+import datasource.entity.core.personaldata.PersonalDataInfEntity;
+import datasource.entity.core.personaldata.calender.CalenderEntity;
+import datasource.entity.core.setting.SettingMainEntity;
+import datasource.entity.core.user.UserEntity;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -51,9 +46,9 @@ class entityTestBench {
     void userTestCase(String username, String password) {
         UserEntity userEntity = new UserEntity(username, password);
         entityManager.persist(userEntity);
-        FileSystemInfMainEntity fileSystemInfMainEntity = new FileSystemInfMainEntity(userEntity);
-        entityManager.persist(fileSystemInfMainEntity);
-        entityManager.persist(new FileSystemInfSpaceEntity(fileSystemInfMainEntity));
+        FileSystemMainEntity fileSystemMainEntity = new FileSystemMainEntity(userEntity);
+        entityManager.persist(fileSystemMainEntity);
+        entityManager.persist(new FileSystemSpaceEntity(fileSystemMainEntity));
         entityManager.persist(new PersonalDataInfEntity(userEntity));
         entityManager.persist(new SettingMainEntity(userEntity));
     }
@@ -64,20 +59,17 @@ class entityTestBench {
     void musicAlbumTestCase(String albumName, String artist, String albumArtist, String composer) {
         MusicAlbumEntity musicAlbumEntity = new MusicAlbumEntity(albumName, artist);
         entityManager.persist(musicAlbumEntity);
-        MusicAlbumInfEntity musicAlbumInfEntity = new MusicAlbumInfEntity(albumArtist, composer, "");
-        musicAlbumInfEntity.setMusicAlbumEntity(musicAlbumEntity);
+        MusicAlbumInfEntity musicAlbumInfEntity = new MusicAlbumInfEntity(musicAlbumEntity);
+        MusicAlbumInfStaticEntity musicAlbumInfStaticEntity = new MusicAlbumInfStaticEntity(musicAlbumEntity);
         entityManager.persist(musicAlbumInfEntity);
+        entityManager.persist(musicAlbumInfStaticEntity);
     }
 
+    @Disabled
     @DisplayName("Music_Track test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-track.csv")
     void musicTrackTestCase(String trackName, String totalTime, String artist, String albumName, String genre, int playbackCount) {
-        MusicTrackEntity musicTrackEntity = new MusicTrackEntity(trackName);
-        entityManager.persist(musicTrackEntity);
-        MusicTrackInfEntity musicTrackInfEntity = new MusicTrackInfEntity(totalTime, artist, artist, artist, genre);
-        musicTrackInfEntity.setMusicTrackEntity(musicTrackEntity);
-        entityManager.persist(musicTrackInfEntity);
     }
 
     @DisplayName("Book test case")
