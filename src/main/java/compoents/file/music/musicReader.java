@@ -1,4 +1,4 @@
-package service.file.music;
+package compoents.file.music;
 
 public class musicReader {
 }
