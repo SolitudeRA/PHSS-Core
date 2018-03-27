@@ -132,4 +132,8 @@ public class FileSystemMainEntity {
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
     }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
 }

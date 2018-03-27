@@ -9,7 +9,7 @@ import java.util.UUID;
  * @since 1.8
  */
 
-public abstract class UserService {
+public interface UserService {
     /**
      * Get user profile from database
      *
@@ -17,7 +17,7 @@ public abstract class UserService {
      * @param password password of the user
      * @return a JSON format string of current user's profile
      */
-    public abstract String getUser(String username, String password);
+     String getUser(String username, String password);
 
 
     /**
@@ -27,7 +27,7 @@ public abstract class UserService {
      * @param profile updated JSON format user profile
      * @return a JSON format string of the updated user profile
      */
-    public abstract String updateUser(UUID uuid, String profile);
+     String updateUser(UUID uuid, String profile);
 
     /**
      * Sign up a new user profile
@@ -35,7 +35,7 @@ public abstract class UserService {
      * @param profile a JSON format string of the user profile
      * @return a JSON format string of the user profile
      */
-    public abstract String saveUser(String profile);
+     String saveUser(String profile);
 
     /**
      * Delete user profile
@@ -43,5 +43,5 @@ public abstract class UserService {
      * @param uuid uuid of the user
      * @return a bool number whether the user has been deleted
      */
-    public abstract boolean removeUser(UUID uuid);
+     boolean removeUser(UUID uuid);
 }

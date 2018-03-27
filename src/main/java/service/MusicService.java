@@ -9,87 +9,112 @@ import java.util.UUID;
  * @since 1.9
  */
 
-public abstract class MusicService {
+//TODO:Music service interfaces design
+public interface MusicService {
 
     /**
      * Persist an album
      *
      * @param uuid  uuid of the user
      * @param album a JSON format string of the album
-     * @return a JSON format string of the saved album
+     * @return JSON format string of the saved album
      */
-    public abstract String saveAlbum(UUID uuid, String album);
+    String saveAlbum(UUID uuid, String album);
 
     /**
-     * Remove the album
+     * Remove an album
      *
      * @param uuid uuid of the album
      * @return boolean
      */
-    public abstract boolean removeAlbum(UUID uuid);
+    boolean removeAlbum(UUID uuid);
 
     /**
-     * Get current album
+     * Get an album
      *
      * @param uuid uuid of the album
-     * @return a JSON format string of the album
+     * @return JSON format string of the album
      */
-    public abstract String getAlbum(UUID uuid);
+    String getAlbum(UUID uuid);
 
     /**
-     * List album by name
+     * List albums by name
      *
-     * @param albumName name of the album
-     * @return a JSON format string of the album
+     * @param albumName name of the albums
+     * @return JSON format string of the album
      */
-    public abstract String listAlbumByName(String albumName);
+    String listAlbumByName(String albumName);
 
     /**
-     * List album by artist
+     * List albums by artist
      *
-     * @param Artist artist of the album
-     * @return a JSON format string of the album
+     * @param Artist artist of the albums
+     * @return JSON format string of the album
      */
-    public abstract String listAlbumByArtist(String Artist);
+    String listAlbumByArtist(String Artist);
+
+    /**
+     * Update an album
+     *
+     * @param album JSON format string of the updated album
+     * @return JSON format string of the updated album
+     */
+    String updateAlbum(String album);
 
     /**
      * Persist a track
      *
      * @param track a JSON format string of the track
-     * @return a JSON format string of the saved track
+     * @return JSON format string of the saved track
      */
-    public abstract String saveTrack(String track);
+    String saveTrack(String track);
 
     /**
-     * Remove the track
+     * Remove a track
      *
      * @param uuid uuid of the track
      * @return boolean
      */
 
-    public abstract boolean removeTrack(UUID uuid);
+    boolean removeTrack(UUID uuid);
 
     /**
-     * Get Current track
+     * Get a track
      *
      * @param uuid uuid of the track
-     * @return a JSON format string of the track
+     * @return JSON format string of the track
      */
-    public abstract String getTrack(UUID uuid);
+    String getTrack(UUID uuid);
 
     /**
-     * List track by name
+     * List tracks by name
      *
-     * @param trackName name of the track
-     * @return a JSON format string of the track
+     * @param trackName name of the tracks
+     * @return JSON format string of the track
      */
-    public abstract String listTrackByName(String trackName);
+    String listTrackByName(String trackName);
 
     /**
      * List tracks by album name
      *
-     * @param albumName name of the album
-     * @return a JSON format string of the tracks
+     * @param albumName name of the albums
+     * @return JSON format string of the tracks
      */
-    public abstract String listTrackByAlbum(String albumName);
+    String listTrackByAlbum(String albumName);
+
+    /**
+     * List tracks by artist
+     *
+     * @param artist artist of the tracks
+     * @return JSON format string of the tracks
+     */
+    String listTracksByArtist(String artist);
+
+    /**
+     * Update a track
+     *
+     * @param track JSON format string of the updated track
+     * @return JSON format string of the updated track
+     */
+    String updateTrack(String track);
 }

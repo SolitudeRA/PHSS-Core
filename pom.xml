@@ -30,12 +30,13 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <json-path.version>2.4.0</json-path.version>
         <spring-security.version>5.0.3.RELEASE</spring-security.version>
-        <junit.jupiter.version>5.0.3</junit.jupiter.version>
-        <junit.platform.version>1.0.3</junit.platform.version>
-        <log4j.version>2.10.0</log4j.version>
-        <hibernate.version>5.2.12.Final</hibernate.version>
-        <jdbc-connecter.version>5.1.45</jdbc-connecter.version>
+        <junit.jupiter.version>5.1.0</junit.jupiter.version>
+        <junit.platform.version>1.1.0</junit.platform.version>
+        <log4j.version>2.11.0</log4j.version>
+        <hibernate.version>5.2.16.Final</hibernate.version>
+        <jdbc-connector.version>5.1.46</jdbc-connector.version>
     </properties>
 
     <dependencies>
@@ -70,6 +71,11 @@
             <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json-path.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring-security.version}</version>
@@ -82,16 +88,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${jdbc-connecter.version}</version>
+            <version>${jdbc-connector.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -1,5 +1,6 @@
 package datasource.entity.core.filesystem.album.music;
 
+import datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -19,7 +20,11 @@ public class MusicTrackEntity {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_ALBUM_MUSIC_ID"))
+    @JoinColumn(name = "owner_id",foreignKey = @ForeignKey(name = "FK_TRACK_OWNER_ID"))
+    private FileSystemMainEntity fileSystemMainEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_TRACK_ALBUM_MUSIC_ID"))
     private MusicAlbumEntity musicAlbumEntity;
 
     @Column(name = "name")
