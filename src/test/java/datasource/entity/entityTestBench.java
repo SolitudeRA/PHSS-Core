@@ -15,6 +15,8 @@ import datasource.entity.core.personaldata.PersonalDataInfEntity;
 import datasource.entity.core.personaldata.calender.CalenderEntity;
 import datasource.entity.core.setting.SettingMainEntity;
 import datasource.entity.core.user.UserEntity;
+import org.apache.catalina.User;
+import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -51,6 +53,14 @@ class entityTestBench {
         entityManager.persist(new FileSystemSpaceEntity(fileSystemMainEntity));
         entityManager.persist(new PersonalDataInfEntity(userEntity));
         entityManager.persist(new SettingMainEntity(userEntity));
+    }
+
+    @DisplayName("user select test case")
+    @ParameterizedTest
+    @CsvSource({"Alpha", "Beta", "Charlie", "Delta"})
+    void userSelectTestCase(String username) {
+        UserEntity userEntity = entityManager.createQuery("select user from UserEntity user where user.username=:username", UserEntity.class).setParameter("username", username).getSingleResult();
+        System.out.println(userEntity.getPassword());
     }
 
     @DisplayName("Music_Album test case")

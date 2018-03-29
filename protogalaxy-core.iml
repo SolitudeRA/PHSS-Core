@@ -47,11 +47,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.0.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-engine:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.opentest4j:opentest4j:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-api:5.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-params:5.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-surefire-provider:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-launcher:1.1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.surefire:surefire-api:2.19.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.surefire:common-java5:2.19.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE" level="project" />
