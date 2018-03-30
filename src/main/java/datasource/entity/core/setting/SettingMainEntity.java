@@ -1,5 +1,6 @@
 package datasource.entity.core.setting;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import datasource.entity.core.user.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 

@@ -1,9 +1,10 @@
 package controller;
 
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ReadContext;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import datasource.DataSource;
 import datasource.entity.core.user.UserEntity;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,12 @@ import javax.persistence.EntityManager;
 @RequestMapping(value = "/users")
 public class UserController {
     @GetMapping("/login")
-    public void login(@RequestParam(name = "userInf") String userInf) {
+    public String login() throws Exception {
         DataSource dataSource = new DataSource();
         EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
-        ReadContext ctx = JsonPath.parse(userInf);
-        UserEntity userEntity = entityManager.createQuery("select user from UserEntity user where user.username=:username", UserEntity.class).setParameter("username", ctx.read("$.username")).getSingleResult();
-        if (ctx.read("$.password") == userEntity.getPassword()) {
-
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new Hibernate5Module());
+        return mapper.writeValueAsString(entityManager.createQuery("select user from UserEntity user where user.username=:username").setParameter("username", "Alpha"));
     }
 
     @PostMapping
@@ -35,5 +34,9 @@ public class UserController {
     @DeleteMapping("/{user}")
     public void deleteUser(@PathVariable Long user) {
 
+    }
+
+    public static void main(String args[]) throws Exception {
+        SpringApplication.run(UserController.class, args);
     }
 }

@@ -30,12 +30,12 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <json-path.version>2.4.0</json-path.version>
         <spring-security.version>5.0.3.RELEASE</spring-security.version>
         <junit.jupiter.version>5.1.0</junit.jupiter.version>
         <junit.platform.version>1.1.0</junit.platform.version>
         <log4j.version>2.11.0</log4j.version>
         <hibernate.version>5.2.16.Final</hibernate.version>
+        <jackson-datatype-hibernate.version>2.9.5</jackson-datatype-hibernate.version>
         <jdbc-connector.version>5.1.46</jdbc-connector.version>
     </properties>
 
@@ -76,11 +76,6 @@
             <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${json-path.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring-security.version}</version>
@@ -89,6 +84,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>${jackson-datatype-hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

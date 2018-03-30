@@ -33,7 +33,7 @@ import javax.persistence.*;
 
 @DisplayName("Entity test bench")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class entityTestBench {
+class EntityTestBench {
     private DataSource dataSource = new DataSource();
     private EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
 
