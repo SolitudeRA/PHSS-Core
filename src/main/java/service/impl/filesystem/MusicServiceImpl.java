@@ -1,10 +1,12 @@
-package service.impl;
+package service.impl.filesystem;
 
-import service.MusicService;
+import org.springframework.stereotype.Service;
+import service.filesystem.MusicService;
 
 import java.util.UUID;
 
 //TODO: Music service implement
+@Service
 public class MusicServiceImpl implements MusicService {
     @Override
     public String saveAlbum(UUID uuid, String album) {

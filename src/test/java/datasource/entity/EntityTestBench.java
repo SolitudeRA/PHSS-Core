@@ -1,6 +1,6 @@
 package datasource.entity;
 
-import datasource.DataSource;
+import datasource.JPAUtil;
 import datasource.entity.core.filesystem.album.music.*;
 import datasource.entity.core.filesystem.book.BookEntity;
 import datasource.entity.core.filesystem.book.BookInfEntity;
@@ -15,8 +15,6 @@ import datasource.entity.core.personaldata.PersonalDataInfEntity;
 import datasource.entity.core.personaldata.calender.CalenderEntity;
 import datasource.entity.core.setting.SettingMainEntity;
 import datasource.entity.core.user.UserEntity;
-import org.apache.catalina.User;
-import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -34,8 +32,7 @@ import javax.persistence.*;
 @DisplayName("Entity test bench")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class EntityTestBench {
-    private DataSource dataSource = new DataSource();
-    private EntityManager entityManager = dataSource.getEntityManagerFactory().createEntityManager();
+    private EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
     @BeforeAll
     void initAll() {
@@ -158,6 +155,6 @@ class EntityTestBench {
     @AfterAll
     void tearDownAll() {
         entityManager.getTransaction().commit();
-        dataSource.close();
+        JPAUtil.close();
     }
 }

@@ -1,5 +1,6 @@
 package datasource.entity.core.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import datasource.entity.core.personaldata.PersonalDataInfEntity;
 import datasource.entity.core.setting.SettingMainEntity;
@@ -39,12 +40,15 @@ public class UserEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private FileSystemMainEntity fileSystemMainEntity;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private PersonalDataInfEntity personalDataInfEntity;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private SettingMainEntity settingMainEntity;
 
@@ -126,5 +130,21 @@ public class UserEntity {
 
     public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
         this.fileSystemMainEntity = fileSystemMainEntity;
+    }
+
+    public PersonalDataInfEntity getPersonalDataInfEntity() {
+        return personalDataInfEntity;
+    }
+
+    public void setPersonalDataInfEntity(PersonalDataInfEntity personalDataInfEntity) {
+        this.personalDataInfEntity = personalDataInfEntity;
+    }
+
+    public SettingMainEntity getSettingMainEntity() {
+        return settingMainEntity;
+    }
+
+    public void setSettingMainEntity(SettingMainEntity settingMainEntity) {
+        this.settingMainEntity = settingMainEntity;
     }
 }
