@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import datasource.entity.core.personaldata.PersonalDataInfEntity;
 import datasource.entity.core.setting.SettingMainEntity;
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -20,7 +21,12 @@ public class UserEntity {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
+    @Lob
+    @Column(name = "password", columnDefinition = "LONGBLOB")
+    @ColumnTransformer(
+            read = "aes_decrypt(password,'salt')",
+            write = "aes_encrypt(?,'salt')"
+    )
     private String password;
 
     @Column(name = "password_ext1")

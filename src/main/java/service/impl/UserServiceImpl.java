@@ -16,26 +16,31 @@ public class UserServiceImpl implements UserService {
     public String checkUser(String username, String password) throws Exception {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         ObjectMapper mapper = new ObjectMapper();
-        UserEntity user = entityManager.createQuery("select user from UserEntity user where user.username=:username", UserEntity.class).setParameter("username", username).getSingleResult();
-        if (password.equals(user.getPassword())) {
-            return mapper.writeValueAsString(user);
+        UserEntity userEntity = entityManager.createQuery("select user from UserEntity user where user.username=:username", UserEntity.class).setParameter("username", username).getSingleResult();
+        if (password.equals(userEntity.getPassword())) {
+            return mapper.writeValueAsString(userEntity);
         } else {
             return null;
         }
     }
 
     @Override
-    public String getUser(UUID uuid) {
+    public String getUser(UUID uuid) throws Exception {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        ObjectMapper mapper = new ObjectMapper();
+        UserEntity userEntity = entityManager.find(UserEntity.class, uuid);
+        return mapper.writeValueAsString(userEntity);
+    }
+
+    @Override
+    public String updateUser(UUID uuid, String profile) throws Exception {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         return null;
     }
 
     @Override
-    public String updateUser(UUID uuid, String profile) {
-        return null;
-    }
-
-    @Override
-    public String saveUser(String profile) {
+    public String saveUser(String profile) throws Exception {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         return null;
     }
 

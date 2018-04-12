@@ -3,5 +3,5 @@ package service.filesystem;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IllustrationService {
+public interface IllustrationService {
 }
