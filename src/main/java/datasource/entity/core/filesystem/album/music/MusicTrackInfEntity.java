@@ -1,12 +1,12 @@
 package datasource.entity.core.filesystem.album.music;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author SolitudeRA
@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table(name = "track_inf")
 public class MusicTrackInfEntity {
     @Id
-    private UUID trackId;
+    private int trackId;
 
     @Column(name = "playback_count")
     @ColumnDefault("0")
@@ -39,9 +39,12 @@ public class MusicTrackInfEntity {
     @CreationTimestamp
     private Date dateAdded;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
+    @UpdateTimestamp
     private Date dateModified;
 
+    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "track_id")
@@ -54,22 +57,28 @@ public class MusicTrackInfEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfEntity(Integer playbackCount, Date playbackDate, Integer skipCount, Date skipDate, Date dateAdded, Date dateModified, MusicTrackEntity musicTrackEntity) {
+    public MusicTrackInfEntity(Integer playbackCount, Date playbackDate, Integer skipCount, Date skipDate, MusicTrackEntity musicTrackEntity) {
         this.playbackCount = playbackCount;
         this.playbackDate = playbackDate;
         this.skipCount = skipCount;
         this.skipDate = skipDate;
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public UUID getTrackId() {
+    public int getTrackId() {
         return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 
     public Integer getPlaybackCount() {
         return playbackCount;
+    }
+
+    public void setPlaybackCount(Integer playbackCount) {
+        this.playbackCount = playbackCount;
     }
 
     public Date getPlaybackDate() {
@@ -82,6 +91,10 @@ public class MusicTrackInfEntity {
 
     public Integer getSkipCount() {
         return skipCount;
+    }
+
+    public void setSkipCount(Integer skipCount) {
+        this.skipCount = skipCount;
     }
 
     public Date getSkipDate() {

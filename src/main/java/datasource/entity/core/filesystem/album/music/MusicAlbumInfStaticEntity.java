@@ -1,11 +1,13 @@
 package datasource.entity.core.filesystem.album.music;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author SolitudeRA
@@ -16,7 +18,7 @@ import java.util.UUID;
 @Table(name = "album_music_inf_static")
 public class MusicAlbumInfStaticEntity {
     @Id
-    private UUID albumId;
+    private int albumId;
 
     @Lob
     @Column(name = "artwork")
@@ -64,17 +66,19 @@ public class MusicAlbumInfStaticEntity {
     @Column(name = "size")
     private Integer size;
 
-    @Column(name = "location")
-    private String location;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
     @CreationTimestamp
     private Date dateAdded;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
+    @UpdateTimestamp
     private Date dateModified;
 
+    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "album_id")
@@ -87,7 +91,13 @@ public class MusicAlbumInfStaticEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public MusicAlbumInfStaticEntity(Blob artwork, String composer, Integer year, Integer totalTime, Integer trackCount, Integer albumNumber, Integer albumCount, String genreSummary, String genreSub1, String genreSub2, String genreSub3, Integer star, Integer isFavorite, String comment, Integer size, String location) {
+    public MusicAlbumInfStaticEntity(String composer, Integer year, MusicAlbumEntity musicAlbumEntity) {
+        this.composer = composer;
+        this.year = year;
+        this.musicAlbumEntity = musicAlbumEntity;
+    }
+
+    public MusicAlbumInfStaticEntity(Blob artwork, String composer, Integer year, Integer totalTime, Integer trackCount, Integer albumNumber, Integer albumCount, String genreSummary, String genreSub1, String genreSub2, String genreSub3, Integer star, Integer isFavorite, String comment, Integer size, MusicAlbumEntity musicAlbumEntity) {
         this.artwork = artwork;
         this.composer = composer;
         this.year = year;
@@ -103,14 +113,14 @@ public class MusicAlbumInfStaticEntity {
         this.isFavorite = isFavorite;
         this.comment = comment;
         this.size = size;
-        this.location = location;
+        this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public UUID getAlbumId() {
+    public int getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(UUID albumId) {
+    public void setAlbumId(int albumId) {
         this.albumId = albumId;
     }
 
@@ -232,14 +242,6 @@ public class MusicAlbumInfStaticEntity {
 
     public void setSize(Integer size) {
         this.size = size;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public Date getDateAdded() {

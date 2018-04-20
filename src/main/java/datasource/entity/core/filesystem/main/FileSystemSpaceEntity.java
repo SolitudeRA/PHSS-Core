@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "filesystem_space")
 public class FileSystemSpaceEntity {
     @Id
-    private UUID fileSystemId;
+    private int fileSystemId;
 
     @Column(name = "space")
     @ColumnDefault("0")
@@ -48,6 +48,14 @@ public class FileSystemSpaceEntity {
         this.fileCount = fileCount;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
+    }
+
+    public int getFileSystemId() {
+        return fileSystemId;
+    }
+
+    public void setFileSystemId(int fileSystemId) {
+        this.fileSystemId = fileSystemId;
     }
 
     public Integer getSpace() {

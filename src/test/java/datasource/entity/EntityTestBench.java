@@ -36,6 +36,11 @@ class EntityTestBench {
 
     @BeforeAll
     void initAll() {
+
+    }
+
+    @BeforeEach
+    void init(){
         entityManager.getTransaction().begin();
     }
 
@@ -60,23 +65,25 @@ class EntityTestBench {
         System.out.println(userEntity.getPassword());
     }
 
+
     @DisplayName("Music_Album test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-album.csv")
     void musicAlbumTestCase(String albumName, String artist, String albumArtist, String composer) {
         MusicAlbumEntity musicAlbumEntity = new MusicAlbumEntity(albumName, artist);
         entityManager.persist(musicAlbumEntity);
-        MusicAlbumInfEntity musicAlbumInfEntity = new MusicAlbumInfEntity(musicAlbumEntity);
-        MusicAlbumInfStaticEntity musicAlbumInfStaticEntity = new MusicAlbumInfStaticEntity(musicAlbumEntity);
-        entityManager.persist(musicAlbumInfEntity);
-        entityManager.persist(musicAlbumInfStaticEntity);
+        entityManager.persist(new MusicAlbumInfEntity(musicAlbumEntity));
+        entityManager.persist(new MusicAlbumInfStaticEntity(musicAlbumEntity));
     }
 
-    @Disabled
     @DisplayName("Music_Track test case")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-track.csv")
     void musicTrackTestCase(String trackName, String totalTime, String artist, String albumName, String genre, int playbackCount) {
+        MusicTrackEntity musicTrackEntity = new MusicTrackEntity(trackName, albumName, artist, artist);
+        entityManager.persist(musicTrackEntity);
+        entityManager.persist(new MusicTrackInfEntity(playbackCount, null, 0, null, musicTrackEntity));
+        entityManager.persist(new MusicTrackInfStaticEntity("music track test", musicTrackEntity));
     }
 
     @DisplayName("Book test case")
@@ -152,9 +159,13 @@ class EntityTestBench {
         entityManager.persist(new CalenderEntity());
     }
 
+    @AfterEach
+    void tearDown(){
+        entityManager.getTransaction().commit();
+    }
+
     @AfterAll
     void tearDownAll() {
-        entityManager.getTransaction().commit();
         JPAUtil.close();
     }
 }

@@ -1,11 +1,12 @@
 package datasource.entity.core.filesystem.album.music;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author SolitudeRA
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Table(name = "track_inf_static")
 public class MusicTrackInfStaticEntity {
     @Id
-    private UUID trackId;
+    private int trackId;
 
     @Column(name = "size")
     private Integer size;
@@ -57,15 +58,23 @@ public class MusicTrackInfStaticEntity {
     @CreationTimestamp
     private Date dateAdded;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
+    @UpdateTimestamp
     private Date dateModified;
 
+    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "track_id")
     private MusicTrackEntity musicTrackEntity;
 
     public MusicTrackInfStaticEntity() {
+    }
+
+    public MusicTrackInfStaticEntity(String location, MusicTrackEntity musicTrackEntity) {
+        this.location = location;
+        this.musicTrackEntity = musicTrackEntity;
     }
 
     public MusicTrackInfStaticEntity(Integer size, Integer totalTime, Integer trackNumber, Integer trackCount, Integer year, Integer bitRate, Integer sampleRate, Blob artwork, String genre, String kind, String location, MusicTrackEntity musicTrackEntity) {
@@ -83,8 +92,12 @@ public class MusicTrackInfStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public UUID getTrackId() {
+    public int getTrackId() {
         return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 
     public Integer getSize() {

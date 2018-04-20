@@ -12,8 +12,8 @@ import java.util.UUID;
 @Table(name = "music_playlist")
 public class MusicPlaylistEntity {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = ""))
@@ -38,8 +38,12 @@ public class MusicPlaylistEntity {
         this.location = location;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public FileSystemMainEntity getFileSystemMainEntity() {

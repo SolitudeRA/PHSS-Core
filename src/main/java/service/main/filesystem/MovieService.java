@@ -1,4 +1,4 @@
-package service.filesystem;
+package service.main.filesystem;
 
 import org.springframework.stereotype.Service;
 

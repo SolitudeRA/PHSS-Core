@@ -1,4 +1,4 @@
-package service;
+package service.main;
 
 import org.springframework.stereotype.Service;
 
@@ -25,20 +25,19 @@ public interface UserService {
     /**
      * Get user profile from database
      *
-     * @param uuid uuid of the user
+     * @param id id of the user
      * @return a JSON format string of current user's profile
      */
-    String getUser(UUID uuid) throws Exception;
+    String getUser(int id) throws Exception;
 
 
     /**
      * Update user profile
      *
-     * @param uuid    uuid of the user
      * @param profile updated JSON format user profile
      * @return a JSON format string of the updated user profile
      */
-    String updateUser(UUID uuid, String profile) throws Exception;
+    String updateUser(String profile) throws Exception;
 
     /**
      * Sign up a new user profile
@@ -51,8 +50,8 @@ public interface UserService {
     /**
      * Delete user profile
      *
-     * @param uuid uuid of the user
+     * @param id uuid of the user
      * @return a bool number whether the user has been deleted
      */
-    boolean removeUser(UUID uuid) throws Exception;
+    boolean removeUser(int id) throws Exception;
 }

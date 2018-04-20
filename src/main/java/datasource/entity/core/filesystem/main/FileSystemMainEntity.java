@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "filesystem_main")
 public class FileSystemMainEntity {
     @Id
-    private UUID ownerId;
+    private int ownerId;
 
     @Column(name = "album_count")
     @ColumnDefault("0")
@@ -67,6 +67,14 @@ public class FileSystemMainEntity {
         this.illustrationCount = illustrationCount;
         this.movieCount = movieCount;
         this.photoCount = photoCount;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Integer getAlbumCount() {

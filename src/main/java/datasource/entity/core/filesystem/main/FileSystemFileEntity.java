@@ -11,7 +11,7 @@ import java.util.UUID;
 public class FileSystemFileEntity {
     @Id
     @GeneratedValue
-    private UUID id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_FILE"))
@@ -31,51 +31,53 @@ public class FileSystemFileEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    public FileSystemFileEntity(){
+    public FileSystemFileEntity() {
     }
 
-    public FileSystemFileEntity(String name, String type, Date gmtCreate, Date gmtModified){
+    public FileSystemFileEntity(String name, String type, Date gmtCreate, Date gmtModified) {
         this.name = name;
         this.type = type;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    public UUID getId(){
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id){
+    public void setId(int id) {
         this.id = id;
     }
 
-    public FileSystemMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemMainEntity getFilesystemInfMainEntity() {
+        return filesystemInfMainEntity;
+    }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
-    public void setType(String type){
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified){
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 }

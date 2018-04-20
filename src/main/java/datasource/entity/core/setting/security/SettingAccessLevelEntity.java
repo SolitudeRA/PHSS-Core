@@ -9,7 +9,7 @@ import java.util.UUID;
 @Table(name = "setting_access_level")
 public class SettingAccessLevelEntity {
     @Id
-    private UUID ownerId;
+    private int ownerId;
 
     @Column(name = "name")
     private String name;
@@ -34,11 +34,11 @@ public class SettingAccessLevelEntity {
         this.keyneeded = keyneeded;
     }
 
-    public UUID getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(UUID ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
 

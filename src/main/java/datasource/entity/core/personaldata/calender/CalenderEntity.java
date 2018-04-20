@@ -9,7 +9,7 @@ import java.util.UUID;
 @Table(name = "calender")
 public class CalenderEntity {
     @Id
-    private UUID ownerId;
+    private int ownerId;
 
     @Column(name = "event_static_setting")
     private String eventStaticSetting;
@@ -22,11 +22,11 @@ public class CalenderEntity {
     public CalenderEntity() {
     }
 
-    public UUID getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(UUID ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
 

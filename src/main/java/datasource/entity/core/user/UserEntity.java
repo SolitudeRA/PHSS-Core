@@ -1,22 +1,23 @@
 package datasource.entity.core.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import datasource.entity.core.personaldata.PersonalDataInfEntity;
 import datasource.entity.core.setting.SettingMainEntity;
 import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "user")
 public class UserEntity {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "username")
     private String username;
@@ -38,12 +39,16 @@ public class UserEntity {
     @Column(name = "password_ext3")
     private String passwordExt3;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
     private Date gmtCreate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     @JsonIgnore
@@ -74,7 +79,7 @@ public class UserEntity {
         this.passwordExt3 = passwordExt3;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 

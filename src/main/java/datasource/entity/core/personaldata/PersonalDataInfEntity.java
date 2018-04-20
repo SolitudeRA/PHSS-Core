@@ -9,7 +9,7 @@ import java.util.UUID;
 @Table(name = "personaldata_inf")
 public class PersonalDataInfEntity {
     @Id
-    private UUID ownerId;
+    private int ownerId;
 
     @OneToOne
     @MapsId
@@ -23,11 +23,11 @@ public class PersonalDataInfEntity {
         this.userEntity = userEntity;
     }
 
-    public UUID getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(UUID ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
 

@@ -1,12 +1,13 @@
 package datasource.entity.core.filesystem.album.music;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author SolitudeRA
@@ -18,20 +19,25 @@ import java.util.UUID;
 @Table(name = "album_music_inf")
 public class MusicAlbumInfEntity {
     @Id
-    private UUID albumId;
+    private int albumId;
 
     @Column(name = "playback_count")
     @ColumnDefault("0")
     private Integer playbackCount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
     @CreationTimestamp
     private Date dateAdded;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
+    @UpdateTimestamp
     private Date dateModified;
 
+    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "album_id")
@@ -44,11 +50,11 @@ public class MusicAlbumInfEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public UUID getAlbumId() {
+    public int getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(UUID albumId) {
+    public void setAlbumId(int albumId) {
         this.albumId = albumId;
     }
 

@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "setting_runtime")
 public class SettingRuntimeEntity {
     @Id
-    private UUID ownerId;
+    private int ownerId;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
@@ -34,11 +34,11 @@ public class SettingRuntimeEntity {
         this.gmtModified = gmtModified;
     }
 
-    public UUID getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(UUID ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
 

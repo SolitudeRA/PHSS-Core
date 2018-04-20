@@ -8,8 +8,8 @@ import java.util.UUID;
 @Table(name = "calender_event")
 public class CalenderEventEntity {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_PERSONAL_DATA_ID"))
@@ -46,11 +46,11 @@ public class CalenderEventEntity {
         this.fileAttachment = fileAttachment;
     }
 
-    public UUID getId(){
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id){
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -1,9 +1,12 @@
 package datasource.entity.core.filesystem.album.music;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author SolitudeRA
@@ -14,12 +17,12 @@ import java.util.*;
 @Table(name = "album_music")
 public class MusicAlbumEntity {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_MUSIC"))
-    private FileSystemMainEntity filesystemInfMainEntity;
+    private FileSystemMainEntity owner;
 
     @Column(name = "name")
     private String name;
@@ -29,6 +32,26 @@ public class MusicAlbumEntity {
 
     @Column(name = "location")
     private String location;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_added")
+    @CreationTimestamp
+    private Date dateAdded;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_modified")
+    @CreationTimestamp
+    private Date dateModified;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private MusicAlbumInfEntity albumInformation;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private MusicAlbumInfStaticEntity albumInformationStatic;
 
     public MusicAlbumEntity() {
     }
@@ -44,20 +67,20 @@ public class MusicAlbumEntity {
         this.location = location;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public FileSystemMainEntity getFilesystemInfMainEntity() {
-        return filesystemInfMainEntity;
+    public FileSystemMainEntity getOwner() {
+        return owner;
     }
 
-    public void setFilesystemInfMainEntity(FileSystemMainEntity filesystemInfMainEntity) {
-        this.filesystemInfMainEntity = filesystemInfMainEntity;
+    public void setOwner(FileSystemMainEntity owner) {
+        this.owner = owner;
     }
 
     public String getName() {
@@ -82,5 +105,29 @@ public class MusicAlbumEntity {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public Date getDateModified() {
+        return dateModified;
+    }
+
+    public MusicAlbumInfEntity getAlbumInformation() {
+        return albumInformation;
+    }
+
+    public void setAlbumInformation(MusicAlbumInfEntity albumInformation) {
+        this.albumInformation = albumInformation;
+    }
+
+    public MusicAlbumInfStaticEntity getAlbumInformationStatic() {
+        return albumInformationStatic;
+    }
+
+    public void setAlbumInformationStatic(MusicAlbumInfStaticEntity albumInformationStatic) {
+        this.albumInformationStatic = albumInformationStatic;
     }
 }
