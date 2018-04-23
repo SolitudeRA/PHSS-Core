@@ -1,10 +1,10 @@
 package datasource.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import datasource.entity.core.user.UserEntity;
+import me.protogalaxy.datasource.entity.core.user.UserEntity;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import service.impl.UserServiceImpl;
+import me.protogalaxy.service.impl.UserServiceImpl;
 
 
 @DisplayName("User API test case")

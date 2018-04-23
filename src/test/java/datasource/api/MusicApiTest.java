@@ -1,12 +1,12 @@
 package datasource.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import datasource.entity.core.filesystem.album.music.MusicAlbumEntity;
-import datasource.entity.core.filesystem.album.music.MusicAlbumInfEntity;
-import datasource.entity.core.filesystem.album.music.MusicAlbumInfStaticEntity;
+import me.protogalaxy.datasource.entity.core.filesystem.album.music.MusicAlbumEntity;
+import me.protogalaxy.datasource.entity.core.filesystem.album.music.MusicAlbumInfEntity;
+import me.protogalaxy.datasource.entity.core.filesystem.album.music.MusicAlbumInfStaticEntity;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import service.impl.filesystem.MusicServiceImpl;
+import me.protogalaxy.service.impl.filesystem.MusicServiceImpl;
 
 //TODO: test cases
 @DisplayName("Music api test case")
