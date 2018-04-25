@@ -6,14 +6,14 @@ package me.protogalaxy.service.security;
  * @author SolitudeRA (https://github.com/SolitudeRA)
  */
 
-public class PHSSToken {
+public class PhssToken {
     private String issuer;
     private String expirationTime;
     private String username;
     private String password;
     private String picture;
 
-    public PHSSToken(String issuer, String expirationTime, String username, String password, String picture) {
+    public PhssToken(String issuer, String expirationTime, String username, String password, String picture) {
         this.issuer = issuer;
         this.expirationTime = expirationTime;
         this.username = username;

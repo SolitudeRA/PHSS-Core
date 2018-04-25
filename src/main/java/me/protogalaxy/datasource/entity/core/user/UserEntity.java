@@ -5,16 +5,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.protogalaxy.datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import me.protogalaxy.datasource.entity.core.personaldata.PersonalDataInfEntity;
 import me.protogalaxy.datasource.entity.core.setting.SettingMainEntity;
-import org.hibernate.annotations.ColumnTransformer;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import me.protogalaxy.service.security.config.PhssGrantedAuthority;
+import org.hibernate.annotations.*;
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+//TODO:isCredentialsNonExpired
 
 @Entity
+@DynamicInsert
 @Table(name = "user")
-public class UserEntity {
+public class UserEntity implements UserDetails, CredentialsContainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -23,11 +34,7 @@ public class UserEntity {
     private String username;
 
     @Lob
-    @Column(name = "password", columnDefinition = "LONGBLOB")
-    @ColumnTransformer(
-            read = "aes_decrypt(password,'salt')",
-            write = "aes_encrypt(?,'salt')"
-    )
+    @Column(name = "password")
     private String password;
 
     @Column(name = "password_ext1")
@@ -39,17 +46,32 @@ public class UserEntity {
     @Column(name = "password_ext3")
     private String passwordExt3;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
-    private Date gmtCreate;
+    @Column(name = "isEnabled")
+    @ColumnDefault("true")
+    private Boolean isEnabled;
+
+    @Column(name = "isAccountNonExpired")
+    @ColumnDefault("true")
+    private Boolean isAccountNonExpired;
+
+    @Column(name = "isAccountNonLocked")
+    @ColumnDefault("true")
+    private Boolean isAccountNonLocked;
+
+    @Column(name = "authorities")
+    private String authorities;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
+    @Column(name = "date_create")
+    @CreationTimestamp
+    private Date dateCreate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_modified")
     @UpdateTimestamp
-    private Date gmtModified;
+    private Date dateModified;
 
     @JsonIgnore
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -71,6 +93,16 @@ public class UserEntity {
         this.password = password;
     }
 
+    public UserEntity(String username, String password, Set<GrantedAuthority> authorities) {
+        if (((username == null) || "".equals(username)) || (password == null)) {
+            throw new IllegalArgumentException(
+                    "Cannot pass null or empty values to constructor");
+        }
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities.toString();
+    }
+
     public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3) {
         this.username = username;
         this.password = password;
@@ -83,6 +115,7 @@ public class UserEntity {
         return id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -91,6 +124,7 @@ public class UserEntity {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -123,16 +157,62 @@ public class UserEntity {
         this.passwordExt3 = passwordExt3;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    @Override
+    public boolean isEnabled() {
+        return this.isEnabled;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.isAccountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.isAccountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public Collection<PhssGrantedAuthority> getAuthorities() {
+        String[] authoritiesString = authorities.split(",");
+        Set<PhssGrantedAuthority> authorityCollection = new HashSet<>();
+        for (String anAuthoritiesString : authoritiesString) {
+            authorityCollection.add(new PhssGrantedAuthority(anAuthoritiesString));
+        }
+        return authorityCollection;
+    }
+
+    public void setAuthorities(Set<PhssGrantedAuthority> authorities) {
+
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public Date getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
     }
 
     public FileSystemMainEntity getFileSystemMainEntity() {
@@ -157,5 +237,10 @@ public class UserEntity {
 
     public void setSettingMainEntity(SettingMainEntity settingMainEntity) {
         this.settingMainEntity = settingMainEntity;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        password = null;
     }
 }
