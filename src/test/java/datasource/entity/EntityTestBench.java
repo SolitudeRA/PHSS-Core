@@ -17,6 +17,7 @@ import me.protogalaxy.datasource.entity.core.personaldata.PersonalDataInfEntity;
 import me.protogalaxy.datasource.entity.core.personaldata.calender.CalenderEntity;
 import me.protogalaxy.datasource.entity.core.setting.SettingMainEntity;
 import me.protogalaxy.datasource.entity.core.user.UserEntity;
+import me.protogalaxy.service.security.config.PhssGrantedAuthority;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -24,6 +25,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author SolitudeRA
@@ -42,7 +45,7 @@ class EntityTestBench {
     }
 
     @BeforeEach
-    void init(){
+    void init() {
         entityManager.getTransaction().begin();
     }
 
@@ -50,7 +53,12 @@ class EntityTestBench {
     @ParameterizedTest
     @CsvSource({"Alpha,sol123456", "Beta,#$%&!@#", "Charlie,test", "Delta,test"})
     void userTestCase(String username, String password) {
-        UserEntity userEntity = new UserEntity(username, password);
+        Set<PhssGrantedAuthority> authorities = new HashSet<>();
+        PhssGrantedAuthority authority1 = new PhssGrantedAuthority("ROLE_USER");
+        PhssGrantedAuthority authority2 = new PhssGrantedAuthority("ROLE_ADMIN");
+        authorities.add(authority1);
+        authorities.add(authority2);
+        UserEntity userEntity = new UserEntity(username, password, authorities);
         entityManager.persist(userEntity);
         FileSystemMainEntity fileSystemMainEntity = new FileSystemMainEntity(userEntity);
         entityManager.persist(fileSystemMainEntity);
@@ -162,7 +170,7 @@ class EntityTestBench {
     }
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         entityManager.getTransaction().commit();
     }
 

@@ -4,9 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 
 //TODO: Role check method
 public class PhssGrantedAuthority implements GrantedAuthority {
-    private static final String USER_AUTHORITY = "USER";
-    private static final String ADMIN_AUTHORITY = "ADMIN";
-    private static final String GUEST_AUTHORITY = "GUEST";
+    private static final String USER_AUTHORITY = "ROLE_USER";
+    private static final String ADMIN_AUTHORITY = "ROLE_ADMIN";
+    private static final String GUEST_AUTHORITY = "ROLE_GUEST";
     private final String role;
 
     public PhssGrantedAuthority(String role) {

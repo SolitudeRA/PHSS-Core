@@ -10,12 +10,13 @@ import org.hibernate.annotations.*;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Collection;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -88,27 +89,60 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     public UserEntity() {
     }
 
-    public UserEntity(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public UserEntity(String username, String password, Set<GrantedAuthority> authorities) {
+    /**
+     * User entity simple constructor
+     *
+     * @param username       name of the user
+     * @param password       password of the user
+     * @param authoritiesSet authorities of the user
+     */
+    public UserEntity(String username, String password, Set<PhssGrantedAuthority> authoritiesSet) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
         }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        Set<String> roleStrSet = new HashSet<>();
+        for (PhssGrantedAuthority authority : authoritiesSet) {
+            roleStrSet.add(authority.toString().substring(5));
+        }
         this.username = username;
-        this.password = password;
-        this.authorities = authorities.toString();
+        this.password = encoder.encode(password);
+        this.authorities = String.join(",", roleStrSet);
     }
 
-    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3) {
+    /**
+     * User entity full constructor
+     *
+     * @param username              name of the user
+     * @param password              password of the user
+     * @param passwordExt1          USB key content of the user
+     * @param passwordExt2          fingerprint data of the user
+     * @param passwordExt3          face ID data of the user
+     * @param authoritiesSet        authorities of the user
+     * @param fileSystemMainEntity  fileSystem entity of the user
+     * @param personalDataInfEntity personalDataInf Entity of the user
+     * @param settingMainEntity     settingMain Entity of the user
+     */
+    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataInfEntity personalDataInfEntity, SettingMainEntity settingMainEntity) {
+        if (((username == null) || "".equals(username)) || (password == null)) {
+            throw new IllegalArgumentException(
+                    "Cannot pass null or empty values to constructor");
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        Set<String> roleStrSet = new HashSet<>();
+        for (PhssGrantedAuthority authority : authoritiesSet) {
+            roleStrSet.add(authority.toString().substring(5));
+        }
         this.username = username;
-        this.password = password;
+        this.password = encoder.encode(password);
         this.passwordExt1 = passwordExt1;
         this.passwordExt2 = passwordExt2;
         this.passwordExt3 = passwordExt3;
+        this.authorities = String.join(",", roleStrSet);
+        this.fileSystemMainEntity = fileSystemMainEntity;
+        this.personalDataInfEntity = personalDataInfEntity;
+        this.settingMainEntity = settingMainEntity;
     }
 
     public int getId() {
@@ -190,17 +224,21 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     }
 
     @Override
-    public Collection<PhssGrantedAuthority> getAuthorities() {
+    public Set<PhssGrantedAuthority> getAuthorities() {
         String[] authoritiesString = authorities.split(",");
-        Set<PhssGrantedAuthority> authorityCollection = new HashSet<>();
+        Set<PhssGrantedAuthority> authoritiesSet = new HashSet<>();
         for (String anAuthoritiesString : authoritiesString) {
-            authorityCollection.add(new PhssGrantedAuthority(anAuthoritiesString));
+            authoritiesSet.add(new PhssGrantedAuthority(("ROLE_" + anAuthoritiesString)));
         }
-        return authorityCollection;
+        return authoritiesSet;
     }
 
-    public void setAuthorities(Set<PhssGrantedAuthority> authorities) {
-
+    public void setAuthorities(Set<PhssGrantedAuthority> authoritiesSet) {
+        Set<String> roleStrSet = new HashSet<>();
+        for (PhssGrantedAuthority authority : authoritiesSet) {
+            roleStrSet.add(authority.toString().substring(5));
+        }
+        this.authorities = String.join(",", roleStrSet);
     }
 
     public Date getDateCreate() {
