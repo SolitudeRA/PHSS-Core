@@ -16,8 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/", "/index", "/user/signup").permitAll()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/", "/index", "/user/signup", "/user/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
