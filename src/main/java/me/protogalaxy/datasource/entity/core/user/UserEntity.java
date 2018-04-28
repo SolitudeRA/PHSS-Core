@@ -3,12 +3,11 @@ package me.protogalaxy.datasource.entity.core.user;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.protogalaxy.datasource.entity.core.filesystem.main.FileSystemMainEntity;
-import me.protogalaxy.datasource.entity.core.personaldata.PersonalDataInfEntity;
+import me.protogalaxy.datasource.entity.core.personaldata.PersonalDataEntity;
 import me.protogalaxy.datasource.entity.core.setting.SettingMainEntity;
-import me.protogalaxy.service.security.config.PhssGrantedAuthority;
+import me.protogalaxy.security.config.PhssGrantedAuthority;
 import org.hibernate.annotations.*;
 import org.springframework.security.core.CredentialsContainer;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -29,7 +28,7 @@ import java.util.Set;
 public class UserEntity implements UserDetails, CredentialsContainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "username")
     private String username;
@@ -80,7 +79,7 @@ public class UserEntity implements UserDetails, CredentialsContainer {
 
     @JsonIgnore
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private PersonalDataInfEntity personalDataInfEntity;
+    private PersonalDataEntity personalDataEntity;
 
     @JsonIgnore
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -114,17 +113,17 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     /**
      * User entity full constructor
      *
-     * @param username              name of the user
-     * @param password              password of the user
-     * @param passwordExt1          USB key content of the user
-     * @param passwordExt2          fingerprint data of the user
-     * @param passwordExt3          face ID data of the user
-     * @param authoritiesSet        authorities of the user
-     * @param fileSystemMainEntity  fileSystem entity of the user
-     * @param personalDataInfEntity personalDataInf Entity of the user
-     * @param settingMainEntity     settingMain Entity of the user
+     * @param username             name of the user
+     * @param password             password of the user
+     * @param passwordExt1         USB key content of the user
+     * @param passwordExt2         fingerprint data of the user
+     * @param passwordExt3         face ID data of the user
+     * @param authoritiesSet       authorities of the user
+     * @param fileSystemMainEntity fileSystem entity of the user
+     * @param personalDataEntity   personalDataInf Entity of the user
+     * @param settingMainEntity    settingMain Entity of the user
      */
-    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataInfEntity personalDataInfEntity, SettingMainEntity settingMainEntity) {
+    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
@@ -141,11 +140,11 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.passwordExt3 = passwordExt3;
         this.authorities = String.join(",", roleStrSet);
         this.fileSystemMainEntity = fileSystemMainEntity;
-        this.personalDataInfEntity = personalDataInfEntity;
+        this.personalDataEntity = personalDataEntity;
         this.settingMainEntity = settingMainEntity;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -261,12 +260,12 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
-    public PersonalDataInfEntity getPersonalDataInfEntity() {
-        return personalDataInfEntity;
+    public PersonalDataEntity getPersonalDataEntity() {
+        return personalDataEntity;
     }
 
-    public void setPersonalDataInfEntity(PersonalDataInfEntity personalDataInfEntity) {
-        this.personalDataInfEntity = personalDataInfEntity;
+    public void setPersonalDataEntity(PersonalDataEntity personalDataEntity) {
+        this.personalDataEntity = personalDataEntity;
     }
 
     public SettingMainEntity getSettingMainEntity() {

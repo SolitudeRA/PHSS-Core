@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "book_inf")
 public class BookInfEntity {
     @Id
-    private UUID uuid;
+    private Integer uuid;
 
     @Column(name = "author")
     private String author;
@@ -37,6 +37,10 @@ public class BookInfEntity {
     private BookEntity bookEntity;
 
     public BookInfEntity() {
+    }
+
+    public BookInfEntity(BookEntity bookEntity) {
+        this.bookEntity = bookEntity;
     }
 
     public BookInfEntity(String author, Blob illustrator, Date releaseDate) {
@@ -79,6 +83,10 @@ public class BookInfEntity {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public BookEntity getBookEntity() {
+        return bookEntity;
     }
 
     public void setBookEntity(BookEntity bookEntity) {

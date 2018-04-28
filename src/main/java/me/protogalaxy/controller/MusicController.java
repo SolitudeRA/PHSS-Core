@@ -1,17 +1,24 @@
 package me.protogalaxy.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 //TODO: Music controller implement
 @RestController
 @RequestMapping("/music")
 public class MusicController {
-    @RequestMapping("/listAlbum")
-    public String listAlbum(@RequestParam(name = "id") UUID userid) {
+    @RequestMapping("/upload")
+    public String upload() {
+        return null;
+    }
+
+    @GetMapping("/track")
+    public String getTrack() {
+        return null;
+    }
+
+    @RequestMapping("/updateTrack")
+    public String updateTrack() {
         return null;
     }
 }

@@ -1,6 +1,6 @@
 package me.protogalaxy.datasource.entity.core.personaldata.calender;
 
-import me.protogalaxy.datasource.entity.core.personaldata.PersonalDataInfEntity;
+import me.protogalaxy.datasource.entity.core.personaldata.PersonalDataEntity;
 
 import javax.persistence.*;
 
@@ -16,7 +16,7 @@ public class CalenderEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "owner_id")
-    private PersonalDataInfEntity personalDataInfEntity;
+    private PersonalDataEntity personalDataEntity;
 
     public CalenderEntity() {
     }
@@ -41,11 +41,11 @@ public class CalenderEntity {
         this.eventStaticSetting = eventStaticSetting;
     }
 
-    public PersonalDataInfEntity getPersonalDataInfEntity() {
-        return personalDataInfEntity;
+    public PersonalDataEntity getPersonalDataEntity() {
+        return personalDataEntity;
     }
 
-    public void setPersonalDataInfEntity(PersonalDataInfEntity personalDataInfEntity) {
-        this.personalDataInfEntity = personalDataInfEntity;
+    public void setPersonalDataEntity(PersonalDataEntity personalDataEntity) {
+        this.personalDataEntity = personalDataEntity;
     }
 }
