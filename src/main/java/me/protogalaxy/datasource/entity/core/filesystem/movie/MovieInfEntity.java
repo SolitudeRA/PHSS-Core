@@ -5,13 +5,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "movie_inf")
 public class MovieInfEntity {
     @Id
-    private UUID movieId;
+    private int movieId;
 
     @Column(name = "content_rating")
     private Float contentRating;
@@ -73,11 +72,11 @@ public class MovieInfEntity {
         this.metascore = metascore;
     }
 
-    public UUID getMovieId() {
+    public int getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(UUID movieId) {
+    public void setMovieId(int movieId) {
         this.movieId = movieId;
     }
 

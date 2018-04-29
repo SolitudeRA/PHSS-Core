@@ -10,14 +10,4 @@ public class UserController {
     public String register(@RequestBody String user) throws Exception {
         return null;
     }
-
-    @RequestMapping("/profile/{user}")
-    public String getProfile(@PathVariable int user) throws Exception {
-        return null;
-    }
-
-    @RequestMapping("/remove")
-    public boolean deleteProfile(@RequestParam int id) throws Exception {
-        return false;
-    }
 }

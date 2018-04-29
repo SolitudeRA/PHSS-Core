@@ -5,13 +5,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "anime_inf")
 public class AnimeInfEntity {
     @Id
-    private UUID animeId;
+    private int animeId;
 
     @Lob
     @Column(name = "poster")
@@ -69,11 +68,11 @@ public class AnimeInfEntity {
         this.seasonAnime = seasonAnime;
     }
 
-    public UUID getAnimeId() {
+    public int getAnimeId() {
         return animeId;
     }
 
-    public void setAnimeId(UUID animeId) {
+    public void setAnimeId(int animeId) {
         this.animeId = animeId;
     }
 

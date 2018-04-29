@@ -37,6 +37,9 @@ public class MusicTrackEntity {
     @Column(name = "album_artist")
     private String albumArtist;
 
+    @Column(name = "location")
+    private String location;
+
     @JsonManagedReference
     @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private MusicTrackInfEntity trackInformation;
@@ -48,24 +51,13 @@ public class MusicTrackEntity {
     public MusicTrackEntity() {
     }
 
-    public MusicTrackEntity(String name) {
-        this.name = name;
-    }
-
-    public MusicTrackEntity(String name, String album, String artist, String albumArtist) {
+    public MusicTrackEntity(FileSystemMainEntity owner, String name, String album, String artist, String albumArtist, String location) {
+        this.owner = owner;
         this.name = name;
         this.album = album;
         this.artist = artist;
         this.albumArtist = albumArtist;
-    }
-
-    public MusicTrackEntity(String name, String album, String artist, String albumArtist, MusicTrackInfEntity trackInformation, MusicTrackInfStaticEntity trackInformationStatic) {
-        this.name = name;
-        this.album = album;
-        this.artist = artist;
-        this.albumArtist = albumArtist;
-        this.trackInformation = trackInformation;
-        this.trackInformationStatic = trackInformationStatic;
+        this.location = location;
     }
 
     public int getId() {
@@ -122,6 +114,14 @@ public class MusicTrackEntity {
 
     public void setAlbumArtist(String albumArtist) {
         this.albumArtist = albumArtist;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public MusicTrackInfEntity getTrackInformation() {

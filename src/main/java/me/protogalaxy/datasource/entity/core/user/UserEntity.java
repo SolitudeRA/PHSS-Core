@@ -16,6 +16,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +29,7 @@ import java.util.Set;
 public class UserEntity implements UserDetails, CredentialsContainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(name = "username")
     private String username;
@@ -45,6 +46,10 @@ public class UserEntity implements UserDetails, CredentialsContainer {
 
     @Column(name = "password_ext3")
     private String passwordExt3;
+
+    @Lob
+    @Column(name = "avatar")
+    private Blob avatar;
 
     @Column(name = "isEnabled")
     @ColumnDefault("true")
@@ -144,8 +149,12 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.settingMainEntity = settingMainEntity;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -188,6 +197,14 @@ public class UserEntity implements UserDetails, CredentialsContainer {
 
     public void setPasswordExt3(String passwordExt3) {
         this.passwordExt3 = passwordExt3;
+    }
+
+    public Blob getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Blob avatar) {
+        this.avatar = avatar;
     }
 
     @Override

@@ -56,12 +56,8 @@ public class MusicAlbumEntity {
     public MusicAlbumEntity() {
     }
 
-    public MusicAlbumEntity(String name, String artist) {
-        this.name = name;
-        this.artist = artist;
-    }
-
-    public MusicAlbumEntity(String name, String artist, String location) {
+    public MusicAlbumEntity(FileSystemMainEntity owner, String name, String artist, String location) {
+        this.owner = owner;
         this.name = name;
         this.artist = artist;
         this.location = location;

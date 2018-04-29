@@ -47,7 +47,7 @@ import java.util.Set;
 @Rollback(false)
 @ExtendWith({SpringExtension.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class EntityTestBench {
+public class TestDataFiller {
 
     @Autowired
     private UserRepository userRepository;
@@ -96,7 +96,7 @@ public class EntityTestBench {
     public void init() {
     }
 
-    @DisplayName("User test case")
+    @DisplayName("User filler")
     @ParameterizedTest
     @CsvSource({"Alpha,sol123456", "Beta,#$%&!@#", "Charlie,test", "Delta,test"})
     public void userTestCase(String username, String password) {
@@ -114,36 +114,27 @@ public class EntityTestBench {
         settingMainRepository.save(new SettingMainEntity(userEntity));
     }
 
-    @DisplayName("user select test case")
-    @ParameterizedTest
-    @CsvSource({"Alpha", "Beta", "Charlie", "Delta"})
-    public void userSelectTestCase(String username) {
-        UserEntity userEntity = userRepository.findByUsername(username);
-        System.out.println(userEntity.getPassword());
-    }
-
-
-    @DisplayName("Music_Album test case")
+    @DisplayName("Music_Album filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-album.csv")
     public void musicAlbumTestCase(String albumName, String artist, String albumArtist, String composer) {
-        MusicAlbumEntity musicAlbumEntity = new MusicAlbumEntity(albumName, artist);
+        MusicAlbumEntity musicAlbumEntity = new MusicAlbumEntity(userRepository.findByUsername("Alpha").getFileSystemMainEntity(), albumName, artist, "");
         musicAlbumRepository.save(musicAlbumEntity);
         musicAlbumInfRepository.save(new MusicAlbumInfEntity(musicAlbumEntity));
         musicAlbumInfStaticRepository.save(new MusicAlbumInfStaticEntity(musicAlbumEntity));
     }
 
-    @DisplayName("Music_Track test case")
+    @DisplayName("Music_Track filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/music-track.csv")
     public void musicTrackTestCase(String trackName, String totalTime, String artist, String albumName, String genre, int playbackCount) {
-        MusicTrackEntity musicTrackEntity = new MusicTrackEntity(trackName, albumName, artist, artist);
+        MusicTrackEntity musicTrackEntity = new MusicTrackEntity(userRepository.findByUsername("Alpha").getFileSystemMainEntity(), trackName, albumName, artist, "", "");
         musicTrackRepository.save(musicTrackEntity);
         musicTrackInfRepository.save(new MusicTrackInfEntity(musicTrackEntity));
         musicTrackInfStaticRepository.save(new MusicTrackInfStaticEntity("music track test", musicTrackEntity));
     }
 
-    @DisplayName("Book test case")
+    @DisplayName("Book filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/book.csv")
     public void bookTestCase(String bookName, String author) {
@@ -152,14 +143,14 @@ public class EntityTestBench {
         bookInfRepository.save(new BookInfEntity(bookEntity));
     }
 
-    @DisplayName("Document test case")
+    @DisplayName("Document filler")
     @ParameterizedTest
     @ValueSource(strings = {"doc1", "doc2", "doc3"})
     public void documentTestCase(String documentName) {
 
     }
 
-    @DisplayName("Movie test case")
+    @DisplayName("Movie filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/movie.csv")
     public void movieTestCase(String movieName, String director) {
@@ -167,7 +158,7 @@ public class EntityTestBench {
     }
 
     @Disabled
-    @DisplayName("Video test case")
+    @DisplayName("Video filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/video.csv")
     public void videoTestCase() {
@@ -175,7 +166,7 @@ public class EntityTestBench {
     }
 
     @Disabled
-    @DisplayName("Anime test case")
+    @DisplayName("Anime filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/anime.csv")
     public void animeTestCase() {
@@ -183,7 +174,7 @@ public class EntityTestBench {
     }
 
     @Disabled
-    @DisplayName("Illustration test case")
+    @DisplayName("Illustration filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/illustration.csv")
     public void illustrationTestCase() {
@@ -191,7 +182,7 @@ public class EntityTestBench {
     }
 
     @Disabled
-    @DisplayName("Photo test case")
+    @DisplayName("Photo filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/photo.csv")
     public void photoTestCase() {
@@ -199,14 +190,14 @@ public class EntityTestBench {
     }
 
     @Disabled
-    @DisplayName("Folder test case")
+    @DisplayName("Folder filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/folder.csv")
     public void folderTestCase() {
     }
 
     @Disabled
-    @DisplayName("Calender test case")
+    @DisplayName("Calender filler")
     @ParameterizedTest
     @CsvFileSource(resources = "/valuesources/calender.csv")
     public void calenderEventTestCase() {

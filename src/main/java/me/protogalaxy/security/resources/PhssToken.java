@@ -1,4 +1,4 @@
-package me.protogalaxy.security;
+package me.protogalaxy.security.resources;
 
 /**
  * PHSS Token
