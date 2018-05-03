@@ -2,7 +2,7 @@ package me.protogalaxy.service.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "phss", value = "storage")
+@ConfigurationProperties(prefix = "storage")
 public class PhssStorageServiceConfig {
 
     /**
