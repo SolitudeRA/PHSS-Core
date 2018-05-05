@@ -19,6 +19,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -39,7 +40,6 @@ public class PhssStorageServiceImpl implements PhssStorageService {
         this.rootLocation = Paths.get(config.getLocation());
     }
 
-    @Override
     public void init() {
         try {
             Files.createDirectories(rootLocation);
@@ -53,15 +53,14 @@ public class PhssStorageServiceImpl implements PhssStorageService {
         String filename = StringUtils.cleanPath(musicFile.getOriginalFilename());
         try {
             av_register_all();
-            BytePointer pointer = new BytePointer(musicFile.getBytes());
-            AVFormatContext context = new AVFormatContext(null);
-            avformat_open_input(context, pointer, null, null);
-            System.out.println(context);
-            System.out.println("test");
-        } catch (IOException e) {
+            avformat_network_init();
+            AVFormatContext avFormatContext = avformat_alloc_context();
+            AVDictionaryEntry dictionaryEntry = new AVDictionaryEntry();
+            ByteBuffer byteBuffer = ByteBuffer.wrap(musicFile.getBytes());
+            System.out.println(avFormatContext);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             if (musicFile.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + filename);
