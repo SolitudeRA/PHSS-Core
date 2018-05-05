@@ -37,6 +37,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg-platform</artifactId>
+            <version>3.4.2-1.4.1</version>
+        </dependency>
         <!--Spring boot section -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

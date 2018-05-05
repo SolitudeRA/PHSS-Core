@@ -8,7 +8,7 @@ public class PhssStorageServiceConfig {
     /**
      * Folder location for storing files
      */
-    private String location = "phss";
+    private String location = "phssStorage";
 
     public String getLocation() {
         return location;

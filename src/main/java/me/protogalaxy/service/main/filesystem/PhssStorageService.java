@@ -7,26 +7,26 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public interface PhssStorageService {
-    /**
-     * init the storage service
-     */
     void init();
 
-    /**
-     * store the file
-     *
-     * @param file file
-     */
-    void store(MultipartFile file);
+    void storeMusic(String username, MultipartFile musicFile);
+
+    void storeAnime(String username, MultipartFile animeFile);
+
+    void storeMovie(String username, MultipartFile movieFile);
+
+    void storeVideo(String username, MultipartFile videoFile);
+
+    void storePhoto(String username, MultipartFile photoFile);
+
+    void storeBook(String username, MultipartFile bookFile);
+
+    void storeDocument(String username, MultipartFile documentFile);
+
+    void storeIllustration(String username, MultipartFile illustrationFile);
 
     Stream<Path> loadAll();
 
-    /**
-     * load file through name
-     *
-     * @param filename name of the file
-     * @return file path
-     */
     Path load(String filename);
 
     Resource loadAsResource(String filename);
