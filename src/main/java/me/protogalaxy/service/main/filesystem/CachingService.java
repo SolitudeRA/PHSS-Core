@@ -1,14 +1,16 @@
 package me.protogalaxy.service.main.filesystem;
 
-import java.nio.ByteBuffer;
+import org.springframework.web.multipart.MultipartFile;
+
+
 import java.nio.file.Path;
 
 public interface CachingService {
     /**
-     * Caching file from buffer
+     * Caching file from MultipartFile
      *
-     * @param buffer NIO Buffer of the file
+     * @param file uploaded MultipartFile
      * @return Path of the cached file
      */
-    Path cachingFileFromBuffer(ByteBuffer buffer);
+    Path cachingFile(String username, MultipartFile file);
 }

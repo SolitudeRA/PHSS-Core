@@ -1,12 +1,5 @@
 package me.protogalaxy.service.impl.filesystem;
 
-import org.bytedeco.javacpp.*;
-
-import static org.bytedeco.javacpp.avcodec.*;
-import static org.bytedeco.javacpp.avformat.*;
-import static org.bytedeco.javacpp.avutil.*;
-import static org.bytedeco.javacpp.swscale.*;
-
 import me.protogalaxy.exception.storage.StorageException;
 import me.protogalaxy.exception.storage.StorageFileNotFoundException;
 import me.protogalaxy.service.config.PhssStorageServiceConfig;
@@ -16,33 +9,32 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 @Service
 public class PhssStorageServiceImpl implements PhssStorageService {
     private final Path rootLocation;
 
+    private final CachingServiceImpl cachingService;
+
     @Autowired
-    public PhssStorageServiceImpl(PhssStorageServiceConfig config) {
+    public PhssStorageServiceImpl(PhssStorageServiceConfig config, CachingServiceImpl cachingService) {
         this.rootLocation = Paths.get(config.getLocation());
+        this.cachingService = cachingService;
     }
 
     public void init() {
         try {
-            Files.createDirectories(rootLocation);
+            if (Files.notExists(rootLocation)) {
+                Files.createDirectory(rootLocation);
+            }
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
@@ -50,34 +42,8 @@ public class PhssStorageServiceImpl implements PhssStorageService {
 
     @Override
     public void storeMusic(String username, MultipartFile musicFile) {
-        String filename = StringUtils.cleanPath(musicFile.getOriginalFilename());
-        try {
-            av_register_all();
-            avformat_network_init();
-            AVFormatContext avFormatContext = avformat_alloc_context();
-            AVDictionaryEntry dictionaryEntry = new AVDictionaryEntry();
-            ByteBuffer byteBuffer = ByteBuffer.wrap(musicFile.getBytes());
-            System.out.println(avFormatContext);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            if (musicFile.isEmpty()) {
-                throw new StorageException("Failed to store empty file " + filename);
-            }
-            if (filename.contains("..")) {
-                // This is a security check
-                throw new StorageException(
-                        "Cannot store file with relative path outside current directory "
-                                + filename);
-            }
-            try (InputStream inputStream = musicFile.getInputStream()) {
-                Files.copy(inputStream, this.rootLocation.resolve(username).resolve(filename),
-                        StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file " + filename, e);
-        }
+        Path tempFilePath = cachingService.cachingFile(username, musicFile);
+
     }
 
     @Override
