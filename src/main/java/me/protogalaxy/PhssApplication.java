@@ -17,11 +17,4 @@ public class PhssApplication {
     public static void main(String args[]) {
         SpringApplication.run(PhssApplication.class, args);
     }
-
-    @Bean
-    CommandLineRunner init(PhssStorageServiceImpl phssStorageService) {
-        return (args -> {
-            phssStorageService.init();
-        });
-    }
 }

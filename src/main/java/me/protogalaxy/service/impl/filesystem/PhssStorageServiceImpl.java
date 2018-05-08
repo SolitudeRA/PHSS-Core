@@ -28,6 +28,7 @@ public class PhssStorageServiceImpl implements PhssStorageService {
     public PhssStorageServiceImpl(PhssStorageServiceConfig config, CachingServiceImpl cachingService) {
         this.rootLocation = Paths.get(config.getLocation());
         this.cachingService = cachingService;
+        init();
     }
 
     public void init() {
