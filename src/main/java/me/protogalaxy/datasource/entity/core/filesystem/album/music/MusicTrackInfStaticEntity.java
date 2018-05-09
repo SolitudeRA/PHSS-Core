@@ -20,25 +20,28 @@ public class MusicTrackInfStaticEntity {
     private int trackId;
 
     @Column(name = "size")
-    private Integer size;
+    private String size;
 
-    @Column(name = "total_time")
-    private Integer totalTime;
+    @Column(name = "duration")
+    private String duration;
 
     @Column(name = "track_number")
-    private Integer trackNumber;
+    private String trackNumber;
 
     @Column(name = "track_count")
-    private Integer trackCount;
+    private String trackCount;
+
+    @Column(name = "disc")
+    private String disc;
 
     @Column(name = "year")
-    private Integer year;
+    private String year;
 
     @Column(name = "bit_rate")
-    private Integer bitRate;
+    private String bitRate;
 
     @Column(name = "sample_rate")
-    private Integer sampleRate;
+    private String sampleRate;
 
     @Lob
     @Column(name = "artwork")
@@ -77,82 +80,80 @@ public class MusicTrackInfStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfStaticEntity(Integer size, Integer totalTime, Integer trackNumber, Integer trackCount, Integer year, Integer bitRate, Integer sampleRate, Blob artwork, String genre, String kind, String location, MusicTrackEntity musicTrackEntity) {
+    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String bitRate, String sampleRate, Blob artwork, String genre, String location, MusicTrackEntity musicTrackEntity) {
         this.size = size;
-        this.totalTime = totalTime;
+        this.duration = duration;
         this.trackNumber = trackNumber;
-        this.trackCount = trackCount;
-        this.year = year;
+        this.disc = disc;
         this.bitRate = bitRate;
         this.sampleRate = sampleRate;
         this.artwork = artwork;
         this.genre = genre;
-        this.kind = kind;
         this.location = location;
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public int getTrackId() {
-        return trackId;
-    }
-
-    public void setTrackId(int trackId) {
-        this.trackId = trackId;
-    }
-
-    public Integer getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
-    public Integer getTotalTime() {
-        return totalTime;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setTotalTime(Integer totalTime) {
-        this.totalTime = totalTime;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
-    public Integer getTrackNumber() {
+    public String getTrackNumber() {
         return trackNumber;
     }
 
-    public void setTrackNumber(Integer trackNumber) {
+    public void setTrackNumber(String trackNumber) {
         this.trackNumber = trackNumber;
     }
 
-    public Integer getTrackCount() {
+    public String getTrackCount() {
         return trackCount;
     }
 
-    public void setTrackCount(Integer trackCount) {
+    public void setTrackCount(String trackCount) {
         this.trackCount = trackCount;
     }
 
-    public Integer getYear() {
+    public String getDisc() {
+        return disc;
+    }
+
+    public void setDisc(String disc) {
+        this.disc = disc;
+    }
+
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public Integer getBitRate() {
+    public String getBitRate() {
         return bitRate;
     }
 
-    public void setBitRate(Integer bitRate) {
+    public void setBitRate(String bitRate) {
         this.bitRate = bitRate;
     }
 
-    public Integer getSampleRate() {
+    public String getSampleRate() {
         return sampleRate;
     }
 
-    public void setSampleRate(Integer sampleRate) {
+    public void setSampleRate(String sampleRate) {
         this.sampleRate = sampleRate;
     }
 

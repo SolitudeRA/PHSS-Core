@@ -1,11 +1,10 @@
 package me.protogalaxy.controller.filesystem;
 
-import me.protogalaxy.service.main.filesystem.PhssStorageService;
+import me.protogalaxy.service.main.filesystem.io.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 //TODO: Music controller implement
@@ -13,16 +12,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RestController
 @RequestMapping("/music")
 public class MusicController {
-    private final PhssStorageService storageService;
+    private final StorageService storageService;
 
     @Autowired
-    public MusicController(PhssStorageService storageService) {
+    public MusicController(StorageService storageService) {
         this.storageService = storageService;
     }
 
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     @PostMapping("/upload")
-    public String handleMusicUpload(@RequestParam("username") String username, @RequestParam("music") MultipartFile file) {
+    public String handleMusicUpload(@RequestParam("username") String username, @RequestParam("music") MultipartFile file) throws Exception {
         storageService.storeMusic(username, file);
         return null;
     }

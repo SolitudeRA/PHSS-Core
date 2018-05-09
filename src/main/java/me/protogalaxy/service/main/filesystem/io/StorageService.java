@@ -1,15 +1,12 @@
-package me.protogalaxy.service.main.filesystem;
+package me.protogalaxy.service.main.filesystem.io;
 
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
-import java.util.stream.Stream;
 
-public interface PhssStorageService {
+public interface StorageService {
     void init();
 
-    void storeMusic(String username, MultipartFile musicFile);
+    void storeMusic(String username, MultipartFile musicFile) throws Exception;
 
     void storeAnime(String username, MultipartFile animeFile);
 
@@ -24,12 +21,4 @@ public interface PhssStorageService {
     void storeDocument(String username, MultipartFile documentFile);
 
     void storeIllustration(String username, MultipartFile illustrationFile);
-
-    Stream<Path> loadAll();
-
-    Path load(String filename);
-
-    Resource loadAsResource(String filename);
-
-    void deleteAll();
 }

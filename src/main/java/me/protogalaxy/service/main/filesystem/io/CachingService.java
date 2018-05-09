@@ -1,4 +1,4 @@
-package me.protogalaxy.service.main.filesystem;
+package me.protogalaxy.service.main.filesystem.io;
 
 import org.springframework.web.multipart.MultipartFile;
 

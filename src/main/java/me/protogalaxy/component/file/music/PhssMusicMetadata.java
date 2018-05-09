@@ -7,18 +7,24 @@ import static org.bytedeco.javacpp.avformat.*;
 import static org.bytedeco.javacpp.avutil.*;
 import static org.bytedeco.javacpp.swscale.*;
 
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Java2DFrameConverter;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 
 @Component
 public class PhssMusicMetadata {
     private List<String> metadataList = Arrays.asList("title", "album", "artist", "album_artist", "genre", "composer", "track", "disc", "bitrate", "comment");
 
-    public Map<String, Object> getMetaData(Path path) {
+    public Map<String, Object> getMetaData(Path path) throws Exception {
         av_register_all();
         Map<String, Object> metadataFullMap = new HashMap<>();
         Map<String, Object> metadataCurrentMap = new HashMap<>();
@@ -32,21 +38,28 @@ public class PhssMusicMetadata {
         for (String key : metadataList) {
             metadataCurrentMap.put(key, metadataFullMap.get(key));
         }
+        metadataCurrentMap.put("duration", formatDuration(avFormatContext.duration()));
+        metadataCurrentMap.put("bitrate", formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
+        metadataCurrentMap.put("sample_rate", avFormatContext.streams(0).codecpar().sample_rate());
+        metadataCurrentMap.put("bit_depth", avFormatContext.streams(0).codecpar().bits_per_raw_sample());
+        metadataCurrentMap.put("artwork", getArtwork(path));
         avformat_close_input(avFormatContext);
         return metadataCurrentMap;
     }
 
     //TODO: Artwork getter
-    public byte[] getArtwork(Path path) {
-        av_register_all();
-        AVFormatContext avFormatContext = avformat_alloc_context();
-        avformat_open_input(avFormatContext, path.toString(), null, null);
-        avFormatContext.streams(1);
-        //avformat_find_stream_info()
-        return null;
+    private byte[] getArtwork(Path path) throws Exception {
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
+        Java2DFrameConverter converter = new Java2DFrameConverter();
+        grabber.start();
+        BufferedImage bufferedImage = converter.getBufferedImage(grabber.grabImage());
+        grabber.close();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, ".png", outputStream);
+        return outputStream.toByteArray();
     }
 
-    private String getDuration(long duration) {
+    private String formatDuration(long duration) {
         long secs, us;
         secs = (duration / AV_TIME_BASE);
         us = (1000 * (duration % AV_TIME_BASE)) / AV_TIME_BASE;
@@ -55,7 +68,7 @@ public class PhssMusicMetadata {
         return format.format(totalus);
     }
 
-    private String getBitrate(long bitrate) {
+    private String formatBitrate(long bitrate) {
         return String.valueOf(bitrate / 1000) + " kbps";
     }
 }

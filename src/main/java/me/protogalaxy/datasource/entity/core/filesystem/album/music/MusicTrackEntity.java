@@ -25,8 +25,8 @@ public class MusicTrackEntity {
     @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_TRACK_ALBUM_MUSIC_ID"))
     private MusicAlbumEntity musicAlbumEntity;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "album")
     private String album;
@@ -51,9 +51,9 @@ public class MusicTrackEntity {
     public MusicTrackEntity() {
     }
 
-    public MusicTrackEntity(FileSystemMainEntity owner, String name, String album, String artist, String albumArtist, String location) {
+    public MusicTrackEntity(FileSystemMainEntity owner, String title, String album, String artist, String albumArtist, String location) {
         this.owner = owner;
-        this.name = name;
+        this.title = title;
         this.album = album;
         this.artist = artist;
         this.albumArtist = albumArtist;
@@ -84,12 +84,12 @@ public class MusicTrackEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAlbum() {

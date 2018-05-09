@@ -8,21 +8,29 @@ import static org.bytedeco.javacpp.avformat.*;
 import static org.bytedeco.javacpp.avutil.*;
 import static org.bytedeco.javacpp.swscale.*;
 
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.FrameGrabber;
+import org.bytedeco.javacv.Java2DFrameConverter;
 import org.junit.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ffmpegtest {
     @Autowired
     PhssMusicMetadata phssMusicMetadata;
@@ -40,6 +48,9 @@ public class ffmpegtest {
         SimpleDateFormat format = new SimpleDateFormat("mm:ss:SSS");
         System.out.println(format.format(totalus));
         System.out.println(String.valueOf(avFormatContext.bit_rate() / 1000) + "kbps");
+        System.out.println(avFormatContext.streams(0).codecpar().sample_rate());
+        System.out.println(avFormatContext.streams(0).codecpar().bits_per_coded_sample());
+        System.out.println(avFormatContext.streams(0).codecpar().bits_per_raw_sample());
         avformat_close_input(avFormatContext);
     }
 
@@ -67,24 +78,24 @@ public class ffmpegtest {
     }
 
     @Test
-    public void metadataTest() {
+    public void metadataTest() throws Exception{
         Path path = Paths.get("phssStorage/Alpha/test.aiff");
         System.out.println(phssMusicMetadata.getMetaData(path));
     }
 
     @Test
-    public void artworkTest() {
-        av_register_all();
-        AVFormatContext avFormatContext = avformat_alloc_context();
-        AVDictionary avDictionary = null;
-        AVCodecContext avCodecContext = null;
-        AVCodec avCodec = null;
-        AVPacket packet = av_packet_alloc();
-        AVFrame frame = av_frame_alloc();
-        avformat_open_input(avFormatContext, "phssStorage/Alpha/test.aiff", null, null);
-        avformat_find_stream_info(avFormatContext, (PointerPointer) null);
-        avCodecContext = avFormatContext.streams(1).codec();
-        avCodec = avcodec_find_decoder(avCodecContext.codec_id());
-        av_read_frame(avFormatContext, packet);
+    public void artworkTest() throws FrameGrabber.Exception {
+        File file = new File("phssStorage/Alpha/test.mp3");
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(file);
+        grabber.start();
+        Frame frame = grabber.grabImage();
+        Java2DFrameConverter converter = new Java2DFrameConverter();
+        BufferedImage bufferedImage = converter.getBufferedImage(frame);
+        try {
+            ImageIO.write(bufferedImage, "png", new File("test.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

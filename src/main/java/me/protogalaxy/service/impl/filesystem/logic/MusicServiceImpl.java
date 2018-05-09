@@ -1,6 +1,6 @@
-package me.protogalaxy.service.impl.filesystem;
+package me.protogalaxy.service.impl.filesystem.logic;
 
-import me.protogalaxy.service.main.filesystem.MusicService;
+import me.protogalaxy.service.main.filesystem.logic.MusicService;
 import org.springframework.stereotype.Service;
 
 
