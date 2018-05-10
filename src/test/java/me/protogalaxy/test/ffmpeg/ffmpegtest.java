@@ -51,6 +51,7 @@ public class ffmpegtest {
         System.out.println(avFormatContext.streams(0).codecpar().sample_rate());
         System.out.println(avFormatContext.streams(0).codecpar().bits_per_coded_sample());
         System.out.println(avFormatContext.streams(0).codecpar().bits_per_raw_sample());
+        System.out.println(Paths.get("phssStorage/Alpha/test.aiff").toFile().length());
         avformat_close_input(avFormatContext);
     }
 

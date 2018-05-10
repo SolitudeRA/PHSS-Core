@@ -11,8 +11,8 @@ import me.protogalaxy.service.main.filesystem.io.FileRegisteringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.nio.file.Path;
-import java.sql.Blob;
 import java.util.Map;
 
 @Service
@@ -32,7 +32,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
 
     //TODO: trackinfstatic
     @Override
-    public void registerMusic(String username, Map<String, Object> metadata, Path path) {
+    public void registerMusic(String username, Map<String, Object> metadata, Path path) throws Exception {
         MusicTrackEntity trackEntity = new MusicTrackEntity(
                 filesystemMainRepository.findByUserEntity_Username(username),
                 metadata.get("title").toString(),
@@ -47,11 +47,12 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 metadata.get("duration").toString(),
                 metadata.get("track").toString(),
                 metadata.get("disc").toString(),
-                metadata.get("bitrate").toString(),
-                metadata.get("sampleRate").toString(),
-                (Blob) metadata.get("artwork"),
+                metadata.get("date").toString(),
+                new SerialBlob(metadata.get("artwork").toString().getBytes()),
                 metadata.get("genre").toString(),
-                metadata.get("location").toString(),
+                metadata.get("bitrate").toString(),
+                metadata.get("sample_rate").toString(),
+                metadata.get("bit_depth").toString(),
                 trackEntity));
     }
 }

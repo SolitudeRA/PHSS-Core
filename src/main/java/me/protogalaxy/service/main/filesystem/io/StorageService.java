@@ -4,8 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 public interface StorageService {
-    void init();
-
     void storeMusic(String username, MultipartFile musicFile) throws Exception;
 
     void storeAnime(String username, MultipartFile animeFile);

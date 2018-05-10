@@ -34,14 +34,8 @@ public class MusicTrackInfStaticEntity {
     @Column(name = "disc")
     private String disc;
 
-    @Column(name = "year")
-    private String year;
-
-    @Column(name = "bit_rate")
-    private String bitRate;
-
-    @Column(name = "sample_rate")
-    private String sampleRate;
+    @Column(name = "date")
+    private String date;
 
     @Lob
     @Column(name = "artwork")
@@ -53,8 +47,14 @@ public class MusicTrackInfStaticEntity {
     @Column(name = "kind")
     private String kind;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "bit_rate")
+    private String bitRate;
+
+    @Column(name = "sample_rate")
+    private String sampleRate;
+
+    @Column(name = "bit_depth")
+    private String bitDepth;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
@@ -75,22 +75,31 @@ public class MusicTrackInfStaticEntity {
     public MusicTrackInfStaticEntity() {
     }
 
-    public MusicTrackInfStaticEntity(String location, MusicTrackEntity musicTrackEntity) {
-        this.location = location;
+    public MusicTrackInfStaticEntity(String kind, MusicTrackEntity musicTrackEntity) {
+        this.kind = kind;
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String bitRate, String sampleRate, Blob artwork, String genre, String location, MusicTrackEntity musicTrackEntity) {
+    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String date, Blob artwork, String genre, String bitRate, String sampleRate, String bitDepth, MusicTrackEntity musicTrackEntity) {
         this.size = size;
         this.duration = duration;
         this.trackNumber = trackNumber;
         this.disc = disc;
-        this.bitRate = bitRate;
-        this.sampleRate = sampleRate;
+        this.date = date;
         this.artwork = artwork;
         this.genre = genre;
-        this.location = location;
+        this.bitRate = bitRate;
+        this.sampleRate = sampleRate;
+        this.bitDepth = bitDepth;
         this.musicTrackEntity = musicTrackEntity;
+    }
+
+    public int getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 
     public String getSize() {
@@ -133,28 +142,12 @@ public class MusicTrackInfStaticEntity {
         this.disc = disc;
     }
 
-    public String getYear() {
-        return year;
+    public String getDate() {
+        return date;
     }
 
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getBitRate() {
-        return bitRate;
-    }
-
-    public void setBitRate(String bitRate) {
-        this.bitRate = bitRate;
-    }
-
-    public String getSampleRate() {
-        return sampleRate;
-    }
-
-    public void setSampleRate(String sampleRate) {
-        this.sampleRate = sampleRate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Blob getArtwork() {
@@ -181,12 +174,28 @@ public class MusicTrackInfStaticEntity {
         this.kind = kind;
     }
 
-    public String getLocation() {
-        return location;
+    public String getBitRate() {
+        return bitRate;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setBitRate(String bitRate) {
+        this.bitRate = bitRate;
+    }
+
+    public String getSampleRate() {
+        return sampleRate;
+    }
+
+    public void setSampleRate(String sampleRate) {
+        this.sampleRate = sampleRate;
+    }
+
+    public String getBitDepth() {
+        return bitDepth;
+    }
+
+    public void setBitDepth(String bitDepth) {
+        this.bitDepth = bitDepth;
     }
 
     public Date getDateAdded() {

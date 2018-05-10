@@ -22,7 +22,7 @@ import java.util.List;
 
 @Component
 public class PhssMusicMetadata {
-    private List<String> metadataList = Arrays.asList("title", "album", "artist", "album_artist", "genre", "composer", "track", "disc", "bitrate", "comment");
+    private List<String> metadataList = Arrays.asList("title", "album", "artist", "album_artist", "date", "genre", "composer", "track", "disc", "bitrate", "comment");
 
     public Map<String, Object> getMetaData(Path path) throws Exception {
         av_register_all();
@@ -36,18 +36,22 @@ public class PhssMusicMetadata {
             metadataFullMap.put(entry.key().getString(), entry.value().getString());
         }
         for (String key : metadataList) {
-            metadataCurrentMap.put(key, metadataFullMap.get(key));
+            if (metadataFullMap.get(key) != null) {
+                metadataCurrentMap.put(key, metadataFullMap.get(key));
+            } else {
+                metadataCurrentMap.put(key, "");
+            }
         }
         metadataCurrentMap.put("duration", formatDuration(avFormatContext.duration()));
         metadataCurrentMap.put("bitrate", formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
         metadataCurrentMap.put("sample_rate", avFormatContext.streams(0).codecpar().sample_rate());
         metadataCurrentMap.put("bit_depth", avFormatContext.streams(0).codecpar().bits_per_raw_sample());
         metadataCurrentMap.put("artwork", getArtwork(path));
+        metadataCurrentMap.put("size", formatSize(path.toFile().length()));
         avformat_close_input(avFormatContext);
         return metadataCurrentMap;
     }
 
-    //TODO: Artwork getter
     private byte[] getArtwork(Path path) throws Exception {
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
@@ -70,5 +74,27 @@ public class PhssMusicMetadata {
 
     private String formatBitrate(long bitrate) {
         return String.valueOf(bitrate / 1000) + " kbps";
+    }
+
+    private String formatSize(long size) {
+        if (size < 1024) {
+            return String.valueOf(size) + "B";
+        } else {
+            size = size / 1024;
+        }
+        if (size < 1024) {
+            return String.valueOf(size) + "KB";
+        } else {
+            size = size / 1024;
+        }
+        if (size < 1024) {
+            size = size * 100;
+            return String.valueOf((size / 100)) + "."
+                    + String.valueOf((size % 100)) + "MB";
+        } else {
+            size = size * 100 / 1024;
+            return String.valueOf((size / 100)) + "."
+                    + String.valueOf((size % 100)) + "GB";
+        }
     }
 }

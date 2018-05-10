@@ -10,5 +10,5 @@ public interface FileRegisteringService {
      * @param metadata metadata of the music
      * @param path     path of the file
      */
-    void registerMusic(String username, Map<String, Object> metadata, Path path);
+    void registerMusic(String username, Map<String, Object> metadata, Path path) throws Exception;
 }

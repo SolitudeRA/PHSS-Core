@@ -25,7 +25,7 @@ public class StorageServiceImpl implements StorageService {
     private final PhssMusicMetadata musicMetadataService;
     private final FileRegisteringService fileRegisteringService;
 
-    //TODO:Create directory
+    //TODO:Add shutdown hook
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
                               CachingServiceImpl cachingService,
@@ -37,27 +37,18 @@ public class StorageServiceImpl implements StorageService {
         this.fileRegisteringService = fileRegisteringService;
     }
 
-    public void init() {
-        try {
-            if (Files.notExists(rootLocation)) {
-                Files.createDirectory(rootLocation);
-            }
-        } catch (IOException e) {
-            throw new StorageException("Could not initialize storage", e);
-        }
-    }
-
     @Override
-    public void storeMusic(String username, MultipartFile musicFile) throws Exception{
-        String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());
+    public void storeMusic(String username, MultipartFile musicFile) throws Exception {
+        String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
+        Path root = pathCheck(rootLocation);//Storage root check
+        Path userRoot = pathCheck(root.resolve(username));//User root check
         Path tempFilePath = cachingService.cachingFile(username, musicFile);
         Map<String, Object> metadata = musicMetadataService.getMetaData(tempFilePath);
-        Path path = pathCheck(Paths.get(username)
-                .resolve(metadata.get("artist").toString())
-                .resolve(metadata.get("album").toString()));
+        Path userRootArtist = pathCheck(userRoot.resolve(metadata.get("artist").toString()));//Artist root check
+        Path userRootArtistAlbum = pathCheck(userRootArtist.resolve(metadata.get("album").toString()));//Album root check
         try {
-            Path realPath = Files.move(tempFilePath, path.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-            //fileRegisteringService.registerMusic(username, metadata, realPath);
+            Path realPath = Files.move(tempFilePath, userRootArtistAlbum.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            fileRegisteringService.registerMusic(username, metadata, realPath);
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
         }
@@ -107,7 +98,7 @@ public class StorageServiceImpl implements StorageService {
                 return path;
             }
         } catch (IOException e) {
-            throw new StorageException("Path check error", e);
+            throw new StorageException("Path check " + path.toString() + " error", e);
         }
     }
 }

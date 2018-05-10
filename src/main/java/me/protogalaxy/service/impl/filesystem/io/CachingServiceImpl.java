@@ -1,5 +1,6 @@
 package me.protogalaxy.service.impl.filesystem.io;
 
+import me.protogalaxy.exception.storage.StorageException;
 import me.protogalaxy.exception.storage.StorageTempException;
 import me.protogalaxy.service.config.PhssStorageServiceConfig;
 import me.protogalaxy.service.main.filesystem.io.CachingService;
@@ -24,11 +25,11 @@ public class CachingServiceImpl implements CachingService {
         this.tempLocation = Paths.get(config.getTempLocation());
     }
 
-    //TODO:Create directory
     @Override
     public Path cachingFile(String username, MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
+            tempPathCheck(tempLocation);
             Path tempDirectory = getUserTempDirectoryPath(username);
             return Files.write(tempDirectory.resolve(filename), file.getBytes());
         } catch (IOException e) {
@@ -38,9 +39,20 @@ public class CachingServiceImpl implements CachingService {
 
     private Path getUserTempDirectoryPath(String username) {
         try {
+            tempPathCheck(tempLocation.resolve(Paths.get(username)));
             return Files.createTempDirectory(tempLocation.resolve(Paths.get(username)), phssTempPrefix);
         } catch (IOException e) {
             throw new StorageTempException("Fail to create temp directory", e);
+        }
+    }
+
+    private void tempPathCheck(Path path) {
+        try {
+            if (Files.notExists(path)) {
+                Files.createDirectory(path);
+            }
+        } catch (IOException e) {
+            throw new StorageException("Temp path check " + path.toString() + " error", e);
         }
     }
 }
