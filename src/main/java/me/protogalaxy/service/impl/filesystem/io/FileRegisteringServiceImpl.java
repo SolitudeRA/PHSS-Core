@@ -26,7 +26,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public MusicTrackEntity registerMusic(String username, Map<String, Object> metadata, Path path) throws Exception {
+    public MusicTrackEntity registerMusic(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception {
         MusicTrackEntity trackEntity = new MusicTrackEntity(
                 filesystemMainRepository.findByUserEntity_Username(username),
                 metadata.get("title").toString(),
@@ -41,7 +41,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 metadata.get("track").toString(),
                 metadata.get("disc").toString(),
                 metadata.get("date").toString(),
-                metadata.get("artwork").toString().getBytes(),
+                artwork,
                 metadata.get("genre").toString(),
                 metadata.get("bitrate").toString(),
                 metadata.get("sample_rate").toString(),

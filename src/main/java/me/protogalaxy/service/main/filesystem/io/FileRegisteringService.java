@@ -12,5 +12,5 @@ public interface FileRegisteringService {
      * @param metadata metadata of the music
      * @param path     path of the file
      */
-    MusicTrackEntity registerMusic(String username, Map<String, Object> metadata, Path path) throws Exception;
+    MusicTrackEntity registerMusic(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception;
 }

@@ -46,20 +46,19 @@ public class PhssMusicMetadata {
         metadataCurrentMap.put("bitrate", formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
         metadataCurrentMap.put("sample_rate", avFormatContext.streams(0).codecpar().sample_rate());
         metadataCurrentMap.put("bit_depth", avFormatContext.streams(0).codecpar().bits_per_raw_sample());
-        metadataCurrentMap.put("artwork", getArtwork(path));
         metadataCurrentMap.put("size", formatSize(path.toFile().length()));
         avformat_close_input(avFormatContext);
         return metadataCurrentMap;
     }
 
-    private byte[] getArtwork(Path path) throws Exception {
+    public byte[] getArtwork(Path path) throws Exception {
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
         grabber.start();
         BufferedImage bufferedImage = converter.getBufferedImage(grabber.grabImage());
-        grabber.close();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, ".png", outputStream);
+        ImageIO.write(bufferedImage, "jpg", outputStream);
+        grabber.close();
         return outputStream.toByteArray();
     }
 

@@ -24,13 +24,13 @@ public class StorageServiceImpl implements StorageService {
 
     private final CachingServiceImpl cachingService;
     private final PhssMusicMetadata musicMetadataService;
-    private final FileRegisteringService fileRegisteringService;
+    private final FileRegisteringServiceImpl fileRegisteringService;
 
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
                               CachingServiceImpl cachingService,
                               PhssMusicMetadata phssMusicMetadata,
-                              FileRegisteringService fileRegisteringService) {
+                              FileRegisteringServiceImpl fileRegisteringService) {
         this.rootLocation = Paths.get(config.getLocation());
         this.cachingService = cachingService;
         this.musicMetadataService = phssMusicMetadata;
@@ -45,11 +45,12 @@ public class StorageServiceImpl implements StorageService {
         Path userRoot = pathCheck(root.resolve(username));//User root check
         Path tempFilePath = cachingService.cachingFile(username, musicFile);
         Map<String, Object> metadata = musicMetadataService.getMetaData(tempFilePath);
+        byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
         Path userRootArtist = pathCheck(userRoot.resolve(metadata.get("artist").toString()));//Artist root check
         Path userRootArtistAlbum = pathCheck(userRootArtist.resolve(metadata.get("album").toString()));//Album root check
         try {
             Path realPath = Files.move(tempFilePath, userRootArtistAlbum.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-            return mapper.writeValueAsString(fileRegisteringService.registerMusic(username, metadata, realPath));
+            return mapper.writeValueAsString(fileRegisteringService.registerMusic(username, metadata, artwork, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
         }

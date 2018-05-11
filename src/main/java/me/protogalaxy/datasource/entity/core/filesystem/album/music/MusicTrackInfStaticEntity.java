@@ -1,14 +1,10 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.sql.rowset.serial.SerialBlob;
-import java.sql.Blob;
 import java.util.Date;
 
 /**
@@ -41,7 +37,7 @@ public class MusicTrackInfStaticEntity {
     private String date;
 
     @Lob
-    @Column(name = "artwork", columnDefinition = "LONGBLOB")
+    @Column(name = "artwork")
     private byte[] artwork;
 
     @Column(name = "genre")

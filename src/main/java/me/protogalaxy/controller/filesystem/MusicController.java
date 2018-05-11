@@ -1,6 +1,6 @@
 package me.protogalaxy.controller.filesystem;
 
-import me.protogalaxy.service.main.filesystem.io.StorageService;
+import me.protogalaxy.service.impl.filesystem.io.StorageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/music")
 public class MusicController {
-    private final StorageService storageService;
+    private final StorageServiceImpl storageService;
 
     @Autowired
-    public MusicController(StorageService storageService) {
+    public MusicController(StorageServiceImpl storageService) {
         this.storageService = storageService;
     }
 
