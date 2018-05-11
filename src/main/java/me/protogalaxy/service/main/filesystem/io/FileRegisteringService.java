@@ -1,5 +1,7 @@
 package me.protogalaxy.service.main.filesystem.io;
 
+import me.protogalaxy.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
+
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -10,5 +12,5 @@ public interface FileRegisteringService {
      * @param metadata metadata of the music
      * @param path     path of the file
      */
-    void registerMusic(String username, Map<String, Object> metadata, Path path) throws Exception;
+    MusicTrackEntity registerMusic(String username, Map<String, Object> metadata, Path path) throws Exception;
 }

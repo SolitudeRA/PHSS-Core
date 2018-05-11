@@ -22,8 +22,7 @@ public class MusicController {
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     @PostMapping("/upload")
     public String handleMusicUpload(@RequestParam("username") String username, @RequestParam("music") MultipartFile file) throws Exception {
-        storageService.storeMusic(username, file);
-        return null;
+        return storageService.storeMusic(username, file);
     }
 
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")

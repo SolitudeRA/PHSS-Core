@@ -1,5 +1,7 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import me.protogalaxy.datasource.entity.core.filesystem.main.FileSystemMainEntity;
 
@@ -13,10 +15,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "track")
 public class MusicTrackEntity {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_TRACK_OWNER_ID"))
     private FileSystemMainEntity owner;
@@ -37,6 +41,7 @@ public class MusicTrackEntity {
     @Column(name = "album_artist")
     private String albumArtist;
 
+    @JsonIgnore
     @Column(name = "location")
     private String location;
 

@@ -1,6 +1,7 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;

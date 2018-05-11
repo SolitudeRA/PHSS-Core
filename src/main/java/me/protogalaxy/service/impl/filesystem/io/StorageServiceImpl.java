@@ -1,5 +1,6 @@
 package me.protogalaxy.service.impl.filesystem.io;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.protogalaxy.component.file.music.PhssMusicMetadata;
 import me.protogalaxy.exception.storage.StorageException;
 import me.protogalaxy.service.config.PhssStorageServiceConfig;
@@ -25,7 +26,6 @@ public class StorageServiceImpl implements StorageService {
     private final PhssMusicMetadata musicMetadataService;
     private final FileRegisteringService fileRegisteringService;
 
-    //TODO:Add shutdown hook
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
                               CachingServiceImpl cachingService,
@@ -38,7 +38,8 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void storeMusic(String username, MultipartFile musicFile) throws Exception {
+    public String storeMusic(String username, MultipartFile musicFile) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
         Path root = pathCheck(rootLocation);//Storage root check
         Path userRoot = pathCheck(root.resolve(username));//User root check
@@ -48,11 +49,12 @@ public class StorageServiceImpl implements StorageService {
         Path userRootArtistAlbum = pathCheck(userRootArtist.resolve(metadata.get("album").toString()));//Album root check
         try {
             Path realPath = Files.move(tempFilePath, userRootArtistAlbum.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-            fileRegisteringService.registerMusic(username, metadata, realPath);
+            return mapper.writeValueAsString(fileRegisteringService.registerMusic(username, metadata, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
         }
     }
+
 
     @Override
     public void storeAnime(String username, MultipartFile animeFile) {

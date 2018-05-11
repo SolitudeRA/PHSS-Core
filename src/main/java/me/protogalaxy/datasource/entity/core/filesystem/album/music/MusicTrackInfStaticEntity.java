@@ -1,10 +1,13 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.Blob;
 import java.util.Date;
 
@@ -38,8 +41,8 @@ public class MusicTrackInfStaticEntity {
     private String date;
 
     @Lob
-    @Column(name = "artwork")
-    private Blob artwork;
+    @Column(name = "artwork", columnDefinition = "LONGBLOB")
+    private byte[] artwork;
 
     @Column(name = "genre")
     private String genre;
@@ -80,7 +83,7 @@ public class MusicTrackInfStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String date, Blob artwork, String genre, String bitRate, String sampleRate, String bitDepth, MusicTrackEntity musicTrackEntity) {
+    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String date, byte[] artwork, String genre, String bitRate, String sampleRate, String bitDepth, MusicTrackEntity musicTrackEntity) throws Exception {
         this.size = size;
         this.duration = duration;
         this.trackNumber = trackNumber;
@@ -150,11 +153,11 @@ public class MusicTrackInfStaticEntity {
         this.date = date;
     }
 
-    public Blob getArtwork() {
+    public byte[] getArtwork() {
         return artwork;
     }
 
-    public void setArtwork(Blob artwork) {
+    public void setArtwork(byte[] artwork) throws Exception {
         this.artwork = artwork;
     }
 
