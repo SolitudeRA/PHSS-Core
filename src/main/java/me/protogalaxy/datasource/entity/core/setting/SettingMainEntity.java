@@ -1,5 +1,7 @@
 package me.protogalaxy.datasource.entity.core.setting;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.protogalaxy.datasource.entity.core.user.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -9,6 +11,7 @@ import java.util.Date;
 @Entity
 @Table(name = "setting_main")
 public class SettingMainEntity {
+    @JsonIgnore
     @Id
     private int ownerId;
 
@@ -20,6 +23,7 @@ public class SettingMainEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
+    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "setting_owner_id")

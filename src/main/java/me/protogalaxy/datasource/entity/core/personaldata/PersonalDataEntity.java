@@ -1,5 +1,7 @@
 package me.protogalaxy.datasource.entity.core.personaldata;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.protogalaxy.datasource.entity.core.user.UserEntity;
 
 import javax.persistence.*;
@@ -7,9 +9,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "personaldata_inf")
 public class PersonalDataEntity {
+    @JsonIgnore
     @Id
     private int ownerId;
 
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "owner_id")

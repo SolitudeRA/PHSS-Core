@@ -2,6 +2,7 @@ package me.protogalaxy.datasource.entity.core.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import me.protogalaxy.datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import me.protogalaxy.datasource.entity.core.personaldata.PersonalDataEntity;
 import me.protogalaxy.datasource.entity.core.setting.SettingMainEntity;
@@ -16,7 +17,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import java.sql.Blob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +27,7 @@ import java.util.Set;
 @DynamicInsert
 @Table(name = "user")
 public class UserEntity implements UserDetails, CredentialsContainer {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,22 +35,26 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     @Column(name = "username")
     private String username;
 
+    @JsonIgnore
     @Lob
     @Column(name = "password")
     private String password;
 
+    @JsonIgnore
     @Column(name = "password_ext1")
     private String passwordExt1;
 
+    @JsonIgnore
     @Column(name = "password_ext2")
     private String passwordExt2;
 
+    @JsonIgnore
     @Column(name = "password_ext3")
     private String passwordExt3;
 
     @Lob
     @Column(name = "avatar")
-    private Blob avatar;
+    private byte[] avatar;
 
     @Column(name = "isEnabled")
     @ColumnDefault("true")
@@ -78,15 +83,15 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     @UpdateTimestamp
     private Date dateModified;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private FileSystemMainEntity fileSystemMainEntity;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private PersonalDataEntity personalDataEntity;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private SettingMainEntity settingMainEntity;
 
@@ -94,7 +99,24 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     }
 
     /**
-     * User entity simple constructor
+     * User entity simple constructor with default ROLE_USER
+     *
+     * @param username name of the user
+     * @param password password of the user;
+     */
+    public UserEntity(String username, String password) {
+        if (((username == null) || "".equals(username)) || (password == null)) {
+            throw new IllegalArgumentException(
+                    "Cannot pass null or empty values to constructor");
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        this.username = username.toLowerCase();
+        this.password = password;
+        this.authorities = "USER";
+    }
+
+    /**
+     * User entity constructor with authorities
      *
      * @param username       name of the user
      * @param password       password of the user
@@ -110,7 +132,7 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         for (PhssGrantedAuthority authority : authoritiesSet) {
             roleStrSet.add(authority.toString().substring(5));
         }
-        this.username = username;
+        this.username = username.toLowerCase();
         this.password = encoder.encode(password);
         this.authorities = String.join(",", roleStrSet);
     }
@@ -138,7 +160,7 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         for (PhssGrantedAuthority authority : authoritiesSet) {
             roleStrSet.add(authority.toString().substring(5));
         }
-        this.username = username;
+        this.username = username.toLowerCase();
         this.password = encoder.encode(password);
         this.passwordExt1 = passwordExt1;
         this.passwordExt2 = passwordExt2;
@@ -153,17 +175,13 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toLowerCase();
     }
 
     @Override
@@ -199,11 +217,11 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.passwordExt3 = passwordExt3;
     }
 
-    public Blob getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Blob avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 

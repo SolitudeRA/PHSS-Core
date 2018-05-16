@@ -1,5 +1,7 @@
 package me.protogalaxy.datasource.entity.core.filesystem.main;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.protogalaxy.datasource.entity.core.user.UserEntity;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +14,7 @@ import java.util.Date;
 @DynamicInsert
 @Table(name = "filesystem_main")
 public class FileSystemMainEntity {
+    @JsonIgnore
     @Id
     private int ownerId;
 
@@ -47,6 +50,7 @@ public class FileSystemMainEntity {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
+    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "owner_id")
