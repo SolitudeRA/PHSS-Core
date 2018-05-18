@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 //TODO: Music controller implement
-@PreAuthorize("hasRole('ROLE_USER')")
 @RestController
 @RequestMapping("/music")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class MusicController {
     private final StorageServiceImpl storageService;
 

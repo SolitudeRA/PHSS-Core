@@ -1,5 +1,7 @@
 package me.protogalaxy.security.config;
 
+import me.protogalaxy.security.main.PhssJwtAuthenticationFilter;
+import me.protogalaxy.security.main.PhssJwtLoginFilter;
 import me.protogalaxy.security.main.PhssUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,13 +21,8 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/index", "/user/signup", "/user/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginProcessingUrl("/user/login")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/user/logout")
-                .logoutSuccessUrl("/index");
+                .addFilter(new PhssJwtLoginFilter(authenticationManager()))
+                .addFilter(new PhssJwtAuthenticationFilter(authenticationManager()));
     }
 
     @Bean

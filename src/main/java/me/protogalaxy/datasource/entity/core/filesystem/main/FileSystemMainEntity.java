@@ -1,11 +1,13 @@
 package me.protogalaxy.datasource.entity.core.filesystem.main;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.protogalaxy.datasource.entity.core.user.UserEntity;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -42,12 +44,16 @@ public class FileSystemMainEntity {
     @ColumnDefault("0")
     private Integer photoCount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
     private Date gmtCreate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     @JsonBackReference

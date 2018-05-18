@@ -1,9 +1,11 @@
 package me.protogalaxy.datasource.entity.core.setting;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.protogalaxy.datasource.entity.core.user.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,12 +17,16 @@ public class SettingMainEntity {
     @Id
     private int ownerId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
     private Date gmtCreate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     @JsonBackReference
