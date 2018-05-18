@@ -30,6 +30,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.auth0:java-jwt:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:javacv-platform:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:javacv:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:javacpp:1.4.1" level="project" />
