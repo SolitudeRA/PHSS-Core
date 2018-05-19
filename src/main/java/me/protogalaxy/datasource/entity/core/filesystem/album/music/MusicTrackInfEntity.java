@@ -1,8 +1,7 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -36,13 +35,13 @@ public class MusicTrackInfEntity {
     @Column(name = "skip_date")
     private Date skipDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
     @CreationTimestamp
     private Date dateAdded;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
     @UpdateTimestamp

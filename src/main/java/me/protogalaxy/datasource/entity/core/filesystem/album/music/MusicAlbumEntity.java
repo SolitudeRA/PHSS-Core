@@ -1,6 +1,6 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import me.protogalaxy.datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,16 +30,17 @@ public class MusicAlbumEntity {
     @Column(name = "artist")
     private String artist;
 
+    @JsonIgnore
     @Column(name = "location")
     private String location;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
     @CreationTimestamp
     private Date dateAdded;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
     @CreationTimestamp

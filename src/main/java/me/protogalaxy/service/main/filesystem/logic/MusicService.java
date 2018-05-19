@@ -1,5 +1,6 @@
 package me.protogalaxy.service.main.filesystem.logic;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,14 +13,6 @@ import org.springframework.stereotype.Service;
 //TODO:Music service interfaces design
 @Service
 public interface MusicService {
-    /**
-     * Persist an album
-     *
-     * @param album a JSON format string of the album
-     * @return JSON format string of the saved album
-     */
-    String saveAlbum(String album) throws Exception;
-
     /**
      * Get an album
      *
@@ -53,6 +46,15 @@ public interface MusicService {
     boolean removeAlbum(int id);
 
     /**
+     * List user albums
+     *
+     * @param username name of the user
+     * @param pageable data page
+     * @return JSON format string of albums
+     */
+    String listAlbum(String username, Pageable pageable) throws Exception;
+
+    /**
      * List albums by name
      *
      * @param ownerId   id of the owner
@@ -69,15 +71,6 @@ public interface MusicService {
      * @return JSON format string of the album
      */
     String listAlbumByArtist(int ownerId, String Artist) throws Exception;
-
-
-    /**
-     * Persist a track
-     *
-     * @param track a JSON format string of the track
-     * @return JSON format string of the saved track
-     */
-    String saveTrack(String track) throws Exception;
 
 
     /**
@@ -114,28 +107,28 @@ public interface MusicService {
     boolean removeTrack(int id);
 
     /**
-     * List tracks by name
+     * List tracks by title
      *
-     * @param ownerId   id of the owner
-     * @param trackName name of the tracks
+     * @param username name of the user
+     * @param title    name of the tracks
      * @return JSON format string of the track
      */
-    String listTrackByName(int ownerId, String trackName) throws Exception;
+    String listTrackByTitle(String username, String title) throws Exception;
 
     /**
      * List tracks by album name
      *
-     * @param albumName name of the albums
+     * @param username name of the user
      * @return JSON format string of the tracks
      */
-    String listTrackByAlbum(int ownerId, String albumName) throws Exception;
+    String listTrackByAlbum(String username, String album) throws Exception;
 
     /**
      * List tracks by artist
      *
-     * @param ownerId id of the owner
-     * @param artist  artist of the tracks
+     * @param username name of the user
+     * @param artist   artist of the tracks
      * @return JSON format string of the tracks
      */
-    String listTracksByArtist(int ownerId, String artist) throws Exception;
+    String listTracksByArtist(String username, String artist) throws Exception;
 }

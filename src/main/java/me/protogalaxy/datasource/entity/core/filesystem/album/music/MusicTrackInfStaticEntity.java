@@ -1,7 +1,7 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -56,13 +56,13 @@ public class MusicTrackInfStaticEntity {
     @Column(name = "bit_depth")
     private String bitDepth;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
     @CreationTimestamp
     private Date dateAdded;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
     @UpdateTimestamp

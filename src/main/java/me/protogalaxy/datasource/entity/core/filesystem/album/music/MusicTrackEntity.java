@@ -1,10 +1,14 @@
 package me.protogalaxy.datasource.entity.core.filesystem.album.music;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import me.protogalaxy.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author SolitudeRA
@@ -43,6 +47,18 @@ public class MusicTrackEntity {
     @JsonIgnore
     @Column(name = "location")
     private String location;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_added")
+    @CreationTimestamp
+    private Date dateAdded;
+
+    @JsonIgnore
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_added")
+    @UpdateTimestamp
+    private Date dataModified;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -126,6 +142,22 @@ public class MusicTrackEntity {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public Date getDataModified() {
+        return dataModified;
+    }
+
+    public void setDataModified(Date dataModified) {
+        this.dataModified = dataModified;
     }
 
     public MusicTrackInfEntity getTrackInformation() {

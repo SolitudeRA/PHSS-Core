@@ -10,7 +10,9 @@ import java.util.List;
 
 @PreAuthorize("hasRole('ROLE_USER')")
 public interface MusicTrackRepository extends Repository<MusicTrackEntity, Integer>, CrudRepository<MusicTrackEntity, Integer>, PagingAndSortingRepository<MusicTrackEntity, Integer> {
-    List<MusicTrackEntity> findByTitle(String title);
+    List<MusicTrackEntity> findByTitleAndOwner_UserEntity_Username(String title, String username);
 
-    List<MusicTrackEntity> findByAlbum(String album);
+    List<MusicTrackEntity> findByAlbumAndOwner_UserEntity_Username(String album, String username);
+
+    List<MusicTrackEntity> findByArtistAndOwner_UserEntity_Username(String artist, String username);
 }
