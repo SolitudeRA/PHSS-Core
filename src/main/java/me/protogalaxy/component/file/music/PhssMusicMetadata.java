@@ -24,6 +24,12 @@ import java.util.List;
 public class PhssMusicMetadata {
     private List<String> metadataList = Arrays.asList("title", "album", "artist", "album_artist", "date", "genre", "composer", "track", "disc", "bitrate", "comment");
 
+    /**
+     * Get meta data of music
+     *
+     * @param path temp path og the music
+     * @return Map of the music metadata
+     */
     public Map<String, Object> getMetaData(Path path) throws Exception {
         av_register_all();
         Map<String, Object> metadataFullMap = new HashMap<>();
@@ -51,6 +57,12 @@ public class PhssMusicMetadata {
         return metadataCurrentMap;
     }
 
+    /**
+     * Get artwork of the music
+     *
+     * @param path temp path of the music
+     * @return byte array og the track artwork
+     */
     public byte[] getArtwork(Path path) throws Exception {
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
@@ -62,6 +74,12 @@ public class PhssMusicMetadata {
         return outputStream.toByteArray();
     }
 
+    /**
+     * Format track duration string
+     *
+     * @param duration duration og the track
+     * @return String format duration of the track
+     */
     private String formatDuration(long duration) {
         long secs, us;
         secs = (duration / AV_TIME_BASE);
@@ -71,10 +89,22 @@ public class PhssMusicMetadata {
         return format.format(totalus);
     }
 
+    /**
+     * Format track bitrate
+     *
+     * @param bitrate bitrate of the track
+     * @return String format bitrate
+     */
     private String formatBitrate(long bitrate) {
         return String.valueOf(bitrate / 1000) + " kbps";
     }
 
+    /**
+     * 'Format size of the file
+     *
+     * @param size size of the file
+     * @return String format size of the file
+     */
     private String formatSize(long size) {
         if (size < 1024) {
             return String.valueOf(size) + "B";

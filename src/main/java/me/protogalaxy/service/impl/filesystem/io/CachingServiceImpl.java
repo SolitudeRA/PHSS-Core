@@ -25,6 +25,13 @@ public class CachingServiceImpl implements CachingService {
         this.tempLocation = Paths.get(config.getTempLocation());
     }
 
+    /**
+     * Caching file
+     *
+     * @param username name of the user
+     * @param file     uploaded MultipartFile
+     * @return Path of the temp file
+     */
     @Override
     public Path cachingFile(String username, MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
@@ -37,6 +44,12 @@ public class CachingServiceImpl implements CachingService {
         }
     }
 
+    /**
+     * Create temp directory
+     *
+     * @param username name of the user
+     * @return Path of the temp directory
+     */
     private Path getUserTempDirectoryPath(String username) {
         try {
             tempPathCheck(tempLocation.resolve(Paths.get(username)));
