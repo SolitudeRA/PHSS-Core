@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-//TODO:isCredentialsNonExpired
-
 @Entity
 @DynamicInsert
 @Table(name = "user")

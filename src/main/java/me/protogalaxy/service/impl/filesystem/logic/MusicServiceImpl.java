@@ -20,8 +20,8 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public String getAlbum(int id) throws Exception {
-        return null;
+    public String getAlbum(String username, int id) throws Exception {
+        return new ObjectMapper().writeValueAsString(musicAlbumRepository.findByOwner_UserEntity_UsernameAndId(username, id));
     }
 
     @Override
@@ -40,14 +40,13 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public String listAlbum(String username, Pageable pageable) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(musicAlbumRepository.findAllByOwner_UserEntity_Username(username, pageable));
+    public String listUserAlbum(String username, Pageable pageable) throws Exception {
+        return new ObjectMapper().writeValueAsString(musicAlbumRepository.findAllByOwner_UserEntity_Username(username, pageable));
     }
 
     @Override
-    public String listAlbumByName(int ownerId, String albumName) throws Exception {
-        return null;
+    public String listAlbumByTitle(String username, String title) throws Exception {
+        return new ObjectMapper().writeValueAsString(musicAlbumRepository.findByOwner_UserEntity_UsernameAndTitle(username, title));
     }
 
     @Override
@@ -77,19 +76,21 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public String listTrackByTitle(String username, String title) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(musicTrackRepository.findByTitleAndOwner_UserEntity_Username(title, username));
+        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByTitleAndOwner_UserEntity_Username(title, username));
     }
 
     @Override
     public String listTrackByAlbum(String username, String album) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(musicTrackRepository.findByAlbumAndOwner_UserEntity_Username(album, username));
+        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByAlbumAndOwner_UserEntity_Username(album, username));
+    }
+
+    @Override
+    public String listTrackByAlbumId(String username, int id) throws Exception {
+        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByMusicAlbumEntity_IdAndOwner_UserEntity_Username(id, username));
     }
 
     @Override
     public String listTracksByArtist(String username, String artist) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(musicTrackRepository.findByArtistAndOwner_UserEntity_Username(artist, username));
+        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByArtistAndOwner_UserEntity_Username(artist, username));
     }
 }

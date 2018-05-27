@@ -15,4 +15,6 @@ public interface MusicTrackRepository extends Repository<MusicTrackEntity, Integ
     List<MusicTrackEntity> findByAlbumAndOwner_UserEntity_Username(String album, String username);
 
     List<MusicTrackEntity> findByArtistAndOwner_UserEntity_Username(String artist, String username);
+
+    List<MusicTrackEntity> findByMusicAlbumEntity_IdAndOwner_UserEntity_Username(int id, String username);
 }

@@ -24,8 +24,8 @@ public class MusicAlbumEntity {
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_MUSIC"))
     private FileSystemMainEntity owner;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "artist")
     private String artist;
@@ -57,9 +57,9 @@ public class MusicAlbumEntity {
     public MusicAlbumEntity() {
     }
 
-    public MusicAlbumEntity(FileSystemMainEntity owner, String name, String artist, String location) {
+    public MusicAlbumEntity(FileSystemMainEntity owner, String title, String artist, String location) {
         this.owner = owner;
-        this.name = name;
+        this.title = title;
         this.artist = artist;
         this.location = location;
     }
@@ -80,12 +80,12 @@ public class MusicAlbumEntity {
         this.owner = owner;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getArtist() {

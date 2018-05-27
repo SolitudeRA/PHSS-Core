@@ -16,10 +16,11 @@ public interface MusicService {
     /**
      * Get an album
      *
-     * @param id id of the album
+     * @param username name of the user
+     * @param id       id of the album
      * @return JSON format string of the album
      */
-    String getAlbum(int id) throws Exception;
+    String getAlbum(String username, int id) throws Exception;
 
     /**
      * Update an album
@@ -52,16 +53,16 @@ public interface MusicService {
      * @param pageable data page
      * @return JSON format string of albums
      */
-    String listAlbum(String username, Pageable pageable) throws Exception;
+    String listUserAlbum(String username, Pageable pageable) throws Exception;
 
     /**
      * List albums by name
      *
-     * @param ownerId   id of the owner
-     * @param albumName name of the albums
+     * @param username name of the user
+     * @param title    title of the albums
      * @return JSON format string of the album
      */
-    String listAlbumByName(int ownerId, String albumName) throws Exception;
+    String listAlbumByTitle(String username, String title) throws Exception;
 
     /**
      * List albums by artist
@@ -119,9 +120,19 @@ public interface MusicService {
      * List tracks by album name
      *
      * @param username name of the user
+     * @param title    title of the album
      * @return JSON format string of the tracks
      */
-    String listTrackByAlbum(String username, String album) throws Exception;
+    String listTrackByAlbum(String username, String title) throws Exception;
+
+    /**
+     * List tracks by album id
+     *
+     * @param username name of the user
+     * @param id       is of the album
+     * @return JSON format string of tracks
+     */
+    String listTrackByAlbumId(String username, int id) throws Exception;
 
     /**
      * List tracks by artist

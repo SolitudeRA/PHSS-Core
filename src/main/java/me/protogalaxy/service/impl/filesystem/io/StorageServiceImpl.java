@@ -2,9 +2,9 @@ package me.protogalaxy.service.impl.filesystem.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.protogalaxy.component.file.music.PhssMusicMetadata;
+import me.protogalaxy.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
 import me.protogalaxy.exception.storage.StorageException;
 import me.protogalaxy.service.config.PhssStorageServiceConfig;
-import me.protogalaxy.service.main.filesystem.io.FileRegisteringService;
 import me.protogalaxy.service.main.filesystem.io.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -38,7 +37,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeMusic(String username, MultipartFile musicFile) throws Exception {
+    public String storeTrack(String username, MultipartFile musicFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
         Path root = pathCheck(rootLocation);//Storage root check
@@ -56,40 +55,62 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-
     @Override
-    public void storeAnime(String username, MultipartFile animeFile) {
-
+    public String storeTracks(String username, MultipartFile[] musicFiles) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        List<MusicTrackEntity> musicTrackEntities = new ArrayList<>();
+        for (MultipartFile musicFile : musicFiles) {
+            String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());
+            Path root = pathCheck(rootLocation);
+            Path userRoot = pathCheck(root.resolve(username));
+            Path tempFilePath = cachingService.cachingFile(username, musicFile);
+            Map<String, Object> metadata = musicMetadataService.getMetaData(tempFilePath);
+            byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
+            Path userRootArtist = pathCheck(userRoot.resolve(metadata.get("artist").toString()));
+            Path userRootArtistAlbum = pathCheck(userRootArtist.resolve(metadata.get("album").toString()));
+            try {
+                Path realPath = Files.move(tempFilePath, userRootArtistAlbum.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                musicTrackEntities.add(fileRegisteringService.registerMusic(username, metadata, artwork, realPath));
+            } catch (IOException e) {
+                throw new StorageException("Could not move temp file", e);
+            }
+        }
+        return mapper.writeValueAsString(musicTrackEntities);
     }
 
     @Override
-    public void storeMovie(String username, MultipartFile movieFile) {
-
+    public String storeAnime(String username, MultipartFile animeFile) {
+        return null;
     }
 
     @Override
-    public void storeVideo(String username, MultipartFile videoFile) {
-
+    public String storeMovie(String username, MultipartFile movieFile) {
+        return null;
     }
 
     @Override
-    public void storePhoto(String username, MultipartFile photoFile) {
-
+    public String storeVideo(String username, MultipartFile videoFile) {
+        return null;
     }
 
     @Override
-    public void storeBook(String username, MultipartFile bookFile) {
-
+    public String storePhoto(String username, MultipartFile photoFile) {
+        return null;
     }
 
     @Override
-    public void storeDocument(String username, MultipartFile documentFile) {
-
+    public String storeBook(String username, MultipartFile bookFile) {
+        return null;
     }
 
     @Override
-    public void storeIllustration(String username, MultipartFile illustrationFile) {
+    public String storeDocument(String username, MultipartFile documentFile) {
+        return null;
+    }
 
+    @Override
+    public String storeIllustration(String username, MultipartFile illustrationFile) {
+        return null;
     }
 
     private Path pathCheck(Path path) {
