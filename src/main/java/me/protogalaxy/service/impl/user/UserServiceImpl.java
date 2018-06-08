@@ -22,10 +22,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String register(String username, String password) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        UserEntity userEntity = new UserEntity(username, password);
-        userEntity.setFileSystemMainEntity(new FileSystemMainEntity());
-        userEntity.setPersonalDataEntity(new PersonalDataEntity());
-        userEntity.setSettingMainEntity(new SettingMainEntity());
+        UserEntity userEntity = new UserEntity(username, password, true, true, true);
+        userEntity.setFileSystemMainEntity(new FileSystemMainEntity(userEntity));
+        userEntity.setPersonalDataEntity(new PersonalDataEntity(userEntity));
+        userEntity.setSettingMainEntity(new SettingMainEntity(userEntity));
         userRepository.save(userEntity);
         return mapper.writeValueAsString(userEntity);
     }

@@ -99,28 +99,37 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     /**
      * User entity simple constructor with default ROLE_USER
      *
-     * @param username name of the user
-     * @param password password of the user;
+     * @param username            name of the user
+     * @param password            password of the user
+     * @param isEnabled           whether account is enabled
+     * @param isAccountNonExpired whether account is not expired
+     * @param isAccountNonLocked  whether account is not locked
      */
-    public UserEntity(String username, String password) {
+    public UserEntity(String username, String password, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
         this.username = username.toLowerCase();
-        this.password = password;
+        this.password = encoder.encode(password);
         this.authorities = "USER";
+        this.isEnabled = isEnabled;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
     }
 
     /**
      * User entity constructor with authorities
      *
-     * @param username       name of the user
-     * @param password       password of the user
-     * @param authoritiesSet authorities of the user
+     * @param username            name of the user
+     * @param password            password of the user
+     * @param authoritiesSet      authorities of the user
+     * @param isEnabled           whether account is enabled
+     * @param isAccountNonExpired whether account is not expired
+     * @param isAccountNonLocked  whether account is not locked
      */
-    public UserEntity(String username, String password, Set<PhssGrantedAuthority> authoritiesSet) {
+    public UserEntity(String username, String password, Set<PhssGrantedAuthority> authoritiesSet, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
@@ -133,6 +142,9 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.username = username.toLowerCase();
         this.password = encoder.encode(password);
         this.authorities = String.join(",", roleStrSet);
+        this.isEnabled = isEnabled;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
     }
 
     /**

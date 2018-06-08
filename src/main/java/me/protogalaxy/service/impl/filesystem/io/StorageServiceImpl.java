@@ -19,7 +19,14 @@ import java.util.Map;
 
 @Service
 public class StorageServiceImpl implements StorageService {
-    private final Path rootLocation;
+    private final Path musicLocation;
+    private final Path animeLocation;
+    private final Path movieLocation;
+    private final Path videoLocation;
+    private final Path bookLocation;
+    private final Path documentLocation;
+    private final Path illustrationLocation;
+    private final Path photoLocation;
 
     private final CachingServiceImpl cachingService;
     private final PhssMusicMetadata musicMetadataService;
@@ -30,7 +37,14 @@ public class StorageServiceImpl implements StorageService {
                               CachingServiceImpl cachingService,
                               PhssMusicMetadata phssMusicMetadata,
                               FileRegisteringServiceImpl fileRegisteringService) {
-        this.rootLocation = Paths.get(config.getLocation());
+        this.musicLocation = config.getMusicLocation();
+        this.animeLocation = config.getAnimeLocation();
+        this.movieLocation = config.getMovieLocation();
+        this.videoLocation = config.getVideoLocation();
+        this.bookLocation = config.getBookLocation();
+        this.documentLocation = config.getDocumentLocation();
+        this.illustrationLocation = config.getIllustrationLocation();
+        this.photoLocation = config.getPhotoLocation();
         this.cachingService = cachingService;
         this.musicMetadataService = phssMusicMetadata;
         this.fileRegisteringService = fileRegisteringService;
@@ -40,15 +54,11 @@ public class StorageServiceImpl implements StorageService {
     public String storeTrack(String username, MultipartFile musicFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
-        Path root = pathCheck(rootLocation);//Storage root check
-        Path userRoot = pathCheck(root.resolve(username));//User root check
         Path tempFilePath = cachingService.cachingFile(username, musicFile);
-        Map<String, Object> metadata = musicMetadataService.getMetaData(tempFilePath);
+        Map<String, Object> metadata = musicMetadataService.readMetaData(tempFilePath);
         byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
-        Path userRootArtist = pathCheck(userRoot.resolve(metadata.get("artist").toString()));//Artist root check
-        Path userRootArtistAlbum = pathCheck(userRootArtist.resolve(metadata.get("album").toString()));//Album root check
         try {
-            Path realPath = Files.move(tempFilePath, userRootArtistAlbum.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            Path realPath = Files.move(tempFilePath, pathCheck(musicLocation.resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerMusic(username, metadata, artwork, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
@@ -61,15 +71,11 @@ public class StorageServiceImpl implements StorageService {
         List<MusicTrackEntity> musicTrackEntities = new ArrayList<>();
         for (MultipartFile musicFile : musicFiles) {
             String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());
-            Path root = pathCheck(rootLocation);
-            Path userRoot = pathCheck(root.resolve(username));
             Path tempFilePath = cachingService.cachingFile(username, musicFile);
-            Map<String, Object> metadata = musicMetadataService.getMetaData(tempFilePath);
+            Map<String, Object> metadata = musicMetadataService.readMetaData(tempFilePath);
             byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
-            Path userRootArtist = pathCheck(userRoot.resolve(metadata.get("artist").toString()));
-            Path userRootArtistAlbum = pathCheck(userRootArtist.resolve(metadata.get("album").toString()));
             try {
-                Path realPath = Files.move(tempFilePath, userRootArtistAlbum.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                Path realPath = Files.move(tempFilePath, pathCheck(musicLocation.resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
                 musicTrackEntities.add(fileRegisteringService.registerMusic(username, metadata, artwork, realPath));
             } catch (IOException e) {
                 throw new StorageException("Could not move temp file", e);
@@ -104,8 +110,15 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeDocument(String username, MultipartFile documentFile) {
-        return null;
+    public String storeDocument(String username, MultipartFile documentFile, String type) {
+        ObjectMapper mapper = new ObjectMapper();
+        String fileName = StringUtils.cleanPath(documentFile.getOriginalFilename());
+        try {
+            Path realPath = Files.write(documentLocation.resolve("default").resolve(fileName), documentFile.getBytes());
+            return mapper.writeValueAsString(fileRegisteringService.registerDocument(username, fileName, type, realPath));
+        } catch (IOException e) {
+            throw new StorageException("Could not save document", e);
+        }
     }
 
     @Override
@@ -116,7 +129,7 @@ public class StorageServiceImpl implements StorageService {
     private Path pathCheck(Path path) {
         try {
             if (Files.notExists(path)) {
-                Files.createDirectory(path);
+                Files.createDirectories(path);
                 return path;
             } else {
                 return path;

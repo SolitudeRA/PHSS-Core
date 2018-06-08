@@ -105,7 +105,7 @@ public class TestDataFiller {
         PhssGrantedAuthority authority2 = new PhssGrantedAuthority("ROLE_ADMIN");
         authorities.add(authority1);
         authorities.add(authority2);
-        UserEntity userEntity = new UserEntity(username, password, authorities);
+        UserEntity userEntity = new UserEntity(username, password, authorities, true, true, true);
         userRepository.save(userEntity);
         FileSystemMainEntity fileSystemMainEntity = new FileSystemMainEntity(userEntity);
         filesystemMainRepository.save(fileSystemMainEntity);

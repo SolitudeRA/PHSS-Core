@@ -78,7 +78,7 @@ public class ffmpegtest {
     @Test
     public void metadataTest() throws Exception{
         Path path = Paths.get("phssStorage/Alpha/test.aiff");
-        System.out.println(phssMusicMetadata.getMetaData(path));
+        System.out.println(phssMusicMetadata.readMetaData(path));
     }
 
     @Test

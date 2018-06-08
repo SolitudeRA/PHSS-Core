@@ -25,12 +25,12 @@ public class PhssMusicMetadata {
     private List<String> metadataList = Arrays.asList("title", "album", "artist", "album_artist", "date", "genre", "composer", "track", "disc", "bitrate", "comment");
 
     /**
-     * Get meta data of music
+     * Read meta data of music
      *
-     * @param path temp path og the music
+     * @param path temp path of the music
      * @return Map of the music metadata
      */
-    public Map<String, Object> getMetaData(Path path) throws Exception {
+    public Map<String, Object> readMetaData(Path path) throws Exception {
         av_register_all();
         Map<String, Object> metadataFullMap = new HashMap<>();
         Map<String, Object> metadataCurrentMap = new HashMap<>();
@@ -72,6 +72,17 @@ public class PhssMusicMetadata {
         ImageIO.write(bufferedImage, "jpg", outputStream);
         grabber.close();
         return outputStream.toByteArray();
+    }
+
+    /**
+     * Write metadata to the track
+     *
+     * @param metaData Map of the music metadata
+     * @param path     path of the music
+     * @return Map of the music metadata
+     */
+    public Map<String, Object> writeMetaData(Map<String, Object> metaData, Path path) throws Exception {
+        return null;
     }
 
     /**

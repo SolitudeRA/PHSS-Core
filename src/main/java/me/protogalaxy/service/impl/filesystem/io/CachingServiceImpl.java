@@ -22,7 +22,7 @@ public class CachingServiceImpl implements CachingService {
     @Autowired
     public CachingServiceImpl(PhssStorageServiceConfig config) {
         this.phssTempPrefix = config.getPrefix();
-        this.tempLocation = Paths.get(config.getTempLocation());
+        this.tempLocation = config.getTempLocation();
     }
 
     /**

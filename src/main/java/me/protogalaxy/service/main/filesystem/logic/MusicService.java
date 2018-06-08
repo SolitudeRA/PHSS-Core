@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
  * Music management service
  *
  * @author Arthur.Lee
- * @since 1.9
+ * @since 1.0
  */
 
-//TODO:Music service interfaces design
 @Service
 public interface MusicService {
     /**

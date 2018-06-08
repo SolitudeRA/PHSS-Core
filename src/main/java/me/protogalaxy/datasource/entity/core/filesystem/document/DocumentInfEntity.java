@@ -1,5 +1,6 @@
 package me.protogalaxy.datasource.entity.core.filesystem.document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -23,9 +24,14 @@ public class DocumentInfEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "document_id")
+    @JsonBackReference
     private DocumentEntity documentEntity;
 
     public DocumentInfEntity() {
+    }
+
+    public DocumentInfEntity(DocumentEntity documentEntity) {
+        this.documentEntity = documentEntity;
     }
 
     public DocumentInfEntity(Date gmtCreate, Date gmtModified) {

@@ -56,9 +56,9 @@ public class MusicTrackEntity {
 
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_added")
+    @Column(name = "date_modified")
     @UpdateTimestamp
-    private Date dataModified;
+    private Date dateModified;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -152,12 +152,12 @@ public class MusicTrackEntity {
         this.dateAdded = dateAdded;
     }
 
-    public Date getDataModified() {
-        return dataModified;
+    public Date getDateModified() {
+        return dateModified;
     }
 
-    public void setDataModified(Date dataModified) {
-        this.dataModified = dataModified;
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
     }
 
     public MusicTrackInfEntity getTrackInformation() {

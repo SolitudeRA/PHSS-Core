@@ -28,8 +28,8 @@ public class MusicController {
 
     @PostMapping("/multiupload")
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String handleMusicMultiUpload(@PathVariable String username, MultipartFile[] files) {
-        return null;
+    public String handleMusicMultiUpload(@PathVariable String username, MultipartFile[] files) throws Exception {
+        return storageService.storeTracks(username, files);
     }
 
     @PostMapping("/album")
