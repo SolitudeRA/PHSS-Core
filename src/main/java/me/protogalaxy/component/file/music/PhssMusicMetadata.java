@@ -111,7 +111,7 @@ public class PhssMusicMetadata {
     }
 
     /**
-     * 'Format size of the file
+     * Format size of the file
      *
      * @param size size of the file
      * @return String format size of the file
