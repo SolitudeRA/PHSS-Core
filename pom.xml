@@ -9,6 +9,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>PHSS-Core</name>
+    <description>Protogalaxy Home Server System is a server side software for the smart home project</description>
     <url>https://github.com/SolitudeRA/PHSS-Core</url>
 
     <licenses>
@@ -85,19 +86,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <!--Spring security oAuth2 section -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
         <!--Spring Section -->
         <dependency>

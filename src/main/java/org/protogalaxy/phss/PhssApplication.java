@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
 
-//TODO:change GroupId
 @SpringBootApplication
 @EnableConfigurationProperties({PhssStorageServiceConfig.class})
 @Import(PhssDatasourceConfig.class)
