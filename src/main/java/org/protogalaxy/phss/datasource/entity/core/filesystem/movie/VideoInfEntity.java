@@ -1,12 +1,13 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.movie;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "video_inf")
 public class VideoInfEntity {
     @Id
-    private int videoId;
+    private UUID videoId;
 
     @Column(name = "type")
     private String type;
@@ -51,11 +52,11 @@ public class VideoInfEntity {
         this.genre5 = genre5;
     }
 
-    public int getVideoId() {
+    public UUID getVideoId() {
         return videoId;
     }
 
-    public void setVideoId(int videoId) {
+    public void setVideoId(UUID videoId) {
         this.videoId = videoId;
     }
 

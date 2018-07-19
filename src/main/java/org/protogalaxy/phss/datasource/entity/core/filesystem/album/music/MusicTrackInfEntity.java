@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author SolitudeRA
@@ -19,7 +20,7 @@ import java.util.Date;
 @Table(name = "track_inf")
 public class MusicTrackInfEntity {
     @Id
-    private int trackId;
+    private UUID trackId;
 
     @Column(name = "playback_count")
     @ColumnDefault("0")
@@ -68,11 +69,11 @@ public class MusicTrackInfEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public int getTrackId() {
+    public UUID getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(int trackId) {
+    public void setTrackId(UUID trackId) {
         this.trackId = trackId;
     }
 

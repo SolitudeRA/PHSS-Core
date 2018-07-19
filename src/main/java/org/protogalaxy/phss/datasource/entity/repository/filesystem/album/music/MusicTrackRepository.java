@@ -7,9 +7,10 @@ import org.springframework.data.repository.Repository;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
+import java.util.UUID;
 
 @PreAuthorize("hasRole('ROLE_USER')")
-public interface MusicTrackRepository extends Repository<MusicTrackEntity, Integer>, CrudRepository<MusicTrackEntity, Integer>, PagingAndSortingRepository<MusicTrackEntity, Integer> {
+public interface MusicTrackRepository extends Repository<MusicTrackEntity, UUID>, CrudRepository<MusicTrackEntity, UUID>, PagingAndSortingRepository<MusicTrackEntity, UUID> {
     List<MusicTrackEntity> findByTitleAndOwner_UserEntity_Username(String title, String username);
 
     List<MusicTrackEntity> findByAlbumAndOwner_UserEntity_Username(String album, String username);

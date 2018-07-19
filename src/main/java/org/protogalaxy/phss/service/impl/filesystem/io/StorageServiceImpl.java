@@ -126,6 +126,11 @@ public class StorageServiceImpl implements StorageService {
         return null;
     }
 
+    @Override
+    public Path changeLocation(String username, Path currentPath, Path changedPath) {
+        return null;
+    }
+
     private Path pathCheck(Path path) {
         try {
             if (Files.notExists(path)) {

@@ -4,5 +4,7 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.VideoEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 
-public interface VideoRepository extends Repository<VideoEntity, Integer>, CrudRepository<VideoEntity, Integer> {
+import java.util.UUID;
+
+public interface VideoRepository extends Repository<VideoEntity, UUID>, CrudRepository<VideoEntity, UUID> {
 }

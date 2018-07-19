@@ -5,5 +5,7 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.book.BookEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 
-public interface BookRepository extends Repository<BookEntity, Integer>, CrudRepository<BookEntity, Integer> {
+import java.util.UUID;
+
+public interface BookRepository extends Repository<BookEntity, UUID>, CrudRepository<BookEntity, UUID> {
 }

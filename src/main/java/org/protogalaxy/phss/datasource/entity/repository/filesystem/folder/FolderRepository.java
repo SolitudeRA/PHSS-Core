@@ -4,5 +4,7 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.folder.FolderEntit
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 
-public interface FolderRepository extends Repository<FolderEntity, Integer>, CrudRepository<FolderEntity, Integer> {
+import java.util.UUID;
+
+public interface FolderRepository extends Repository<FolderEntity, UUID>, CrudRepository<FolderEntity, UUID> {
 }

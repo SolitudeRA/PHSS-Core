@@ -12,7 +12,7 @@ import java.util.UUID;
 public class BookEntity {
     @Id
     @GeneratedValue
-    private Integer id;
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_BOOK"))
@@ -43,7 +43,7 @@ public class BookEntity {
         this.isbn = isbn;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 

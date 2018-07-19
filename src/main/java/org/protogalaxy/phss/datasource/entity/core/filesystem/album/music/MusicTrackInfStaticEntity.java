@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author SolitudeRA
@@ -17,7 +18,7 @@ import java.util.Date;
 @Table(name = "track_inf_static")
 public class MusicTrackInfStaticEntity {
     @Id
-    private int trackId;
+    private UUID trackId;
 
     @Column(name = "size")
     private String size;
@@ -96,11 +97,11 @@ public class MusicTrackInfStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public int getTrackId() {
+    public UUID getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(int trackId) {
+    public void setTrackId(UUID trackId) {
         this.trackId = trackId;
     }
 

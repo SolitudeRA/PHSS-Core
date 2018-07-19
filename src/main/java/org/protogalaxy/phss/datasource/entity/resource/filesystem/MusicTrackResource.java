@@ -3,8 +3,10 @@ package org.protogalaxy.phss.datasource.entity.resource.filesystem;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
 import org.springframework.hateoas.ResourceSupport;
 
+import java.util.UUID;
+
 public class MusicTrackResource extends ResourceSupport {
-    private int trackIid;
+    private UUID trackIid;
 
     private String title;
 
@@ -22,7 +24,7 @@ public class MusicTrackResource extends ResourceSupport {
         this.albumArtist = musicTrackEntity.getAlbumArtist();
     }
 
-    public int getTrackIid() {
+    public UUID getTrackIid() {
         return trackIid;
     }
 

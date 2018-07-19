@@ -3,5 +3,7 @@ package org.protogalaxy.phss.datasource.entity.repository.filesystem.illustratio
 import org.protogalaxy.phss.datasource.entity.core.filesystem.illustration.IllustrationInfEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface IllustrationInfRepository extends CrudRepository<IllustrationInfEntity, Integer> {
+import java.util.UUID;
+
+public interface IllustrationInfRepository extends CrudRepository<IllustrationInfEntity, UUID> {
 }

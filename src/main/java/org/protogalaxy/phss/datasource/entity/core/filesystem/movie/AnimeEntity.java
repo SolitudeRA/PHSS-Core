@@ -3,13 +3,14 @@ package org.protogalaxy.phss.datasource.entity.core.filesystem.movie;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "anime")
 public class AnimeEntity {
     @Id
     @GeneratedValue
-    private int id;
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_ANIME"))
@@ -25,11 +26,11 @@ public class AnimeEntity {
         this.animeName = animeName;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

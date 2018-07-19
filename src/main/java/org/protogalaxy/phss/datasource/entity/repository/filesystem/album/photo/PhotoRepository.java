@@ -4,5 +4,7 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.album.photo.PhotoE
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 
-public interface PhotoRepository extends Repository<PhotoEntity, Integer>, CrudRepository<PhotoEntity, Integer> {
+import java.util.UUID;
+
+public interface PhotoRepository extends Repository<PhotoEntity, UUID>, CrudRepository<PhotoEntity, UUID> {
 }

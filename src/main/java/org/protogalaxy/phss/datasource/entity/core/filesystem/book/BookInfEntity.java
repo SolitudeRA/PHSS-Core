@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "book_inf")
 public class BookInfEntity {
     @Id
-    private Integer uuid;
+    private UUID uuid;
 
     @Column(name = "author")
     private String author;

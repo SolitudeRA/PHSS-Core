@@ -4,5 +4,7 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentE
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 
-public interface DocumentRepository extends Repository<DocumentEntity, Integer>, CrudRepository<DocumentEntity, Integer> {
+import java.util.UUID;
+
+public interface DocumentRepository extends Repository<DocumentEntity, UUID>, CrudRepository<DocumentEntity, UUID> {
 }
