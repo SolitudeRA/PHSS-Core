@@ -59,7 +59,7 @@ public class StorageServiceImpl implements StorageService {
         byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
         try {
             Path realPath = Files.move(tempFilePath, pathCheck(musicLocation.resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
-            return mapper.writeValueAsString(fileRegisteringService.registerMusic(username, metadata, artwork, realPath));
+            return mapper.writeValueAsString(fileRegisteringService.registerTrack(username, metadata, artwork, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
         }
@@ -76,7 +76,7 @@ public class StorageServiceImpl implements StorageService {
             byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
             try {
                 Path realPath = Files.move(tempFilePath, pathCheck(musicLocation.resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
-                musicTrackEntities.add(fileRegisteringService.registerMusic(username, metadata, artwork, realPath));
+                musicTrackEntities.add(fileRegisteringService.registerTrack(username, metadata, artwork, realPath));
             } catch (IOException e) {
                 throw new StorageException("Could not move temp file", e);
             }

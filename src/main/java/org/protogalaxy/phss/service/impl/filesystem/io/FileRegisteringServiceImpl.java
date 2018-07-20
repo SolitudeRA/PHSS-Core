@@ -3,8 +3,14 @@ package org.protogalaxy.phss.service.impl.filesystem.io;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackInfEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackInfStaticEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.album.photo.PhotoEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentInfEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.illustration.IllustrationEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.AnimeEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.MovieEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.VideoEntity;
 import org.protogalaxy.phss.datasource.entity.repository.filesystem.album.music.MusicTrackRepository;
 import org.protogalaxy.phss.datasource.entity.repository.filesystem.document.DocumentRepository;
 import org.protogalaxy.phss.datasource.entity.repository.filesystem.main.FilesystemMainRepository;
@@ -31,7 +37,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public MusicTrackEntity registerMusic(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception {
+    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception {
         MusicTrackEntity trackEntity = new MusicTrackEntity(
                 filesystemMainRepository.findByUserEntity_Username(username),
                 metadata.get("title").toString(),
@@ -57,10 +63,40 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
+    public AnimeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception {
+        return null;
+    }
+
+    @Override
+    public MovieEntity registerMovie(String username, Map<String, String> metadata, Path path) throws Exception {
+        return null;
+    }
+
+    @Override
+    public VideoEntity registerVideo(String username, Map<String, String> metadata, Path path) throws Exception {
+        return null;
+    }
+
+    @Override
+    public PhotoEntity registerPhoto(String username, Map<String, String> metadata, Path path) throws Exception {
+        return null;
+    }
+
+    @Override
+    public BookEntity registerBook(String username, Map<String, String> metadata, Path path) throws Exception {
+        return null;
+    }
+
+    @Override
     public DocumentEntity registerDocument(String username, String title, String type, Path path) {
         DocumentEntity documentEntity = new DocumentEntity(filesystemMainRepository.findByUserEntity_Username(username), title, type);
         documentEntity.setDocumentInfEntity(new DocumentInfEntity(documentEntity));
         documentRepository.save(documentEntity);
         return documentEntity;
+    }
+
+    @Override
+    public IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception {
+        return null;
     }
 }
