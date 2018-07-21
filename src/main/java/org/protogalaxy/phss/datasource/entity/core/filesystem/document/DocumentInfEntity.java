@@ -13,6 +13,15 @@ public class DocumentInfEntity {
     @Id
     private UUID documentId;
 
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "categories")
+    private String categories;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -45,6 +54,14 @@ public class DocumentInfEntity {
 
     public void setDocumentId(UUID documentId) {
         this.documentId = documentId;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 
     public Date getGmtCreate() {
