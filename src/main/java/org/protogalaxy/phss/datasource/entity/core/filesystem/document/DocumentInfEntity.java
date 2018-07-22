@@ -19,6 +19,15 @@ public class DocumentInfEntity {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "year")
+    private int year;
+
+    @Column(name = "month")
+    private int month;
+
+    @Column(name = "pages")
+    private int pages;
+
     @Column(name = "categories")
     private String categories;
 
