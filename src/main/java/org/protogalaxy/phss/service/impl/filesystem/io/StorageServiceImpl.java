@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.service.impl.filesystem.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.protogalaxy.phss.component.file.music.PhssMusicMetadata;
+import org.protogalaxy.phss.component.file.music.MusicMetadata;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
@@ -29,13 +29,13 @@ public class StorageServiceImpl implements StorageService {
     private final Path photoLocation;
 
     private final CachingServiceImpl cachingService;
-    private final PhssMusicMetadata musicMetadataService;
+    private final MusicMetadata musicMetadataService;
     private final FileRegisteringServiceImpl fileRegisteringService;
 
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
                               CachingServiceImpl cachingService,
-                              PhssMusicMetadata phssMusicMetadata,
+                              MusicMetadata musicMetadata,
                               FileRegisteringServiceImpl fileRegisteringService) {
         this.musicLocation = config.getMusicLocation();
         this.animeLocation = config.getAnimeLocation();
@@ -46,7 +46,7 @@ public class StorageServiceImpl implements StorageService {
         this.illustrationLocation = config.getIllustrationLocation();
         this.photoLocation = config.getPhotoLocation();
         this.cachingService = cachingService;
-        this.musicMetadataService = phssMusicMetadata;
+        this.musicMetadataService = musicMetadata;
         this.fileRegisteringService = fileRegisteringService;
     }
 

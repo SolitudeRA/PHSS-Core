@@ -1,12 +1,10 @@
 package org.protogalaxy.phss.test.ffmpeg;
 
-import org.protogalaxy.phss.component.file.music.PhssMusicMetadata;
+import org.protogalaxy.phss.component.file.music.MusicMetadata;
 import org.bytedeco.javacpp.*;
 
-import static org.bytedeco.javacpp.avcodec.*;
 import static org.bytedeco.javacpp.avformat.*;
 import static org.bytedeco.javacpp.avutil.*;
-import static org.bytedeco.javacpp.swscale.*;
 
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Frame;
@@ -30,7 +28,7 @@ import java.text.SimpleDateFormat;
 @RunWith(SpringRunner.class)
 public class ffmpegtest {
     @Autowired
-    PhssMusicMetadata phssMusicMetadata;
+    MusicMetadata musicMetadata;
 
     @Test
     public void singleMetadataTest() {
@@ -78,7 +76,7 @@ public class ffmpegtest {
     @Test
     public void metadataTest() throws Exception{
         Path path = Paths.get("phssStorage/Alpha/test.aiff");
-        System.out.println(phssMusicMetadata.readMetaData(path));
+        System.out.println(musicMetadata.readMetaData(path));
     }
 
     @Test

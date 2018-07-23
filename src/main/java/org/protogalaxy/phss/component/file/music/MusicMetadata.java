@@ -21,7 +21,7 @@ import java.util.List;
 
 
 @Component
-public class PhssMusicMetadata {
+public class MusicMetadata {
     private List<String> metadataList = Arrays.asList("title", "album", "artist", "album_artist", "date", "genre", "composer", "track", "disc", "bitrate", "comment");
 
     /**
