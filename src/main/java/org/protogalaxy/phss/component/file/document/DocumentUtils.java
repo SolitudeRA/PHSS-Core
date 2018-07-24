@@ -18,7 +18,7 @@ public class DocumentUtils {
     }
 
     public Map<String, String> getDocumentMetadata(Path path) {
-        Map<String, String> metadata = new HashMap<>();
+        Map<String, String> metadata;
         switch (fileCommonUtils.getMimeType(path)) {
             case FileConsts.MIME_ADOBE_PDF:
                 metadata = getMetadataAdobePdf(path);
