@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ffmpegtest {
+public class FFmpegTest {
     @Autowired
     MusicMetadata musicMetadata;
 

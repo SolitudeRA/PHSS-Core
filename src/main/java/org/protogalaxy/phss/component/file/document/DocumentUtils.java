@@ -1,12 +1,16 @@
 package org.protogalaxy.phss.component.file.document;
 
+import org.apache.poi.hwpf.extractor.Word6Extractor;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.exception.component.file.ComponentFileInvalidMimeTypeException;
 import org.springframework.stereotype.Component;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
+
 import java.util.Map;
 
 @Component
@@ -17,7 +21,7 @@ public class DocumentUtils {
         this.fileCommonUtils = fileCommonUtils;
     }
 
-    public Map<String, String> getDocumentMetadata(Path path) {
+    public Map<String, String> getDocumentMetadata(Path path) throws Exception{
         Map<String, String> metadata;
         switch (fileCommonUtils.getMimeType(path)) {
             case FileConsts.MIME_ADOBE_PDF:
@@ -87,7 +91,8 @@ public class DocumentUtils {
         return null;
     }
 
-    private Map<String, String> getMetadataMicroSoftWordOld(Path path) {
+    private Map<String, String> getMetadataMicroSoftWordOld(Path path) throws Exception {
+        WordExtractor extractor = new WordExtractor(Files.newInputStream(path));
         return null;
     }
 
@@ -99,7 +104,8 @@ public class DocumentUtils {
         return null;
     }
 
-    private Map<String, String> getMetadataMicroSoftWord(Path path) {
+    private Map<String, String> getMetadataMicroSoftWord(Path path) throws Exception {
+        Word6Extractor extractor = new Word6Extractor(Files.newInputStream(path));
         return null;
     }
 

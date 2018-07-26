@@ -9,6 +9,7 @@ import static org.bytedeco.javacpp.swscale.*;
 
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
+import org.protogalaxy.phss.component.file.FileConsts;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -17,12 +18,11 @@ import java.io.ByteArrayOutputStream;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 
 
 @Component
 public class MusicMetadata {
-    private List<String> metadataList = Arrays.asList("title", "album", "artist", "album_artist", "date", "genre", "composer", "track", "disc", "bitrate", "comment");
+
 
     /**
      * Read meta data of music
@@ -41,18 +41,18 @@ public class MusicMetadata {
         while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
             metadataFullMap.put(entry.key().getString(), entry.value().getString());
         }
-        for (String key : metadataList) {
+        for (String key : FileConsts.METADATA_AUDIO_STANDARD_LIST) {
             if (metadataFullMap.get(key) != null) {
                 metadataCurrentMap.put(key, metadataFullMap.get(key));
             } else {
                 metadataCurrentMap.put(key, "");
             }
         }
-        metadataCurrentMap.put("duration", formatDuration(avFormatContext.duration()));
-        metadataCurrentMap.put("bitrate", formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
-        metadataCurrentMap.put("sample_rate", avFormatContext.streams(0).codecpar().sample_rate());
-        metadataCurrentMap.put("bit_depth", avFormatContext.streams(0).codecpar().bits_per_raw_sample());
-        metadataCurrentMap.put("size", formatSize(path.toFile().length()));
+        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_DURATION, formatDuration(avFormatContext.duration()));
+        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_BITRATE, formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
+        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
+        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
+        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_SIZE, formatSize(path.toFile().length()));
         avformat_close_input(avFormatContext);
         return metadataCurrentMap;
     }
@@ -69,7 +69,7 @@ public class MusicMetadata {
         grabber.start();
         BufferedImage bufferedImage = converter.getBufferedImage(grabber.grabImage());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", outputStream);
+        ImageIO.write(bufferedImage, "png", outputStream);
         grabber.close();
         return outputStream.toByteArray();
     }
