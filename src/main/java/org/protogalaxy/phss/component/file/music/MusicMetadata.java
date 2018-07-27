@@ -22,7 +22,41 @@ import java.util.*;
 
 @Component
 public class MusicMetadata {
-
+    //Audio metadata list
+    private static List<String>
+            METADATA_AUDIO_STANDARD_LIST = Arrays.asList(
+            FileConsts.METADATA_AUDIO_TITLE,
+            FileConsts.METADATA_AUDIO_ALBUM,
+            FileConsts.METADATA_AUDIO_ARTIST,
+            FileConsts.METADATA_AUDIO_ALBUMARTIST,
+            FileConsts.METADATA_AUDIO_COMPOSER,
+            FileConsts.METADATA_AUDIO_PERFORMER,
+            FileConsts.METADATA_AUDIO_DATE,
+            FileConsts.METADATA_AUDIO_TRACK,
+            FileConsts.METADATA_AUDIO_DISC,
+            FileConsts.METADATA_AUDIO_GENRE,
+            FileConsts.METADATA_AUDIO_PUBLISHER,
+            FileConsts.METADATA_AUDIO_COMMENT
+    ), METADATA_AUDIO_FULL_LIST = Arrays.asList(
+            FileConsts.METADATA_AUDIO_TITLE,
+            FileConsts.METADATA_AUDIO_ALBUM,
+            FileConsts.METADATA_AUDIO_ARTIST,
+            FileConsts.METADATA_AUDIO_ALBUMARTIST,
+            FileConsts.METADATA_AUDIO_COMPOSER,
+            FileConsts.METADATA_AUDIO_PERFORMER,
+            FileConsts.METADATA_AUDIO_DATE,
+            FileConsts.METADATA_AUDIO_TRACK,
+            FileConsts.METADATA_AUDIO_DISC,
+            FileConsts.METADATA_AUDIO_GENRE,
+            FileConsts.METADATA_AUDIO_PUBLISHER,
+            FileConsts.METADATA_AUDIO_COMMENT,
+            FileConsts.METADATA_AUDIO_DURATION,
+            FileConsts.METADATA_AUDIO_BITRATE,
+            FileConsts.METADATA_AUDIO_SAMPLERATE,
+            FileConsts.METADATA_AUDIO_BITDEPTH,
+            FileConsts.METADATA_AUDIO_SIZE,
+            FileConsts.METADATA_AUDIO_COVER
+    );
 
     /**
      * Read meta data of music
@@ -41,7 +75,7 @@ public class MusicMetadata {
         while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
             metadataFullMap.put(entry.key().getString(), entry.value().getString());
         }
-        for (String key : FileConsts.METADATA_AUDIO_STANDARD_LIST) {
+        for (String key : METADATA_AUDIO_STANDARD_LIST) {
             if (metadataFullMap.get(key) != null) {
                 metadataCurrentMap.put(key, metadataFullMap.get(key));
             } else {

@@ -1,9 +1,6 @@
 package org.protogalaxy.phss.component.file;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 public final class FileConsts {
     //Document MIME types
     public static final String
@@ -24,7 +21,17 @@ public final class FileConsts {
             MIME_LATEX = "application/x-latex";
     //Document metadata string
     public static final String
-            METADATA_DOCUMENT_AUTHOR = "author";
+            METADATA_MICROSOFT_WORD_OLD_TITLE = "title",
+            METADATA_MICROSOFT_WORD_OLD_AUTHOR = "author",
+            METADATA_MICROSOFT_WORD_OLD_KEYWORDS = "keywords",
+            METADATA_MICROSOFT_WORD_OLD_COMMENTS = "comments",
+            METADATA_MICROSOFT_WORD_OLD_LASTAUTHOR = "last_author",
+            METADATA_MICROSOFT_WORD_OLD_EDITTIME = "edit_time",
+            METADATA_MICROSOFT_WORD_OLD_CREATEDTM = "create_dtm",
+            METADATA_MICROSOFT_WORD_OLD_LASTSAVEDTM = "last_save_dtm",
+            METADATA_MICROSOFT_WORD_OLD_PAGECOUNT = "page_count",
+            METADATA_MICROSOFT_WORD_OLD_WORDCOUNT = "word_count",
+            METADATA_MICROSOFT_WORD_OLD_CHARCOUNT = "char_count";
     //Audio metadata string
     public static final String
             METADATA_AUDIO_TITLE = "title",
@@ -45,39 +52,4 @@ public final class FileConsts {
             METADATA_AUDIO_BITDEPTH = "bit_depth",
             METADATA_AUDIO_SIZE = "size",
             METADATA_AUDIO_COVER = "cover";
-    //Audio metadata list
-    public static final List<String>
-            METADATA_AUDIO_STANDARD_LIST = Arrays.asList(
-            METADATA_AUDIO_TITLE,
-            METADATA_AUDIO_ALBUM,
-            METADATA_AUDIO_ARTIST,
-            METADATA_AUDIO_ALBUMARTIST,
-            METADATA_AUDIO_COMPOSER,
-            METADATA_AUDIO_PERFORMER,
-            METADATA_AUDIO_DATE,
-            METADATA_AUDIO_TRACK,
-            METADATA_AUDIO_DISC,
-            METADATA_AUDIO_GENRE,
-            METADATA_AUDIO_PUBLISHER,
-            METADATA_AUDIO_COMMENT
-    ), METADATA_AUDIO_FULL_LIST = Arrays.asList(
-            METADATA_AUDIO_TITLE,
-            METADATA_AUDIO_ALBUM,
-            METADATA_AUDIO_ARTIST,
-            METADATA_AUDIO_ALBUMARTIST,
-            METADATA_AUDIO_COMPOSER,
-            METADATA_AUDIO_PERFORMER,
-            METADATA_AUDIO_DATE,
-            METADATA_AUDIO_TRACK,
-            METADATA_AUDIO_DISC,
-            METADATA_AUDIO_GENRE,
-            METADATA_AUDIO_PUBLISHER,
-            METADATA_AUDIO_COMMENT,
-            METADATA_AUDIO_DURATION,
-            METADATA_AUDIO_BITRATE,
-            METADATA_AUDIO_SAMPLERATE,
-            METADATA_AUDIO_BITDEPTH,
-            METADATA_AUDIO_SIZE,
-            METADATA_AUDIO_COVER
-    );
 }

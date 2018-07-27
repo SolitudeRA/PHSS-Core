@@ -19,17 +19,35 @@ public class DocumentInfEntity {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "year")
-    private int year;
+    @Column(name = "keywords")
+    private String keyWords;
 
-    @Column(name = "month")
-    private int month;
+    @Column(name = "comments")
+    private String comments;
 
-    @Column(name = "pages")
-    private int pages;
+    @Column(name = "last_author")
+    private String lastAuthor;
 
-    @Column(name = "categories")
-    private String categories;
+    @Column(name = "edit_time")
+    private String editTime;
+
+    @Column(name = "create_dtm")
+    private String createDtm;
+
+    @Column(name = "last_save_dtm")
+    private String lastSaveDtm;
+
+    @Column(name = "page_count")
+    private int pageCount;
+
+    @Column(name = "word_count")
+    private int wordCount;
+
+    @Column(name = "char_count")
+    private int charCount;
+
+    @Column(name = "category")
+    private String category;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
@@ -52,9 +70,20 @@ public class DocumentInfEntity {
         this.documentEntity = documentEntity;
     }
 
-    public DocumentInfEntity(Date gmtCreate, Date gmtModified) {
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
+    public DocumentInfEntity(String title, String author, String keyWords, String comments, String lastAuthor, String editTime, String createDtm, String lastSaveDtm, int pageCount, int wordCount, int charCount, String category, DocumentEntity documentEntity) {
+        this.title = title;
+        this.author = author;
+        this.keyWords = keyWords;
+        this.comments = comments;
+        this.lastAuthor = lastAuthor;
+        this.editTime = editTime;
+        this.createDtm = createDtm;
+        this.lastSaveDtm = lastSaveDtm;
+        this.pageCount = pageCount;
+        this.wordCount = wordCount;
+        this.charCount = charCount;
+        this.category = category;
+        this.documentEntity = documentEntity;
     }
 
     public UUID getDocumentId() {
@@ -65,16 +94,108 @@ public class DocumentInfEntity {
         this.documentId = documentId;
     }
 
-    public String getCategories() {
-        return categories;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCategories(String categories) {
-        this.categories = categories;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(String keyWords) {
+        this.keyWords = keyWords;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getLastAuthor() {
+        return lastAuthor;
+    }
+
+    public void setLastAuthor(String lastAuthor) {
+        this.lastAuthor = lastAuthor;
+    }
+
+    public String getEditTime() {
+        return editTime;
+    }
+
+    public void setEditTime(String editTime) {
+        this.editTime = editTime;
+    }
+
+    public String getCreateDtm() {
+        return createDtm;
+    }
+
+    public void setCreateDtm(String createDtm) {
+        this.createDtm = createDtm;
+    }
+
+    public String getLastSaveDtm() {
+        return lastSaveDtm;
+    }
+
+    public void setLastSaveDtm(String lastSaveDtm) {
+        this.lastSaveDtm = lastSaveDtm;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public int getWordCount() {
+        return wordCount;
+    }
+
+    public void setWordCount(int wordCount) {
+        this.wordCount = wordCount;
+    }
+
+    public int getCharCount() {
+        return charCount;
+    }
+
+    public void setCharCount(int charCount) {
+        this.charCount = charCount;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Date getGmtCreate() {
         return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified() {
