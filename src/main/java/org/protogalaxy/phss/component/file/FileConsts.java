@@ -32,6 +32,15 @@ public final class FileConsts {
             METADATA_MICROSOFT_WORD_OLD_PAGECOUNT = "page_count",
             METADATA_MICROSOFT_WORD_OLD_WORDCOUNT = "word_count",
             METADATA_MICROSOFT_WORD_OLD_CHARCOUNT = "char_count";
+    public static final String
+            METADATA_MICROSOFT_WORD_TITLE = "title",
+            METADATA_MICROSOFT_WORD_CREATOR = "creator",
+            METADATA_MICROSOFT_WORD_KEYWORDS = "keywords",
+            METADATA_MICROSOFT_WORD_CREATED = "created",
+            METADATA_MICROSOFT_WORD_MODIFIED = "modified",
+            METADATA_MICROSOFT_WORD_CHARACTERS = "characters",
+            METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES = "characters_with_space",
+            METADATA_MICROSOFT_WORD_PAGES = "pages";
     //Audio metadata string
     public static final String
             METADATA_AUDIO_TITLE = "title",

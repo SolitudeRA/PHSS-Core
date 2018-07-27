@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class DocumentUtils {
     private FileCommonUtils fileCommonUtils;
-    private static List<String> MICROSOFT_WORD_OLD_METADATA_LIST = Arrays.asList(
+    private static final List<String> MICROSOFT_WORD_OLD_METADATA_LIST = Arrays.asList(
             FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE,
             FileConsts.METADATA_MICROSOFT_WORD_OLD_AUTHOR,
             FileConsts.METADATA_MICROSOFT_WORD_OLD_KEYWORDS,
@@ -33,6 +33,16 @@ public class DocumentUtils {
             FileConsts.METADATA_MICROSOFT_WORD_OLD_PAGECOUNT,
             FileConsts.METADATA_MICROSOFT_WORD_OLD_WORDCOUNT,
             FileConsts.METADATA_MICROSOFT_WORD_OLD_CHARCOUNT
+    );
+    private static final List<String> MICROSOFT_WORD_METADATA_LIST = Arrays.asList(
+            FileConsts.METADATA_MICROSOFT_WORD_TITLE,
+            FileConsts.METADATA_MICROSOFT_WORD_CREATOR,
+            FileConsts.METADATA_MICROSOFT_WORD_KEYWORDS,
+            FileConsts.METADATA_MICROSOFT_WORD_CREATED,
+            FileConsts.METADATA_MICROSOFT_WORD_MODIFIED,
+            FileConsts.METADATA_MICROSOFT_WORD_CHARACTERS,
+            FileConsts.METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES,
+            FileConsts.METADATA_MICROSOFT_WORD_PAGES
     );
 
     public DocumentUtils(FileCommonUtils fileCommonUtils) {
@@ -139,6 +149,15 @@ public class DocumentUtils {
         Map<String, Object> metadata = new HashMap<>();
         XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
+        POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_TITLE, coreProperties.getTitle());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATOR, coreProperties.getCreator());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_KEYWORDS, coreProperties.getKeywords());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATED, coreProperties.getCreated());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIED, coreProperties.getModified());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERS, extendedProperties.getCharacters());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_PAGES, extendedProperties.getPages());
         return metadata;
     }
 

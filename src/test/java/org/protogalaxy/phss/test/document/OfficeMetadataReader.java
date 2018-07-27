@@ -12,13 +12,13 @@ import java.nio.file.Paths;
 @DisplayName("Office metadata reader test")
 public class OfficeMetadataReader {
     @Test
-    public void wordMetadataReader() throws Exception {
+    public void docMetadataReader() throws Exception {
         WordExtractor extractor = new WordExtractor(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.doc")));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
 
     @Test
-    public void word6MetadataReader()throws Exception{
+    public void docxMetadataReader()throws Exception{
         XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.docx"))));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
