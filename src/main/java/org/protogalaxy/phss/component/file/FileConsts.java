@@ -21,26 +21,26 @@ public final class FileConsts {
             MIME_LATEX = "application/x-latex";
     //Document metadata string
     public static final String
-            METADATA_MICROSOFT_WORD_OLD_TITLE = "title",
-            METADATA_MICROSOFT_WORD_OLD_AUTHOR = "author",
-            METADATA_MICROSOFT_WORD_OLD_KEYWORDS = "keywords",
-            METADATA_MICROSOFT_WORD_OLD_COMMENTS = "comments",
-            METADATA_MICROSOFT_WORD_OLD_LASTAUTHOR = "last_author",
-            METADATA_MICROSOFT_WORD_OLD_EDITTIME = "edit_time",
-            METADATA_MICROSOFT_WORD_OLD_CREATEDTM = "create_dtm",
-            METADATA_MICROSOFT_WORD_OLD_LASTSAVEDTM = "last_save_dtm",
-            METADATA_MICROSOFT_WORD_OLD_PAGECOUNT = "page_count",
-            METADATA_MICROSOFT_WORD_OLD_WORDCOUNT = "word_count",
-            METADATA_MICROSOFT_WORD_OLD_CHARCOUNT = "char_count";
+            METADATA_MICROSOFT_OFFICE_OLD_TITLE = "title",
+            METADATA_MICROSOFT_OFFICE_OLD_AUTHOR = "author",
+            METADATA_MICROSOFT_OFFICE_OLD_KEYWORDS = "keywords",
+            METADATA_MICROSOFT_OFFICE_OLD_COMMENTS = "comments",
+            METADATA_MICROSOFT_OFFICE_OLD_LASTAUTHOR = "last_author",
+            METADATA_MICROSOFT_OFFICE_OLD_EDITTIME = "edit_time",
+            METADATA_MICROSOFT_OFFICE_OLD_CREATEDTM = "create_dtm",
+            METADATA_MICROSOFT_OFFICE_OLD_LASTSAVEDTM = "last_save_dtm",
+            METADATA_MICROSOFT_OFFICE_OLD_PAGECOUNT = "page_count",
+            METADATA_MICROSOFT_OFFICE_OLD_WORDCOUNT = "word_count",
+            METADATA_MICROSOFT_OFFICE_OLD_CHARCOUNT = "char_count";
     public static final String
-            METADATA_MICROSOFT_WORD_TITLE = "title",
-            METADATA_MICROSOFT_WORD_CREATOR = "creator",
-            METADATA_MICROSOFT_WORD_KEYWORDS = "keywords",
-            METADATA_MICROSOFT_WORD_CREATED = "created",
-            METADATA_MICROSOFT_WORD_MODIFIED = "modified",
-            METADATA_MICROSOFT_WORD_CHARACTERS = "characters",
-            METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES = "characters_with_space",
-            METADATA_MICROSOFT_WORD_PAGES = "pages";
+            METADATA_MICROSOFT_OFFICE_TITLE = "title",
+            METADATA_MICROSOFT_OFFICE_CREATOR = "creator",
+            METADATA_MICROSOFT_OFFICE_KEYWORDS = "keywords",
+            METADATA_MICROSOFT_OFFICE_CREATED = "created",
+            METADATA_MICROSOFT_OFFICE_MODIFIED = "modified",
+            METADATA_MICROSOFT_OFFICE_CHARACTERS = "characters",
+            METADATA_MICROSOFT_OFFICE_CHARACTERSWITHSPACES = "characters_with_space",
+            METADATA_MICROSOFT_OFFICE_PAGES = "pages";
     //Audio metadata string
     public static final String
             METADATA_AUDIO_TITLE = "title",
