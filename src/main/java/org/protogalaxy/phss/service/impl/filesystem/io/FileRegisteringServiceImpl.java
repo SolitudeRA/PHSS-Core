@@ -5,14 +5,11 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicT
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackInfStaticEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.book.BookEntity;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentEntity;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentInfEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.illustration.IllustrationEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.VideoEntity;
 import org.protogalaxy.phss.datasource.entity.repository.filesystem.album.music.MusicTrackRepository;
-import org.protogalaxy.phss.datasource.entity.repository.filesystem.document.DocumentRepository;
 import org.protogalaxy.phss.datasource.entity.repository.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.service.main.filesystem.io.FileRegisteringService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +22,12 @@ import java.util.Map;
 public class FileRegisteringServiceImpl implements FileRegisteringService {
     private final FilesystemMainRepository filesystemMainRepository;
     private final MusicTrackRepository musicTrackRepository;
-    private final DocumentRepository documentRepository;
 
     @Autowired
     public FileRegisteringServiceImpl(FilesystemMainRepository filesystemMainRepository,
-                                      MusicTrackRepository musicTrackRepository,
-                                      DocumentRepository documentRepository) {
+                                      MusicTrackRepository musicTrackRepository) {
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
-        this.documentRepository = documentRepository;
     }
 
     @Override
@@ -85,14 +79,6 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     @Override
     public BookEntity registerBook(String username, Map<String, String> metadata, Path path) throws Exception {
         return null;
-    }
-
-    @Override
-    public DocumentEntity registerDocument(String username, String title, String type, Path path) {
-        DocumentEntity documentEntity = new DocumentEntity(filesystemMainRepository.findByUserEntity_Username(username), title, type);
-        documentEntity.setDocumentInfEntity(new DocumentInfEntity(documentEntity));
-        documentRepository.save(documentEntity);
-        return documentEntity;
     }
 
     @Override

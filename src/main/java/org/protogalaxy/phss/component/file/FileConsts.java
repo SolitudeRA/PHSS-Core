@@ -57,27 +57,92 @@ public final class FileConsts {
             METADATA_ADOBE_PHOTOSHOP_COLORMODE = "photoshop:ColorMode",
             METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE = "tiff:BitsPerSample";
     public static final String
-            METADATA_MICROSOFT_OFFICE_OLD_TITLE = "title",
-            METADATA_MICROSOFT_OFFICE_OLD_AUTHOR = "author",
-            METADATA_MICROSOFT_OFFICE_OLD_KEYWORDS = "keywords",
-            METADATA_MICROSOFT_OFFICE_OLD_COMMENTS = "comments",
-            METADATA_MICROSOFT_OFFICE_OLD_LASTAUTHOR = "last_author",
-            METADATA_MICROSOFT_OFFICE_OLD_EDITTIME = "edit_time",
-            METADATA_MICROSOFT_OFFICE_OLD_CREATED = "create_dtm",
-            METADATA_MICROSOFT_OFFICE_OLD_LASTSAVEDTM = "last_save_dtm",
-            METADATA_MICROSOFT_OFFICE_OLD_PAGECOUNT = "page_count",
-            METADATA_MICROSOFT_OFFICE_OLD_WORDCOUNT = "word_count",
-            METADATA_MICROSOFT_OFFICE_OLD_CHARCOUNT = "char_count";
+            METADATA_MICROSOFT_WORD_OLD_TITLE = "title",
+            METADATA_MICROSOFT_WORD_OLD_AUTHOR = "author",
+            METADATA_MICROSOFT_WORD_OLD_KEYWORDS = "keywords",
+            METADATA_MICROSOFT_WORD_OLD_COMMENTS = "comments",
+            METADATA_MICROSOFT_WORD_OLD_LASTAUTHOR = "last_author",
+            METADATA_MICROSOFT_WORD_OLD_APPNAME = "app_name",
+            METADATA_MICROSOFT_WORD_OLD_EDITTIME = "edit_time",
+            METADATA_MICROSOFT_WORD_OLD_CREATED = "create_dtm",
+            METADATA_MICROSOFT_WORD_OLD_LASTSAVEDTM = "last_save_dtm",
+            METADATA_MICROSOFT_WORD_OLD_PAGECOUNT = "page_count",
+            METADATA_MICROSOFT_WORD_OLD_WORDCOUNT = "word_count",
+            METADATA_MICROSOFT_WORD_OLD_CHARCOUNT = "char_count",
+            METADATA_MICROSOFT_WORD_OLD_LINECOUNT = "line_count",
+            METADATA_MICROSOFT_WORD_OLD_PARCOUNT = "part_count";
     public static final String
-            METADATA_MICROSOFT_OFFICE_TITLE = "title",
-            METADATA_MICROSOFT_OFFICE_CREATOR = "creator",
-            METADATA_MICROSOFT_OFFICE_KEYWORDS = "keywords",
-            METADATA_MICROSOFT_OFFICE_CREATED = "created",
-            METADATA_MICROSOFT_OFFICE_MODIFIED = "modified",
-            METADATA_MICROSOFT_OFFICE_CHARACTERS = "characters",
-            METADATA_MICROSOFT_OFFICE_CHARACTERSWITHSPACES = "characters_with_space",
-            METADATA_MICROSOFT_OFFICE_PAGES = "pages";
-    //Metadata Lists
+            METADATA_MICROSOFT_EXECL_OLD_AUTHOR = "author",
+            METADATA_MICROSOFT_EXCEL_OLD_LASTAUTHOR = "last_author",
+            METADATA_MICROSOFT_EXCEL_OLD_APPNAME = "app_name",
+            METADATA_MICROSOFT_EXCEL_OLD_CREATEDTM = "create_dtm",
+            METADATA_MICROSOFT_EXCEL_OLD_LASTSAVEDTM = "last_save_dtm",
+            METADATA_MICROSOFT_EXCEL_OLD_DOCPARTS = "doc_parts";
+    public static final String
+            METADATA_MICROSOFT_POWERPOINT_OLD_TITLE = "title",
+            METADATA_MICROSOFT_POWERPOINT_OLD_AUTHOR = "author",
+            METADATA_MICROSOFT_POWERPOINT_OLD_LASTAUTHOR = "last_author",
+            METADATA_MICROSOFT_POWERPOINT_OLD_APPNAME = "app_name",
+            METADATA_MICROSOFT_POWERPOINT_OLD_EDITTIME = "edit_time",
+            METADATA_MICROSOFT_POWERPOINT_OLD_CREATEDTM = "create_dtm",
+            METADATA_MICROSOFT_POWERPOINT_OLD_LASTSAVEDTM = "last_save_dtm",
+            METADATA_MICROSOFT_POWERPOINT_OLD_WORDCOUNT = "word_count",
+            METADATA_MICROSOFT_POWERPOINT_OLD_PRESFORMAT = "present_format",
+            METADATA_MICROSOFT_POWERPOINT_OLD_BYTECOUNT = "byte_count",
+            METADATA_MICROSOFT_POWERPOINT_OLD_PARCOUNT = "part_count",
+            METADATA_MICROSOFT_POWERPOINT_OLD_SLIDECOUNT = "slide_count",
+            METADATA_MICROSOFT_POWERPOINT_OLD_NOTECOUNT = "note_count",
+            METADATA_MICROSOFT_POWERPOINT_OLD_HIDDENCOUNT = "hidden_count",
+            METADATA_MICROSOFT_POWERPOINT_OLD_MMCLIPCOUNT = "mmclip_count";
+    public static final String
+            METADATA_MICROSOFT_WORD_TITLE = "title",
+            METADATA_MICROSOFT_WORD_CREATOR = "creator",
+            METADATA_MICROSOFT_WORD_APPLICATION = "application",
+            METADATA_MICROSOFT_WORD_APPVERSION = "app_version",
+            METADATA_MICROSOFT_WORD_CREATED = "created",
+            METADATA_MICROSOFT_WORD_MODIFIED = "modified",
+            METADATA_MICROSOFT_WORD_LASTMODIFIEDBT="last_modified_by",
+            METADATA_MICROSOFT_WORD_CHARACTERS = "characters",
+            METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES = "characters_with_space",
+            METADATA_MICROSOFT_WORD_LINES = "lines",
+            METADATA_MICROSOFT_WORD_PAGES = "pages",
+            METADATA_MICROSOFT_WORD_PARAGRAPHS = "paragraphs";
+    //Audio metadata lists
+    public static List<String> METADATA_AUDIO_STANDARD_LIST = Arrays.asList(
+            METADATA_AUDIO_TITLE,
+            METADATA_AUDIO_ALBUM,
+            METADATA_AUDIO_ARTIST,
+            METADATA_AUDIO_ALBUMARTIST,
+            METADATA_AUDIO_COMPOSER,
+            METADATA_AUDIO_PERFORMER,
+            METADATA_AUDIO_DATE,
+            METADATA_AUDIO_TRACK,
+            METADATA_AUDIO_DISC,
+            METADATA_AUDIO_GENRE,
+            METADATA_AUDIO_PUBLISHER,
+            METADATA_AUDIO_COMMENT
+    );
+    public static List<String> METADATA_AUDIO_FULL_LIST = Arrays.asList(
+            METADATA_AUDIO_TITLE,
+            METADATA_AUDIO_ALBUM,
+            METADATA_AUDIO_ARTIST,
+            METADATA_AUDIO_ALBUMARTIST,
+            METADATA_AUDIO_COMPOSER,
+            METADATA_AUDIO_PERFORMER,
+            METADATA_AUDIO_DATE,
+            METADATA_AUDIO_TRACK,
+            METADATA_AUDIO_DISC,
+            METADATA_AUDIO_GENRE,
+            METADATA_AUDIO_PUBLISHER,
+            METADATA_AUDIO_COMMENT,
+            METADATA_AUDIO_DURATION,
+            METADATA_AUDIO_BITRATE,
+            METADATA_AUDIO_SAMPLERATE,
+            METADATA_AUDIO_BITDEPTH,
+            METADATA_AUDIO_SIZE,
+            METADATA_AUDIO_COVER
+    );
+    //Document metadata Lists
     public static final List<String> ADOBE_PDF_METADATA_LIST = Arrays.asList(
             METADATA_ADOBE_PDF_TITLE,
             METADATA_ADOBE_PDF_VERSION,
@@ -94,26 +159,9 @@ public final class FileConsts {
             METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE
     );
     public static final List<String> MICROSOFT_OFFICE_OLD_METADATA_LIST = Arrays.asList(
-            METADATA_MICROSOFT_OFFICE_OLD_TITLE,
-            METADATA_MICROSOFT_OFFICE_OLD_AUTHOR,
-            METADATA_MICROSOFT_OFFICE_OLD_KEYWORDS,
-            METADATA_MICROSOFT_OFFICE_OLD_COMMENTS,
-            METADATA_MICROSOFT_OFFICE_OLD_LASTAUTHOR,
-            METADATA_MICROSOFT_OFFICE_OLD_EDITTIME,
-            METADATA_MICROSOFT_OFFICE_OLD_CREATED,
-            METADATA_MICROSOFT_OFFICE_OLD_LASTSAVEDTM,
-            METADATA_MICROSOFT_OFFICE_OLD_PAGECOUNT,
-            METADATA_MICROSOFT_OFFICE_OLD_WORDCOUNT,
-            METADATA_MICROSOFT_OFFICE_OLD_CHARCOUNT
+
     );
     public static final List<String> MICROSOFT_OFFICE_METADATA_LIST = Arrays.asList(
-            METADATA_MICROSOFT_OFFICE_TITLE,
-            METADATA_MICROSOFT_OFFICE_CREATOR,
-            METADATA_MICROSOFT_OFFICE_KEYWORDS,
-            METADATA_MICROSOFT_OFFICE_CREATED,
-            METADATA_MICROSOFT_OFFICE_MODIFIED,
-            METADATA_MICROSOFT_OFFICE_CHARACTERS,
-            METADATA_MICROSOFT_OFFICE_CHARACTERSWITHSPACES,
-            METADATA_MICROSOFT_OFFICE_PAGES
+
     );
 }

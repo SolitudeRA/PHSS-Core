@@ -3,7 +3,6 @@ package org.protogalaxy.phss.service.main.filesystem.io;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.book.BookEntity;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.illustration.IllustrationEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.MovieEntity;
@@ -68,16 +67,6 @@ public interface FileRegisteringService {
      * @param path     path of the file
      */
     BookEntity registerBook(String username, Map<String, String> metadata, Path path) throws Exception;
-
-    /**
-     * Register document in database
-     *
-     * @param username name of the user
-     * @param title    title of the document
-     * @param type     type of the document
-     * @param path     path of the file
-     */
-    DocumentEntity registerDocument(String username, String title, String type, Path path) throws Exception;
 
     /**
      * Register illustration in database

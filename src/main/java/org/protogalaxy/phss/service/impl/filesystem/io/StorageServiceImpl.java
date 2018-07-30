@@ -111,14 +111,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public String storeDocument(String username, MultipartFile documentFile, String type) {
-        ObjectMapper mapper = new ObjectMapper();
-        String fileName = StringUtils.cleanPath(documentFile.getOriginalFilename());
-        try {
-            Path realPath = Files.write(documentLocation.resolve("default").resolve(fileName), documentFile.getBytes());
-            return mapper.writeValueAsString(fileRegisteringService.registerDocument(username, fileName, type, realPath));
-        } catch (IOException e) {
-            throw new StorageException("Could not save document", e);
-        }
+        return null;
     }
 
     @Override
