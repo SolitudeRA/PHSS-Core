@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.component.file.document;
 
 import org.apache.poi.POIXMLProperties;
+import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hslf.extractor.PowerPointExtractor;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
@@ -80,7 +81,7 @@ public class DocumentUtils {
                 metadata = getMetadataLatex(path);
                 break;
             default:
-                throw new ComponentFileInvalidMimeTypeException("Invalid MIME type");
+                throw new ComponentFileInvalidMimeTypeException("Invalid MIME type" );
         }
         return metadata;
     }
@@ -94,33 +95,119 @@ public class DocumentUtils {
     }
 
     private Map<String, Object> getMetadataMicroSoftWordOld(Path path) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
         WordExtractor extractor = new WordExtractor(Files.newInputStream(path));
-        return getMicroSoftOfficeMetadataOld(extractor.getSummaryInformation());
+        SummaryInformation summaryInformation = extractor.getSummaryInformation();
+        DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE, summaryInformation.getTitle());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_AUTHOR, summaryInformation.getAuthor());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_KEYWORDS, summaryInformation.getKeywords());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_COMMENTS, summaryInformation.getComments());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTAUTHOR, summaryInformation.getLastAuthor());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_APPNAME, summaryInformation.getApplicationName());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_EDITTIME, summaryInformation.getEditTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATEDTM, summaryInformation.getCreateDateTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTSAVEDTM, summaryInformation.getLastSaveDateTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_PAGECOUNT, summaryInformation.getPageCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_WORDCOUNT, summaryInformation.getWordCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CHARCOUNT, summaryInformation.getCharCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LINECOUNT, documentSummaryInformation.getLineCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_PARCOUNT, documentSummaryInformation.getParCount());
+        return metadata;
     }
 
     private Map<String, Object> getMetadataMicroSoftExcelOld(Path path) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
         ExcelExtractor extractor = new ExcelExtractor(new HSSFWorkbook(Files.newInputStream(path)));
-        return getMicroSoftOfficeMetadataOld(extractor.getSummaryInformation());
+        SummaryInformation summaryInformation = extractor.getSummaryInformation();
+        DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_AUTHOR, summaryInformation.getAuthor());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTAUTHOR, summaryInformation.getLastAuthor());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_APPNAME, summaryInformation.getApplicationName());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATEDTM, summaryInformation.getCreateDateTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTSAVEDTM, summaryInformation.getLastSaveDateTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_DOCPARTS, documentSummaryInformation.getDocparts());
+        return metadata;
     }
 
     private Map<String, Object> getMetadataMicroSoftPowerpointOld(Path path) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
         PowerPointExtractor extractor = new PowerPointExtractor(Files.newInputStream(path));
-        return getMicroSoftOfficeMetadataOld(extractor.getSummaryInformation());
+        SummaryInformation summaryInformation = extractor.getSummaryInformation();
+        DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE, summaryInformation.getTitle());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_AUTHOR, summaryInformation.getAuthor());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_LASTAUTHOR, summaryInformation.getLastAuthor());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_APPNAME, summaryInformation.getApplicationName());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_EDITTIME, summaryInformation.getEditTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATEDTM, summaryInformation.getCreateDateTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_LASTSAVEDTM, summaryInformation.getLastSaveDateTime());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_WORDCOUNT, summaryInformation.getWordCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PRESFORMAT, documentSummaryInformation.getPresentationFormat());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_BYTECOUNT, documentSummaryInformation.getByteCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PARCOUNT, documentSummaryInformation.getParCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_SLIDECOUNT, documentSummaryInformation.getSlideCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_NOTECOUNT, documentSummaryInformation.getNoteCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_HIDDENCOUNT, documentSummaryInformation.getHiddenCount());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MMCLIPCOUNT, documentSummaryInformation.getMMClipCount());
+        return metadata;
     }
 
     private Map<String, Object> getMetadataMicroSoftWord(Path path) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
         XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(Files.newInputStream(path)));
-        return getMicroSoftOfficeMetadata(extractor.getCoreProperties(), extractor.getExtendedProperties());
+        POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
+        POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_TITLE, coreProperties.getTitle());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATOR, coreProperties.getCreator());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_APPLICATION, extendedProperties.getApplication());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_APPVERSION, extendedProperties.getAppVersion());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATED, coreProperties.getCreated());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIED, coreProperties.getModified());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_LASTMODIFIEDBY, coreProperties.getLastModifiedByUser());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERS, extendedProperties.getCharacters());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_LINES, extendedProperties.getLines());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_PAGES, extendedProperties.getPages());
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_PARAGRAPHS, extendedProperties.getParagraphs());
+        return metadata;
     }
 
     private Map<String, Object> getMetadataMicroSoftExcel(Path path) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
         XSSFExcelExtractor extractor = new XSSFExcelExtractor(new XSSFWorkbook(Files.newInputStream(path)));
-        return getMicroSoftOfficeMetadata(extractor.getCoreProperties(), extractor.getExtendedProperties());
+        POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
+        POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_APPLICATION, extendedProperties.getApplication());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_APPVERSION, extendedProperties.getAppVersion());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED, coreProperties.getCreated());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIED, coreProperties.getModified());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CHARACTERS, extendedProperties.getCharacters());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_LINES, extendedProperties.getLines());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_PAGES, extendedProperties.getPages());
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_PARAGRAPHS, extendedProperties.getParagraphs());
+        return metadata;
     }
 
     private Map<String, Object> getMetadataMicroSoftPowerpoint(Path path) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
         XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(new XMLSlideShow(Files.newInputStream(path)));
-        return getMicroSoftOfficeMetadata(extractor.getCoreProperties(), extractor.getExtendedProperties());
+        POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
+        POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_TITLE, coreProperties.getTitle());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPLICATION, extendedProperties.getApplication());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPVERSION, extendedProperties.getAppVersion());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATOR, coreProperties.getCreator());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LASTMODIFIEDBY, coreProperties.getLastModifiedByUser());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIED, coreProperties.getModified());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERS, extendedProperties.getCharacters());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LINES, extendedProperties.getLines());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PAGES, extendedProperties.getPages());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PARAGRAPHS, extendedProperties.getParagraphs());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PRESENTATIONFORMAT, extendedProperties.getPresentationFormat());
+        return metadata;
     }
 
     private Map<String, Object> getMetadataOpenDocumentPresentation(Path path) {
@@ -143,34 +230,6 @@ public class DocumentUtils {
         return null;
     }
 
-    private Map<String, Object> getMicroSoftOfficeMetadataOld(SummaryInformation information) {
-        Map<String, Object> metadata = new HashMap<>();
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_TITLE, information.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_AUTHOR, information.getAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_KEYWORDS, information.getKeywords());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_COMMENTS, information.getComments());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_LASTAUTHOR, information.getLastAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_EDITTIME, information.getEditTime());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_CREATED, information.getCreateDateTime());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_LASTSAVEDTM, information.getLastSaveDateTime());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_PAGECOUNT, information.getPageCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_WORDCOUNT, information.getWordCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_OLD_CHARCOUNT, information.getCharCount());
-        return metadata;
-    }
-
-    private Map<String, Object> getMicroSoftOfficeMetadata(POIXMLProperties.CoreProperties coreProperties, POIXMLProperties.ExtendedProperties extendedProperties) {
-        Map<String, Object> metadata = new HashMap<>();
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_TITLE, coreProperties.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_CREATOR, coreProperties.getCreator());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_KEYWORDS, coreProperties.getKeywords());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_CREATED, coreProperties.getCreated());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_MODIFIED, coreProperties.getModified());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_CHARACTERS, extendedProperties.getCharacters());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
-        metadata.put(FileConsts.METADATA_MICROSOFT_OFFICE_PAGES, extendedProperties.getPages());
-        return metadata;
-    }
 
     private Map<String, Object> metadataFiller(List<String> metadataList, Metadata tikaMetadata) {
         Map<String, Object> metadata = new HashMap<>();
