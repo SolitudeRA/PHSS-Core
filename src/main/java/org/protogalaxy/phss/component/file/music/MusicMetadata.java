@@ -29,7 +29,6 @@ public class MusicMetadata {
      * @return Map of the music metadata
      */
     public Map<String, Object> readMetaData(Path path) throws Exception {
-        av_register_all();
         Map<String, Object> metadataFullMap = new HashMap<>();
         Map<String, Object> metadataCurrentMap = new HashMap<>();
         AVFormatContext avFormatContext = avformat_alloc_context();

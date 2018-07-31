@@ -32,7 +32,6 @@ public class FFmpegTest {
 
     @Test
     public void singleMetadataTest() {
-        av_register_all();
         AVFormatContext avFormatContext = avformat_alloc_context();
         avformat_open_input(avFormatContext, "phssStorage/Alpha/test.aiff", null, null);
         avformat_find_stream_info(avFormatContext, (PointerPointer) null);
@@ -52,7 +51,6 @@ public class FFmpegTest {
 
     @Test
     public void multiMetadataTest() {
-        av_register_all();
         AVFormatContext avFormatContext = avformat_alloc_context();
         avformat_open_input(avFormatContext, "phssStorage/Alpha/test.aiff", null, null);
         AVDictionaryEntry avDictionaryEntry = null;
@@ -65,7 +63,6 @@ public class FFmpegTest {
 
     @Test
     public void dumpFormatTest() {
-        av_register_all();
         AVFormatContext avFormatContext = avformat_alloc_context();
         avformat_open_input(avFormatContext, "phssStorage/Alpha/test.aiff", null, null);
         avformat_find_stream_info(avFormatContext, (PointerPointer) null);

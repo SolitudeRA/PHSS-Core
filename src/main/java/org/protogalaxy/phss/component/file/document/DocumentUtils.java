@@ -81,7 +81,8 @@ public class DocumentUtils {
                 metadata = getMetadataLatex(path);
                 break;
             default:
-                throw new ComponentFileInvalidMimeTypeException("Invalid MIME type" );
+                throw new ComponentFileInvalidMimeTypeException("Unsupported MIME type" );
+
         }
         return metadata;
     }
@@ -210,16 +211,16 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataOpenDocumentPresentation(Path path) {
-        return null;
+    private Map<String, Object> getMetadataOpenDocumentText(Path path) throws Exception {
+        return metadataFiller(FileConsts.OPENDOCUMENT_TEXT_METADATA_LIST, getTikaMetadata(path));
     }
 
-    private Map<String, Object> getMetadataOpenDocumentSpreadsheet(Path path) {
-        return null;
+    private Map<String, Object> getMetadataOpenDocumentSpreadsheet(Path path) throws Exception {
+        return metadataFiller(FileConsts.OPENDOCUMENT_SPREADSHEET_METADATA_LIST, getTikaMetadata(path));
     }
 
-    private Map<String, Object> getMetadataOpenDocumentText(Path path) {
-        return null;
+    private Map<String, Object> getMetadataOpenDocumentPresentation(Path path) throws Exception {
+        return metadataFiller(FileConsts.OPENDOCUMENT_SPREADSHEET_PRESENTATION_LIST, getTikaMetadata(path));
     }
 
     private Map<String, Object> getMetadataMarkdown(Path path) {
