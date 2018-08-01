@@ -22,6 +22,33 @@ public class DocumentMicrosoftExcelEntity {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "application")
+    private String application;
+
+    @Column(name = "app_version")
+    private String appVersion;
+
+    @Column(name = "created")
+    private Date created;
+
+    @Column(name = "modified")
+    private Date modified;
+
+    @Column(name = "characters")
+    private int characters;
+
+    @Column(name = "characters_with_spaces")
+    private int charactersWithSpaces;
+
+    @Column(name = "lines")
+    private int lines;
+
+    @Column(name = "pages")
+    private int pages;
+
+    @Column(name = "paragraphs")
+    private int paragraphs;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreationTimestamp
@@ -31,4 +58,121 @@ public class DocumentMicrosoftExcelEntity {
     @Column(name = "gmt_modified")
     @UpdateTimestamp
     private Date gmtModified;
+
+    public DocumentMicrosoftExcelEntity() {
+    }
+
+    public DocumentMicrosoftExcelEntity(FileSystemMainEntity fileSystemMainEntity, String title, String application, String appVersion, Date created, Date modified, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
+        this.fileSystemMainEntity = fileSystemMainEntity;
+        this.title = title;
+        this.application = application;
+        this.appVersion = appVersion;
+        this.created = created;
+        this.modified = modified;
+        this.characters = characters;
+        this.charactersWithSpaces = charactersWithSpaces;
+        this.lines = lines;
+        this.pages = pages;
+        this.paragraphs = paragraphs;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public FileSystemMainEntity getFileSystemMainEntity() {
+        return fileSystemMainEntity;
+    }
+
+    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
+        this.fileSystemMainEntity = fileSystemMainEntity;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public int getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(int characters) {
+        this.characters = characters;
+    }
+
+    public int getCharactersWithSpaces() {
+        return charactersWithSpaces;
+    }
+
+    public void setCharactersWithSpaces(int charactersWithSpaces) {
+        this.charactersWithSpaces = charactersWithSpaces;
+    }
+
+    public int getLines() {
+        return lines;
+    }
+
+    public void setLines(int lines) {
+        this.lines = lines;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public int getParagraphs() {
+        return paragraphs;
+    }
+
+    public void setParagraphs(int paragraphs) {
+        this.paragraphs = paragraphs;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
 }

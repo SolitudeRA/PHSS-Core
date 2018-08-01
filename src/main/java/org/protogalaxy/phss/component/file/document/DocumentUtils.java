@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//TODO: metadata reader format update
 @Component
 public class DocumentUtils {
     private FileCommonUtils fileCommonUtils;
@@ -81,7 +82,7 @@ public class DocumentUtils {
                 metadata = getMetadataLatex(path);
                 break;
             default:
-                throw new ComponentFileInvalidMimeTypeException("Unsupported MIME type" );
+                throw new ComponentFileInvalidMimeTypeException("Unsupported MIME type");
 
         }
         return metadata;
@@ -179,6 +180,7 @@ public class DocumentUtils {
         XSSFExcelExtractor extractor = new XSSFExcelExtractor(new XSSFWorkbook(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
         POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_TITLE, coreProperties.getTitle());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_APPLICATION, extendedProperties.getApplication());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_APPVERSION, extendedProperties.getAppVersion());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED, coreProperties.getCreated());
@@ -201,6 +203,7 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPVERSION, extendedProperties.getAppVersion());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATOR, coreProperties.getCreator());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LASTMODIFIEDBY, coreProperties.getLastModifiedByUser());
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATED, coreProperties.getCreated());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIED, coreProperties.getModified());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERS, extendedProperties.getCharacters());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());

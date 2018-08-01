@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @DisplayName("Open document metadata reader test" )
 public class OpenDocumentMetadataReader {
@@ -22,6 +24,8 @@ public class OpenDocumentMetadataReader {
         ParseContext context = new ParseContext();
         parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.odt" )), handler, metadata, context);
         System.out.println(metadata.toString());
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        System.out.println(dateFormat.parse(metadata.get("meta:creation-date")));
     }
 
     @Test
