@@ -9,8 +9,8 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.illustration.Illus
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.VideoEntity;
-import org.protogalaxy.phss.datasource.entity.repository.filesystem.album.music.MusicTrackRepository;
-import org.protogalaxy.phss.datasource.entity.repository.filesystem.main.FilesystemMainRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.album.music.MusicTrackRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.service.main.filesystem.io.FileRegisteringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

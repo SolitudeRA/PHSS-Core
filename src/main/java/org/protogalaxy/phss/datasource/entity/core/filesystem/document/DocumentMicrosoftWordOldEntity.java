@@ -1,81 +1,75 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "document_microsoft_word_old")
+@Document(collection = "document")
 public class DocumentMicrosoftWordOldEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT_MICROSOFT_WORD_OLD"))
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @Column(name = "title")
+    @Field("title")
     private String title;
 
-    @Column(name = "author")
+    @Field("author")
     private String author;
 
-    @Column(name = "keywords")
+    @Field("keywords")
     private String keywords;
 
-    @Column(name = "comments")
+    @Field("comments")
     private String comments;
 
-    @Column(name = "last_author")
+    @Field("last_author")
     private String lastAuthor;
 
-    @Column(name = "app_name")
+    @Field("app_name")
     private String appName;
 
-    @Column(name = "edit_time")
+    @Field("edit_time")
     private long editTime;
 
-    @Column(name = "create_dtm")
+    @Field("create_dtm")
     private Date createDtm;
 
-    @Column(name = "last_save_dtm")
+    @Field("last_save_dtm")
     private Date lastSaveDtm;
 
-    @Column(name = "page_count")
+    @Field("page_count")
     private int pageCount;
 
-    @Column(name = "word_count")
+    @Field("word_count")
     private int wordCount;
 
-    @Column(name = "char_count")
+    @Field("char_count")
     private int charCount;
 
-    @Column(name = "line_count")
+    @Field("line_count")
     private int lineCount;
 
-    @Column(name = "par_count")
+    @Field("par_count")
     private int parCount;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
+    @Field("gmt_create")
+    @CreatedDate
     private Date gmtCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
+    @Field("gmt_modified")
+    @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentMicrosoftWordOldEntity() {
-    }
-
-    public DocumentMicrosoftWordOldEntity(FileSystemMainEntity fileSystemMainEntity, String title, String author, String keywords, String comments, String lastAuthor, String appName, long editTime, Date createDtm, Date lastSaveDtm, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
+    @PersistenceConstructor
+    public DocumentMicrosoftWordOldEntity(String title, String author, String keywords, String comments, String lastAuthor, String appName, long editTime, Date createDtm, Date lastSaveDtm, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
         this.title = title;
         this.author = author;
         this.keywords = keywords;
@@ -94,14 +88,6 @@ public class DocumentMicrosoftWordOldEntity {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public FileSystemMainEntity getFileSystemMainEntity() {
-        return fileSystemMainEntity;
-    }
-
-    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
     public String getTitle() {

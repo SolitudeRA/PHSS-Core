@@ -1,54 +1,48 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "document_adobe_photoshop")
+@Document(collection = "document")
 public class DocumentAdobePhotoshopEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT_ADOBE_PHOTOSHOP"))
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @Column(name = "title")
+    @Field("title")
     private String title;
 
-    @Column(name = "width")
+    @Field("width")
     private int width;
 
-    @Column(name = "height")
+    @Field("height")
     private int height;
 
-    @Column(name = "color_mode")
+    @Field("color_mode")
     private String colorMode;
 
-    @Column(name = "bits_per_sample")
+    @Field("bits_per_sample")
     private int bitsPerSample;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
+    @Field("gmt_create")
+    @CreatedDate
     private Date gmtCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
+    @Field("gmt_modified")
+    @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentAdobePhotoshopEntity() {
-    }
-
-    public DocumentAdobePhotoshopEntity(FileSystemMainEntity fileSystemMainEntity, String title, int width, int height, String colorMode, int bitsPerSample) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
+    @PersistenceConstructor
+    public DocumentAdobePhotoshopEntity(String title, int width, int height, String colorMode, int bitsPerSample) {
         this.title = title;
         this.width = width;
         this.height = height;
@@ -58,18 +52,6 @@ public class DocumentAdobePhotoshopEntity {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public FileSystemMainEntity getFileSystemMainEntity() {
-        return fileSystemMainEntity;
-    }
-
-    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
     public String getTitle() {

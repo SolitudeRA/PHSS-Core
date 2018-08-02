@@ -1,69 +1,63 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "document_microsoft_excel")
+@Document(collection = "document")
 public class DocumentMicrosoftExcelEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT_MICROSOFT_EXCEL"))
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @Column(name = "title")
+    @Field("title")
     private String title;
 
-    @Column(name = "application")
+    @Field("application")
     private String application;
 
-    @Column(name = "app_version")
+    @Field("app_version")
     private String appVersion;
 
-    @Column(name = "created")
+    @Field("created")
     private Date created;
 
-    @Column(name = "modified")
+    @Field("modified")
     private Date modified;
 
-    @Column(name = "characters")
+    @Field("characters")
     private int characters;
 
-    @Column(name = "characters_with_spaces")
+    @Field("characters_with_spaces")
     private int charactersWithSpaces;
 
-    @Column(name = "lines")
+    @Field("lines")
     private int lines;
 
-    @Column(name = "pages")
+    @Field("pages")
     private int pages;
 
-    @Column(name = "paragraphs")
+    @Field("paragraphs")
     private int paragraphs;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
+    @Field("gmt_create")
+    @CreatedDate
     private Date gmtCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
+    @Field("gmt_modified")
+    @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentMicrosoftExcelEntity() {
-    }
-
-    public DocumentMicrosoftExcelEntity(FileSystemMainEntity fileSystemMainEntity, String title, String application, String appVersion, Date created, Date modified, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
+    @PersistenceConstructor
+    public DocumentMicrosoftExcelEntity(String title, String application, String appVersion, Date created, Date modified, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
         this.title = title;
         this.application = application;
         this.appVersion = appVersion;
@@ -78,14 +72,6 @@ public class DocumentMicrosoftExcelEntity {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public FileSystemMainEntity getFileSystemMainEntity() {
-        return fileSystemMainEntity;
-    }
-
-    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
     public String getTitle() {

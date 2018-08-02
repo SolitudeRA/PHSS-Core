@@ -1,57 +1,47 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "document_adobe_pdf")
+@Document(collection = "document")
 public class DocumentAdobePdfEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT_ADOBE_PDF"))
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @Column(name = "title")
+    @Field("title")
     private String title;
 
-    @Column(name = "version")
+    @Field("version")
     private String version;
 
-    @Column(name = "author")
+    @Field("author")
     private String author;
 
-    @Column(name = "producer")
+    @Field("producer")
     private String producer;
 
-    @Column(name = "created")
+    @Field("created")
     private Date created;
 
-    @Column(name = "modified")
+    @Field("modified")
     private Date modified;
 
+    @Field("gmt_create")
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
     private Date gmtCreate;
 
+    @Field("gmt_modified")
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
     private Date gmtModified;
 
-    public DocumentAdobePdfEntity() {
-    }
-
-    public DocumentAdobePdfEntity(FileSystemMainEntity fileSystemMainEntity, String title, String version, String author, String producer, Date created, Date modified) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
+    @PersistenceConstructor
+    public DocumentAdobePdfEntity(String title, String version, String author, String producer, Date created, Date modified) {
         this.title = title;
         this.version = version;
         this.author = author;
@@ -62,18 +52,6 @@ public class DocumentAdobePdfEntity {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public FileSystemMainEntity getFileSystemMainEntity() {
-        return fileSystemMainEntity;
-    }
-
-    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
     public String getTitle() {
@@ -128,15 +106,7 @@ public class DocumentAdobePdfEntity {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
     public Date getGmtModified() {
         return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
     }
 }

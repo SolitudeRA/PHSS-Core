@@ -1,72 +1,66 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "document_open_text")
+@Document(collection = "document")
 public class DocumentOpenTextEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT_OPEN_TEXT"))
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @Column(name = "title")
+    @Field("title")
     private String title;
 
-    @Column(name = "initial_author")
+    @Field("initial_author")
     private String initialAuthor;
 
-    @Column(name = "author")
+    @Field("author")
     private String author;
 
-    @Column(name = "creation_date")
+    @Field("creation_date")
     private Date creationDate;
 
-    @Column(name = "save_date")
+    @Field("save_date")
     private Date saveDate;
 
-    @Column(name = "word_count")
+    @Field("word_count")
     private int wordCount;
 
-    @Column(name = "character_count")
+    @Field("character_count")
     private int characterCount;
 
-    @Column(name = "image_count")
+    @Field("image_count")
     private int imageCount;
 
-    @Column(name = "par_count")
+    @Field("par_count")
     private int parCount;
 
-    @Column(name = "table_count")
+    @Field("table_count")
     private int tableCount;
 
-    @Column(name = "page_count")
+    @Field("page_count")
     private int pageCount;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
+    @Field("gmt_create")
+    @CreatedDate
     private Date gmtCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
+    @Field("gmt_modified")
+    @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentOpenTextEntity() {
-    }
-
-    public DocumentOpenTextEntity(FileSystemMainEntity fileSystemMainEntity, String title, String initialAuthor, String author, Date creationDate, Date saveDate, int wordCount, int characterCount, int imageCount, int parCount, int tableCount, int pageCount) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
+    @PersistenceConstructor
+    public DocumentOpenTextEntity(String title, String initialAuthor, String author, Date creationDate, Date saveDate, int wordCount, int characterCount, int imageCount, int parCount, int tableCount, int pageCount) {
         this.title = title;
         this.initialAuthor = initialAuthor;
         this.author = author;
@@ -82,14 +76,6 @@ public class DocumentOpenTextEntity {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public FileSystemMainEntity getFileSystemMainEntity() {
-        return fileSystemMainEntity;
-    }
-
-    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
     public String getTitle() {

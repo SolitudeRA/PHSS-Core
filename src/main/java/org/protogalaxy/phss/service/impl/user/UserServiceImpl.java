@@ -5,7 +5,7 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMai
 import org.protogalaxy.phss.datasource.entity.core.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.core.setting.SettingMainEntity;
 import org.protogalaxy.phss.datasource.entity.core.user.UserEntity;
-import org.protogalaxy.phss.datasource.entity.repository.user.UserRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.user.UserRepository;
 import org.protogalaxy.phss.service.main.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

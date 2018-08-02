@@ -1,75 +1,69 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "document_microsoft_word")
+@Document(collection = "document")
 public class DocumentMicrosoftWordEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT_MICROSOFT_WORD"))
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @Column(name = "title")
+    @Field("title")
     private String title;
 
-    @Column(name = "creator")
+    @Field("creator")
     private String creator;
 
-    @Column(name = "application")
+    @Field("application")
     private String application;
 
-    @Column(name = "app_version")
+    @Field("app_version")
     private String appVersion;
 
-    @Column(name = "created")
+    @Field("created")
     private Date created;
 
-    @Column(name = "modified")
+    @Field("modified")
     private Date modified;
 
-    @Column(name = "last_modified_by")
+    @Field("last_modified_by")
     private String lastModifiedBy;
 
-    @Column(name = "characters")
+    @Field("characters")
     private int characters;
 
-    @Column(name = "characters_with_spaces")
+    @Field("characters_with_spaces")
     private int charactersWithSpaces;
 
-    @Column(name = "lines")
+    @Field("lines")
     private int lines;
 
-    @Column(name = "pages")
+    @Field("pages")
     private int pages;
 
-    @Column(name = "paragraphs")
+    @Field("paragraphs")
     private int paragraphs;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
+    @Field("gmt_create")
+    @CreatedDate
     private Date gmtCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
+    @Field("gmt_modified")
+    @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentMicrosoftWordEntity() {
-    }
-
-    public DocumentMicrosoftWordEntity(FileSystemMainEntity fileSystemMainEntity, String title, String creator, String application, String appVersion, Date created, Date modified, String lastModifiedBy, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
+    @PersistenceConstructor
+    public DocumentMicrosoftWordEntity(String title, String creator, String application, String appVersion, Date created, Date modified, String lastModifiedBy, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
         this.title = title;
         this.creator = creator;
         this.application = application;
@@ -86,14 +80,6 @@ public class DocumentMicrosoftWordEntity {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public FileSystemMainEntity getFileSystemMainEntity() {
-        return fileSystemMainEntity;
-    }
-
-    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
     public String getTitle() {

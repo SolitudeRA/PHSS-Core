@@ -132,19 +132,23 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
         <!--Spring Section -->
         <dependency>
@@ -158,18 +162,23 @@
             <artifactId>java-jwt</artifactId>
             <version>${java-jwt.version}</version>
         </dependency>
-        <!-- Multimedia section
+        <!-- Multimedia section -->
         <dependency>
             <groupId>org.apache.ftpserver</groupId>
-            <artifactId>ftpserver</artifactId>
+            <artifactId>ftpserver-core</artifactId>
+            <version>${apache-ftpserver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ftpserver</groupId>
+            <artifactId>ftplet-api</artifactId>
             <version>${apache-ftpserver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jupnp</groupId>
-            <artifactId>jupnp</artifactId>
+            <artifactId>org.jupnp</artifactId>
             <version>${jupnp.version}</version>
         </dependency>
-        MySQL connector section -->
+        <!-- MySQL connector section -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -216,7 +225,7 @@
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>1.5.3</version>
+                <version>1.5.6</version>
                 <executions>
                     <execution>
                         <id>generate-docs</id>
@@ -241,7 +250,7 @@
 
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.21.0</version>
+                <version>2.22.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>

@@ -5,11 +5,11 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemSpa
 import org.protogalaxy.phss.datasource.entity.core.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.core.setting.SettingMainEntity;
 import org.protogalaxy.phss.datasource.entity.core.user.UserEntity;
-import org.protogalaxy.phss.datasource.entity.repository.filesystem.main.FilesystemMainRepository;
-import org.protogalaxy.phss.datasource.entity.repository.filesystem.main.FilesystemSpaceRepository;
-import org.protogalaxy.phss.datasource.entity.repository.personaldata.PersonalDataRepository;
-import org.protogalaxy.phss.datasource.entity.repository.setting.SettingMainRepository;
-import org.protogalaxy.phss.datasource.entity.repository.user.UserRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.main.FilesystemMainRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.main.FilesystemSpaceRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.personaldata.PersonalDataRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.setting.SettingMainRepository;
+import org.protogalaxy.phss.datasource.entity.repository.jpa.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

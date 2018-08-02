@@ -1,57 +1,51 @@
 package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "document_microsoft_excel_old")
+@Document(collection = "document")
 public class DocumentMicrosoftExcelOldEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_DOCUMENT_MICROSOFT_EXCEL_OLD"))
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @Column(name = "author")
+    @Field("author")
     private String author;
 
-    @Column(name = "last_author")
+    @Field("last_author")
     private String lastAuthor;
 
-    @Column(name = "app_name")
+    @Field("app_name")
     private String appName;
 
-    @Column(name = "create_dtm")
+    @Field("create_dtm")
     private Date createDtm;
 
-    @Column(name = "last_save_dtm")
+    @Field("last_save_dtm")
     private Date lastSaveDtm;
 
-    @Column(name = "doc_parts")
+    @Field("doc_parts")
     private int doc_parts;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
+    @Field("gmt_create")
+    @CreatedDate
     private Date gmtCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
+    @Field("gmt_modified")
+    @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentMicrosoftExcelOldEntity() {
-    }
-
-    public DocumentMicrosoftExcelOldEntity(FileSystemMainEntity fileSystemMainEntity, String author, String lastAuthor, String appName, Date createDtm, Date lastSaveDtm, int doc_parts) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
+    @PersistenceConstructor
+    public DocumentMicrosoftExcelOldEntity(String author, String lastAuthor, String appName, Date createDtm, Date lastSaveDtm, int doc_parts) {
         this.author = author;
         this.lastAuthor = lastAuthor;
         this.appName = appName;
@@ -62,14 +56,6 @@ public class DocumentMicrosoftExcelOldEntity {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public FileSystemMainEntity getFileSystemMainEntity() {
-        return fileSystemMainEntity;
-    }
-
-    public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
-        this.fileSystemMainEntity = fileSystemMainEntity;
     }
 
     public String getAuthor() {
