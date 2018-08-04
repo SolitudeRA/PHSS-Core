@@ -16,6 +16,15 @@ public class DocumentMicrosoftExcelOldEntity {
     @GeneratedValue
     private UUID uuid;
 
+    @Field("title")
+    private String title;
+
+    @Field("created")
+    private Date created;
+
+    @Field("modified")
+    private Date modified;
+
     @Field("author")
     private String author;
 
@@ -24,12 +33,6 @@ public class DocumentMicrosoftExcelOldEntity {
 
     @Field("app_name")
     private String appName;
-
-    @Field("create_dtm")
-    private Date createDtm;
-
-    @Field("last_save_dtm")
-    private Date lastSaveDtm;
 
     @Field("doc_parts")
     private int doc_parts;
@@ -45,17 +48,42 @@ public class DocumentMicrosoftExcelOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftExcelOldEntity(String author, String lastAuthor, String appName, Date createDtm, Date lastSaveDtm, int doc_parts) {
+    public DocumentMicrosoftExcelOldEntity(String title, Date created, Date modified, String author, String lastAuthor, String appName, int doc_parts) {
+        this.title = title;
+        this.created = created;
+        this.modified = modified;
         this.author = author;
         this.lastAuthor = lastAuthor;
         this.appName = appName;
-        this.createDtm = createDtm;
-        this.lastSaveDtm = lastSaveDtm;
         this.doc_parts = doc_parts;
     }
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
     }
 
     public String getAuthor() {
@@ -80,22 +108,6 @@ public class DocumentMicrosoftExcelOldEntity {
 
     public void setAppName(String appName) {
         this.appName = appName;
-    }
-
-    public Date getCreateDtm() {
-        return createDtm;
-    }
-
-    public void setCreateDtm(Date createDtm) {
-        this.createDtm = createDtm;
-    }
-
-    public Date getLastSaveDtm() {
-        return lastSaveDtm;
-    }
-
-    public void setLastSaveDtm(Date lastSaveDtm) {
-        this.lastSaveDtm = lastSaveDtm;
     }
 
     public int getDoc_parts() {

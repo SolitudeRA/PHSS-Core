@@ -10,4 +10,9 @@ public class ConnectionMongoDB {
         MongoClient mongoClient = new MongoClient("localhost");
         System.out.println(mongoClient.getDatabase("protogalaxy").listCollectionNames().first());
     }
+
+    @Test
+    public void operation(){
+
+    }
 }

@@ -19,6 +19,12 @@ public class DocumentMicrosoftPowerpointEntity {
     @Field("title")
     private String title;
 
+    @Field("created")
+    private Date created;
+
+    @Field("modified")
+    private Date modified;
+
     @Field("application")
     private String application;
 
@@ -30,12 +36,6 @@ public class DocumentMicrosoftPowerpointEntity {
 
     @Field("last_modified_by")
     private String lastModifiedBy;
-
-    @Field("created")
-    private Date created;
-
-    @Field("modified")
-    private Date modified;
 
     @Field("characters")
     private int characters;

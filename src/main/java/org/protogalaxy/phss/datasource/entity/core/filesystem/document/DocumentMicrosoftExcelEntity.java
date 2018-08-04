@@ -19,17 +19,20 @@ public class DocumentMicrosoftExcelEntity {
     @Field("title")
     private String title;
 
-    @Field("application")
-    private String application;
-
-    @Field("app_version")
-    private String appVersion;
-
     @Field("created")
     private Date created;
 
     @Field("modified")
     private Date modified;
+
+    @Field("author")
+    private String author;
+
+    @Field("application")
+    private String application;
+
+    @Field("app_version")
+    private String appVersion;
 
     @Field("characters")
     private int characters;
@@ -57,12 +60,13 @@ public class DocumentMicrosoftExcelEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftExcelEntity(String title, String application, String appVersion, Date created, Date modified, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
+    public DocumentMicrosoftExcelEntity(String title, String author, Date created, Date modified, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
         this.title = title;
-        this.application = application;
-        this.appVersion = appVersion;
+        this.author = author;
         this.created = created;
         this.modified = modified;
+        this.application = application;
+        this.appVersion = appVersion;
         this.characters = characters;
         this.charactersWithSpaces = charactersWithSpaces;
         this.lines = lines;
@@ -82,20 +86,12 @@ public class DocumentMicrosoftExcelEntity {
         this.title = title;
     }
 
-    public String getApplication() {
-        return application;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setApplication(String application) {
-        this.application = application;
-    }
-
-    public String getAppVersion() {
-        return appVersion;
-    }
-
-    public void setAppVersion(String appVersion) {
-        this.appVersion = appVersion;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Date getCreated() {
@@ -112,6 +108,22 @@ public class DocumentMicrosoftExcelEntity {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
     }
 
     public int getCharacters() {

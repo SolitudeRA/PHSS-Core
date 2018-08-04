@@ -17,20 +17,20 @@ public class DocumentAdobePdfEntity {
     @Field("title")
     private String title;
 
-    @Field("version")
-    private String version;
-
-    @Field("author")
-    private String author;
-
-    @Field("producer")
-    private String producer;
-
     @Field("created")
     private Date created;
 
     @Field("modified")
     private Date modified;
+
+    @Field("author")
+    private String author;
+
+    @Field("version")
+    private String version;
+
+    @Field("producer")
+    private String producer;
 
     @Field("gmt_create")
     @Temporal(TemporalType.TIMESTAMP)
