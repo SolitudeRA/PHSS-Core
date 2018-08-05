@@ -45,11 +45,11 @@ public final class FileConsts {
     //Document metadata string
     public static final String
             METADATA_ADOBE_PDF_TITLE = "title",
+            METADATA_ADOBE_PDF_CREATED = "created",
+            METADATA_ADOBE_PDF_MODIFIED = "modified",
             METADATA_ADOBE_PDF_VERSION = "pdf:PDFVersion",
             METADATA_ADOBE_PDF_AUTHOR = "Author",
-            METADATA_ADOBE_PDF_PRODUCER = "producer",
-            METADATA_ADOBE_PDF_CREATED = "created",
-            METADATA_ADOBE_PDF_MODIFIED = "modified";
+            METADATA_ADOBE_PDF_PRODUCER = "producer";
     public static final String
             METADATA_ADOBE_PHOTOSHOP_TITLE = "title",
             METADATA_ADOBE_PHOTOSHOP_WIDTH = "tiff:ImageWidth",

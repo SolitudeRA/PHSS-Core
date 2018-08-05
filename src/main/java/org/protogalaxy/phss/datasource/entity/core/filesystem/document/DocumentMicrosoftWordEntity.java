@@ -19,23 +19,23 @@ public class DocumentMicrosoftWordEntity {
     @Field("title")
     private String title;
 
-    @Field("creator")
-    private String creator;
-
-    @Field("application")
-    private String application;
-
-    @Field("app_version")
-    private String appVersion;
-
     @Field("created")
     private Date created;
 
     @Field("modified")
     private Date modified;
 
+    @Field("creator")
+    private String creator;
+
     @Field("last_modified_by")
     private String lastModifiedBy;
+
+    @Field("application")
+    private String application;
+
+    @Field("app_version")
+    private String appVersion;
 
     @Field("characters")
     private int characters;

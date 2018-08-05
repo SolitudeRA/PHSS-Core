@@ -2,6 +2,7 @@ package org.protogalaxy.phss.datasource.entity.core.filesystem.document;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -18,23 +19,23 @@ public class DocumentMicrosoftPowerpointOldEntity {
     @Field("title")
     private String title;
 
-    @Field("author")
-    private String author;
+    @Field("created")
+    private Date created;
 
-    @Field("last_author")
-    private String lastAuthor;
+    @Field("modified")
+    private Date modified;
+
+    @Field("creator")
+    private String creator;
+
+    @Field("last_modified_by")
+    private String lastModifiedBy;
 
     @Field("app_name")
     private String appName;
 
     @Field("edit_time")
     private long editTime;
-
-    @Field("create_dtm")
-    private Date createDtm;
-
-    @Field("last_save_dtm")
-    private Date lastSaveDtm;
 
     @Field("word_count")
     private int wordCount;
@@ -70,14 +71,15 @@ public class DocumentMicrosoftPowerpointOldEntity {
     @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentMicrosoftPowerpointOldEntity(String title, String author, String lastAuthor, String appName, long editTime, Date createDtm, Date lastSaveDtm, int wordCount, int presentCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount) {
+    @PersistenceConstructor
+    public DocumentMicrosoftPowerpointOldEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String appName, long editTime, int wordCount, int presentCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount) {
         this.title = title;
-        this.author = author;
-        this.lastAuthor = lastAuthor;
+        this.created = created;
+        this.modified = modified;
+        this.creator = creator;
+        this.lastModifiedBy = lastModifiedBy;
         this.appName = appName;
         this.editTime = editTime;
-        this.createDtm = createDtm;
-        this.lastSaveDtm = lastSaveDtm;
         this.wordCount = wordCount;
         this.presentCount = presentCount;
         this.byteCount = byteCount;
@@ -100,20 +102,36 @@ public class DocumentMicrosoftPowerpointOldEntity {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
-    public String getLastAuthor() {
-        return lastAuthor;
+    public Date getModified() {
+        return modified;
     }
 
-    public void setLastAuthor(String lastAuthor) {
-        this.lastAuthor = lastAuthor;
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     public String getAppName() {
@@ -130,22 +148,6 @@ public class DocumentMicrosoftPowerpointOldEntity {
 
     public void setEditTime(long editTime) {
         this.editTime = editTime;
-    }
-
-    public Date getCreateDtm() {
-        return createDtm;
-    }
-
-    public void setCreateDtm(Date createDtm) {
-        this.createDtm = createDtm;
-    }
-
-    public Date getLastSaveDtm() {
-        return lastSaveDtm;
-    }
-
-    public void setLastSaveDtm(Date lastSaveDtm) {
-        this.lastSaveDtm = lastSaveDtm;
     }
 
     public int getWordCount() {

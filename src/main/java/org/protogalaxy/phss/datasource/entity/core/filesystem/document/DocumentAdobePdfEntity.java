@@ -23,14 +23,17 @@ public class DocumentAdobePdfEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("author")
-    private String author;
+    @Field("creator")
+    private String creator;
 
     @Field("version")
     private String version;
 
     @Field("producer")
     private String producer;
+
+    @Field("path")
+    private String path;
 
     @Field("gmt_create")
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,13 +44,14 @@ public class DocumentAdobePdfEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePdfEntity(String title, String version, String author, String producer, Date created, Date modified) {
+    public DocumentAdobePdfEntity(String title, Date created, Date modified, String creator, String version, String producer, String path) {
         this.title = title;
-        this.version = version;
-        this.author = author;
-        this.producer = producer;
         this.created = created;
         this.modified = modified;
+        this.creator = creator;
+        this.version = version;
+        this.producer = producer;
+        this.path = path;
     }
 
     public UUID getUuid() {
@@ -60,30 +64,6 @@ public class DocumentAdobePdfEntity {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getProducer() {
-        return producer;
-    }
-
-    public void setProducer(String producer) {
-        this.producer = producer;
     }
 
     public Date getCreated() {
@@ -100,6 +80,38 @@ public class DocumentAdobePdfEntity {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Date getGmtCreate() {

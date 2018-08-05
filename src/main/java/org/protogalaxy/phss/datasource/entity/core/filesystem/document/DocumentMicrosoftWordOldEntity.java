@@ -19,8 +19,17 @@ public class DocumentMicrosoftWordOldEntity {
     @Field("title")
     private String title;
 
-    @Field("author")
-    private String author;
+    @Field("created")
+    private Date created;
+
+    @Field("modified")
+    private Date modified;
+
+    @Field("creator")
+    private String creator;
+
+    @Field("last_modified_by")
+    private String lastModifiedBy;
 
     @Field("keywords")
     private String keywords;
@@ -28,20 +37,11 @@ public class DocumentMicrosoftWordOldEntity {
     @Field("comments")
     private String comments;
 
-    @Field("last_author")
-    private String lastAuthor;
-
     @Field("app_name")
     private String appName;
 
     @Field("edit_time")
     private long editTime;
-
-    @Field("create_dtm")
-    private Date createDtm;
-
-    @Field("last_save_dtm")
-    private Date lastSaveDtm;
 
     @Field("page_count")
     private int pageCount;
@@ -69,16 +69,16 @@ public class DocumentMicrosoftWordOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftWordOldEntity(String title, String author, String keywords, String comments, String lastAuthor, String appName, long editTime, Date createDtm, Date lastSaveDtm, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
+    public DocumentMicrosoftWordOldEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String keywords, String comments, String appName, long editTime, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
         this.title = title;
-        this.author = author;
+        this.created = created;
+        this.modified = modified;
+        this.creator = creator;
+        this.lastModifiedBy = lastModifiedBy;
         this.keywords = keywords;
         this.comments = comments;
-        this.lastAuthor = lastAuthor;
         this.appName = appName;
         this.editTime = editTime;
-        this.createDtm = createDtm;
-        this.lastSaveDtm = lastSaveDtm;
         this.pageCount = pageCount;
         this.wordCount = wordCount;
         this.charCount = charCount;
@@ -98,12 +98,36 @@ public class DocumentMicrosoftWordOldEntity {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     public String getKeywords() {
@@ -122,14 +146,6 @@ public class DocumentMicrosoftWordOldEntity {
         this.comments = comments;
     }
 
-    public String getLastAuthor() {
-        return lastAuthor;
-    }
-
-    public void setLastAuthor(String lastAuthor) {
-        this.lastAuthor = lastAuthor;
-    }
-
     public String getAppName() {
         return appName;
     }
@@ -144,22 +160,6 @@ public class DocumentMicrosoftWordOldEntity {
 
     public void setEditTime(long editTime) {
         this.editTime = editTime;
-    }
-
-    public Date getCreateDtm() {
-        return createDtm;
-    }
-
-    public void setCreateDtm(Date createDtm) {
-        this.createDtm = createDtm;
-    }
-
-    public Date getLastSaveDtm() {
-        return lastSaveDtm;
-    }
-
-    public void setLastSaveDtm(Date lastSaveDtm) {
-        this.lastSaveDtm = lastSaveDtm;
     }
 
     public int getPageCount() {

@@ -19,17 +19,17 @@ public class DocumentOpenTextEntity {
     @Field("title")
     private String title;
 
-    @Field("initial_author")
-    private String initialAuthor;
+    @Field("created")
+    private Date created;
 
-    @Field("author")
-    private String author;
+    @Field("modified")
+    private Date modified;
 
-    @Field("creation_date")
-    private Date creationDate;
+    @Field("creator")
+    private String creator;
 
-    @Field("save_date")
-    private Date saveDate;
+    @Field("last_modified_by")
+    private String lastModifiedBy;
 
     @Field("word_count")
     private int wordCount;
@@ -60,12 +60,12 @@ public class DocumentOpenTextEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentOpenTextEntity(String title, String initialAuthor, String author, Date creationDate, Date saveDate, int wordCount, int characterCount, int imageCount, int parCount, int tableCount, int pageCount) {
+    public DocumentOpenTextEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, int wordCount, int characterCount, int imageCount, int parCount, int tableCount, int pageCount) {
         this.title = title;
-        this.initialAuthor = initialAuthor;
-        this.author = author;
-        this.creationDate = creationDate;
-        this.saveDate = saveDate;
+        this.created = created;
+        this.modified = modified;
+        this.creator = creator;
+        this.lastModifiedBy = lastModifiedBy;
         this.wordCount = wordCount;
         this.characterCount = characterCount;
         this.imageCount = imageCount;
@@ -86,36 +86,36 @@ public class DocumentOpenTextEntity {
         this.title = title;
     }
 
-    public String getInitialAuthor() {
-        return initialAuthor;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setInitialAuthor(String initialAuthor) {
-        this.initialAuthor = initialAuthor;
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
-    public String getAuthor() {
-        return author;
+    public Date getModified() {
+        return modified;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setModified(Date modified) {
+        this.modified = modified;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
-    public Date getSaveDate() {
-        return saveDate;
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
     }
 
-    public void setSaveDate(Date saveDate) {
-        this.saveDate = saveDate;
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     public int getWordCount() {

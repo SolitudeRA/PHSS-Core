@@ -25,17 +25,17 @@ public class DocumentMicrosoftPowerpointEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("application")
-    private String application;
-
-    @Field("app_version")
-    private String appVersion;
-
     @Field("creator")
     private String creator;
 
     @Field("last_modified_by")
     private String lastModifiedBy;
+
+    @Field("application")
+    private String application;
+
+    @Field("app_version")
+    private String appVersion;
 
     @Field("characters")
     private int characters;

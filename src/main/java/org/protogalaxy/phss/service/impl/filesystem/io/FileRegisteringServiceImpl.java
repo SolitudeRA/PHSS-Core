@@ -1,33 +1,72 @@
 package org.protogalaxy.phss.service.impl.filesystem.io;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackInfEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackInfStaticEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.photo.PhotoEntity;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.book.BookEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentAdobePdfEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentAdobePhotoshopEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.illustration.IllustrationEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.VideoEntity;
 import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.album.music.MusicTrackRepository;
 import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.main.FilesystemMainRepository;
+import org.protogalaxy.phss.datasource.entity.repository.mongodb.document.*;
 import org.protogalaxy.phss.service.main.filesystem.io.FileRegisteringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
+import java.util.Date;
 import java.util.Map;
 
 @Service
 public class FileRegisteringServiceImpl implements FileRegisteringService {
     private final FilesystemMainRepository filesystemMainRepository;
     private final MusicTrackRepository musicTrackRepository;
+    private final DocumentAdobePdfRepository documentAdobePdfRepository;
+    private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
+    private final DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
+    private final DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository;
+    private final DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository;
+    private final DocumentMicrosoftWordRepository documentMicrosoftWordRepository;
+    private final DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository;
+    private final DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository;
+    private final DocumentOpenTextRepository documentOpenTextRepository;
+    private final DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository;
+    private final DocumentOpenPresentationRepository documentOpenPresentationRepository;
 
     @Autowired
     public FileRegisteringServiceImpl(FilesystemMainRepository filesystemMainRepository,
-                                      MusicTrackRepository musicTrackRepository) {
+                                      MusicTrackRepository musicTrackRepository,
+                                      DocumentAdobePdfRepository documentAdobePdfRepository,
+                                      DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
+                                      DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
+                                      DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository,
+                                      DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository,
+                                      DocumentMicrosoftWordRepository documentMicrosoftWordRepository,
+                                      DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository,
+                                      DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository,
+                                      DocumentOpenTextRepository documentOpenTextRepository,
+                                      DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository,
+                                      DocumentOpenPresentationRepository documentOpenPresentationRepository) {
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
+        this.documentAdobePdfRepository = documentAdobePdfRepository;
+        this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
+        this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
+        this.documentMicrosoftExcelOldRepository = documentMicrosoftExcelOldRepository;
+        this.documentMicrosoftPowerpointOldRepository = documentMicrosoftPowerpointOldRepository;
+        this.documentMicrosoftWordRepository = documentMicrosoftWordRepository;
+        this.documentMicrosoftExcelRepository = documentMicrosoftExcelRepository;
+        this.documentMicrosoftPowerpointRepository = documentMicrosoftPowerpointRepository;
+        this.documentOpenTextRepository = documentOpenTextRepository;
+        this.documentOpenSpreadsheetRepository = documentOpenSpreadsheetRepository;
+        this.documentOpenPresentationRepository = documentOpenPresentationRepository;
     }
 
     @Override
@@ -77,12 +116,97 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public BookEntity registerBook(String username, Map<String, String> metadata, Path path) throws Exception {
+    public String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception {
+        switch (mimeType) {
+            case FileConsts.MIME_ADOBE_PDF:
+                return registerAdobePdf(username, metadata, path);
+            case FileConsts.MIME_ADOBE_PHOTOSHOP:
+                return registerAdobePhotoshop(username, metadata, path);
+            case FileConsts.MIME_MICROSOFT_WORD_OLD:
+                return registerMicrosoftWordOld(username, metadata, path);
+            case FileConsts.MIME_MICROSOFT_EXCEL_OLD:
+                return registerMicrosoftExcelOld(username, metadata, path);
+            case FileConsts.MIME_MICROSOFT_POWERPOINT_OLD:
+                return registerMicrosoftPowerpointOld(username, metadata, path);
+            case FileConsts.MIME_MICROSOFT_WORD:
+                return registerMicrosoftWord(username, metadata, path);
+            case FileConsts.MIME_MICROSOFT_EXCEL:
+                return registerMicrosoftExcel(username, metadata, path);
+            case FileConsts.MIME_MICROSOFT_POWERPOINT:
+                return registerMicrosoftPowerpoint(username, metadata, path);
+            case FileConsts.MIME_OPENDOCUMENT_TEXT:
+                return registerOpendocumentText(username, metadata, path);
+            case FileConsts.MIME_OPENDOCUMENT_SPREADSHEET:
+                return registerOpendocumentSpreadsheet(username, metadata, path);
+            case FileConsts.MIME_OPENDOCUMENT_PRESENTATION:
+                return registerOpendocumentPresentation(username, metadata, path);
+        }
         return null;
     }
 
     @Override
     public IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception {
+        return null;
+    }
+
+    private String registerAdobePdf(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        DocumentAdobePdfEntity documentAdobePdfEntity = new DocumentAdobePdfEntity((String) metadata.get(FileConsts.METADATA_ADOBE_PDF_TITLE),
+                                                                                   (Date) metadata.get(FileConsts.METADATA_ADOBE_PDF_CREATED),
+                                                                                   (Date) metadata.get(FileConsts.METADATA_ADOBE_PDF_MODIFIED),
+                                                                                   (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_AUTHOR),
+                                                                                   (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_VERSION),
+                                                                                   (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_PRODUCER),
+                                                                                   path.toString());
+        documentAdobePdfRepository.save(documentAdobePdfEntity);
+        return mapper.writeValueAsString(documentAdobePdfEntity);
+    }
+
+    private String registerAdobePhotoshop(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        DocumentAdobePhotoshopEntity documentAdobePhotoshopEntity = new DocumentAdobePhotoshopEntity((String) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT),
+                                                                                                     (String) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_COLORMODE),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE),
+                                                                                                     path.toString());
+        documentAdobePhotoshopRepository.save(documentAdobePhotoshopEntity);
+        return mapper.writeValueAsString(documentAdobePhotoshopEntity);
+    }
+
+    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerMicrosoftPowerpointOld(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerMicrosoftExcel(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerMicrosoftPowerpoint(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerOpendocumentText(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerOpendocumentSpreadsheet(String username, Map<String, Object> metadata, Path path) {
+        return null;
+    }
+
+    private String registerOpendocumentPresentation(String username, Map<String, Object> metadata, Path path) {
         return null;
     }
 }

@@ -1,16 +1,12 @@
 package org.protogalaxy.phss.test.datasource;
 
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.*;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.book.BookEntity;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.book.BookInfEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemSpaceEntity;
 import org.protogalaxy.phss.datasource.entity.core.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.core.setting.SettingMainEntity;
 import org.protogalaxy.phss.datasource.entity.core.user.UserEntity;
 import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.album.music.*;
-import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.book.BookInfRepository;
-import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.entity.repository.jpa.filesystem.main.FilesystemSpaceRepository;
 import org.protogalaxy.phss.datasource.entity.repository.jpa.personaldata.PersonalDataRepository;
@@ -79,12 +75,6 @@ public class TestDataFiller {
     @Autowired
     private MusicTrackInfStaticRepository musicTrackInfStaticRepository;
 
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private BookInfRepository bookInfRepository;
-
     @BeforeAll
     public void initAll() {
     }
@@ -129,15 +119,6 @@ public class TestDataFiller {
         musicTrackRepository.save(musicTrackEntity);
         musicTrackInfRepository.save(new MusicTrackInfEntity(musicTrackEntity));
         musicTrackInfStaticRepository.save(new MusicTrackInfStaticEntity("music track test", musicTrackEntity));
-    }
-
-    @DisplayName("Book filler")
-    @ParameterizedTest
-    @CsvFileSource(resources = "/valuesources/book.csv")
-    public void bookTestCase(String bookName, String author) {
-        BookEntity bookEntity = new BookEntity(bookName);
-        bookRepository.save(bookEntity);
-        bookInfRepository.save(new BookInfEntity(bookEntity));
     }
 
     @DisplayName("Document filler")

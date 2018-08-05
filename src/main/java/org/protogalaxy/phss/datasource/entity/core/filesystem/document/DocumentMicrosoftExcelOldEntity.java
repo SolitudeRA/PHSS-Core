@@ -25,8 +25,8 @@ public class DocumentMicrosoftExcelOldEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("author")
-    private String author;
+    @Field("creator")
+    private String creator;
 
     @Field("last_author")
     private String lastAuthor;
@@ -48,11 +48,11 @@ public class DocumentMicrosoftExcelOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftExcelOldEntity(String title, Date created, Date modified, String author, String lastAuthor, String appName, int doc_parts) {
+    public DocumentMicrosoftExcelOldEntity(String title, Date created, Date modified, String creator, String lastAuthor, String appName, int doc_parts) {
         this.title = title;
         this.created = created;
         this.modified = modified;
-        this.author = author;
+        this.creator = creator;
         this.lastAuthor = lastAuthor;
         this.appName = appName;
         this.doc_parts = doc_parts;
@@ -86,12 +86,12 @@ public class DocumentMicrosoftExcelOldEntity {
         this.modified = modified;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public String getLastAuthor() {

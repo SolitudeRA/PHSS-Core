@@ -31,6 +31,9 @@ public class DocumentAdobePhotoshopEntity {
     @Field("bits_per_sample")
     private int bitsPerSample;
 
+    @Field("path")
+    private String path;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Field("gmt_create")
     @CreatedDate
@@ -42,12 +45,13 @@ public class DocumentAdobePhotoshopEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePhotoshopEntity(String title, int width, int height, String colorMode, int bitsPerSample) {
+    public DocumentAdobePhotoshopEntity(String title, int width, int height, String colorMode, int bitsPerSample, String path) {
         this.title = title;
         this.width = width;
         this.height = height;
         this.colorMode = colorMode;
         this.bitsPerSample = bitsPerSample;
+        this.path = path;
     }
 
     public UUID getUuid() {
@@ -92,6 +96,14 @@ public class DocumentAdobePhotoshopEntity {
 
     public void setBitsPerSample(int bitsPerSample) {
         this.bitsPerSample = bitsPerSample;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Date getGmtCreate() {
