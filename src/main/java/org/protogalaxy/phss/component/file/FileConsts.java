@@ -72,6 +72,7 @@ public final class FileConsts {
             METADATA_MICROSOFT_WORD_OLD_LINECOUNT = "line_count",
             METADATA_MICROSOFT_WORD_OLD_PARCOUNT = "par_count";
     public static final String
+            METADATA_MICROSOFT_EXCEL_OLD_TITLE="title",
             METADATA_MICROSOFT_EXCEL_OLD_AUTHOR = "author",
             METADATA_MICROSOFT_EXCEL_OLD_LASTAUTHOR = "last_author",
             METADATA_MICROSOFT_EXCEL_OLD_APPNAME = "app_name",
@@ -224,6 +225,7 @@ public final class FileConsts {
             METADATA_MICROSOFT_WORD_OLD_PARCOUNT
     );
     public static final List<String> MICROSOFT_EXCEL_OLD_METADATA_LIST = Arrays.asList(
+            METADATA_MICROSOFT_EXCEL_OLD_TITLE,
             METADATA_MICROSOFT_EXCEL_OLD_AUTHOR,
             METADATA_MICROSOFT_EXCEL_OLD_LASTAUTHOR,
             METADATA_MICROSOFT_EXCEL_OLD_APPNAME,

@@ -3,7 +3,6 @@ package org.protogalaxy.phss.test.datasource;
 import com.mongodb.MongoClient;
 import org.junit.Test;
 
-
 public class ConnectionMongoDB {
     @Test
     public void connection() {
@@ -13,6 +12,5 @@ public class ConnectionMongoDB {
 
     @Test
     public void operation(){
-
     }
 }

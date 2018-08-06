@@ -7,8 +7,7 @@ import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicT
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackInfEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackInfStaticEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.photo.PhotoEntity;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentAdobePdfEntity;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.document.DocumentAdobePhotoshopEntity;
+import org.protogalaxy.phss.datasource.entity.core.filesystem.document.*;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.illustration.IllustrationEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.movie.MovieEntity;
@@ -174,15 +173,42 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentAdobePhotoshopEntity);
     }
 
-    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) {
-        return null;
+    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        DocumentMicrosoftWordOldEntity documentMicrosoftWordOldEntity = new DocumentMicrosoftWordOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATEDTM),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTSAVEDTM),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_AUTHOR),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTAUTHOR),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_KEYWORDS),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_COMMENTS),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_APPNAME),
+                                                                                                           (Long) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_EDITTIME),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_PAGECOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_WORDCOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_CHARCOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_LINECOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_PARCOUNT));
+        documentMicrosoftWordOldRepository.save(documentMicrosoftWordOldEntity);
+        return mapper.writeValueAsString(documentMicrosoftWordOldEntity);
     }
 
-    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) {
-        return null;
+    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        DocumentMicrosoftExcelOldEntity documentMicrosoftExcelOldEntity = new DocumentMicrosoftExcelOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_TITLE),
+                                                                                                              (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATEDTM),
+                                                                                                              (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTSAVEDTM),
+                                                                                                              (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_AUTHOR),
+                                                                                                              (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTSAVEDTM),
+                                                                                                              (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_APPNAME),
+                                                                                                              (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_DOCPARTS));
+        documentMicrosoftExcelOldRepository.save(documentMicrosoftExcelOldEntity);
+        return mapper.writeValueAsString(documentMicrosoftExcelOldEntity);
     }
 
     private String registerMicrosoftPowerpointOld(String username, Map<String, Object> metadata, Path path) {
+        ObjectMapper mapper = new ObjectMapper();
+        DocumentMicrosoftPowerpointOldEntity documentMicrosoftPowerpointOldEntity = new DocumentMicrosoftPowerpointOldEntity();
         return null;
     }
 
