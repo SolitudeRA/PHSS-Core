@@ -66,14 +66,14 @@ public class DocumentMicrosoftPowerpointEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftPowerpointEntity(String title, String application, String appVersion, String creator, String lastModifiedBy, Date created, Date modified, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat) {
+    public DocumentMicrosoftPowerpointEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat) {
         this.title = title;
-        this.application = application;
-        this.appVersion = appVersion;
-        this.creator = creator;
-        this.lastModifiedBy = lastModifiedBy;
         this.created = created;
         this.modified = modified;
+        this.creator = creator;
+        this.lastModifiedBy = lastModifiedBy;
+        this.application = application;
+        this.appVersion = appVersion;
         this.characters = characters;
         this.charactersWithSpaces = charactersWithSpaces;
         this.lines = lines;

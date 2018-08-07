@@ -77,7 +77,7 @@ public interface StorageService {
      * @param type         type of the document
      * @return JSON format string of the uploaded document
      */
-    String storeDocument(String username, MultipartFile documentFile, String type);
+    String storeDocument(String username, MultipartFile documentFile, String type) throws Exception;
 
     /**
      * Store single illustration

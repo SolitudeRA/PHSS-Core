@@ -63,14 +63,14 @@ public class DocumentMicrosoftWordEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftWordEntity(String title, String creator, String application, String appVersion, Date created, Date modified, String lastModifiedBy, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
+    public DocumentMicrosoftWordEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
         this.title = title;
-        this.creator = creator;
-        this.application = application;
-        this.appVersion = appVersion;
         this.created = created;
         this.modified = modified;
+        this.creator = creator;
         this.lastModifiedBy = lastModifiedBy;
+        this.application = application;
+        this.appVersion = appVersion;
         this.characters = characters;
         this.charactersWithSpaces = charactersWithSpaces;
         this.lines = lines;

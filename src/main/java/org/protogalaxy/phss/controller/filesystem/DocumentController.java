@@ -25,6 +25,6 @@ public class DocumentController {
     @PostMapping("/upload")
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String documentUpload(@PathVariable String username, MultipartFile file, String type) {
-        return storageService.storeDocument(username, file, type);
+        return null;
     }
 }

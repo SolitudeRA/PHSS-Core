@@ -40,9 +40,6 @@ public class DocumentMicrosoftPowerpointOldEntity {
     @Field("word_count")
     private int wordCount;
 
-    @Field("present_count")
-    private int presentCount;
-
     @Field("byte_count")
     private int byteCount;
 
@@ -61,6 +58,9 @@ public class DocumentMicrosoftPowerpointOldEntity {
     @Field("mmclip_count")
     private int mmclipCount;
 
+    @Field("present_format")
+    private String presentFormat;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Field("gmt_create")
     @CreatedDate
@@ -72,7 +72,7 @@ public class DocumentMicrosoftPowerpointOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftPowerpointOldEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String appName, long editTime, int wordCount, int presentCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount) {
+    public DocumentMicrosoftPowerpointOldEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String appName, long editTime, int wordCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount, String presentFormat) {
         this.title = title;
         this.created = created;
         this.modified = modified;
@@ -81,13 +81,13 @@ public class DocumentMicrosoftPowerpointOldEntity {
         this.appName = appName;
         this.editTime = editTime;
         this.wordCount = wordCount;
-        this.presentCount = presentCount;
         this.byteCount = byteCount;
         this.partCount = partCount;
         this.slideCount = slideCount;
         this.noteCount = noteCount;
         this.hiddenCount = hiddenCount;
         this.mmclipCount = mmclipCount;
+        this.presentFormat = presentFormat;
     }
 
     public UUID getUuid() {
@@ -158,14 +158,6 @@ public class DocumentMicrosoftPowerpointOldEntity {
         this.wordCount = wordCount;
     }
 
-    public int getPresentCount() {
-        return presentCount;
-    }
-
-    public void setPresentCount(int presentCount) {
-        this.presentCount = presentCount;
-    }
-
     public int getByteCount() {
         return byteCount;
     }
@@ -212,6 +204,14 @@ public class DocumentMicrosoftPowerpointOldEntity {
 
     public void setMmclipCount(int mmclipCount) {
         this.mmclipCount = mmclipCount;
+    }
+
+    public String getPresentFormat() {
+        return presentFormat;
+    }
+
+    public void setPresentFormat(String presentFormat) {
+        this.presentFormat = presentFormat;
     }
 
     public Date getGmtCreate() {

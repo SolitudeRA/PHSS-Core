@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.service.impl.filesystem.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.protogalaxy.phss.component.file.document.DocumentUtils;
 import org.protogalaxy.phss.component.file.music.MusicMetadata;
 import org.protogalaxy.phss.datasource.entity.core.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.exception.storage.StorageException;
@@ -31,12 +32,14 @@ public class StorageServiceImpl implements StorageService {
     private final CachingServiceImpl cachingService;
     private final MusicMetadata musicMetadataService;
     private final FileRegisteringServiceImpl fileRegisteringService;
+    private final DocumentUtils documentUtils;
 
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
                               CachingServiceImpl cachingService,
                               MusicMetadata musicMetadata,
-                              FileRegisteringServiceImpl fileRegisteringService) {
+                              FileRegisteringServiceImpl fileRegisteringService,
+                              DocumentUtils documentUtils) {
         this.musicLocation = config.getMusicLocation();
         this.animeLocation = config.getAnimeLocation();
         this.movieLocation = config.getMovieLocation();
@@ -48,6 +51,7 @@ public class StorageServiceImpl implements StorageService {
         this.cachingService = cachingService;
         this.musicMetadataService = musicMetadata;
         this.fileRegisteringService = fileRegisteringService;
+        this.documentUtils = documentUtils;
     }
 
     @Override
@@ -110,7 +114,10 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeDocument(String username, MultipartFile documentFile, String type) {
+    public String storeDocument(String username, MultipartFile documentFile, String type) throws Exception {
+        String filename = StringUtils.cleanPath(documentFile.getOriginalFilename());
+        Path tempFilePath = cachingService.cachingFile(username, documentFile);
+        Map<String, Object> metadata = documentUtils.getDocumentMetadata(tempFilePath);
         return null;
     }
 
