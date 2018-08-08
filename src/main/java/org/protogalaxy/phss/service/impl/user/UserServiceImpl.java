@@ -1,11 +1,11 @@
 package org.protogalaxy.phss.service.impl.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.protogalaxy.phss.datasource.entity.core.filesystem.main.FileSystemMainEntity;
-import org.protogalaxy.phss.datasource.entity.core.personaldata.PersonalDataEntity;
-import org.protogalaxy.phss.datasource.entity.core.setting.SettingMainEntity;
-import org.protogalaxy.phss.datasource.entity.core.user.UserEntity;
-import org.protogalaxy.phss.datasource.entity.repository.jpa.user.UserRepository;
+import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
+import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
+import org.protogalaxy.phss.datasource.entity.user.UserEntity;
+import org.protogalaxy.phss.datasource.repository.jpa.user.UserRepository;
 import org.protogalaxy.phss.service.main.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

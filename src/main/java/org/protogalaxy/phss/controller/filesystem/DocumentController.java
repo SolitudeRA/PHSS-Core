@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Pageable;
+
 @RestController
 @RequestMapping("/{username}/document")
 public class DocumentController {
@@ -24,7 +26,19 @@ public class DocumentController {
 
     @PostMapping("/upload")
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String documentUpload(@PathVariable String username, MultipartFile file, String type) {
+    public String documentUpload(@PathVariable String username, MultipartFile file, String mimeType) throws Exception {
+        return storageService.storeDocument(username, file, mimeType);
+    }
+
+    @PostMapping("/")
+    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
+    public String listDocument(@PathVariable String username, Pageable pageable) {
+        return null;
+    }
+
+    @PostMapping("/search")
+    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
+    public String searchDocument(@PathVariable String username, String title) {
         return null;
     }
 }

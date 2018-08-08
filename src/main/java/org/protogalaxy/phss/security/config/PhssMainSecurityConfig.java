@@ -32,19 +32,31 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
+            //-------------------------Url filter config--------------------------//
             .authorizeRequests()
             .antMatchers("/", "/index", "/user/register", "/user/login").permitAll()
             .anyRequest().authenticated()
             .and()
+
+
+            //--------------------------Login config------------------------------//
             .formLogin()
             .loginProcessingUrl("/user/login")
             .failureHandler(ajaxAuthFailHandler)
             .successHandler(ajaxAuthSuccessHandler)
             .permitAll()
+
+
+            //-------------------------Logout config------------------------------//
             .and()
             .logout()
             .logoutUrl("/user/logout")
-            .logoutSuccessUrl("/index");
+            .logoutSuccessUrl("/index")
+            .and()
+
+            //-----------------------Remember-me config---------------------------//
+            .rememberMe()
+            .key("key");
     }
 
     @Bean
