@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Document(collection = "e_book")
-public class BookEpub {
+public class BookEpubEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
