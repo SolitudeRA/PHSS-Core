@@ -61,16 +61,13 @@ public class PhssDatasourceConfig {
     }
 
     @Bean
-    public MongoClientFactoryBean mongoClientFactoryBean() {
-        MongoClientFactoryBean mongoClientFactoryBean = new MongoClientFactoryBean();
-        mongoClientFactoryBean.setHost("localhost");
-        mongoClientFactoryBean.setPort(27017);
-        return mongoClientFactoryBean;
+    public MongoClient mongoClient() {
+        return new MongoClient("localhost", 27017);
     }
 
     @Bean
-    public MongoDbFactory mongoDbFactory() throws Exception {
-        return new SimpleMongoDbFactory(new MongoClient(), "protogalaxy");
+    public MongoDbFactory mongoDbFactory() {
+        return new SimpleMongoDbFactory(mongoClient(), "protogalaxy");
     }
 
     @Bean
