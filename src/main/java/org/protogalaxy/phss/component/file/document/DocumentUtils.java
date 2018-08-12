@@ -83,7 +83,6 @@ public class DocumentUtils {
                 break;
             default:
                 throw new ComponentFileInvalidMimeTypeException("Unsupported MIME type");
-
         }
         return metadata;
     }
