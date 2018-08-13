@@ -12,9 +12,9 @@ import java.nio.file.Paths;
 public class PhssStorageServiceConfig {
     private String prefix = "phss_";
 
-    private String rootLocation = "phssStorage";
+    private String rootLocation = "phss_storage";
 
-    private String tempLocation = "phssTemp";
+    private String tempLocation = "phss_temp";
 
     private String musicLocation = "music";
 
