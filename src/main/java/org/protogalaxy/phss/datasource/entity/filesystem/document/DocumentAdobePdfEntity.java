@@ -26,14 +26,17 @@ public class DocumentAdobePdfEntity {
     @Field("creator")
     private String creator;
 
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
+
     @Field("version")
     private String version;
 
     @Field("producer")
     private String producer;
-
-    @Field("path")
-    private String path;
 
     @Field("gmt_create")
     @Temporal(TemporalType.TIMESTAMP)
@@ -44,14 +47,15 @@ public class DocumentAdobePdfEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePdfEntity(String title, Date created, Date modified, String creator, String version, String producer, String path) {
+    public DocumentAdobePdfEntity(String title, Date created, Date modified, String creator, String modifier, String path, String version, String producer) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.creator = creator;
+        this.modifier = modifier;
+        this.path = path;
         this.version = version;
         this.producer = producer;
-        this.path = path;
     }
 
     public UUID getUuid() {
@@ -90,6 +94,22 @@ public class DocumentAdobePdfEntity {
         this.creator = creator;
     }
 
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public String getVersion() {
         return version;
     }
@@ -104,14 +124,6 @@ public class DocumentAdobePdfEntity {
 
     public void setProducer(String producer) {
         this.producer = producer;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public Date getGmtCreate() {

@@ -28,8 +28,11 @@ public class DocumentOpenPresentationEntity {
     @Field("creator")
     private String creator;
 
-    @Field("last_modified_by")
-    private String lastModifiedBy;
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Field("gmt_create")
@@ -42,12 +45,13 @@ public class DocumentOpenPresentationEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentOpenPresentationEntity(String title, Date created, Date modified, String creator, String lastModifiedBy) {
+    public DocumentOpenPresentationEntity(String title, Date created, Date modified, String creator, String modifier, String path) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.creator = creator;
-        this.lastModifiedBy = lastModifiedBy;
+        this.modifier = modifier;
+        this.path = path;
     }
 
     public UUID getUuid() {
@@ -86,12 +90,20 @@ public class DocumentOpenPresentationEntity {
         this.creator = creator;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public String getModifier() {
+        return modifier;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Date getGmtCreate() {

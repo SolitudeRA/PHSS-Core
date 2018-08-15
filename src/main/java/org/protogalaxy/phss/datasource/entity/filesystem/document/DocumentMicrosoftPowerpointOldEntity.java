@@ -28,8 +28,11 @@ public class DocumentMicrosoftPowerpointOldEntity {
     @Field("creator")
     private String creator;
 
-    @Field("last_modified_by")
-    private String lastModifiedBy;
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
 
     @Field("app_name")
     private String appName;
@@ -72,12 +75,13 @@ public class DocumentMicrosoftPowerpointOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftPowerpointOldEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String appName, long editTime, int wordCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount, String presentFormat) {
+    public DocumentMicrosoftPowerpointOldEntity(String title, Date created, Date modified, String creator, String modifier, String path, String appName, long editTime, int wordCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount, String presentFormat) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.creator = creator;
-        this.lastModifiedBy = lastModifiedBy;
+        this.modifier = modifier;
+        this.path = path;
         this.appName = appName;
         this.editTime = editTime;
         this.wordCount = wordCount;
@@ -126,12 +130,20 @@ public class DocumentMicrosoftPowerpointOldEntity {
         this.creator = creator;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public String getModifier() {
+        return modifier;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getAppName() {

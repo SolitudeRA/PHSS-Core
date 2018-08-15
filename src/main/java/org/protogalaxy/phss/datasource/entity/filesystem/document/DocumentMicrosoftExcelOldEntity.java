@@ -28,8 +28,11 @@ public class DocumentMicrosoftExcelOldEntity {
     @Field("creator")
     private String creator;
 
-    @Field("last_author")
-    private String lastAuthor;
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
 
     @Field("app_name")
     private String appName;
@@ -48,12 +51,13 @@ public class DocumentMicrosoftExcelOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftExcelOldEntity(String title, Date created, Date modified, String creator, String lastAuthor, String appName, int doc_parts) {
+    public DocumentMicrosoftExcelOldEntity(String title, Date created, Date modified, String creator, String modifier, String path, String appName, int doc_parts) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.creator = creator;
-        this.lastAuthor = lastAuthor;
+        this.modifier = modifier;
+        this.path = path;
         this.appName = appName;
         this.doc_parts = doc_parts;
     }
@@ -94,12 +98,20 @@ public class DocumentMicrosoftExcelOldEntity {
         this.creator = creator;
     }
 
-    public String getLastAuthor() {
-        return lastAuthor;
+    public String getModifier() {
+        return modifier;
     }
 
-    public void setLastAuthor(String lastAuthor) {
-        this.lastAuthor = lastAuthor;
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getAppName() {

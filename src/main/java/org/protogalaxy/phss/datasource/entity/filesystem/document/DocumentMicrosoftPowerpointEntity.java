@@ -28,8 +28,11 @@ public class DocumentMicrosoftPowerpointEntity {
     @Field("creator")
     private String creator;
 
-    @Field("last_modified_by")
-    private String lastModifiedBy;
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
 
     @Field("application")
     private String application;
@@ -66,12 +69,13 @@ public class DocumentMicrosoftPowerpointEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftPowerpointEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat) {
+    public DocumentMicrosoftPowerpointEntity(String title, Date created, Date modified, String creator, String modifier, String path, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.creator = creator;
-        this.lastModifiedBy = lastModifiedBy;
+        this.modifier = modifier;
+        this.path = path;
         this.application = application;
         this.appVersion = appVersion;
         this.characters = characters;
@@ -94,38 +98,6 @@ public class DocumentMicrosoftPowerpointEntity {
         this.title = title;
     }
 
-    public String getApplication() {
-        return application;
-    }
-
-    public void setApplication(String application) {
-        this.application = application;
-    }
-
-    public String getAppVersion() {
-        return appVersion;
-    }
-
-    public void setAppVersion(String appVersion) {
-        this.appVersion = appVersion;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
     public Date getCreated() {
         return created;
     }
@@ -140,6 +112,46 @@ public class DocumentMicrosoftPowerpointEntity {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
     }
 
     public int getCharacters() {

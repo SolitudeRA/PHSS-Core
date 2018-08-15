@@ -19,6 +19,21 @@ public class DocumentAdobePhotoshopEntity {
     @Field("title")
     private String title;
 
+    @Field("created")
+    private Date created;
+
+    @Field("modified")
+    private Date modified;
+
+    @Field("creator")
+    private String creator;
+
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
+
     @Field("width")
     private int width;
 
@@ -31,9 +46,6 @@ public class DocumentAdobePhotoshopEntity {
     @Field("bits_per_sample")
     private int bitsPerSample;
 
-    @Field("path")
-    private String path;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Field("gmt_create")
     @CreatedDate
@@ -45,13 +57,17 @@ public class DocumentAdobePhotoshopEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePhotoshopEntity(String title, int width, int height, String colorMode, int bitsPerSample, String path) {
+    public DocumentAdobePhotoshopEntity(String title, Date created, Date modified, String creator, String modifier, String path, int width, int height, String colorMode, int bitsPerSample) {
         this.title = title;
+        this.created = created;
+        this.modified = modified;
+        this.creator = creator;
+        this.modifier = modifier;
+        this.path = path;
         this.width = width;
         this.height = height;
         this.colorMode = colorMode;
         this.bitsPerSample = bitsPerSample;
-        this.path = path;
     }
 
     public UUID getUuid() {
@@ -64,6 +80,46 @@ public class DocumentAdobePhotoshopEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public int getWidth() {
@@ -98,27 +154,11 @@ public class DocumentAdobePhotoshopEntity {
         this.bitsPerSample = bitsPerSample;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
     public Date getGmtModified() {
         return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
     }
 }

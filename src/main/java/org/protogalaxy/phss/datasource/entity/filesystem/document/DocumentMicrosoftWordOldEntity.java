@@ -28,8 +28,11 @@ public class DocumentMicrosoftWordOldEntity {
     @Field("creator")
     private String creator;
 
-    @Field("last_modified_by")
-    private String lastModifiedBy;
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
 
     @Field("keywords")
     private String keywords;
@@ -69,12 +72,13 @@ public class DocumentMicrosoftWordOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftWordOldEntity(String title, Date created, Date modified, String creator, String lastModifiedBy, String keywords, String comments, String appName, long editTime, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
+    public DocumentMicrosoftWordOldEntity(String title, Date created, Date modified, String creator, String modifier, String path, String keywords, String comments, String appName, long editTime, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.creator = creator;
-        this.lastModifiedBy = lastModifiedBy;
+        this.modifier = modifier;
+        this.path = path;
         this.keywords = keywords;
         this.comments = comments;
         this.appName = appName;
@@ -122,12 +126,20 @@ public class DocumentMicrosoftWordOldEntity {
         this.creator = creator;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public String getModifier() {
+        return modifier;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getKeywords() {

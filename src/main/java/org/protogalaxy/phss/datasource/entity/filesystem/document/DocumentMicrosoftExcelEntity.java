@@ -28,6 +28,12 @@ public class DocumentMicrosoftExcelEntity {
     @Field("creator")
     private String creator;
 
+    @Field("modifier")
+    private String modifier;
+
+    @Field("path")
+    private String path;
+
     @Field("application")
     private String application;
 
@@ -60,11 +66,13 @@ public class DocumentMicrosoftExcelEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftExcelEntity(String title, Date created, Date modified, String creator, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
+    public DocumentMicrosoftExcelEntity(String title, Date created, Date modified, String creator, String modifier, String path, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.creator = creator;
+        this.modifier = modifier;
+        this.path = path;
         this.application = application;
         this.appVersion = appVersion;
         this.characters = characters;
@@ -86,14 +94,6 @@ public class DocumentMicrosoftExcelEntity {
         this.title = title;
     }
 
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
     public Date getCreated() {
         return created;
     }
@@ -108,6 +108,30 @@ public class DocumentMicrosoftExcelEntity {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getApplication() {
