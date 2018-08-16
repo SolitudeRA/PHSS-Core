@@ -8,6 +8,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -21,7 +22,7 @@ public class AdobeMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.pdf")), handler, metadata, context);
+        parser.parse(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.pdf")), handler, metadata, context);
         System.out.println(metadata.get("pdf:PDFVersion"));
         System.out.println(metadata.get("Author"));
         System.out.println(metadata.get("producer"));
@@ -38,7 +39,8 @@ public class AdobeMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.psd")), handler, metadata, context);
+        parser.parse(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.psd")), handler, metadata, context);
+        System.out.println(new File("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.psd"));
         System.out.println(metadata.toString());
     }
 }

@@ -21,42 +21,42 @@ public class MicrosoftMetadataReader {
     @Test
     @DisplayName("Read DOC metadata")
     public void docMetadataReader() throws Exception {
-        WordExtractor extractor = new WordExtractor(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.doc")));
+        WordExtractor extractor = new WordExtractor(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.doc")));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
 
     @Test
     @DisplayName("Read XLS metadata")
     public void xlsMetadataReader() throws Exception {
-        ExcelExtractor extractor = new ExcelExtractor(new HSSFWorkbook(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.xls"))));
+        ExcelExtractor extractor = new ExcelExtractor(new HSSFWorkbook(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.xls"))));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
 
     @Test
     @DisplayName("Read PPT metadata")
     public void pptMetadataReader() throws Exception {
-        PowerPointExtractor extractor = new PowerPointExtractor(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.ppt")));
+        PowerPointExtractor extractor = new PowerPointExtractor(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.ppt")));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
 
     @Test
     @DisplayName("Read DOCX metadata")
     public void docxMetadataReader() throws Exception {
-        XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.docx"))));
+        XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.docx"))));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
 
     @Test
     @DisplayName("Read XLSX metadata")
     public void xlsxMetadataReader() throws Exception {
-        XSSFExcelExtractor extractor = new XSSFExcelExtractor(new XSSFWorkbook(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.xlsx"))));
+        XSSFExcelExtractor extractor = new XSSFExcelExtractor(new XSSFWorkbook(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.xlsx"))));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
 
     @Test
     @DisplayName("Read PPTX metadata")
     public void pptxMetadataReader() throws Exception {
-        XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(new XMLSlideShow(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.pptx"))));
+        XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(new XMLSlideShow(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.pptx"))));
         System.out.println(extractor.getMetadataTextExtractor().getText());
     }
 }
