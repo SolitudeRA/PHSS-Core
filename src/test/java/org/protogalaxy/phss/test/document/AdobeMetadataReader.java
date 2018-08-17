@@ -23,11 +23,6 @@ public class AdobeMetadataReader {
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
         parser.parse(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.pdf")), handler, metadata, context);
-        System.out.println(metadata.get("pdf:PDFVersion"));
-        System.out.println(metadata.get("Author"));
-        System.out.println(metadata.get("producer"));
-        System.out.println(metadata.get("created"));
-        System.out.println(metadata.get("modified"));
         System.out.println(metadata.toString());
     }
 
