@@ -25,11 +25,8 @@ public class DocumentMicrosoftPowerpointEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("creator")
-    private String creator;
-
-    @Field("modifier")
-    private String modifier;
+    @Field("last_access")
+    private Date lastAccess;
 
     @Field("path")
     private String path;
@@ -69,12 +66,11 @@ public class DocumentMicrosoftPowerpointEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftPowerpointEntity(String title, Date created, Date modified, String creator, String modifier, String path, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat) {
+    public DocumentMicrosoftPowerpointEntity(String title, Date created, Date modified, Date lastAccess, String path, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat){
         this.title = title;
         this.created = created;
         this.modified = modified;
-        this.creator = creator;
-        this.modifier = modifier;
+        this.lastAccess = lastAccess;
         this.path = path;
         this.application = application;
         this.appVersion = appVersion;
@@ -114,20 +110,12 @@ public class DocumentMicrosoftPowerpointEntity {
         this.modified = modified;
     }
 
-    public String getCreator() {
-        return creator;
+    public Date getLastAccess(){
+        return lastAccess;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public String getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
+    public void setLastAccess(Date lastAccess){
+        this.lastAccess = lastAccess;
     }
 
     public String getPath() {

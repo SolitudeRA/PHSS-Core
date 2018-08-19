@@ -25,11 +25,8 @@ public class DocumentMicrosoftWordEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("creator")
-    private String creator;
-
-    @Field("modifier")
-    private String modifier;
+    @Field("last_access")
+    private Date lastAccess;
 
     @Field("path")
     private String path;
@@ -66,12 +63,11 @@ public class DocumentMicrosoftWordEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftWordEntity(String title, Date created, Date modified, String creator, String modifier, String path, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs) {
+    public DocumentMicrosoftWordEntity(String title, Date created, Date modified, Date lastAccess, String path, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs){
         this.title = title;
         this.created = created;
         this.modified = modified;
-        this.creator = creator;
-        this.modifier = modifier;
+        this.lastAccess = lastAccess;
         this.path = path;
         this.application = application;
         this.appVersion = appVersion;
@@ -82,119 +78,111 @@ public class DocumentMicrosoftWordEntity {
         this.paragraphs = paragraphs;
     }
 
-    public UUID getUuid() {
+    public UUID getUuid(){
         return uuid;
     }
 
-    public String getTitle() {
+    public String getTitle(){
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title){
         this.title = title;
     }
 
-    public Date getCreated() {
+    public Date getCreated(){
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Date created){
         this.created = created;
     }
 
-    public Date getModified() {
+    public Date getModified(){
         return modified;
     }
 
-    public void setModified(Date modified) {
+    public void setModified(Date modified){
         this.modified = modified;
     }
 
-    public String getCreator() {
-        return creator;
+    public Date getLastAccess(){
+        return lastAccess;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setLastAccess(Date lastAccess){
+        this.lastAccess = lastAccess;
     }
 
-    public String getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
-    }
-
-    public String getPath() {
+    public String getPath(){
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(String path){
         this.path = path;
     }
 
-    public String getApplication() {
+    public String getApplication(){
         return application;
     }
 
-    public void setApplication(String application) {
+    public void setApplication(String application){
         this.application = application;
     }
 
-    public String getAppVersion() {
+    public String getAppVersion(){
         return appVersion;
     }
 
-    public void setAppVersion(String appVersion) {
+    public void setAppVersion(String appVersion){
         this.appVersion = appVersion;
     }
 
-    public int getCharacters() {
+    public int getCharacters(){
         return characters;
     }
 
-    public void setCharacters(int characters) {
+    public void setCharacters(int characters){
         this.characters = characters;
     }
 
-    public int getCharactersWithSpaces() {
+    public int getCharactersWithSpaces(){
         return charactersWithSpaces;
     }
 
-    public void setCharactersWithSpaces(int charactersWithSpaces) {
+    public void setCharactersWithSpaces(int charactersWithSpaces){
         this.charactersWithSpaces = charactersWithSpaces;
     }
 
-    public int getLines() {
+    public int getLines(){
         return lines;
     }
 
-    public void setLines(int lines) {
+    public void setLines(int lines){
         this.lines = lines;
     }
 
-    public int getPages() {
+    public int getPages(){
         return pages;
     }
 
-    public void setPages(int pages) {
+    public void setPages(int pages){
         this.pages = pages;
     }
 
-    public int getParagraphs() {
+    public int getParagraphs(){
         return paragraphs;
     }
 
-    public void setParagraphs(int paragraphs) {
+    public void setParagraphs(int paragraphs){
         this.paragraphs = paragraphs;
     }
 
-    public Date getGmtCreate() {
+    public Date getGmtCreate(){
         return gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public Date getGmtModified(){
         return gmtModified;
     }
 }

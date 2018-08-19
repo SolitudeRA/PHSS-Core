@@ -25,11 +25,8 @@ public class DocumentOpenPresentationEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("creator")
-    private String creator;
-
-    @Field("modifier")
-    private String modifier;
+    @Field("last_access")
+    private Date lastAccess;
 
     @Field("path")
     private String path;
@@ -45,12 +42,11 @@ public class DocumentOpenPresentationEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentOpenPresentationEntity(String title, Date created, Date modified, String creator, String modifier, String path) {
+    public DocumentOpenPresentationEntity(String title, Date created, Date modified, Date lastAccess, String path){
         this.title = title;
         this.created = created;
         this.modified = modified;
-        this.creator = creator;
-        this.modifier = modifier;
+        this.lastAccess = lastAccess;
         this.path = path;
     }
 
@@ -82,20 +78,12 @@ public class DocumentOpenPresentationEntity {
         this.modified = modified;
     }
 
-    public String getCreator() {
-        return creator;
+    public Date getLastAccess(){
+        return lastAccess;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public String getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
+    public void setLastAccess(Date lastAccess){
+        this.lastAccess = lastAccess;
     }
 
     public String getPath() {

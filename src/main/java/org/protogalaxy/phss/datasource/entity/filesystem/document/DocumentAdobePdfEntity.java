@@ -23,11 +23,8 @@ public class DocumentAdobePdfEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("creator")
-    private String creator;
-
-    @Field("modifier")
-    private String modifier;
+    @Field("last_access")
+    private Date lastAccess;
 
     @Field("path")
     private String path;
@@ -47,90 +44,81 @@ public class DocumentAdobePdfEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePdfEntity(String title, Date created, Date modified, String creator, String modifier, String path, String version, String producer) {
+    public DocumentAdobePdfEntity(String title, Date created, Date modified, Date lastAccess, String path, String version, String producer){
         this.title = title;
         this.created = created;
         this.modified = modified;
-        this.creator = creator;
-        this.modifier = modifier;
+        this.lastAccess = lastAccess;
         this.path = path;
         this.version = version;
         this.producer = producer;
     }
 
-    public UUID getUuid() {
+    public UUID getUuid(){
         return uuid;
     }
 
-    public String getTitle() {
+    public String getTitle(){
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title){
         this.title = title;
     }
 
-    public Date getCreated() {
+    public Date getCreated(){
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Date created){
         this.created = created;
     }
 
-    public Date getModified() {
+    public Date getModified(){
         return modified;
     }
 
-    public void setModified(Date modified) {
+    public void setModified(Date modified){
         this.modified = modified;
     }
 
-    public String getCreator() {
-        return creator;
+    public Date getLastAccess(){
+        return lastAccess;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setLastAccess(Date lastAccess){
+        this.lastAccess = lastAccess;
     }
 
-    public String getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
-    }
-
-    public String getPath() {
+    public String getPath(){
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(String path){
         this.path = path;
     }
 
-    public String getVersion() {
+    public String getVersion(){
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(String version){
         this.version = version;
     }
 
-    public String getProducer() {
+    public String getProducer(){
         return producer;
     }
 
-    public void setProducer(String producer) {
+    public void setProducer(String producer){
         this.producer = producer;
     }
 
-    public Date getGmtCreate() {
+    public Date getGmtCreate(){
         return gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public Date getGmtModified(){
         return gmtModified;
     }
 }

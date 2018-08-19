@@ -25,11 +25,8 @@ public class DocumentAdobePhotoshopEntity {
     @Field("modified")
     private Date modified;
 
-    @Field("creator")
-    private String creator;
-
-    @Field("modifier")
-    private String modifier;
+    @Field("last_access")
+    private Date lastAccess;
 
     @Field("path")
     private String path;
@@ -57,12 +54,11 @@ public class DocumentAdobePhotoshopEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePhotoshopEntity(String title, Date created, Date modified, String creator, String modifier, String path, int width, int height, String colorMode, int bitsPerSample) {
+    public DocumentAdobePhotoshopEntity(String title, Date created, Date modified, Date lastAccess, String path, int width, int height, String colorMode, int bitsPerSample){
         this.title = title;
         this.created = created;
         this.modified = modified;
-        this.creator = creator;
-        this.modifier = modifier;
+        this.lastAccess = lastAccess;
         this.path = path;
         this.width = width;
         this.height = height;
@@ -98,20 +94,12 @@ public class DocumentAdobePhotoshopEntity {
         this.modified = modified;
     }
 
-    public String getCreator() {
-        return creator;
+    public Date getLastAccess(){
+        return lastAccess;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public String getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
+    public void setLastAccess(Date lastAccess){
+        this.lastAccess = lastAccess;
     }
 
     public String getPath() {
