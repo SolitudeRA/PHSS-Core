@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -30,7 +31,7 @@ import javax.sql.DataSource;
 @EnableRedisRepositories("org.protogalaxy.phss.datasource.repository.redis")
 public class PhssDatasourceConfig {
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/protogalaxy?useSSL=true");
@@ -40,7 +41,7 @@ public class PhssDatasourceConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setShowSql(true);
         jpaVendorAdapter.setGenerateDdl(true);
@@ -53,24 +54,29 @@ public class PhssDatasourceConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
 
     @Bean
-    public MongoClient mongoClient() {
+    public MongoClient mongoClient(){
         return new MongoClient("localhost", 27017);
     }
 
     @Bean
-    public MongoDbFactory mongoDbFactory() {
+    public MongoDbFactory mongoDbFactory(){
         return new SimpleMongoDbFactory(mongoClient(), "protogalaxy");
     }
 
     @Bean
-    public LettuceConnectionFactory redisConnectionFactory() {
+    public MongoTemplate mongoTemplate(){
+        return new MongoTemplate(mongoClient(), "protogalaxy");
+    }
+
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory(){
         return new LettuceConnectionFactory(new RedisStandaloneConfiguration("localhost", 6379));
     }
 }

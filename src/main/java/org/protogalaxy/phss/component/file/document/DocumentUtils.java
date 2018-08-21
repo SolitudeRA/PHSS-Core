@@ -27,10 +27,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.nio.file.attribute.BasicFileAttributes;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-//TODO: metadata reader format update
 @Component
 public class DocumentUtils {
     private FileCommonUtils fileCommonUtils;

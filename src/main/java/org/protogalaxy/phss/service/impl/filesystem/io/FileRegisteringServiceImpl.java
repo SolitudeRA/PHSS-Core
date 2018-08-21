@@ -52,7 +52,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                       DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository,
                                       DocumentOpenTextRepository documentOpenTextRepository,
                                       DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository,
-                                      DocumentOpenPresentationRepository documentOpenPresentationRepository) {
+                                      DocumentOpenPresentationRepository documentOpenPresentationRepository){
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
@@ -69,7 +69,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception {
+    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception{
         MusicTrackEntity trackEntity = new MusicTrackEntity(
                 filesystemMainRepository.findByUserEntity_Username(username),
                 metadata.get("title").toString(),
@@ -95,27 +95,27 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public AnimeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception {
+    public AnimeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception{
         return null;
     }
 
     @Override
-    public MovieEntity registerMovie(String username, Map<String, String> metadata, Path path) throws Exception {
+    public MovieEntity registerMovie(String username, Map<String, String> metadata, Path path) throws Exception{
         return null;
     }
 
     @Override
-    public VideoEntity registerVideo(String username, Map<String, String> metadata, Path path) throws Exception {
+    public VideoEntity registerVideo(String username, Map<String, String> metadata, Path path) throws Exception{
         return null;
     }
 
     @Override
-    public PhotoEntity registerPhoto(String username, Map<String, String> metadata, Path path) throws Exception {
+    public PhotoEntity registerPhoto(String username, Map<String, String> metadata, Path path) throws Exception{
         return null;
     }
 
     @Override
-    public String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception {
+    public String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception{
         switch (mimeType) {
             case FileConsts.MIME_ADOBE_PDF:
                 return registerAdobePdf(username, metadata, path);
@@ -144,90 +144,182 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception {
+    public IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception{
         return null;
     }
 
-    private String registerAdobePdf(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerAdobePdf(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         DocumentAdobePdfEntity documentAdobePdfEntity = new DocumentAdobePdfEntity((String) metadata.get(FileConsts.METADATA_ADOBE_PDF_TITLE),
                                                                                    (Date) metadata.get(FileConsts.METADATA_ADOBE_PDF_CREATED),
                                                                                    (Date) metadata.get(FileConsts.METADATA_ADOBE_PDF_MODIFIED),
-                                                                                   null,
-                                                                                   (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_AUTHOR),
+                                                                                   (Date) metadata.get(FileConsts.METADATA_ADOBE_PDF_LASTACCESSTIME),
+                                                                                   (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_PATH),
                                                                                    (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_VERSION),
-                                                                                   (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_PRODUCER),
-                                                                                   path.toString());
+                                                                                   (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_PRODUCER));
         documentAdobePdfRepository.save(documentAdobePdfEntity);
         return mapper.writeValueAsString(documentAdobePdfEntity);
     }
 
-    private String registerAdobePhotoshop(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerAdobePhotoshop(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentAdobePhotoshopEntity documentAdobePhotoshopEntity = new DocumentAdobePhotoshopEntity(null,null,null,null,null,null,0,0,null,0);
+        DocumentAdobePhotoshopEntity documentAdobePhotoshopEntity = new DocumentAdobePhotoshopEntity((String) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE),
+                                                                                                     (Date) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_CREATED),
+                                                                                                     (Date) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_MODIFIED),
+                                                                                                     (Date) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_LASTACCESSTIME),
+                                                                                                     (String) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_PATH),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT),
+                                                                                                     (String) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_COLORMODE),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE));
         documentAdobePhotoshopRepository.save(documentAdobePhotoshopEntity);
         return mapper.writeValueAsString(documentAdobePhotoshopEntity);
     }
 
-    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentMicrosoftWordOldEntity documentMicrosoftWordOldEntity = new DocumentMicrosoftWordOldEntity(null,null,null,null,null,null,null,null,null,0,0,0,0,0,0);
+        DocumentMicrosoftWordOldEntity documentMicrosoftWordOldEntity = new DocumentMicrosoftWordOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATED),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIED),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTACCESSTIME),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_PATH),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_KEYWORDS),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_COMMENTS),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_APPNAME),
+                                                                                                           (Long) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_EDITTIME),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_PAGECOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_WORDCOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_CHARCOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_LINECOUNT),
+                                                                                                           (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_PARCOUNT));
         documentMicrosoftWordOldRepository.save(documentMicrosoftWordOldEntity);
         return mapper.writeValueAsString(documentMicrosoftWordOldEntity);
     }
 
-    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentMicrosoftExcelOldEntity documentMicrosoftExcelOldEntity = new DocumentMicrosoftExcelOldEntity(null,null,null,null,null,null,null,0);
+        DocumentMicrosoftExcelOldEntity documentMicrosoftExcelOldEntity = new DocumentMicrosoftExcelOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_TITLE),
+                                                                                                              (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATED),
+                                                                                                              (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIED),
+                                                                                                              (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTACCESSTIME),
+                                                                                                              (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_PATH),
+                                                                                                              (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_APPNAME),
+                                                                                                              (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_DOCPARTS));
         documentMicrosoftExcelOldRepository.save(documentMicrosoftExcelOldEntity);
         return mapper.writeValueAsString(documentMicrosoftExcelOldEntity);
     }
 
-    private String registerMicrosoftPowerpointOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerMicrosoftPowerpointOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();//
-        DocumentMicrosoftPowerpointOldEntity documentMicrosoftPowerpointOldEntity = new DocumentMicrosoftPowerpointOldEntity(null,null,null,null,null,null,null,0,0,0,0,0,0,0,0,null);
+        DocumentMicrosoftPowerpointOldEntity documentMicrosoftPowerpointOldEntity = new DocumentMicrosoftPowerpointOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE),
+                                                                                                                             (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATED),
+                                                                                                                             (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIED),
+                                                                                                                             (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_LASTACCESSTIME),
+                                                                                                                             (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PATH),
+                                                                                                                             (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_APPNAME),
+                                                                                                                             (Long) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_EDITTIME),
+                                                                                                                             (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_WORDCOUNT),
+                                                                                                                             (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_BYTECOUNT),
+                                                                                                                             (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PARCOUNT),
+                                                                                                                             (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_SLIDECOUNT),
+                                                                                                                             (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_NOTECOUNT),
+                                                                                                                             (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_HIDDENCOUNT),
+                                                                                                                             (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MMCLIPCOUNT),
+                                                                                                                             (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PRESFORMAT));
         documentMicrosoftPowerpointOldRepository.save(documentMicrosoftPowerpointOldEntity);
         return mapper.writeValueAsString(documentMicrosoftPowerpointOldEntity);
     }
 
-    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentMicrosoftWordEntity documentMicrosoftWordEntity = new DocumentMicrosoftWordEntity(null,null,null,null,null,null,null,null,0,0,0,0,0);
+        DocumentMicrosoftWordEntity documentMicrosoftWordEntity = new DocumentMicrosoftWordEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_TITLE),
+                                                                                                  (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_CREATED),
+                                                                                                  (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_MODIFIED),
+                                                                                                  (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_LASTACCESSTIME),
+                                                                                                  (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_PATH),
+                                                                                                  (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_APPLICATION),
+                                                                                                  (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_APPVERSION),
+                                                                                                  (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERS),
+                                                                                                  (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES),
+                                                                                                  (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_LINES),
+                                                                                                  (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_PAGES),
+                                                                                                  (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_PARAGRAPHS));
         documentMicrosoftWordRepository.save(documentMicrosoftWordEntity);
         return mapper.writeValueAsString(documentMicrosoftWordEntity);
     }
 
-    private String registerMicrosoftExcel(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerMicrosoftExcel(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentMicrosoftExcelEntity documentMicrosoftExcelEntity = new DocumentMicrosoftExcelEntity(null,null,null,null,null,null,null,null,0,0,0,0,0);
+        DocumentMicrosoftExcelEntity documentMicrosoftExcelEntity = new DocumentMicrosoftExcelEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_TITLE),
+                                                                                                     (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED),
+                                                                                                     (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIED),
+                                                                                                     (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_LASTACCESSTIME),
+                                                                                                     (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_PATH),
+                                                                                                     (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_APPLICATION),
+                                                                                                     (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_APPVERSION),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_CHARACTERS),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_CHARACTERSWITHSPACES),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_LINES),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_PAGES),
+                                                                                                     (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_PARAGRAPHS));
         documentMicrosoftExcelRepository.save(documentMicrosoftExcelEntity);
         return mapper.writeValueAsString(documentMicrosoftExcelEntity);
     }
 
-    private String registerMicrosoftPowerpoint(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerMicrosoftPowerpoint(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentMicrosoftPowerpointEntity documentMicrosoftPowerpointEntity = new DocumentMicrosoftPowerpointEntity(null,null,null,null,null,null,null,null,0,0,0,0,0,null);
+        DocumentMicrosoftPowerpointEntity documentMicrosoftPowerpointEntity = new DocumentMicrosoftPowerpointEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_TITLE),
+                                                                                                                    (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATED),
+                                                                                                                    (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIED),
+                                                                                                                    (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_LASTACCESSTIME),
+                                                                                                                    (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_PATH),
+                                                                                                                    (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPLICATION),
+                                                                                                                    (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPVERSION),
+                                                                                                                    (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERS),
+                                                                                                                    (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERSWITHSPACES),
+                                                                                                                    (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_LINES),
+                                                                                                                    (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_PAGES),
+                                                                                                                    (Integer) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_PARAGRAPHS),
+                                                                                                                    (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_PRESENTATIONFORMAT));
         documentMicrosoftPowerpointRepository.save(documentMicrosoftPowerpointEntity);
         return mapper.writeValueAsString(documentMicrosoftPowerpointEntity);
     }
 
-    private String registerOpendocumentText(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerOpendocumentText(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentOpenTextEntity documentOpenTextEntity = new DocumentOpenTextEntity(null,null,null,null,null,null,0,0,0,0,0,0);
+        DocumentOpenTextEntity documentOpenTextEntity = new DocumentOpenTextEntity((String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE),
+                                                                                   (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATED),
+                                                                                   (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIED),
+                                                                                   (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_LASTACCESSTIME),
+                                                                                   (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_PATH),
+                                                                                   (Integer) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_WORDCOUNT),
+                                                                                   (Integer) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_CHARACTERCOUNT),
+                                                                                   (Integer) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_IMAGECOUNT),
+                                                                                   (Integer) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_PARCOUNT),
+                                                                                   (Integer) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TABLECOUNT),
+                                                                                   (Integer) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_PAGECOUNT));
         documentOpenTextRepository.save(documentOpenTextEntity);
         return mapper.writeValueAsString(documentOpenTextEntity);
     }
 
-    private String registerOpendocumentSpreadsheet(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerOpendocumentSpreadsheet(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentOpenSpreadsheetEntity documentOpenSpreadsheetEntity = new DocumentOpenSpreadsheetEntity(null,null,null,null,null,null);
+        DocumentOpenSpreadsheetEntity documentOpenSpreadsheetEntity = new DocumentOpenSpreadsheetEntity((String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE),
+                                                                                                        (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATED),
+                                                                                                        (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIED),
+                                                                                                        (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_LASTACCESSTIME),
+                                                                                                        (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_PATH));
         documentOpenSpreadsheetRepository.save(documentOpenSpreadsheetEntity);
         return mapper.writeValueAsString(documentOpenSpreadsheetEntity);
     }
 
-    private String registerOpendocumentPresentation(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
+    private String registerOpendocumentPresentation(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        DocumentOpenPresentationEntity documentOpenPresentationEntity = new DocumentOpenPresentationEntity(null,null,null,null,null,null);
+        DocumentOpenPresentationEntity documentOpenPresentationEntity = new DocumentOpenPresentationEntity((String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATED),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIED),
+                                                                                                           (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_LASTACCESSTIME),
+                                                                                                           (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_PATH));
         documentOpenPresentationRepository.save(documentOpenPresentationEntity);
         return mapper.writeValueAsString(documentOpenPresentationEntity);
     }
