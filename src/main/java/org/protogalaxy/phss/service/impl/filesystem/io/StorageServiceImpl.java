@@ -39,7 +39,7 @@ public class StorageServiceImpl implements StorageService {
                               CachingServiceImpl cachingService,
                               MusicMetadata musicMetadata,
                               FileRegisteringServiceImpl fileRegisteringService,
-                              DocumentUtils documentUtils) {
+                              DocumentUtils documentUtils){
         this.musicLocation = config.getMusicLocation();
         this.animeLocation = config.getAnimeLocation();
         this.movieLocation = config.getMovieLocation();
@@ -55,7 +55,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeTrack(String username, MultipartFile musicFile) throws Exception {
+    public String storeTrack(String username, MultipartFile musicFile) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
         Path tempFilePath = cachingService.cachingFile(username, musicFile);
@@ -70,7 +70,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeTracks(String username, MultipartFile[] musicFiles) throws Exception {
+    public String storeTracks(String username, MultipartFile[] musicFiles) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         List<MusicTrackEntity> musicTrackEntities = new ArrayList<>();
         for (MultipartFile musicFile : musicFiles) {
@@ -89,49 +89,55 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeAnime(String username, MultipartFile animeFile) {
+    public String storeAnime(String username, MultipartFile animeFile){
         return null;
     }
 
     @Override
-    public String storeMovie(String username, MultipartFile movieFile) {
+    public String storeMovie(String username, MultipartFile movieFile){
         return null;
     }
 
     @Override
-    public String storeVideo(String username, MultipartFile videoFile) {
+    public String storeVideo(String username, MultipartFile videoFile){
         return null;
     }
 
     @Override
-    public String storePhoto(String username, MultipartFile photoFile) {
+    public String storePhoto(String username, MultipartFile photoFile){
         return null;
     }
 
     @Override
-    public String storeBook(String username, MultipartFile bookFile) {
+    public String storeBook(String username, MultipartFile bookFile){
         return null;
     }
 
     @Override
-    public String storeDocument(String username, MultipartFile documentFile, String type) throws Exception {
+    public String storeDocument(String username, MultipartFile documentFile, String mimeType) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(documentFile.getOriginalFilename());
         Path tempFilePath = cachingService.cachingFile(username, documentFile);
         Map<String, Object> metadata = documentUtils.getDocumentMetadata(tempFilePath);
+        try {
+            Path realPath = Files.move(tempFilePath, pathCheck(documentLocation.resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
+            return mapper.writeValueAsString(fileRegisteringService.registerDocument(username, metadata, realPath, mimeType));
+        } catch (IOException e) {
+            throw new StorageException("Could not move temp file", e);
+        }
+    }
+
+    @Override
+    public String storeIllustration(String username, MultipartFile illustrationFile){
         return null;
     }
 
     @Override
-    public String storeIllustration(String username, MultipartFile illustrationFile) {
+    public Path changeLocation(String username, Path currentPath, Path changedPath){
         return null;
     }
 
-    @Override
-    public Path changeLocation(String username, Path currentPath, Path changedPath) {
-        return null;
-    }
-
-    private Path pathCheck(Path path) {
+    private Path pathCheck(Path path){
         try {
             if (Files.notExists(path)) {
                 Files.createDirectories(path);
