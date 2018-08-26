@@ -33,13 +33,13 @@ import java.util.*;
 public class DocumentUtils {
     private FileCommonUtils fileCommonUtils;
 
-    public DocumentUtils(FileCommonUtils fileCommonUtils){
+    public DocumentUtils(FileCommonUtils fileCommonUtils) {
         this.fileCommonUtils = fileCommonUtils;
     }
 
-    public Map<String, Object> getDocumentMetadata(Path path) throws Exception{
+    public Map<String, Object> getDocumentMetadata(Path path, String mimeType) throws Exception {
         Map<String, Object> metadata;
-        switch (fileCommonUtils.getMimeType(path)) {
+        switch (mimeType) {
             case FileConsts.MIME_ADOBE_PDF:
                 metadata = getMetadataAdobePdf(path);
                 break;
@@ -85,7 +85,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataAdobePdf(Path path) throws Exception{
+    private Map<String, Object> getMetadataAdobePdf(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_ADOBE_PDF_TITLE, path.getFileName());
@@ -99,7 +99,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataAdobePhotoshop(Path path) throws Exception{
+    private Map<String, Object> getMetadataAdobePhotoshop(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE, path.getFileName());
@@ -114,7 +114,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataMicroSoftWordOld(Path path) throws Exception{
+    private Map<String, Object> getMetadataMicroSoftWordOld(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         WordExtractor extractor = new WordExtractor(Files.newInputStream(path));
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
@@ -138,7 +138,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataMicroSoftExcelOld(Path path) throws Exception{
+    private Map<String, Object> getMetadataMicroSoftExcelOld(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         ExcelExtractor extractor = new ExcelExtractor(new HSSFWorkbook(Files.newInputStream(path)));
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
@@ -155,7 +155,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataMicroSoftPowerpointOld(Path path) throws Exception{
+    private Map<String, Object> getMetadataMicroSoftPowerpointOld(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         PowerPointExtractor extractor = new PowerPointExtractor(Files.newInputStream(path));
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
@@ -180,7 +180,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataMicroSoftWord(Path path) throws Exception{
+    private Map<String, Object> getMetadataMicroSoftWord(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
@@ -202,7 +202,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataMicroSoftExcel(Path path) throws Exception{
+    private Map<String, Object> getMetadataMicroSoftExcel(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         XSSFExcelExtractor extractor = new XSSFExcelExtractor(new XSSFWorkbook(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
@@ -224,7 +224,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataMicroSoftPowerpoint(Path path) throws Exception{
+    private Map<String, Object> getMetadataMicroSoftPowerpoint(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(new XMLSlideShow(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
@@ -247,7 +247,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataOpenDocumentText(Path path) throws Exception{
+    private Map<String, Object> getMetadataOpenDocumentText(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE));
@@ -266,7 +266,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataOpenDocumentSpreadsheet(Path path) throws Exception{
+    private Map<String, Object> getMetadataOpenDocumentSpreadsheet(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE));
@@ -279,7 +279,7 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataOpenDocumentPresentation(Path path) throws Exception{
+    private Map<String, Object> getMetadataOpenDocumentPresentation(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE));
@@ -292,17 +292,17 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Map<String, Object> getMetadataMarkdown(Path path){
+    private Map<String, Object> getMetadataMarkdown(Path path) {
         Map<String, Object> metadata = new HashMap<>();
         return metadata;
     }
 
-    private Map<String, Object> getMetadataLatex(Path path){
+    private Map<String, Object> getMetadataLatex(Path path) {
         Map<String, Object> metadata = new HashMap<>();
         return metadata;
     }
 
-    private Metadata getTikaMetadata(Path path) throws Exception{
+    private Metadata getTikaMetadata(Path path) throws Exception {
         Parser parser = new AutoDetectParser();
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
@@ -311,17 +311,17 @@ public class DocumentUtils {
         return metadata;
     }
 
-    private Date getCreated(Path path) throws Exception{
+    private Date getCreated(Path path) throws Exception {
         BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
         return new Date(attributes.creationTime().toMillis());
     }
 
-    private Date getModified(Path path) throws Exception{
+    private Date getModified(Path path) throws Exception {
         BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
         return new Date(attributes.lastModifiedTime().toMillis());
     }
 
-    private Date getLastAccessTime(Path path) throws Exception{
+    private Date getLastAccessTime(Path path) throws Exception {
         BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
         return new Date(attributes.lastAccessTime().toMillis());
     }

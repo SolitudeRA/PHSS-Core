@@ -52,7 +52,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                       DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository,
                                       DocumentOpenTextRepository documentOpenTextRepository,
                                       DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository,
-                                      DocumentOpenPresentationRepository documentOpenPresentationRepository){
+                                      DocumentOpenPresentationRepository documentOpenPresentationRepository) {
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
@@ -69,7 +69,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception{
+    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception {
         MusicTrackEntity trackEntity = new MusicTrackEntity(
                 filesystemMainRepository.findByUserEntity_Username(username),
                 metadata.get("title").toString(),
@@ -95,27 +95,27 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public AnimeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception{
+    public AnimeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public MovieEntity registerMovie(String username, Map<String, String> metadata, Path path) throws Exception{
+    public MovieEntity registerMovie(String username, Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public VideoEntity registerVideo(String username, Map<String, String> metadata, Path path) throws Exception{
+    public VideoEntity registerVideo(String username, Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public PhotoEntity registerPhoto(String username, Map<String, String> metadata, Path path) throws Exception{
+    public PhotoEntity registerPhoto(String username, Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception{
+    public String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception {
         switch (mimeType) {
             case FileConsts.MIME_ADOBE_PDF:
                 return registerAdobePdf(username, metadata, path);
@@ -144,11 +144,11 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception{
+    public IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
-    private String registerAdobePdf(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerAdobePdf(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentAdobePdfEntity documentAdobePdfEntity = new DocumentAdobePdfEntity((String) metadata.get(FileConsts.METADATA_ADOBE_PDF_TITLE),
                                                                                    (Date) metadata.get(FileConsts.METADATA_ADOBE_PDF_CREATED),
@@ -161,7 +161,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentAdobePdfEntity);
     }
 
-    private String registerAdobePhotoshop(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerAdobePhotoshop(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentAdobePhotoshopEntity documentAdobePhotoshopEntity = new DocumentAdobePhotoshopEntity((String) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE),
                                                                                                      (Date) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_CREATED),
@@ -176,7 +176,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentAdobePhotoshopEntity);
     }
 
-    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftWordOldEntity documentMicrosoftWordOldEntity = new DocumentMicrosoftWordOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE),
                                                                                                            (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATED),
@@ -196,7 +196,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftWordOldEntity);
     }
 
-    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftExcelOldEntity documentMicrosoftExcelOldEntity = new DocumentMicrosoftExcelOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_TITLE),
                                                                                                               (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATED),
@@ -209,7 +209,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftExcelOldEntity);
     }
 
-    private String registerMicrosoftPowerpointOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerMicrosoftPowerpointOld(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();//
         DocumentMicrosoftPowerpointOldEntity documentMicrosoftPowerpointOldEntity = new DocumentMicrosoftPowerpointOldEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE),
                                                                                                                              (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATED),
@@ -230,7 +230,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftPowerpointOldEntity);
     }
 
-    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftWordEntity documentMicrosoftWordEntity = new DocumentMicrosoftWordEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_TITLE),
                                                                                                   (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_CREATED),
@@ -248,7 +248,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftWordEntity);
     }
 
-    private String registerMicrosoftExcel(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerMicrosoftExcel(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftExcelEntity documentMicrosoftExcelEntity = new DocumentMicrosoftExcelEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_TITLE),
                                                                                                      (Date) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED),
@@ -266,7 +266,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftExcelEntity);
     }
 
-    private String registerMicrosoftPowerpoint(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerMicrosoftPowerpoint(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftPowerpointEntity documentMicrosoftPowerpointEntity = new DocumentMicrosoftPowerpointEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_TITLE),
                                                                                                                     (Date) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATED),
@@ -285,7 +285,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftPowerpointEntity);
     }
 
-    private String registerOpendocumentText(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerOpendocumentText(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentOpenTextEntity documentOpenTextEntity = new DocumentOpenTextEntity((String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE),
                                                                                    (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATED),
@@ -302,7 +302,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentOpenTextEntity);
     }
 
-    private String registerOpendocumentSpreadsheet(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerOpendocumentSpreadsheet(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentOpenSpreadsheetEntity documentOpenSpreadsheetEntity = new DocumentOpenSpreadsheetEntity((String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE),
                                                                                                         (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATED),
@@ -313,7 +313,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentOpenSpreadsheetEntity);
     }
 
-    private String registerOpendocumentPresentation(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException{
+    private String registerOpendocumentPresentation(String username, Map<String, Object> metadata, Path path) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         DocumentOpenPresentationEntity documentOpenPresentationEntity = new DocumentOpenPresentationEntity((String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE),
                                                                                                            (Date) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATED),

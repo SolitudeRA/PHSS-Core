@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.test.document;
+package org.protogalaxy.phss.test.document.tika;
 
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;

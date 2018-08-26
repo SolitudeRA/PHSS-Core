@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.test.document;
+package org.protogalaxy.phss.test.document.tika;
 
 import org.apache.poi.hslf.extractor.PowerPointExtractor;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
