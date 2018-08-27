@@ -89,10 +89,10 @@ public class DocumentUtils {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_ADOBE_PDF_TITLE, path.getFileName());
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_ADOBE_PDF_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_ADOBE_PDF_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_ADOBE_PDF_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_ADOBE_PDF_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_ADOBE_PDF_CREATOR, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_CREATOR));
         metadata.put(FileConsts.METADATA_ADOBE_PDF_VERSION, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_VERSION));
         metadata.put(FileConsts.METADATA_ADOBE_PDF_PRODUCER, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_PRODUCER));
@@ -103,10 +103,10 @@ public class DocumentUtils {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE, path.getFileName());
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH));
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT));
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_COLORMODE, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_COLORMODE));
@@ -120,10 +120,10 @@ public class DocumentUtils {
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
         DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE, summaryInformation.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATOR, summaryInformation.getAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIER, summaryInformation.getLastAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_KEYWORDS, summaryInformation.getKeywords());
@@ -144,10 +144,10 @@ public class DocumentUtils {
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
         DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_TITLE, summaryInformation.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATOR, summaryInformation.getAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIER, summaryInformation.getLastAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_APPNAME, summaryInformation.getApplicationName());
@@ -161,10 +161,10 @@ public class DocumentUtils {
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
         DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE, summaryInformation.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATOR, summaryInformation.getAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIER, summaryInformation.getLastAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_APPNAME, summaryInformation.getApplicationName());
@@ -186,10 +186,10 @@ public class DocumentUtils {
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
         POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_TITLE, coreProperties.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATOR, coreProperties.getCreator());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIER, coreProperties.getLastModifiedByUser());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_APPLICATION, extendedProperties.getApplication());
@@ -208,10 +208,10 @@ public class DocumentUtils {
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
         POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_TITLE, coreProperties.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATOR, coreProperties.getCreator());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIER, coreProperties.getLastModifiedByUser());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_APPLICATION, extendedProperties.getApplication());
@@ -230,10 +230,10 @@ public class DocumentUtils {
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
         POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_TITLE, coreProperties.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATOR, coreProperties.getCreator());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIER, coreProperties.getLastModifiedByUser());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPLICATION, extendedProperties.getApplication());
@@ -251,10 +251,10 @@ public class DocumentUtils {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATOR));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIER));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_WORDCOUNT, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_WORDCOUNT));
@@ -270,10 +270,10 @@ public class DocumentUtils {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER));
         return metadata;
@@ -283,10 +283,10 @@ public class DocumentUtils {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATED, getCreated(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIED, getModified(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATED, fileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_LASTACCESSTIME, getLastAccessTime(path));
+        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER));
         return metadata;
@@ -309,20 +309,5 @@ public class DocumentUtils {
         ParseContext context = new ParseContext();
         parser.parse(Files.newInputStream(path), handler, metadata, context);
         return metadata;
-    }
-
-    private Date getCreated(Path path) throws Exception {
-        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
-        return new Date(attributes.creationTime().toMillis());
-    }
-
-    private Date getModified(Path path) throws Exception {
-        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
-        return new Date(attributes.lastModifiedTime().toMillis());
-    }
-
-    private Date getLastAccessTime(Path path) throws Exception {
-        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
-        return new Date(attributes.lastAccessTime().toMillis());
     }
 }

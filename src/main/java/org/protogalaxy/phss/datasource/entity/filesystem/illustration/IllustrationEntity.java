@@ -16,7 +16,7 @@ public class IllustrationEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_ILLUSTRATION"))
-    private FileSystemMainEntity filesystemInfMainEntity;
+    private FileSystemMainEntity fileSystemMainEntity;
 
     @Column(name = "illustration_name")
     private String illustrationName;
@@ -46,7 +46,9 @@ public class IllustrationEntity {
         this.id = id;
     }
 
-    public FileSystemMainEntity getFilesystemInfMainEntity(){ return filesystemInfMainEntity; }
+    public FileSystemMainEntity getFileSystemMainEntity() {
+        return fileSystemMainEntity;
+    }
 
     public String getIllustrationName(){
         return illustrationName;

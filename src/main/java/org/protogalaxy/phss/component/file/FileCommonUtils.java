@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
 
 @Component
 public class FileCommonUtils {
@@ -16,5 +18,20 @@ public class FileCommonUtils {
             e.printStackTrace();
         }
         return mimeType;
+    }
+
+    public Date getCreated(Path path) throws Exception {
+        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+        return new Date(attributes.creationTime().toMillis());
+    }
+
+    public Date getModified(Path path) throws Exception {
+        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+        return new Date(attributes.lastModifiedTime().toMillis());
+    }
+
+    public Date getLastAccessTime(Path path) throws Exception {
+        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+        return new Date(attributes.lastAccessTime().toMillis());
     }
 }

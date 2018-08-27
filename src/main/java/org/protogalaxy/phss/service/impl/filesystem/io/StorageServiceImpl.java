@@ -115,6 +115,10 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public String storeBook(String username, MultipartFile bookFile) {
+        ObjectMapper mapper = new ObjectMapper();
+        String filename = StringUtils.cleanPath(bookFile.getOriginalFilename());
+        Path tempFilePath = cachingService.cachingFile(username, bookFile);
+        String mimeType = fileCommonUtils.getMimeType(tempFilePath);
         return null;
     }
 

@@ -7,12 +7,15 @@ import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackE
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackInfEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackInfStaticEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.photo.PhotoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.book.BookInfEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.document.*;
 import org.protogalaxy.phss.datasource.entity.filesystem.illustration.IllustrationEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.VideoEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicTrackRepository;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
 import org.protogalaxy.phss.service.main.filesystem.io.FileRegisteringService;
@@ -27,6 +30,7 @@ import java.util.Map;
 public class FileRegisteringServiceImpl implements FileRegisteringService {
     private final FilesystemMainRepository filesystemMainRepository;
     private final MusicTrackRepository musicTrackRepository;
+    private final BookRepository bookRepository;
     private final DocumentAdobePdfRepository documentAdobePdfRepository;
     private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
     private final DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
@@ -42,6 +46,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     @Autowired
     public FileRegisteringServiceImpl(FilesystemMainRepository filesystemMainRepository,
                                       MusicTrackRepository musicTrackRepository,
+                                      BookRepository bookRepository,
                                       DocumentAdobePdfRepository documentAdobePdfRepository,
                                       DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
                                       DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
@@ -55,6 +60,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                       DocumentOpenPresentationRepository documentOpenPresentationRepository) {
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
+        this.bookRepository = bookRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
         this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
         this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
@@ -115,6 +121,31 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
+    public BookEntity registerBook(String username, Map<String, Object> metadata, Path path) throws Exception {
+        BookEntity bookEntity = new BookEntity(
+                filesystemMainRepository.findByUserEntity_Username(username),
+                (String) metadata.get(FileConsts.METADATA_BOOK_TITLE),
+                (String) metadata.get(FileConsts.METADATA_BOOK_AUTHOR),
+                (String) metadata.get(FileConsts.METADATA_BOOK_PATH));
+        bookEntity.setBookInfEntity(new BookInfEntity(
+                (Date) metadata.get(FileConsts.METADATA_BOOK_CREATED),
+                (Date) metadata.get(FileConsts.METADATA_BOOK_MODIFIED),
+                (Date) metadata.get(FileConsts.METADATA_BOOK_LASTACCESSTIME),
+                (String) metadata.get(FileConsts.METADATA_BOOK_COVER),
+                (Date) metadata.get(FileConsts.METADATA_BOOK_DATE),
+                (String) metadata.get(FileConsts.METADATA_BOOK_DESCRIPTION),
+                (String) metadata.get(FileConsts.METADATA_BOOK_CONTRIBUTOR),
+                (String) metadata.get(FileConsts.METADATA_BOOK_PUBLISHER),
+                (String) metadata.get(FileConsts.METADATA_BOOK_RIGHT),
+                (String) metadata.get(FileConsts.METADATA_BOOK_LANGUAGE),
+                (String) metadata.get(FileConsts.METADATA_BOOK_TYPE),
+                bookEntity
+        ));
+        bookRepository.save(bookEntity);
+        return null;
+    }
+
+    @Override
     public String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception {
         switch (mimeType) {
             case FileConsts.MIME_ADOBE_PDF:
@@ -139,8 +170,9 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 return registerOpendocumentSpreadsheet(username, metadata, path);
             case FileConsts.MIME_OPENDOCUMENT_PRESENTATION:
                 return registerOpendocumentPresentation(username, metadata, path);
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override

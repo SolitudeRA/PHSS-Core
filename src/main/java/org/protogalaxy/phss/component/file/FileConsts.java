@@ -42,6 +42,23 @@ public final class FileConsts {
             METADATA_AUDIO_BITDEPTH = "bit_depth",
             METADATA_AUDIO_SIZE = "size",
             METADATA_AUDIO_COVER = "cover";
+    //Book metadata string
+    public static final String
+            METADATA_BOOK_TITLE = "title",
+            METADATA_BOOK_CREATED = "created",
+            METADATA_BOOK_MODIFIED = "modified",
+            METADATA_BOOK_PATH = "path",
+            METADATA_BOOK_LASTACCESSTIME = "last_access",
+            METADATA_BOOK_AUTHOR = "author",
+            METADATA_BOOK_COVER = "cover",
+            METADATA_BOOK_DATE = "date",
+            METADATA_BOOK_DESCRIPTION = "description",
+            METADATA_BOOK_CONTRIBUTOR = "contributor",
+            METADATA_BOOK_PUBLISHER = "publisher",
+            METADATA_BOOK_RIGHT = "right",
+            METADATA_BOOK_LANGUAGE = "language",
+            METADATA_BOOK_TYPE = "type";
+
     //Document metadata string
     public static final String
             METADATA_ADOBE_PDF_TITLE = "title",
@@ -217,6 +234,38 @@ public final class FileConsts {
             METADATA_AUDIO_BITDEPTH,
             METADATA_AUDIO_SIZE,
             METADATA_AUDIO_COVER
+    );
+    //Book metadata Lists
+    public static List<String> METADATA_BOOK_STANDARD_LIST=Arrays.asList(
+            METADATA_BOOK_TITLE,
+            METADATA_BOOK_CREATED,
+            METADATA_BOOK_MODIFIED,
+            METADATA_BOOK_PATH,
+            METADATA_BOOK_LASTACCESSTIME,
+            METADATA_BOOK_AUTHOR,
+            METADATA_BOOK_DATE,
+            METADATA_BOOK_DESCRIPTION,
+            METADATA_BOOK_CONTRIBUTOR,
+            METADATA_BOOK_PUBLISHER,
+            METADATA_BOOK_RIGHT,
+            METADATA_BOOK_LANGUAGE,
+            METADATA_BOOK_TYPE
+    );
+    public static List<String> METADATA_BOOK_FULL_LIST = Arrays.asList(
+            METADATA_BOOK_TITLE,
+            METADATA_BOOK_CREATED,
+            METADATA_BOOK_MODIFIED,
+            METADATA_BOOK_PATH,
+            METADATA_BOOK_LASTACCESSTIME,
+            METADATA_BOOK_AUTHOR,
+            METADATA_BOOK_COVER,
+            METADATA_BOOK_DATE,
+            METADATA_BOOK_DESCRIPTION,
+            METADATA_BOOK_CONTRIBUTOR,
+            METADATA_BOOK_PUBLISHER,
+            METADATA_BOOK_RIGHT,
+            METADATA_BOOK_LANGUAGE,
+            METADATA_BOOK_TYPE
     );
     //Document metadata Lists
     public static final List<String> ADOBE_PDF_METADATA_LIST = Arrays.asList(
