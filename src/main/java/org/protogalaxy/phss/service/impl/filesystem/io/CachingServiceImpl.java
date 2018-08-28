@@ -58,7 +58,7 @@ public class CachingServiceImpl implements CachingService {
     @Override
     public Path cachingImage(String username, UUID uuid, BufferedImage bufferedImage) {
         String imageName = uuid.toString();
-
+        //TODO: caching service
         return null;
     }
 
