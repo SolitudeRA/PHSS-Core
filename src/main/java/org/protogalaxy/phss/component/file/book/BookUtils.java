@@ -38,7 +38,7 @@ public class BookUtils {
         metadata.put(FileConsts.METADATA_BOOK_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_BOOK_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_BOOK_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_BOOK_COVER)
+        metadata.put(FileConsts.METADATA_BOOK_COVER);
         //TODO:here yesterday
         return metadata;
     }

@@ -32,6 +32,8 @@ public class PhssStorageServiceConfig {
 
     private String photoLocation = "photo";
 
+    private String imagePoolLocation = "image_pool";
+
     public String getPrefix() {
         return prefix;
     }
@@ -76,6 +78,10 @@ public class PhssStorageServiceConfig {
         return Paths.get(rootLocation).resolve(photoLocation);
     }
 
+    public Path getImagePoolLocation() {
+        return Paths.get(rootLocation).resolve(imagePoolLocation);
+    }
+
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
@@ -118,5 +124,9 @@ public class PhssStorageServiceConfig {
 
     public void setPhotoLocation(String photoLocation) {
         this.photoLocation = photoLocation;
+    }
+
+    public void setImagePoolLocation(String imagePoolLocation) {
+        this.imagePoolLocation = imagePoolLocation;
     }
 }

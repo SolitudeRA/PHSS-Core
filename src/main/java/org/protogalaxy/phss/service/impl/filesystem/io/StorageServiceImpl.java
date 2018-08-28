@@ -27,8 +27,8 @@ public class StorageServiceImpl implements StorageService {
     private final Path videoLocation;
     private final Path bookLocation;
     private final Path documentLocation;
-    private final Path illustrationLocation;
     private final Path photoLocation;
+    private final Path illustrationLocation;
 
     private final CachingServiceImpl cachingService;
     private final MusicMetadata musicMetadataService;
@@ -50,12 +50,12 @@ public class StorageServiceImpl implements StorageService {
         this.videoLocation = config.getVideoLocation();
         this.bookLocation = config.getBookLocation();
         this.documentLocation = config.getDocumentLocation();
-        this.illustrationLocation = config.getIllustrationLocation();
         this.photoLocation = config.getPhotoLocation();
-        this.cachingService = cachingService;
-        this.musicMetadataService = musicMetadata;
+        this.illustrationLocation = config.getIllustrationLocation();
         this.fileCommonUtils = fileCommonUtils;
         this.documentUtils = documentUtils;
+        this.cachingService = cachingService;
+        this.musicMetadataService = musicMetadata;
         this.fileRegisteringService = fileRegisteringService;
     }
 
