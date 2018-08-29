@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,8 +60,13 @@ public class CachingServiceImpl implements CachingService {
     @Override
     public Path cachingImage(String username, UUID uuid, BufferedImage bufferedImage) {
         String imageName = uuid.toString();
-        //TODO: caching service
-        return null;
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", outputStream);
+            return Files.write(tempPathCheck(imagePoolLocation.resolve(username).resolve(imageName)), outputStream.toByteArray());
+        } catch (IOException e) {
+            throw new StorageTempException("Failed to cache image", e);
+        }
     }
 
     /**
@@ -79,7 +86,7 @@ public class CachingServiceImpl implements CachingService {
     private Path tempPathCheck(Path path) {
         try {
             if (Files.notExists(path)) {
-                Files.createDirectories(path);
+                return Files.createDirectories(path);
             } else {
                 return path;
             }
