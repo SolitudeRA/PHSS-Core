@@ -2,6 +2,8 @@ package org.protogalaxy.phss.service.impl.filesystem.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
+import org.protogalaxy.phss.component.file.FileConsts;
+import org.protogalaxy.phss.component.file.book.BookUtils;
 import org.protogalaxy.phss.component.file.document.DocumentUtils;
 import org.protogalaxy.phss.component.file.music.MusicMetadata;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
@@ -33,6 +35,7 @@ public class StorageServiceImpl implements StorageService {
     private final CachingServiceImpl cachingService;
     private final MusicMetadata musicMetadataService;
     private final FileCommonUtils fileCommonUtils;
+    private final BookUtils bookUtils;
     private final DocumentUtils documentUtils;
     private final FileRegisteringServiceImpl fileRegisteringService;
 
@@ -42,6 +45,7 @@ public class StorageServiceImpl implements StorageService {
                               CachingServiceImpl cachingService,
                               MusicMetadata musicMetadata,
                               FileCommonUtils fileCommonUtils,
+                              BookUtils bookUtils,
                               DocumentUtils documentUtils,
                               FileRegisteringServiceImpl fileRegisteringService) {
         this.musicLocation = config.getMusicLocation();
@@ -53,6 +57,7 @@ public class StorageServiceImpl implements StorageService {
         this.photoLocation = config.getPhotoLocation();
         this.illustrationLocation = config.getIllustrationLocation();
         this.fileCommonUtils = fileCommonUtils;
+        this.bookUtils = bookUtils;
         this.documentUtils = documentUtils;
         this.cachingService = cachingService;
         this.musicMetadataService = musicMetadata;
@@ -114,12 +119,17 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeBook(String username, MultipartFile bookFile) {
+    public String storeBook(String username, MultipartFile bookFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(bookFile.getOriginalFilename());
         Path tempFilePath = cachingService.cachingFile(username, bookFile);
-        String mimeType = fileCommonUtils.getMimeType(tempFilePath);
-        return null;
+        Map<String, Object> metadata = bookUtils.getBookMetadata(tempFilePath, fileCommonUtils.getMimeType(tempFilePath));
+        try {
+            Path realPath = Files.move(tempFilePath, pathCheck(bookLocation.resolve(metadata.get(FileConsts.METADATA_BOOK_AUTHOR).toString()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
+            return mapper.writeValueAsString(fileRegisteringService.registerBook(username, metadata, realPath));
+        } catch (IOException e) {
+            throw new StorageException("Could not move temp file", e);
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.protogalaxy.phss.component.file.book;
 
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.epub.EpubReader;
+import org.protogalaxy.phss.service.impl.filesystem.io.CachingServiceImpl;
 import org.springframework.stereotype.Component;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.component.file.FileConsts;
@@ -15,16 +16,18 @@ import java.util.Map;
 public class BookUtils {
     private FileCommonUtils fileCommonUtils;
 
-    public BookUtils(FileCommonUtils fileCommonUtils) {
+    public BookUtils(FileCommonUtils fileCommonUtils,
+                     CachingServiceImpl cachingService) {
         this.fileCommonUtils = fileCommonUtils;
     }
 
-    public Map<String, Object> getBookMetadata(Path path, String mimeType) {
-        Map<String, Object> metadata;
+    public Map<String, Object> getBookMetadata(Path path, String mimeType) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
         switch (mimeType) {
             case FileConsts.MIME_EBOOK_EPUB:
-                metadata =
+                metadata = getEpubMetadata(path);
         }
+        return metadata;
     }
 
     private Map<String, Object> getEpubMetadata(Path path) throws Exception {
@@ -38,8 +41,13 @@ public class BookUtils {
         metadata.put(FileConsts.METADATA_BOOK_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_BOOK_MODIFIED, fileCommonUtils.getModified(path));
         metadata.put(FileConsts.METADATA_BOOK_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_BOOK_COVER);
-        //TODO:here yesterday
+        metadata.put(FileConsts.METADATA_BOOK_DATE, book.getMetadata().getDates().get(0).getValue());
+        metadata.put(FileConsts.METADATA_BOOK_DESCRIPTION, book.getMetadata().getDescriptions().get(0));
+        metadata.put(FileConsts.METADATA_BOOK_CONTRIBUTOR, book.getMetadata().getContributors().get(0).getFirstname() + book.getMetadata().getContributors().get(0).getLastname());
+        metadata.put(FileConsts.METADATA_BOOK_PUBLISHER, book.getMetadata().getPublishers().get(0));
+        metadata.put(FileConsts.METADATA_BOOK_RIGHT, book.getMetadata().getRights().get(0));
+        metadata.put(FileConsts.METADATA_BOOK_LANGUAGE, book.getMetadata().getLanguage());
+        metadata.put(FileConsts.METADATA_BOOK_COVER, book.getCoverImage().getData());
         return metadata;
     }
 }

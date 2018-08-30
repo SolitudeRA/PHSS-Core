@@ -67,7 +67,7 @@ public interface StorageService {
      * @param bookFile uploaded book
      * @return JSON format string of the uploaded book
      */
-    String storeBook(String username, MultipartFile bookFile);
+    String storeBook(String username, MultipartFile bookFile) throws Exception;
 
     /**
      * Store single document

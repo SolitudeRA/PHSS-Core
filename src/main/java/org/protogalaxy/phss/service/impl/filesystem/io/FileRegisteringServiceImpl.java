@@ -18,16 +18,21 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.Mus
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
+import org.protogalaxy.phss.service.main.filesystem.io.CachingService;
 import org.protogalaxy.phss.service.main.filesystem.io.FileRegisteringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class FileRegisteringServiceImpl implements FileRegisteringService {
+    private final CachingService cachingService;
     private final FilesystemMainRepository filesystemMainRepository;
     private final MusicTrackRepository musicTrackRepository;
     private final BookRepository bookRepository;
@@ -44,7 +49,8 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     private final DocumentOpenPresentationRepository documentOpenPresentationRepository;
 
     @Autowired
-    public FileRegisteringServiceImpl(FilesystemMainRepository filesystemMainRepository,
+    public FileRegisteringServiceImpl(CachingServiceImpl cachingService,
+                                      FilesystemMainRepository filesystemMainRepository,
                                       MusicTrackRepository musicTrackRepository,
                                       BookRepository bookRepository,
                                       DocumentAdobePdfRepository documentAdobePdfRepository,
@@ -58,6 +64,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                       DocumentOpenTextRepository documentOpenTextRepository,
                                       DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository,
                                       DocumentOpenPresentationRepository documentOpenPresentationRepository) {
+        this.cachingService = cachingService;
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
         this.bookRepository = bookRepository;
@@ -131,7 +138,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (Date) metadata.get(FileConsts.METADATA_BOOK_CREATED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_MODIFIED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_LASTACCESSTIME),
-                (String) metadata.get(FileConsts.METADATA_BOOK_COVER),
+                cachingService.cachingImage(username, UUID.randomUUID(), ImageIO.read((InputStream) metadata.get(FileConsts.METADATA_BOOK_COVER))).toString(),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_DATE),
                 (String) metadata.get(FileConsts.METADATA_BOOK_DESCRIPTION),
                 (String) metadata.get(FileConsts.METADATA_BOOK_CONTRIBUTOR),
@@ -142,7 +149,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 bookEntity
         ));
         bookRepository.save(bookEntity);
-        return null;
+        return bookEntity;
     }
 
     @Override
