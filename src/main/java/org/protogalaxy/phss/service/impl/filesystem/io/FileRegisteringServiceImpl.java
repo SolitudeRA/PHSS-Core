@@ -15,6 +15,7 @@ import org.protogalaxy.phss.datasource.entity.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.VideoEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicTrackRepository;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookInfRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
@@ -36,6 +37,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     private final FilesystemMainRepository filesystemMainRepository;
     private final MusicTrackRepository musicTrackRepository;
     private final BookRepository bookRepository;
+    private final BookInfRepository bookInfRepository;
     private final DocumentAdobePdfRepository documentAdobePdfRepository;
     private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
     private final DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
@@ -53,6 +55,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                       FilesystemMainRepository filesystemMainRepository,
                                       MusicTrackRepository musicTrackRepository,
                                       BookRepository bookRepository,
+                                      BookInfRepository bookInfRepository,
                                       DocumentAdobePdfRepository documentAdobePdfRepository,
                                       DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
                                       DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
@@ -68,6 +71,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
         this.bookRepository = bookRepository;
+        this.bookInfRepository = bookInfRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
         this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
         this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
@@ -134,7 +138,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (String) metadata.get(FileConsts.METADATA_BOOK_TITLE),
                 (String) metadata.get(FileConsts.METADATA_BOOK_AUTHOR),
                 (String) metadata.get(FileConsts.METADATA_BOOK_PATH));
-        bookEntity.setBookInfEntity(new BookInfEntity(
+        BookInfEntity bookInfEntity = new BookInfEntity(
                 (Date) metadata.get(FileConsts.METADATA_BOOK_CREATED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_MODIFIED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_LASTACCESSTIME),
@@ -147,8 +151,9 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (String) metadata.get(FileConsts.METADATA_BOOK_LANGUAGE),
                 (String) metadata.get(FileConsts.METADATA_BOOK_TYPE),
                 bookEntity
-        ));
+        );
         bookRepository.save(bookEntity);
+        bookInfRepository.save(bookInfEntity);
         return bookEntity;
     }
 

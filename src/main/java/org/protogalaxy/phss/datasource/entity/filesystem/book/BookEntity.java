@@ -39,10 +39,6 @@ public class BookEntity {
     @UpdateTimestamp
     private Date gmtModified;
 
-    @JsonManagedReference
-    @OneToOne(mappedBy = "bookEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private BookInfEntity bookInfEntity;
-
     public BookEntity() {
     }
 
@@ -55,6 +51,10 @@ public class BookEntity {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public FileSystemMainEntity getFileSystemMainEntity() {
@@ -95,13 +95,5 @@ public class BookEntity {
 
     public Date getGmtModified() {
         return gmtModified;
-    }
-
-    public BookInfEntity getBookInfEntity() {
-        return bookInfEntity;
-    }
-
-    public void setBookInfEntity(BookInfEntity bookInfEntity) {
-        this.bookInfEntity = bookInfEntity;
     }
 }

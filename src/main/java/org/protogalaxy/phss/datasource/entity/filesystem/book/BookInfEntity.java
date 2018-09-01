@@ -38,20 +38,14 @@ public class BookInfEntity {
     @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "right")
-    private String right;
+    @Column(name = "rights")
+    private String rights;
 
     @Column(name = "language")
     private String language;
 
     @Column(name = "type")
     private String type;
-
-    @JsonBackReference
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "book_id")
-    private BookEntity bookEntity;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
@@ -63,10 +57,16 @@ public class BookInfEntity {
     @UpdateTimestamp
     private Date gmtModified;
 
+    @JsonBackReference
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "book_id")
+    private BookEntity bookEntity;
+
     public BookInfEntity() {
     }
 
-    public BookInfEntity(Date created, Date modified, Date lastAccess, String cover, Date date, String description, String contributor, String publisher, String right, String language, String type, BookEntity bookEntity) {
+    public BookInfEntity(Date created, Date modified, Date lastAccess, String cover, Date date, String description, String contributor, String publisher, String rights, String language, String type, BookEntity bookEntity) {
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
@@ -75,7 +75,7 @@ public class BookInfEntity {
         this.description = description;
         this.contributor = contributor;
         this.publisher = publisher;
-        this.right = right;
+        this.rights = rights;
         this.language = language;
         this.type = type;
         this.bookEntity = bookEntity;
@@ -83,6 +83,10 @@ public class BookInfEntity {
 
     public UUID getBookId() {
         return bookId;
+    }
+
+    public void setBookId(UUID bookId) {
+        this.bookId = bookId;
     }
 
     public Date getCreated() {
@@ -149,12 +153,12 @@ public class BookInfEntity {
         this.publisher = publisher;
     }
 
-    public String getRight() {
-        return right;
+    public String getRights() {
+        return rights;
     }
 
-    public void setRight(String right) {
-        this.right = right;
+    public void setRights(String right) {
+        this.rights = right;
     }
 
     public String getLanguage() {
@@ -173,6 +177,14 @@ public class BookInfEntity {
         this.type = type;
     }
 
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
     public BookEntity getBookEntity() {
         return bookEntity;
     }
@@ -181,11 +193,4 @@ public class BookInfEntity {
         this.bookEntity = bookEntity;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
 }

@@ -39,7 +39,6 @@ import java.util.Set;
 @DataJpaTest
 @Rollback(false)
 @ExtendWith({SpringExtension.class})
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TestDataFiller {
 
     @Autowired

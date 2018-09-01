@@ -4,10 +4,7 @@ import org.protogalaxy.phss.service.impl.filesystem.io.StorageServiceImpl;
 import org.protogalaxy.phss.service.impl.filesystem.logic.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.print.Pageable;
@@ -26,7 +23,7 @@ public class DocumentController {
 
     @PostMapping("/upload")
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String documentUpload(@PathVariable String username, MultipartFile file) throws Exception {
+    public String documentUpload(@PathVariable String username, @RequestParam("document") MultipartFile file) throws Exception {
         return storageService.storeDocument(username, file);
     }
 
