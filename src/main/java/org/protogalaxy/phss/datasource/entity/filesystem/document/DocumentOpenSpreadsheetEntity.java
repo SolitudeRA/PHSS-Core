@@ -31,6 +31,9 @@ public class DocumentOpenSpreadsheetEntity {
     @Field("path")
     private String path;
 
+    @Field("url")
+    private String url;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Field("gmt_create")
     @CreatedDate
@@ -41,16 +44,22 @@ public class DocumentOpenSpreadsheetEntity {
     @LastModifiedDate
     private Date gmtModified;
 
-    public DocumentOpenSpreadsheetEntity(String title, Date created, Date modified, Date lastAccess, String path){
+    @PersistenceConstructor
+    public DocumentOpenSpreadsheetEntity(String title, Date created, Date modified, Date lastAccess, String path, String url) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
+        this.url = url;
     }
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -77,11 +86,11 @@ public class DocumentOpenSpreadsheetEntity {
         this.modified = modified;
     }
 
-    public Date getLastAccess(){
+    public Date getLastAccess() {
         return lastAccess;
     }
 
-    public void setLastAccess(Date lastAccess){
+    public void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
 
@@ -93,11 +102,27 @@ public class DocumentOpenSpreadsheetEntity {
         this.path = path;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Date getGmtCreate() {
         return gmtCreate;
     }
 
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
     public Date getGmtModified() {
         return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

@@ -1,5 +1,7 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.document;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -29,6 +31,9 @@ public class DocumentAdobePdfEntity {
     @Field("path")
     private String path;
 
+    @Field("url")
+    private String url;
+
     @Field("version")
     private String version;
 
@@ -37,88 +42,111 @@ public class DocumentAdobePdfEntity {
 
     @Field("gmt_create")
     @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
     private Date gmtCreate;
 
     @Field("gmt_modified")
     @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePdfEntity(String title, Date created, Date modified, Date lastAccess, String path, String version, String producer){
+    public DocumentAdobePdfEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, String version, String producer) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
+        this.url = url;
         this.version = version;
         this.producer = producer;
     }
 
-    public UUID getUuid(){
+    public UUID getUuid() {
         return uuid;
     }
 
-    public String getTitle(){
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public Date getCreated(){
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created){
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public Date getModified(){
+    public Date getModified() {
         return modified;
     }
 
-    public void setModified(Date modified){
+    public void setModified(Date modified) {
         this.modified = modified;
     }
 
-    public Date getLastAccess(){
+    public Date getLastAccess() {
         return lastAccess;
     }
 
-    public void setLastAccess(Date lastAccess){
+    public void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
 
-    public String getPath(){
+    public String getPath() {
         return path;
     }
 
-    public void setPath(String path){
+    public void setPath(String path) {
         this.path = path;
     }
 
-    public String getVersion(){
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getVersion() {
         return version;
     }
 
-    public void setVersion(String version){
+    public void setVersion(String version) {
         this.version = version;
     }
 
-    public String getProducer(){
+    public String getProducer() {
         return producer;
     }
 
-    public void setProducer(String producer){
+    public void setProducer(String producer) {
         this.producer = producer;
     }
 
-    public Date getGmtCreate(){
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public Date getGmtModified(){
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
         return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

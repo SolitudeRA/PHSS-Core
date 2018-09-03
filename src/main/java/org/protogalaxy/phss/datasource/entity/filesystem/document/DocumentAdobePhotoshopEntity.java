@@ -31,6 +31,9 @@ public class DocumentAdobePhotoshopEntity {
     @Field("path")
     private String path;
 
+    @Field("url")
+    private String url;
+
     @Field("width")
     private int width;
 
@@ -54,12 +57,13 @@ public class DocumentAdobePhotoshopEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePhotoshopEntity(String title, Date created, Date modified, Date lastAccess, String path, int width, int height, String colorMode, int bitsPerSample){
+    public DocumentAdobePhotoshopEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, int width, int height, String colorMode, int bitsPerSample) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
+        this.url = url;
         this.width = width;
         this.height = height;
         this.colorMode = colorMode;
@@ -68,6 +72,10 @@ public class DocumentAdobePhotoshopEntity {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -94,11 +102,11 @@ public class DocumentAdobePhotoshopEntity {
         this.modified = modified;
     }
 
-    public Date getLastAccess(){
+    public Date getLastAccess() {
         return lastAccess;
     }
 
-    public void setLastAccess(Date lastAccess){
+    public void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
 
@@ -108,6 +116,14 @@ public class DocumentAdobePhotoshopEntity {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public int getWidth() {
@@ -146,7 +162,15 @@ public class DocumentAdobePhotoshopEntity {
         return gmtCreate;
     }
 
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
     public Date getGmtModified() {
         return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

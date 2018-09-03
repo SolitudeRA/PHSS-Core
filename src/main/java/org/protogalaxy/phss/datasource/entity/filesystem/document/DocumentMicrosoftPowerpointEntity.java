@@ -31,6 +31,9 @@ public class DocumentMicrosoftPowerpointEntity {
     @Field("path")
     private String path;
 
+    @Field("url")
+    private String url;
+
     @Field("application")
     private String application;
 
@@ -66,12 +69,13 @@ public class DocumentMicrosoftPowerpointEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftPowerpointEntity(String title, Date created, Date modified, Date lastAccess, String path, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat){
+    public DocumentMicrosoftPowerpointEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, String application, String appVersion, int characters, int charactersWithSpaces, int lines, int pages, int paragraphs, String presentationFormat) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
+        this.url = url;
         this.application = application;
         this.appVersion = appVersion;
         this.characters = characters;
@@ -84,6 +88,10 @@ public class DocumentMicrosoftPowerpointEntity {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -110,11 +118,11 @@ public class DocumentMicrosoftPowerpointEntity {
         this.modified = modified;
     }
 
-    public Date getLastAccess(){
+    public Date getLastAccess() {
         return lastAccess;
     }
 
-    public void setLastAccess(Date lastAccess){
+    public void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
 
@@ -124,6 +132,14 @@ public class DocumentMicrosoftPowerpointEntity {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getApplication() {
@@ -194,7 +210,15 @@ public class DocumentMicrosoftPowerpointEntity {
         return gmtCreate;
     }
 
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
     public Date getGmtModified() {
         return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

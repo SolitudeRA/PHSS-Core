@@ -90,7 +90,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_ADOBE_PDF_TITLE, path.getFileName());
         metadata.put(FileConsts.METADATA_ADOBE_PDF_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_ADOBE_PDF_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_ADOBE_PDF_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_ADOBE_PDF_CREATOR, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_CREATOR));
         metadata.put(FileConsts.METADATA_ADOBE_PDF_VERSION, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_VERSION));
@@ -104,7 +103,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE, path.getFileName());
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH));
         metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT));
@@ -121,7 +119,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE, summaryInformation.getTitle());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATOR, summaryInformation.getAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIER, summaryInformation.getLastAuthor());
@@ -145,7 +142,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_TITLE, summaryInformation.getTitle());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATOR, summaryInformation.getAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIER, summaryInformation.getLastAuthor());
@@ -162,7 +158,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE, summaryInformation.getTitle());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATOR, summaryInformation.getAuthor());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIER, summaryInformation.getLastAuthor());
@@ -187,7 +182,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_TITLE, coreProperties.getTitle());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATOR, coreProperties.getCreator());
         metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIER, coreProperties.getLastModifiedByUser());
@@ -209,7 +203,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_TITLE, coreProperties.getTitle());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATOR, coreProperties.getCreator());
         metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIER, coreProperties.getLastModifiedByUser());
@@ -231,7 +224,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_TITLE, coreProperties.getTitle());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATOR, coreProperties.getCreator());
         metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIER, coreProperties.getLastModifiedByUser());
@@ -252,7 +244,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATOR));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIER));
@@ -271,7 +262,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER));
@@ -284,7 +274,6 @@ public class DocumentUtils {
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATED, fileCommonUtils.getCreated(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIED, fileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_PATH, path.toUri().toString());
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_LASTACCESSTIME, fileCommonUtils.getLastAccessTime(path));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR));
         metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER));

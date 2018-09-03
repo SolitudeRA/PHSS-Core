@@ -31,6 +31,9 @@ public class DocumentMicrosoftExcelOldEntity {
     @Field("path")
     private String path;
 
+    @Field("url")
+    private String url;
+
     @Field("app_name")
     private String appName;
 
@@ -48,18 +51,23 @@ public class DocumentMicrosoftExcelOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftExcelOldEntity(String title, Date created, Date modified, Date lastAccess, String path, String appName, int doc_parts){
+    public DocumentMicrosoftExcelOldEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, String appName, int doc_parts) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
+        this.url = url;
         this.appName = appName;
         this.doc_parts = doc_parts;
     }
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -86,11 +94,11 @@ public class DocumentMicrosoftExcelOldEntity {
         this.modified = modified;
     }
 
-    public Date getLastAccess(){
+    public Date getLastAccess() {
         return lastAccess;
     }
 
-    public void setLastAccess(Date lastAccess){
+    public void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
 
@@ -100,6 +108,14 @@ public class DocumentMicrosoftExcelOldEntity {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getAppName() {
@@ -122,7 +138,15 @@ public class DocumentMicrosoftExcelOldEntity {
         return gmtCreate;
     }
 
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
     public Date getGmtModified() {
         return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

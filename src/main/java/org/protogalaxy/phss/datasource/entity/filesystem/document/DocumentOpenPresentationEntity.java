@@ -31,6 +31,9 @@ public class DocumentOpenPresentationEntity {
     @Field("path")
     private String path;
 
+    @Field("url")
+    private String url;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Field("gmt_create")
     @CreatedDate
@@ -42,16 +45,21 @@ public class DocumentOpenPresentationEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentOpenPresentationEntity(String title, Date created, Date modified, Date lastAccess, String path){
+    public DocumentOpenPresentationEntity(String title, Date created, Date modified, Date lastAccess, String path, String url) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
+        this.url = url;
     }
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -78,11 +86,11 @@ public class DocumentOpenPresentationEntity {
         this.modified = modified;
     }
 
-    public Date getLastAccess(){
+    public Date getLastAccess() {
         return lastAccess;
     }
 
-    public void setLastAccess(Date lastAccess){
+    public void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
 
@@ -94,12 +102,28 @@ public class DocumentOpenPresentationEntity {
         this.path = path;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Date getGmtCreate() {
         return gmtCreate;
     }
 
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
     public Date getGmtModified() {
         return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }
 
