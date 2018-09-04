@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.controller.filesystem;
 
 import org.protogalaxy.phss.service.impl.filesystem.io.StorageServiceImpl;
-import org.protogalaxy.phss.service.impl.filesystem.logic.MusicServiceImpl;
+import org.protogalaxy.phss.service.impl.filesystem.common.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;

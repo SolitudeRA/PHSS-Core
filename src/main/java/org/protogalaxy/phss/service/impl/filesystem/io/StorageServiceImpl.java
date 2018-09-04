@@ -9,6 +9,7 @@ import org.protogalaxy.phss.component.file.music.MusicMetadata;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
+import org.protogalaxy.phss.service.impl.filesystem.logic.FileRegisteringServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class StorageServiceImpl implements StorageService {
     private final Path photoLocation;
     private final Path illustrationLocation;
 
-    private final CachingServiceImpl cachingService;
+    private final CacheServiceImpl cachingService;
     private final MusicMetadata musicMetadataService;
     private final FileCommonUtils fileCommonUtils;
     private final BookUtils bookUtils;
@@ -42,7 +43,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
-                              CachingServiceImpl cachingService,
+                              CacheServiceImpl cachingService,
                               MusicMetadata musicMetadata,
                               FileCommonUtils fileCommonUtils,
                               BookUtils bookUtils,

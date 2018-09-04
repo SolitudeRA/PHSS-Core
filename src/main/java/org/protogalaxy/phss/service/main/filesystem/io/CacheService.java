@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.UUID;
 
-public interface CachingService {
+public interface CacheService {
     /**
      * Caching file from MultipartFile
      *

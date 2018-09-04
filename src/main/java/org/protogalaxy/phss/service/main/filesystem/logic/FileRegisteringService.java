@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.main.filesystem.io;
+package org.protogalaxy.phss.service.main.filesystem.logic;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.photo.PhotoEntity;
@@ -7,12 +7,10 @@ import org.protogalaxy.phss.datasource.entity.filesystem.illustration.Illustrati
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.VideoEntity;
-import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
 import java.util.Map;
 
-@Service
 public interface FileRegisteringService {
     /**
      * Register track in database

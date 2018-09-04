@@ -3,9 +3,9 @@ package org.protogalaxy.phss.service.impl.filesystem.io;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.exception.storage.StorageTempException;
 import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
-import org.protogalaxy.phss.service.main.filesystem.io.CachingService;
+import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,14 +18,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-@Component
-public class CachingServiceImpl implements CachingService {
+@Service
+public class CacheServiceImpl implements CacheService {
     private final String phssTempPrefix;
     private final Path tempLocation;
     private final Path imagePoolLocation;
 
     @Autowired
-    public CachingServiceImpl(PhssStorageServiceConfig config) {
+    public CacheServiceImpl(PhssStorageServiceConfig config) {
         this.phssTempPrefix = config.getPrefix();
         this.tempLocation = config.getTempLocation();
         this.imagePoolLocation = config.getImagePoolLocation();
