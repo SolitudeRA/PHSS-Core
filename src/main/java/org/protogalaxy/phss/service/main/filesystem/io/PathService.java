@@ -16,11 +16,21 @@ public interface PathService {
     Path persistFile(String username, String mimeType, Path tempPath, Map<String, Object> metadata);
 
     /**
+     * Switch path with filesystem part
+     *
+     * @param username       Name of the user
+     * @param fileSystemPart Part of the filesystem
+     * @return Correct path for the part
+     */
+    Path basePathSwitcher(String username, String fileSystemPart);
+
+    /**
      * Switch path with MIME type
      *
-     * @param username name of the user
+     * @param username Name of the user
      * @param mimeType MIME type of the file
+     * @param type     (Optional) more string parameters
      * @return Correct path for current MIME type
      */
-    Path mimePathSwitcher(String username, String mimeType);
+    Path mimeBasePathSwitcher(String username, String mimeType, String... type);
 }

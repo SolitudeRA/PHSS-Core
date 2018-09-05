@@ -5,6 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class FileConsts {
+    //Filesystem parts
+    public static final String
+            FILESYSTEM_MUSIC = "music",
+            FILESYSTEM_ANIME = "anime",
+            FILESYSTEM_MOVIE = "movie",
+            FILESYSTEM_VIDEO = "video",
+            FILESYSTEM_PHOTO = "photo",
+            FILESYSTEM_ILLUSTRATION = "illustration",
+            FILESYSTEM_DOCUMENT = "document",
+            FILESYSTEM_BOOK = "book";
     //Document MIME types
     public static final String
             MIME_ADOBE_PDF = "application/pdf",
@@ -236,7 +246,7 @@ public final class FileConsts {
             METADATA_AUDIO_COVER
     );
     //Book metadata Lists
-    public static List<String> METADATA_BOOK_STANDARD_LIST=Arrays.asList(
+    public static List<String> METADATA_BOOK_STANDARD_LIST = Arrays.asList(
             METADATA_BOOK_TITLE,
             METADATA_BOOK_CREATED,
             METADATA_BOOK_MODIFIED,

@@ -1,6 +1,6 @@
-package org.protogalaxy.phss.exception.storage;
+package org.protogalaxy.phss.exception.path;
 
-public class StorageFileNotFoundException extends StorageException {
+public class PathException extends RuntimeException {
     /**
      * Constructs a new runtime exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
@@ -9,7 +9,7 @@ public class StorageFileNotFoundException extends StorageException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public StorageFileNotFoundException(String message) {
+    public PathException(String message) {
         super(message);
     }
 
@@ -27,7 +27,7 @@ public class StorageFileNotFoundException extends StorageException {
      *                unknown.)
      * @since 1.4
      */
-    public StorageFileNotFoundException(String message, Throwable cause) {
+    public PathException(String message, Throwable cause) {
         super(message, cause);
     }
 }
