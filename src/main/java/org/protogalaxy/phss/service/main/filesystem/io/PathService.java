@@ -25,12 +25,12 @@ public interface PathService {
     Path basePathSwitcher(String username, String fileSystemPart);
 
     /**
-     * Switch path with MIME type
+     * Switch path with metadata information
      *
-     * @param username Name of the user
-     * @param mimeType MIME type of the file
-     * @param type     (Optional) more string parameters
+     * @param username       Name of the user
+     * @param tempPath       Temporary path of the file
+     * @param fileSystemPart File system part
      * @return Correct path for current MIME type
      */
-    Path mimeBasePathSwitcher(String username, String mimeType, String... type);
+    Path metadataPathSwitcher(String username, Path tempPath, String fileSystemPart);
 }
