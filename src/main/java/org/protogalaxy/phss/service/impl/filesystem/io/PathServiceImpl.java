@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 @Service
 public class PathServiceImpl implements PathService {
     private PhssStorageServiceConfig storageServiceConfig;
-    private MetadataService metadataService;
+    private MetadataService metadataService;//TODO: here yesterday
 
     @Autowired
     public PathServiceImpl(PhssStorageServiceConfig storageServiceConfig,
