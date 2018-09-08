@@ -10,7 +10,11 @@ import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackE
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
 import org.protogalaxy.phss.service.impl.filesystem.logic.FileRegisteringServiceImpl;
+import org.protogalaxy.phss.service.impl.filesystem.logic.MetadataServiceImpl;
+import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageService;
+import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringService;
+import org.protogalaxy.phss.service.main.filesystem.logic.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -24,43 +28,23 @@ import java.util.Map;
 
 @Service
 public class StorageServiceImpl implements StorageService {
-    private final Path musicLocation;
-    private final Path animeLocation;
-    private final Path movieLocation;
-    private final Path videoLocation;
-    private final Path bookLocation;
-    private final Path documentLocation;
-    private final Path photoLocation;
-    private final Path illustrationLocation;
+    private PhssStorageServiceConfig config;
 
-    private final CacheServiceImpl cachingService;
+    private final CacheService cacheService;
+    private final MetadataService metadataService;
     private final MusicMetadata musicMetadataService;
-    private final FileCommonUtils fileCommonUtils;
-    private final BookUtils bookUtils;
-    private final DocumentUtils documentUtils;
-    private final FileRegisteringServiceImpl fileRegisteringService;
+    private final FileRegisteringService fileRegisteringService;
 
 
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
-                              CacheServiceImpl cachingService,
+                              CacheServiceImpl cacheService,
+                              MetadataServiceImpl metadataService,
                               MusicMetadata musicMetadata,
-                              FileCommonUtils fileCommonUtils,
-                              BookUtils bookUtils,
-                              DocumentUtils documentUtils,
                               FileRegisteringServiceImpl fileRegisteringService) {
-        this.musicLocation = config.getMusicLocation();
-        this.animeLocation = config.getAnimeLocation();
-        this.movieLocation = config.getMovieLocation();
-        this.videoLocation = config.getVideoLocation();
-        this.bookLocation = config.getBookLocation();
-        this.documentLocation = config.getDocumentLocation();
-        this.photoLocation = config.getPhotoLocation();
-        this.illustrationLocation = config.getIllustrationLocation();
-        this.fileCommonUtils = fileCommonUtils;
-        this.bookUtils = bookUtils;
-        this.documentUtils = documentUtils;
-        this.cachingService = cachingService;
+        this.config = config;
+        this.cacheService = cacheService;
+        this.metadataService = metadataService;
         this.musicMetadataService = musicMetadata;
         this.fileRegisteringService = fileRegisteringService;
     }
@@ -69,11 +53,11 @@ public class StorageServiceImpl implements StorageService {
     public String storeTrack(String username, MultipartFile musicFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
-        Path tempFilePath = cachingService.cachingFile(username, musicFile);
-        Map<String, Object> metadata = musicMetadataService.readMetaData(tempFilePath);
-        byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
+        Path tempFilePath = cacheService.cachingFile(username, musicFile);
+        Map<String, Object> metadata = metadataService.musicMetadataResolver(tempFilePath);
+        byte[] artwork = metadataService.getArtwork(tempFilePath);
         try {
-            Path realPath = Files.move(tempFilePath, pathCheck(musicLocation.resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
+            Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getMusicLocation()).resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerTrack(username, metadata, artwork, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
@@ -86,11 +70,11 @@ public class StorageServiceImpl implements StorageService {
         List<MusicTrackEntity> musicTrackEntities = new ArrayList<>();
         for (MultipartFile musicFile : musicFiles) {
             String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());
-            Path tempFilePath = cachingService.cachingFile(username, musicFile);
+            Path tempFilePath = cacheService.cachingFile(username, musicFile);
             Map<String, Object> metadata = musicMetadataService.readMetaData(tempFilePath);
             byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
             try {
-                Path realPath = Files.move(tempFilePath, pathCheck(musicLocation.resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
+                Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getMusicLocation()).resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
                 musicTrackEntities.add(fileRegisteringService.registerTrack(username, metadata, artwork, realPath));
             } catch (IOException e) {
                 throw new StorageException("Could not move temp file", e);
@@ -123,10 +107,10 @@ public class StorageServiceImpl implements StorageService {
     public String storeBook(String username, MultipartFile bookFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(bookFile.getOriginalFilename());
-        Path tempFilePath = cachingService.cachingFile(username, bookFile);
-        Map<String, Object> metadata = bookUtils.getBookMetadata(tempFilePath, fileCommonUtils.getMimeType(tempFilePath));
+        Path tempFilePath = cacheService.cachingFile(username, bookFile);
+        Map<String, Object> metadata = metadataService.bookMetadataResolver(tempFilePath);
         try {
-            Path realPath = Files.move(tempFilePath, pathCheck(bookLocation.resolve(metadata.get(FileConsts.METADATA_BOOK_AUTHOR).toString()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
+            Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getBookLocation()).resolve(metadata.get(FileConsts.METADATA_BOOK_AUTHOR).toString()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerBook(username, metadata, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
@@ -137,11 +121,11 @@ public class StorageServiceImpl implements StorageService {
     public String storeDocument(String username, MultipartFile documentFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(documentFile.getOriginalFilename());
-        Path tempFilePath = cachingService.cachingFile(username, documentFile);
-        String mimeType = fileCommonUtils.getMimeType(tempFilePath);
-        Map<String, Object> metadata = documentUtils.getDocumentMetadata(tempFilePath, mimeType);
+        Path tempFilePath = cacheService.cachingFile(username, documentFile);
+        String mimeType = FileCommonUtils.getMimeType(tempFilePath);
+        Map<String, Object> metadata = metadataService.documentMetadataResolver(tempFilePath);
         try {
-            Path realPath = Files.move(tempFilePath, pathCheck(documentLocation.resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
+            Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getDocumentLocation()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerDocument(username, metadata, realPath, mimeType));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);

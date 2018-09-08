@@ -10,7 +10,7 @@ public interface MetadataService {
      * @param path Path of the file
      * @return Music metadata map of the file
      */
-    Map<String, Object> musicMetadataResolver(Path path);
+    Map<String, Object> musicMetadataResolver(Path path) throws Exception;
 
     /**
      * Resolve video file metadata
@@ -18,7 +18,7 @@ public interface MetadataService {
      * @param path Path of the file
      * @return Video metadata map of the file
      */
-    Map<String, Object> videoMetadataResolver(Path path);
+    Map<String, Object> videoMetadataResolver(Path path) throws Exception;
 
     /**
      * Resolve photo file metadata
@@ -26,7 +26,7 @@ public interface MetadataService {
      * @param path Path of the file
      * @return Photo metadata map of the file
      */
-    Map<String, Object> photoMetadataResolver(Path path);
+    Map<String, Object> photoMetadataResolver(Path path) throws Exception;
 
     /**
      * Resolve illustration file metadata
@@ -34,7 +34,7 @@ public interface MetadataService {
      * @param path Path of the file
      * @return Illustration metadata map of the file
      */
-    Map<String, Object> illustrationMetadataResolver(Path path);
+    Map<String, Object> illustrationMetadataResolver(Path path) throws Exception;
 
     /**
      * Resolve document file metadata
@@ -42,7 +42,7 @@ public interface MetadataService {
      * @param path Path of the file
      * @return Document metadata map of the file
      */
-    Map<String, Object> documentMetadataResolver(Path path);
+    Map<String, Object> documentMetadataResolver(Path path) throws Exception;
 
     /**
      * Resolve book file metadata
@@ -50,5 +50,5 @@ public interface MetadataService {
      * @param path Path of the file
      * @return Book metadata map of the file
      */
-    Map<String, Object> bookMetadataResolver(Path path);
+    Map<String, Object> bookMetadataResolver(Path path) throws Exception;
 }
