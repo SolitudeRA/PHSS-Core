@@ -20,9 +20,8 @@ public class MusicAlbumInfStaticEntity {
     @Id
     private int albumId;
 
-    @Lob
     @Column(name = "artwork")
-    private Blob artwork;
+    private String artwork;
 
     @Column(name = "composer")
     private String composer;
@@ -97,7 +96,7 @@ public class MusicAlbumInfStaticEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public MusicAlbumInfStaticEntity(Blob artwork, String composer, Integer year, Integer totalTime, Integer trackCount, Integer albumNumber, Integer albumCount, String genreSummary, String genreSub1, String genreSub2, String genreSub3, Integer star, Integer isFavorite, String comment, Integer size, MusicAlbumEntity musicAlbumEntity) {
+    public MusicAlbumInfStaticEntity(String artwork, String composer, Integer year, Integer totalTime, Integer trackCount, Integer albumNumber, Integer albumCount, String genreSummary, String genreSub1, String genreSub2, String genreSub3, Integer star, Integer isFavorite, String comment, Integer size, MusicAlbumEntity musicAlbumEntity) {
         this.artwork = artwork;
         this.composer = composer;
         this.year = year;
@@ -124,11 +123,11 @@ public class MusicAlbumInfStaticEntity {
         this.albumId = albumId;
     }
 
-    public Blob getArtwork() {
+    public String getArtwork() {
         return artwork;
     }
 
-    public void setArtwork(Blob artwork) {
+    public void setArtwork(String artwork) {
         this.artwork = artwork;
     }
 

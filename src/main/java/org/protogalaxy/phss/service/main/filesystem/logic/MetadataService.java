@@ -7,10 +7,11 @@ public interface MetadataService {
     /**
      * Resolve music file metadata
      *
-     * @param path Path of the file
+     * @param username Name of current user
+     * @param path     Path of the file
      * @return Music metadata map of the file
      */
-    Map<String, Object> musicMetadataResolver(Path path) throws Exception;
+    Map<String, Object> musicMetadataResolver(String username, Path path) throws Exception;
 
     /**
      * Resolve video file metadata

@@ -39,7 +39,7 @@ public class CacheServiceImpl implements CacheService {
      * @return Path of the temp file
      */
     @Override
-    public Path cachingFile(String username, MultipartFile file) {
+    public Path cacheFile(String username, MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             Path tempDirectory = getUserTempDirectoryPath(username);
@@ -53,13 +53,12 @@ public class CacheServiceImpl implements CacheService {
      * Caching image from memory
      *
      * @param username      current user name
-     * @param uuid          uuid of the object
      * @param bufferedImage buffered image
      * @return Path of the cached image
      */
     @Override
-    public Path cachingImage(String username, UUID uuid, BufferedImage bufferedImage) {
-        String imageName = uuid.toString();
+    public Path cacheImage(String username, BufferedImage bufferedImage) {
+        String imageName = UUID.randomUUID().toString();
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", outputStream);

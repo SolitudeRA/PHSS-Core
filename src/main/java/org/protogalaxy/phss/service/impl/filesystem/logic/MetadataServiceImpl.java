@@ -27,12 +27,12 @@ import org.bytedeco.javacv.Java2DFrameConverter;
 import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.exception.MetadataException;
+import org.protogalaxy.phss.service.impl.filesystem.io.CacheServiceImpl;
+import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.main.filesystem.logic.MetadataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -40,43 +40,55 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.bytedeco.javacpp.avformat.*;
-import static org.bytedeco.javacpp.avutil.AV_DICT_IGNORE_SUFFIX;
-import static org.bytedeco.javacpp.avutil.AV_TIME_BASE;
-import static org.bytedeco.javacpp.avutil.av_dict_get;
+import static org.bytedeco.javacpp.avutil.*;
+
 
 @Service
 public class MetadataServiceImpl implements MetadataService {
+    private CacheService cacheService;
+
+    @Autowired
+    public MetadataServiceImpl(CacheServiceImpl cacheService) {
+        this.cacheService = cacheService;
+    }
+
     /**
      * Resolve music file metadata
      *
-     * @param path Path of the file
+     * @param username Name of current user
+     * @param path     Path of the file
      * @return Music metadata map of the file
      */
     @Override
-    public Map<String, Object> musicMetadataResolver(Path path) throws Exception {
+    public Map<String, Object> musicMetadataResolver(String username, Path path) throws Exception {
         Map<String, Object> metadataFullMap = new HashMap<>();
         Map<String, Object> metadataCurrentMap = new HashMap<>();
         AVFormatContext avFormatContext = avformat_alloc_context();
-        avutil.AVDictionaryEntry entry = null;
+        AVDictionaryEntry entry = null;
         avformat_open_input(avFormatContext, path.toString(), null, null);
         avformat_find_stream_info(avFormatContext, ((PointerPointer) null));
         while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
-            metadataFullMap.put(entry.key().getString(), entry.value().getString());
+            metadataCurrentMap.put(entry.key().getString(), entry.value().getString());
         }
         for (String key : FileConsts.METADATA_AUDIO_STANDARD_LIST) {
-            if (metadataFullMap.get(key) != null) {
-                metadataCurrentMap.put(key, metadataFullMap.get(key));
+            if (metadataCurrentMap.get(key) != null) {
+                metadataFullMap.put(key, metadataFullMap.get(key));
             } else {
-                metadataCurrentMap.put(key, "");
+                metadataFullMap.put(key, "");
             }
         }
-        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_DURATION, formatDuration(avFormatContext.duration()));
-        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_BITRATE, formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
-        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
-        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
-        metadataCurrentMap.put(FileConsts.METADATA_AUDIO_SIZE, formatSize(path.toFile().length()));
+        metadataFullMap.put(FileConsts.METADATA_AUDIO_DURATION, formatDuration(avFormatContext.duration()));
+        metadataFullMap.put(FileConsts.METADATA_AUDIO_BITRATE, formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
+        metadataFullMap.put(FileConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
+        metadataFullMap.put(FileConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
+        metadataFullMap.put(FileConsts.METADATA_AUDIO_SIZE, formatSize(path.toFile().length()));
         avformat_close_input(avFormatContext);
-        return metadataCurrentMap;
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
+        Java2DFrameConverter converter = new Java2DFrameConverter();
+        grabber.start();
+        metadataFullMap.put(FileConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(username, converter.getBufferedImage(grabber.grabImage())));
+        grabber.close();
+        return metadataFullMap;
     }
 
     /**
@@ -117,6 +129,7 @@ public class MetadataServiceImpl implements MetadataService {
      *
      * @param path Path of the file
      * @return Document metadata map of the file
+     * @throws MetadataException Metadata MIME type not supported exception
      */
     @Override
     public Map<String, Object> documentMetadataResolver(Path path) throws Exception {
@@ -153,6 +166,7 @@ public class MetadataServiceImpl implements MetadataService {
      *
      * @param path Path of the file
      * @return Book metadata map of the file
+     * @throws MetadataException Metadata MIME type not supported exception
      */
     @Override
     public Map<String, Object> bookMetadataResolver(Path path) throws Exception {
@@ -162,24 +176,6 @@ public class MetadataServiceImpl implements MetadataService {
             default:
                 throw new MetadataException("MIME type not supported");
         }
-    }
-
-
-    /**
-     * Get artwork of the music
-     *
-     * @param path temp path of the music
-     * @return byte array og the track artwork
-     */
-    public byte[] getArtwork(Path path) throws Exception {
-        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
-        Java2DFrameConverter converter = new Java2DFrameConverter();
-        grabber.start();
-        BufferedImage bufferedImage = converter.getBufferedImage(grabber.grabImage());
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "png", outputStream);
-        grabber.close();
-        return outputStream.toByteArray();
     }
 
     /**
@@ -240,7 +236,6 @@ public class MetadataServiceImpl implements MetadataService {
      *
      * @param path Temporary path of the file
      * @return Metadata map
-     * @throws Exception
      */
     private Map<String, Object> getMetadataAdobePdf(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();

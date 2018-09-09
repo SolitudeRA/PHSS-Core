@@ -2,8 +2,8 @@ package org.protogalaxy.phss.datasource.entity.filesystem.album.music;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -38,10 +38,6 @@ public class MusicTrackInfStaticEntity {
     @Column(name = "date")
     private String date;
 
-    @Lob
-    @Column(name = "artwork")
-    private byte[] artwork;
-
     @Column(name = "genre")
     private String genre;
 
@@ -57,16 +53,19 @@ public class MusicTrackInfStaticEntity {
     @Column(name = "bit_depth")
     private String bitDepth;
 
+    @Column(name = "artwork")
+    private String artwork;
+
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
-    @CreationTimestamp
+    @CreatedDate
     private Date dateAdded;
 
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
-    @UpdateTimestamp
+    @LastModifiedDate
     private Date dateModified;
 
     @JsonBackReference
@@ -83,17 +82,17 @@ public class MusicTrackInfStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String date, byte[] artwork, String genre, String bitRate, String sampleRate, String bitDepth, MusicTrackEntity musicTrackEntity) throws Exception {
+    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String date, String genre, String bitRate, String sampleRate, String bitDepth, String artwork, MusicTrackEntity musicTrackEntity) throws Exception {
         this.size = size;
         this.duration = duration;
         this.trackNumber = trackNumber;
         this.disc = disc;
         this.date = date;
-        this.artwork = artwork;
         this.genre = genre;
         this.bitRate = bitRate;
         this.sampleRate = sampleRate;
         this.bitDepth = bitDepth;
+        this.artwork = artwork;
         this.musicTrackEntity = musicTrackEntity;
     }
 
@@ -153,14 +152,6 @@ public class MusicTrackInfStaticEntity {
         this.date = date;
     }
 
-    public byte[] getArtwork() {
-        return artwork;
-    }
-
-    public void setArtwork(byte[] artwork) throws Exception {
-        this.artwork = artwork;
-    }
-
     public String getGenre() {
         return genre;
     }
@@ -211,6 +202,14 @@ public class MusicTrackInfStaticEntity {
 
     public void setDateModified(Date dateModified) {
         this.dateModified = dateModified;
+    }
+
+    public String getArtwork() {
+        return artwork;
+    }
+
+    public void setArtwork(String artwork) throws Exception {
+        this.artwork = artwork;
     }
 
     public MusicTrackEntity getMusicTrackEntity() {

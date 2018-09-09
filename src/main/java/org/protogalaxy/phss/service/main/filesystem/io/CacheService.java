@@ -15,15 +15,14 @@ public interface CacheService {
      * @param file     uploaded MultipartFile
      * @return Path of the cached file
      */
-    Path cachingFile(String username, MultipartFile file);
+    Path cacheFile(String username, MultipartFile file);
 
     /**
      * Caching image from memory
      *
      * @param username      current user name
-     * @param uuid          uuid of the object
      * @param bufferedImage buffered image
      * @return Path of the cached image
      */
-    Path cachingImage(String username, UUID uuid, BufferedImage bufferedImage);
+    Path cacheImage(String username, BufferedImage bufferedImage);
 }
