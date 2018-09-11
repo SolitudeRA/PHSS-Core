@@ -61,8 +61,8 @@ public class MetadataServiceImpl implements MetadataService {
      */
     @Override
     public Map<String, Object> musicMetadataResolver(String username, Path path) throws Exception {
-        Map<String, Object> metadataFullMap = new HashMap<>();
         Map<String, Object> metadataCurrentMap = new HashMap<>();
+        Map<String, Object> metadataFullMap = new HashMap<>();
         AVFormatContext avFormatContext = avformat_alloc_context();
         AVDictionaryEntry entry = null;
         avformat_open_input(avFormatContext, path.toString(), null, null);
@@ -99,6 +99,7 @@ public class MetadataServiceImpl implements MetadataService {
      */
     @Override
     public Map<String, Object> videoMetadataResolver(Path path) throws Exception {
+        AVFormatContext avFormatContext = avformat_alloc_context();
         return null;
     }
 
