@@ -147,4 +147,17 @@ public class PathServiceImpl implements PathService {
                 throw new PathException("Invalid filesystem part");
         }
     }
+
+    /**
+     * Change file location
+     *
+     * @param username    name of current user
+     * @param currentPath current file path
+     * @param changedPath path that file to move
+     * @return changed file path
+     */
+    @Override
+    public Path changeLocation(String username, Path currentPath, Path changedPath) {
+        return null;
+    }
 }

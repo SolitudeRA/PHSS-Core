@@ -86,14 +86,4 @@ public interface StorageService {
      * @return JSON format string of the uploaded illustration
      */
     String storeIllustration(String username, MultipartFile illustrationFile);
-
-    /**
-     * Change file location
-     *
-     * @param username    name of current user
-     * @param currentPath current file path
-     * @param changedPath path that file to move
-     * @return changed file path
-     */
-    Path changeLocation(String username, Path currentPath, Path changedPath);
 }
