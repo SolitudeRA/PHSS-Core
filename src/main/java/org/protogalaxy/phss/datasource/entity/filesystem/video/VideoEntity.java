@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.movie;
+package org.protogalaxy.phss.datasource.entity.filesystem.video;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 

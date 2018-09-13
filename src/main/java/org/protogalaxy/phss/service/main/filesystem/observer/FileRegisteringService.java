@@ -1,12 +1,12 @@
-package org.protogalaxy.phss.service.main.filesystem.logic;
+package org.protogalaxy.phss.service.main.filesystem.observer;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.illustration.IllustrationEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.movie.AnimeEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.movie.VideoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -19,7 +19,7 @@ public interface FileRegisteringService {
      * @param metadata metadata of the music
      * @param path     path of the file
      */
-    MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception;
+    MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, Path path) throws Exception;
 
     /**
      * Register anime in database

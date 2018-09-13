@@ -52,6 +52,10 @@ public final class FileConsts {
             METADATA_AUDIO_BITDEPTH = "bit_depth",
             METADATA_AUDIO_SIZE = "size",
             METADATA_AUDIO_COVER = "cover";
+    //Anime metadata string
+    public static final String
+            METADATA_ANIME_TITLE="title",
+
     //Book metadata string
     public static final String
             METADATA_BOOK_TITLE = "title",

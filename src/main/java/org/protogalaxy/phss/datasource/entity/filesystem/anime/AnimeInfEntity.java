@@ -1,9 +1,9 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.movie;
+package org.protogalaxy.phss.datasource.entity.filesystem.anime;
 
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.sql.Blob;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,9 +13,8 @@ public class AnimeInfEntity {
     @Id
     private UUID animeId;
 
-    @Lob
     @Column(name = "poster")
-    private Blob poster;
+    private String poster;
 
     @Column(name = "gensaku")
     private String gensaku;
@@ -43,10 +42,12 @@ public class AnimeInfEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
-    @CreationTimestamp
+    @CreatedDate
     private Date gmtCreate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_modified")
+    @LastModifiedDate
     private Date gmtModified;
 
     @OneToOne
@@ -57,7 +58,7 @@ public class AnimeInfEntity {
     public AnimeInfEntity() {
     }
 
-    public AnimeInfEntity(Blob poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime) {
+    public AnimeInfEntity(String poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime, AnimeEntity animeEntity) {
         this.poster = poster;
         this.gensaku = gensaku;
         this.gensakuIrasuto = gensakuIrasuto;
@@ -67,6 +68,7 @@ public class AnimeInfEntity {
         this.releaseYear = releaseYear;
         this.season_time = season_time;
         this.seasonAnime = seasonAnime;
+        this.animeEntity = animeEntity;
     }
 
     public UUID getAnimeId() {
@@ -77,11 +79,11 @@ public class AnimeInfEntity {
         this.animeId = animeId;
     }
 
-    public Blob getPoster() {
+    public String getPoster() {
         return poster;
     }
 
-    public void setPoster(Blob poster) {
+    public void setPoster(String poster) {
         this.poster = poster;
     }
 
@@ -151,6 +153,10 @@ public class AnimeInfEntity {
 
     public Date getGmtCreate() {
         return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 
     public Date getGmtModified() {

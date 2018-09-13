@@ -1,6 +1,6 @@
-package org.protogalaxy.phss.datasource.repository.jpa.filesystem.movie;
+package org.protogalaxy.phss.datasource.repository.jpa.filesystem.video;
 
-import org.protogalaxy.phss.datasource.entity.filesystem.movie.VideoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 

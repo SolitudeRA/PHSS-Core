@@ -10,9 +10,9 @@ import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookInfEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.document.*;
 import org.protogalaxy.phss.datasource.entity.filesystem.illustration.IllustrationEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.movie.AnimeEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.movie.VideoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicTrackRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookInfRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
@@ -20,7 +20,7 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.Filesystem
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
 import org.protogalaxy.phss.service.impl.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
-import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringService;
+import org.protogalaxy.phss.service.main.filesystem.observer.FileRegisteringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +29,18 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class FileRegisteringServiceImpl implements FileRegisteringService {
+    //Services
     private final CacheService cacheService;
+
+
+    //Database core repositories
     private final FilesystemMainRepository filesystemMainRepository;
+
+
+    //Database common repositories
     private final MusicTrackRepository musicTrackRepository;
     private final BookRepository bookRepository;
     private final BookInfRepository bookInfRepository;
@@ -86,7 +92,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, byte[] artwork, Path path) throws Exception {
+    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, Path path) throws Exception {
         MusicTrackEntity trackEntity = new MusicTrackEntity(
                 filesystemMainRepository.findByUserEntity_Username(username),
                 metadata.get("title").toString(),
@@ -101,7 +107,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 metadata.get("track").toString(),
                 metadata.get("disc").toString(),
                 metadata.get("date").toString(),
-                artwork,
+                metadata.get("artwork").toString(),
                 metadata.get("genre").toString(),
                 metadata.get("bitrate").toString(),
                 metadata.get("sample_rate").toString(),
@@ -142,7 +148,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (Date) metadata.get(FileConsts.METADATA_BOOK_CREATED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_MODIFIED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_LASTACCESSTIME),
-                cacheService.cachingImage(username, UUID.randomUUID(), ImageIO.read((InputStream) metadata.get(FileConsts.METADATA_BOOK_COVER))).toString(),
+                cacheService.cacheImage(username, ImageIO.read((InputStream) metadata.get(FileConsts.METADATA_BOOK_COVER))).toString(),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_DATE),
                 (String) metadata.get(FileConsts.METADATA_BOOK_DESCRIPTION),
                 (String) metadata.get(FileConsts.METADATA_BOOK_CONTRIBUTOR),
@@ -274,7 +280,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftPowerpointOldEntity);
     }
 
-    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) throws Exception{
+    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftWordEntity documentMicrosoftWordEntity = new DocumentMicrosoftWordEntity((String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_TITLE),
                                                                                                   (Date) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_CREATED),

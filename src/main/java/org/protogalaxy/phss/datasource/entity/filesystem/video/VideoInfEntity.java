@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.movie;
+package org.protogalaxy.phss.datasource.entity.filesystem.video;
 
 import javax.persistence.*;
 import java.util.UUID;

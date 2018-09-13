@@ -31,6 +31,7 @@ import org.protogalaxy.phss.service.impl.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.main.filesystem.logic.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Files;
@@ -52,21 +53,14 @@ public class MetadataServiceImpl implements MetadataService {
         this.cacheService = cacheService;
     }
 
-    /**
-     * Resolve music file metadata
-     *
-     * @param username Name of current user
-     * @param path     Path of the file
-     * @return Music metadata map of the file
-     */
     @Override
-    public Map<String, Object> musicMetadataResolver(String username, Path path) throws Exception {
+    public Map<String, Object> musicMetadataResolver(Path path) throws Exception {
         Map<String, Object> metadataCurrentMap = new HashMap<>();
         Map<String, Object> metadataFullMap = new HashMap<>();
         AVFormatContext avFormatContext = avformat_alloc_context();
         AVDictionaryEntry entry = null;
         avformat_open_input(avFormatContext, path.toString(), null, null);
-        avformat_find_stream_info(avFormatContext, ((PointerPointer) null));
+        avformat_find_stream_info(avFormatContext, (PointerPointer) null);
         while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
             metadataCurrentMap.put(entry.key().getString(), entry.value().getString());
         }
@@ -86,52 +80,47 @@ public class MetadataServiceImpl implements MetadataService {
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
         grabber.start();
-        metadataFullMap.put(FileConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(username, converter.getBufferedImage(grabber.grabImage())));
+        metadataFullMap.put(FileConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(SecurityContextHolder.getContext().getAuthentication().getName(), converter.getBufferedImage(grabber.grabImage())));
         grabber.close();
         return metadataFullMap;
     }
 
-    /**
-     * Resolve video file metadata
-     *
-     * @param path Path of the file
-     * @return Video metadata map of the file
-     */
+    @Override
+    public Map<String, Object> animeMetadataResolver(Path path) throws Exception {
+        Map<String, Object> metadataCurrentMap = new HashMap<>();
+        Map<String, Object> metadataFullMap = new HashMap<>();
+        AVFormatContext avFormatContext = avformat_alloc_context();
+        AVDictionaryEntry entry = null;
+        avformat_open_input(avFormatContext, path.toString(), null, null);
+        avformat_find_stream_info(avFormatContext, (PointerPointer) null);
+        while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
+            metadataCurrentMap.put(entry.key().getString(), entry.value().getString());
+        }
+
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> movieMetadataResolver(Path path) throws Exception {
+        return null;
+    }
+
     @Override
     public Map<String, Object> videoMetadataResolver(Path path) throws Exception {
         AVFormatContext avFormatContext = avformat_alloc_context();
         return null;
     }
 
-    /**
-     * Resolve photo file metadata
-     *
-     * @param path Path of the file
-     * @return Photo metadata map of the file
-     */
     @Override
     public Map<String, Object> photoMetadataResolver(Path path) throws Exception {
         return null;
     }
 
-    /**
-     * Resolve illustration file metadata
-     *
-     * @param path Path of the file
-     * @return Illustration metadata map of the file
-     */
     @Override
     public Map<String, Object> illustrationMetadataResolver(Path path) throws Exception {
         return null;
     }
 
-    /**
-     * Resolve document file metadata
-     *
-     * @param path Path of the file
-     * @return Document metadata map of the file
-     * @throws MetadataException Metadata MIME type not supported exception
-     */
     @Override
     public Map<String, Object> documentMetadataResolver(Path path) throws Exception {
         switch (FileCommonUtils.getMimeType(path)) {
@@ -162,13 +151,6 @@ public class MetadataServiceImpl implements MetadataService {
         }
     }
 
-    /**
-     * Resolve book file metadata
-     *
-     * @param path Path of the file
-     * @return Book metadata map of the file
-     * @throws MetadataException Metadata MIME type not supported exception
-     */
     @Override
     public Map<String, Object> bookMetadataResolver(Path path) throws Exception {
         switch (FileCommonUtils.getMimeType(path)) {

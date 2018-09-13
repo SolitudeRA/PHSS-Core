@@ -3,17 +3,15 @@ package org.protogalaxy.phss.service.impl.filesystem.io;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.component.file.FileConsts;
-import org.protogalaxy.phss.component.file.book.BookUtils;
-import org.protogalaxy.phss.component.file.document.DocumentUtils;
-import org.protogalaxy.phss.component.file.music.MusicMetadata;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
 import org.protogalaxy.phss.service.impl.filesystem.logic.FileRegisteringServiceImpl;
 import org.protogalaxy.phss.service.impl.filesystem.logic.MetadataServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
+import org.protogalaxy.phss.service.main.filesystem.io.PathService;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageService;
-import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringService;
+import org.protogalaxy.phss.service.main.filesystem.observer.FileRegisteringService;
 import org.protogalaxy.phss.service.main.filesystem.logic.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,22 +28,22 @@ import java.util.Map;
 public class StorageServiceImpl implements StorageService {
     private PhssStorageServiceConfig config;
 
+    private final PathService pathService;
     private final CacheService cacheService;
     private final MetadataService metadataService;
-    private final MusicMetadata musicMetadataService;
     private final FileRegisteringService fileRegisteringService;
 
 
     @Autowired
     public StorageServiceImpl(PhssStorageServiceConfig config,
+                              PathServiceImpl pathService,
                               CacheServiceImpl cacheService,
                               MetadataServiceImpl metadataService,
-                              MusicMetadata musicMetadata,
                               FileRegisteringServiceImpl fileRegisteringService) {
         this.config = config;
+        this.pathService = pathService;
         this.cacheService = cacheService;
         this.metadataService = metadataService;
-        this.musicMetadataService = musicMetadata;
         this.fileRegisteringService = fileRegisteringService;
     }
 
@@ -53,12 +51,11 @@ public class StorageServiceImpl implements StorageService {
     public String storeTrack(String username, MultipartFile musicFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
-        Path tempFilePath = cacheService.cachingFile(username, musicFile);
+        Path tempFilePath = cacheService.cacheFile(username, musicFile);
         Map<String, Object> metadata = metadataService.musicMetadataResolver(tempFilePath);
-        byte[] artwork = metadataService.getArtwork(tempFilePath);
         try {
             Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getMusicLocation()).resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
-            return mapper.writeValueAsString(fileRegisteringService.registerTrack(username, metadata, artwork, realPath));
+            return mapper.writeValueAsString(fileRegisteringService.registerTrack(username, metadata, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
         }
@@ -70,12 +67,11 @@ public class StorageServiceImpl implements StorageService {
         List<MusicTrackEntity> musicTrackEntities = new ArrayList<>();
         for (MultipartFile musicFile : musicFiles) {
             String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());
-            Path tempFilePath = cacheService.cachingFile(username, musicFile);
-            Map<String, Object> metadata = musicMetadataService.readMetaData(tempFilePath);
-            byte[] artwork = musicMetadataService.getArtwork(tempFilePath);
+            Path tempFilePath = cacheService.cacheFile(username, musicFile);
+            Map<String, Object> metadata = metadataService.musicMetadataResolver(username, tempFilePath);
             try {
                 Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getMusicLocation()).resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
-                musicTrackEntities.add(fileRegisteringService.registerTrack(username, metadata, artwork, realPath));
+                musicTrackEntities.add(fileRegisteringService.registerTrack(username, metadata, realPath));
             } catch (IOException e) {
                 throw new StorageException("Could not move temp file", e);
             }
@@ -84,30 +80,55 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String storeAnime(String username, MultipartFile animeFile) {
+    public void deleteTrack(String uuid) {
+
+    }
+
+    @Override
+    public String storeAnime(String username, MultipartFile animeFile) throws Exception {
         return null;
     }
 
     @Override
-    public String storeMovie(String username, MultipartFile movieFile) {
+    public void deleteAnime(String uuid) {
+
+    }
+
+    @Override
+    public String storeMovie(String username, MultipartFile movieFile) throws Exception {
         return null;
     }
 
     @Override
-    public String storeVideo(String username, MultipartFile videoFile) {
+    public void deleteMovie(String uuid) {
+
+    }
+
+    @Override
+    public String storeVideo(String username, MultipartFile videoFile) throws Exception {
         return null;
     }
 
     @Override
-    public String storePhoto(String username, MultipartFile photoFile) {
+    public void deleteVideo(String uuid) {
+
+    }
+
+    @Override
+    public String storePhoto(String username, MultipartFile photoFile) throws Exception {
         return null;
+    }
+
+    @Override
+    public void deletePhoto(String uuid) {
+
     }
 
     @Override
     public String storeBook(String username, MultipartFile bookFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(bookFile.getOriginalFilename());
-        Path tempFilePath = cacheService.cachingFile(username, bookFile);
+        Path tempFilePath = cacheService.cacheFile(username, bookFile);
         Map<String, Object> metadata = metadataService.bookMetadataResolver(tempFilePath);
         try {
             Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getBookLocation()).resolve(metadata.get(FileConsts.METADATA_BOOK_AUTHOR).toString()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
@@ -118,10 +139,15 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    public void deleteBook(String uuid) {
+
+    }
+
+    @Override
     public String storeDocument(String username, MultipartFile documentFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(documentFile.getOriginalFilename());
-        Path tempFilePath = cacheService.cachingFile(username, documentFile);
+        Path tempFilePath = cacheService.cacheFile(username, documentFile);
         String mimeType = FileCommonUtils.getMimeType(tempFilePath);
         Map<String, Object> metadata = metadataService.documentMetadataResolver(tempFilePath);
         try {
@@ -133,13 +159,18 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    public void deleteDocument(String uuid) {
+
+    }
+
+    @Override
     public String storeIllustration(String username, MultipartFile illustrationFile) {
         return null;
     }
 
     @Override
-    public Path changeLocation(String username, Path currentPath, Path changedPath) {
-        return null;
+    public void deleteIllustration(String uuid) {
+
     }
 
     private Path pathCheck(Path path) {
