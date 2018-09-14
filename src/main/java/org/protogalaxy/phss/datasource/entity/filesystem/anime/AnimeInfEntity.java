@@ -34,12 +34,6 @@ public class AnimeInfEntity {
     @Column(name = "release_year")
     private Date releaseYear;
 
-    @Column(name = "season_time")
-    private String season_time;
-
-    @Column(name = "season_anime")
-    private String seasonAnime;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreatedDate
@@ -58,7 +52,7 @@ public class AnimeInfEntity {
     public AnimeInfEntity() {
     }
 
-    public AnimeInfEntity(String poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, String season_time, String seasonAnime, AnimeEntity animeEntity) {
+    public AnimeInfEntity(String poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, AnimeEntity animeEntity) {
         this.poster = poster;
         this.gensaku = gensaku;
         this.gensakuIrasuto = gensakuIrasuto;
@@ -66,8 +60,6 @@ public class AnimeInfEntity {
         this.kantoku = kantoku;
         this.ongaku = ongaku;
         this.releaseYear = releaseYear;
-        this.season_time = season_time;
-        this.seasonAnime = seasonAnime;
         this.animeEntity = animeEntity;
     }
 
@@ -133,22 +125,6 @@ public class AnimeInfEntity {
 
     public void setReleaseYear(Date releaseYear) {
         this.releaseYear = releaseYear;
-    }
-
-    public String getSeason_time() {
-        return season_time;
-    }
-
-    public void setSeason_time(String season_time) {
-        this.season_time = season_time;
-    }
-
-    public String getSeasonAnime() {
-        return seasonAnime;
-    }
-
-    public void setSeasonAnime(String seasonAnime) {
-        this.seasonAnime = seasonAnime;
     }
 
     public Date getGmtCreate() {
