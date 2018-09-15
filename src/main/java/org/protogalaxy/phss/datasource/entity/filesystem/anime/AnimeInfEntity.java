@@ -31,8 +31,23 @@ public class AnimeInfEntity {
     @Column(name = "ongaku")
     private String ongaku;
 
+    @Column(name = "air_date")
+    private Date airDate;
+
     @Column(name = "release_year")
     private Date releaseYear;
+
+    @Column(name = "rating")
+    private Double rating;
+
+    @Column(name = "favorite_status")
+    private Boolean favoriteStatus;
+
+    @Column(name = "last_watched")
+    private Date lastWatched;
+
+    @Column(name = "last_downloaded")
+    private Date lastDownloaded;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")

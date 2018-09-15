@@ -1,8 +1,11 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.anime;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -31,16 +34,34 @@ public class AnimeEntity {
     @Column(name = "episode")
     private Integer episode;
 
+    @Column(name = "episode_title")
+    private String episodeTitle;
+
+    @Column(name = "episode_title_translated")
+    private String episodeTitleTranslated;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "gmt_create")
+    @CreatedDate
+    private Date gmtCreate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "gmt_modified")
+    @LastModifiedDate
+    private Date gmtModified;
+
     public AnimeEntity() {
     }
 
-    public AnimeEntity(FileSystemMainEntity filesystemInfMainEntity, String title, String titleTranslated, String series, Integer season, Integer episode) {
+    public AnimeEntity(FileSystemMainEntity filesystemInfMainEntity, String title, String titleTranslated, String series, Integer season, Integer episode, String episodeTitle, String episodeTitleTranslated) {
         this.filesystemInfMainEntity = filesystemInfMainEntity;
         this.title = title;
         this.titleTranslated = titleTranslated;
         this.series = series;
         this.season = season;
         this.episode = episode;
+        this.episodeTitle = episodeTitle;
+        this.episodeTitleTranslated = episodeTitleTranslated;
     }
 
     public UUID getId() {
@@ -97,5 +118,37 @@ public class AnimeEntity {
 
     public void setEpisode(Integer episode) {
         this.episode = episode;
+    }
+
+    public String getEpisodeTitle() {
+        return episodeTitle;
+    }
+
+    public void setEpisodeTitle(String episodeTitle) {
+        this.episodeTitle = episodeTitle;
+    }
+
+    public String getEpisodeTitleTranslated() {
+        return episodeTitleTranslated;
+    }
+
+    public void setEpisodeTitleTranslated(String episodeTitleTranslated) {
+        this.episodeTitleTranslated = episodeTitleTranslated;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }
