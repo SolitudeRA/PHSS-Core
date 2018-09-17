@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "anime")
-public class AnimeEntity {
+public class AnimeCommonEntity {
     @Id
     @GeneratedValue
     private UUID id;
@@ -50,10 +50,10 @@ public class AnimeEntity {
     @LastModifiedDate
     private Date gmtModified;
 
-    public AnimeEntity() {
+    public AnimeCommonEntity() {
     }
 
-    public AnimeEntity(FileSystemMainEntity filesystemInfMainEntity, String title, String titleTranslated, String series, Integer season, Integer episode, String episodeTitle, String episodeTitleTranslated) {
+    public AnimeCommonEntity(FileSystemMainEntity filesystemInfMainEntity, String title, String titleTranslated, String series, Integer season, Integer episode, String episodeTitle, String episodeTitleTranslated) {
         this.filesystemInfMainEntity = filesystemInfMainEntity;
         this.title = title;
         this.titleTranslated = titleTranslated;

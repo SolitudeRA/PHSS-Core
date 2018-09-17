@@ -9,9 +9,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "anime_inf")
-public class AnimeInfEntity {
+public class AnimeCommonInfEntity {
     @Id
     private UUID animeId;
+
+    @Column(name = "summary")
+    private String summary;
 
     @Column(name = "poster")
     private String poster;
@@ -36,6 +39,9 @@ public class AnimeInfEntity {
 
     @Column(name = "release_year")
     private Date releaseYear;
+
+    @Column(name = "release_season")
+    private Integer releaseSeason;
 
     @Column(name = "rating")
     private Double rating;
@@ -62,12 +68,12 @@ public class AnimeInfEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "anime_id")
-    private AnimeEntity animeEntity;
+    private AnimeCommonEntity animeCommonEntity;
 
-    public AnimeInfEntity() {
+    public AnimeCommonInfEntity() {
     }
 
-    public AnimeInfEntity(String poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, AnimeEntity animeEntity) {
+    public AnimeCommonInfEntity(String poster, String gensaku, String gensakuIrasuto, String seiyuu, String kantoku, String ongaku, Date releaseYear, AnimeCommonEntity animeCommonEntity) {
         this.poster = poster;
         this.gensaku = gensaku;
         this.gensakuIrasuto = gensakuIrasuto;
@@ -75,7 +81,7 @@ public class AnimeInfEntity {
         this.kantoku = kantoku;
         this.ongaku = ongaku;
         this.releaseYear = releaseYear;
-        this.animeEntity = animeEntity;
+        this.animeCommonEntity = animeCommonEntity;
     }
 
     public UUID getAnimeId() {
@@ -158,11 +164,11 @@ public class AnimeInfEntity {
         this.gmtModified = gmtModified;
     }
 
-    public AnimeEntity getAnimeEntity() {
-        return animeEntity;
+    public AnimeCommonEntity getAnimeCommonEntity() {
+        return animeCommonEntity;
     }
 
-    public void setAnimeEntity(AnimeEntity animeEntity) {
-        this.animeEntity = animeEntity;
+    public void setAnimeCommonEntity(AnimeCommonEntity animeCommonEntity) {
+        this.animeCommonEntity = animeCommonEntity;
     }
 }

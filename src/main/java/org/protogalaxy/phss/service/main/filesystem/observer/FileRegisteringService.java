@@ -4,7 +4,7 @@ import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackE
 import org.protogalaxy.phss.datasource.entity.filesystem.album.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.illustration.IllustrationEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeCommonEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
 
@@ -28,7 +28,7 @@ public interface FileRegisteringService {
      * @param metadata metadata of the anime
      * @param path     path of the file
      */
-    AnimeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception;
+    AnimeCommonEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception;
 
     /**
      * Register movie in database
