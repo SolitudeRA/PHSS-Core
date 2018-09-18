@@ -10,7 +10,7 @@ import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookInfEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.document.*;
 import org.protogalaxy.phss.datasource.entity.filesystem.illustration.IllustrationEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeCommonEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEpisodeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicTrackRepository;
@@ -118,7 +118,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public AnimeCommonEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception {
+    public AnimeEpisodeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 

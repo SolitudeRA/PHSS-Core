@@ -7,18 +7,25 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
+
 @Entity
-@Table(name = "anime_staff")
-public class AnimeStaffEntity {
+@Table(name = "anime_seiyuu")
+public class AnimeSeiyuuEntity {
     @Id
     @GeneratedValue
     private UUID uuid;
+
+    @Column(name = "bangumi_id")
+    private Integer bangumiId;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "name_translated")
     private String nameTranslated;
+
+    @Column(name = "role_name")
+    private String roleName;
 
     @Column(name = "image")
     private String image;
@@ -29,7 +36,19 @@ public class AnimeStaffEntity {
     @Column(name = "birth")
     private Date birth;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "height")
+    private Integer height;
+
+    @Column(name = "weight")
+    private Integer weight;
+
+    @Column(name = "blood_type")
+    private String bloodType;
+
+    @Column(name = "bwh")
+    private String bwh;
+
+    @ManyToOne
     @Column(name = "firm")
     private AnimeFirmEntity animeFirmEntity;
 
@@ -43,15 +62,18 @@ public class AnimeStaffEntity {
     @LastModifiedDate
     private Date gmtModified;
 
-    public AnimeStaffEntity() {
-    }
-
-    public AnimeStaffEntity(String name, String nameTranslated, String image, String gender, Date birth, AnimeFirmEntity animeFirmEntity) {
+    public AnimeSeiyuuEntity(Integer bangumiId, String name, String nameTranslated, String roleName, String image, String gender, Date birth, Integer height, Integer weight, String bloodType, String bwh, AnimeFirmEntity animeFirmEntity) {
+        this.bangumiId = bangumiId;
         this.name = name;
         this.nameTranslated = nameTranslated;
+        this.roleName = roleName;
         this.image = image;
         this.gender = gender;
         this.birth = birth;
+        this.height = height;
+        this.weight = weight;
+        this.bloodType = bloodType;
+        this.bwh = bwh;
         this.animeFirmEntity = animeFirmEntity;
     }
 
@@ -61,6 +83,14 @@ public class AnimeStaffEntity {
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public Integer getBangumiId() {
+        return bangumiId;
+    }
+
+    public void setBangumiId(Integer bangumiId) {
+        this.bangumiId = bangumiId;
     }
 
     public String getName() {
@@ -77,6 +107,14 @@ public class AnimeStaffEntity {
 
     public void setNameTranslated(String nameTranslated) {
         this.nameTranslated = nameTranslated;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getImage() {
@@ -101,6 +139,38 @@ public class AnimeStaffEntity {
 
     public void setBirth(Date birth) {
         this.birth = birth;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public String getBwh() {
+        return bwh;
+    }
+
+    public void setBwh(String bwh) {
+        this.bwh = bwh;
     }
 
     public AnimeFirmEntity getAnimeFirmEntity() {

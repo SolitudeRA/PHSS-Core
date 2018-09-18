@@ -1,4 +1,4 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.anime;
 
-public class AnimeBluRayInfEntity {
+public class AnimeMovieMainEntity {
 }
