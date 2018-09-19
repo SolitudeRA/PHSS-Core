@@ -18,10 +18,6 @@ public class AnimeMainInfEntity {
     @Column(name = "summary")
     private String summary;
 
-    //海报
-    @Column(name = "poster")
-    private String poster;
-
     //放送日期
     @Column(name = "air_date")
     private Date airDate;
@@ -145,9 +141,8 @@ public class AnimeMainInfEntity {
     public AnimeMainInfEntity() {
     }
 
-    public AnimeMainInfEntity(String summary, String poster, Date airDate, Date releaseYear, Integer releaseQuarter, String url, AnimeStaffEntity original, AnimeFirmEntity originalProducer, AnimeStaffEntity director, List<AnimeStaffEntity> subdirector, AnimeStaffEntity producer, List<AnimeStaffEntity> script, List<AnimeStaffEntity> storyboard, List<AnimeStaffEntity> characterSetting, AnimeStaffEntity music, AnimeFirmEntity musicProducer, AnimeStaffEntity artDirector, AnimeFirmEntity artDesigner, AnimeStaffEntity colorDesigner, AnimeStaffEntity animationDirector, AnimeFirmEntity animationProducer, AnimeFirmEntity tvStation, Boolean favoriteStatus, Date lastWatched, Date lastDownloaded, AnimeMainEntity animeMainEntity) {
+    public AnimeMainInfEntity(String summary, Date airDate, Date releaseYear, Integer releaseQuarter, String url, AnimeStaffEntity original, AnimeFirmEntity originalProducer, AnimeStaffEntity director, List<AnimeStaffEntity> subdirector, AnimeStaffEntity producer, List<AnimeStaffEntity> script, List<AnimeStaffEntity> storyboard, List<AnimeStaffEntity> characterSetting, AnimeStaffEntity music, AnimeFirmEntity musicProducer, AnimeStaffEntity artDirector, AnimeFirmEntity artDesigner, AnimeStaffEntity colorDesigner, AnimeStaffEntity animationDirector, AnimeFirmEntity animationProducer, AnimeFirmEntity tvStation, Boolean favoriteStatus, Date lastWatched, Date lastDownloaded, AnimeMainEntity animeMainEntity) {
         this.summary = summary;
-        this.poster = poster;
         this.airDate = airDate;
         this.releaseYear = releaseYear;
         this.releaseQuarter = releaseQuarter;
@@ -188,14 +183,6 @@ public class AnimeMainInfEntity {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public String getPoster() {
-        return poster;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
     }
 
     public Date getAirDate() {
