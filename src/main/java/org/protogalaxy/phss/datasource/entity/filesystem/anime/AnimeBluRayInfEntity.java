@@ -6,15 +6,29 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-public class AnimeMovieBluRayInfEntity {
+@Entity
+@Table(name = "anime_bluray_inf")
+public class AnimeBluRayInfEntity {
+    @Id
+    private UUID animeBluRayId;
+
     //简介
     @Column(name = "summary")
     private String summary;
 
-    //上映日期
-    @Column(name = "release_date")
+    //放送日期
+    @Column(name = "air_date")
+    private Date airDate;
+
+    //上映年份
+    @Column(name = "release_year")
     private Date releaseYear;
+
+    //上映季度
+    @Column(name = "release_quarter")
+    private Integer releaseQuarter;
 
     //官网
     @Column(name = "url")
@@ -22,8 +36,13 @@ public class AnimeMovieBluRayInfEntity {
 
     //原作
     @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "original")
-    private AnimeStaffEntity original;
+    @Column(name = "original_work")
+    private AnimeStaffEntity originalWork;
+
+    //原作插画
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "original_illustrator")
+    private AnimeStaffEntity originalIllustrator;
 
     //原作发行公司
     @ManyToOne(fetch = FetchType.EAGER)
@@ -40,10 +59,15 @@ public class AnimeMovieBluRayInfEntity {
     @Column(name = "subdirector")
     private List<AnimeStaffEntity> subdirector;
 
-    //制片人
+    //人设监修
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "character_design_supervision")
+    private AnimeStaffEntity characterDesignSupervision;
+
+    //人设
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "producer")
-    private List<AnimeStaffEntity> producer;
+    @Column(name = "character_design")
+    private List<AnimeStaffEntity> characterDesign;
 
     //脚本
     @ManyToMany(fetch = FetchType.EAGER)
@@ -55,20 +79,30 @@ public class AnimeMovieBluRayInfEntity {
     @Column(name = "storyboard")
     private List<AnimeStaffEntity> storyboard;
 
-    //人物设定
+    //摄影监督
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "photographic_direction")
+    private AnimeStaffEntity photographicDirection;
+
+    //制片人
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "character_setting")
-    private List<AnimeStaffEntity> characterSetting;
+    @Column(name = "producer")
+    private List<AnimeStaffEntity> producer;
 
     //音乐
     @ManyToOne(fetch = FetchType.EAGER)
     @Column(name = "music")
     private AnimeStaffEntity music;
 
-    //音乐制作
+    //音乐制作人
     @ManyToOne(fetch = FetchType.EAGER)
     @Column(name = "music_producer")
-    private AnimeFirmEntity musicProducer;
+    private List<AnimeStaffEntity> musicProducer;
+
+    //音乐制作
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "music_work")
+    private AnimeFirmEntity musicWork;
 
     //美术监督
     @ManyToMany(fetch = FetchType.EAGER)
@@ -81,19 +115,39 @@ public class AnimeMovieBluRayInfEntity {
     private List<AnimeStaffEntity> artDesigner;
 
     //色彩设计
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "color_design")
+    private AnimeStaffEntity colorDesign;
+
+    //总作画监督
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "color_designer")
-    private List<AnimeStaffEntity> colorDesigner;
+    @Column(name = "chief_animation_direction")
+    private List<AnimeStaffEntity> chiefAnimationDirection;
 
     //作画监督
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "animation director")
-    private List<AnimeStaffEntity> animationDirector;
+    @Column(name = "animation_direction")
+    private List<AnimeStaffEntity> animationDirection;
+
+    //原画
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(name = "key_animation")
+    private List<AnimeStaffEntity> keyAnimation;
+
+    //第二原画
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(name = "second_key_animation")
+    private List<AnimeStaffEntity> secondKeyAnimation;
 
     //动画制作
     @ManyToOne(fetch = FetchType.EAGER)
     @Column(name = "animation_producer")
     private AnimeFirmEntity animationProducer;
+
+    //放送电视台
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "tv_station")
+    private AnimeFirmEntity tvStation;
 
     @Column(name = "favorite_status")
     private Boolean favoriteStatus;
@@ -104,6 +158,11 @@ public class AnimeMovieBluRayInfEntity {
     @Column(name = "last_downloaded")
     private Date lastDownloaded;
 
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "anime_bluray_id")
+    private AnimeBluRayEntity animeBluRayEntity;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     @CreatedDate
@@ -113,4 +172,9 @@ public class AnimeMovieBluRayInfEntity {
     @Column(name = "gmt_modified")
     @LastModifiedDate
     private Date gmtModified;
+
+    public AnimeBluRayInfEntity() {
+    }
+
+
 }
