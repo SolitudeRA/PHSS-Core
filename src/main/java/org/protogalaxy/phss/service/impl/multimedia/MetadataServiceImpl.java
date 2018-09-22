@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.impl.filesystem.logic;
+package org.protogalaxy.phss.service.impl.multimedia;
 
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.epub.EpubReader;
@@ -29,7 +29,7 @@ import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.exception.MetadataException;
 import org.protogalaxy.phss.service.impl.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
-import org.protogalaxy.phss.service.main.filesystem.logic.MetadataService;
+import org.protogalaxy.phss.service.main.multimedia.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.impl.filesystem.common;
+package org.protogalaxy.phss.service.impl.filesystem.database;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicAlbumRepository;

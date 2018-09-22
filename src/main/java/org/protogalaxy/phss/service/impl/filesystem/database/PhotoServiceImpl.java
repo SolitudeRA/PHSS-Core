@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.impl.filesystem.common;
+package org.protogalaxy.phss.service.impl.filesystem.database;
 
 import org.springframework.stereotype.Service;
 

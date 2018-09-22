@@ -7,12 +7,12 @@ import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackE
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
 import org.protogalaxy.phss.service.impl.filesystem.logic.FileRegisteringServiceImpl;
-import org.protogalaxy.phss.service.impl.filesystem.logic.MetadataServiceImpl;
+import org.protogalaxy.phss.service.impl.multimedia.MetadataServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.main.filesystem.io.PathService;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageService;
 import org.protogalaxy.phss.service.main.filesystem.observer.FileRegisteringService;
-import org.protogalaxy.phss.service.main.filesystem.logic.MetadataService;
+import org.protogalaxy.phss.service.main.multimedia.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

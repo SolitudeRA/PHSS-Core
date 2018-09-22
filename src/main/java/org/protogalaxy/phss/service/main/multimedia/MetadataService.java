@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.main.filesystem.logic;
+package org.protogalaxy.phss.service.main.multimedia;
 
 import java.nio.file.Path;
 import java.util.Map;

@@ -40,7 +40,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     private final FilesystemMainRepository filesystemMainRepository;
 
 
-    //Database common repositories
+    //Database database repositories
     private final MusicTrackRepository musicTrackRepository;
     private final BookRepository bookRepository;
     private final BookInfRepository bookInfRepository;

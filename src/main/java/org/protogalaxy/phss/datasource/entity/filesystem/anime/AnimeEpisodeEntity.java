@@ -14,6 +14,10 @@ public class AnimeEpisodeEntity {
     @GeneratedValue
     private UUID id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "anime_id")
+    private AnimeMainEntity animeMainEntity;
+
     @Column(name = "ep_number")
     private Integer episode;
 
@@ -36,5 +40,66 @@ public class AnimeEpisodeEntity {
     public AnimeEpisodeEntity() {
     }
 
+    public AnimeEpisodeEntity(AnimeMainEntity animeMainEntity, Integer episode, String title, String titleTranslated) {
+        this.animeMainEntity = animeMainEntity;
+        this.episode = episode;
+        this.title = title;
+        this.titleTranslated = titleTranslated;
+    }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public AnimeMainEntity getAnimeMainEntity() {
+        return animeMainEntity;
+    }
+
+    public void setAnimeMainEntity(AnimeMainEntity animeMainEntity) {
+        this.animeMainEntity = animeMainEntity;
+    }
+
+    public Integer getEpisode() {
+        return episode;
+    }
+
+    public void setEpisode(Integer episode) {
+        this.episode = episode;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitleTranslated() {
+        return titleTranslated;
+    }
+
+    public void setTitleTranslated(String titleTranslated) {
+        this.titleTranslated = titleTranslated;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 }

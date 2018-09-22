@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -41,11 +42,11 @@ public class AnimeBluRayVolumeEntity {
     public AnimeBluRayVolumeEntity() {
     }
 
-    public AnimeBluRayVolumeEntity(AnimeBluRayEntity animeBluRayEntity, String epNumber, String title, String titleTranslated) {
+    public AnimeBluRayVolumeEntity(AnimeBluRayEntity animeBluRayEntity, List<String> epNumber, List<String> title, List<String> titleTranslated) {
         this.animeBluRayEntity = animeBluRayEntity;
-        this.epNumber = epNumber;
-        this.title = title;
-        this.titleTranslated = titleTranslated;
+        this.epNumber = String.join("_", epNumber);
+        this.title = String.join("_", title);
+        this.titleTranslated = String.join("_", titleTranslated);
     }
 
     public UUID getUuid() {
@@ -64,28 +65,28 @@ public class AnimeBluRayVolumeEntity {
         this.animeBluRayEntity = animeBluRayEntity;
     }
 
-    public String getEpNumber() {
-        return epNumber;
+    public List<String> getEpNumber() {
+        return Arrays.asList(epNumber.split("_"));
     }
 
-    public void setEpNumber(String epNumber) {
-        this.epNumber = epNumber;
+    public void setEpNumber(List<String> epNumber) {
+        this.epNumber = String.join("_", epNumber);
     }
 
-    public String getTitle() {
-        return title;
+    public List<String> getTitle() {
+        return Arrays.asList(epNumber.split("_"));
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = String.join("_", title);
     }
 
-    public String getTitleTranslated() {
-        return titleTranslated;
+    public List<String> getTitleTranslated() {
+        return Arrays.asList(titleTranslated.split("_"));
     }
 
     public void setTitleTranslated(String titleTranslated) {
-        this.titleTranslated = titleTranslated;
+        this.titleTranslated = String.join("_", titleTranslated);
     }
 
     public Date getGmtCreate() {
@@ -103,4 +104,5 @@ public class AnimeBluRayVolumeEntity {
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
+
 }
