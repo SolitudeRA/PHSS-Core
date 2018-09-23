@@ -1,15 +1,26 @@
 package org.protogalaxy.phss.service.main.multimedia;
 
-import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeFirmEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeSeiyuuEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeStaffEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.anime.*;
 
 
 public interface BangumiAPIService {
+    AnimeMainEntity searchAnime();
 
-    AnimeStaffEntity retrieveStaff();
+    AnimeCharacterEntity searchCharacter();
+
+    AnimeFirmEntity searchFirm();
+
+    AnimeSeiyuuEntity searchSeiyuu();
+
+    AnimeStaffEntity searchStaff();
+
+    AnimeMainEntity retrieveAnime();
+
+    AnimeCharacterEntity retrieveCharacter();
 
     AnimeFirmEntity retrieveFirm();
 
     AnimeSeiyuuEntity retrieveSeiyuu();
+
+    AnimeStaffEntity retrieveStaff();
 }
