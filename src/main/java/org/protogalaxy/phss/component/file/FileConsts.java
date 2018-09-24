@@ -54,7 +54,7 @@ public final class FileConsts {
             METADATA_AUDIO_COVER = "cover";
     //Anime metadata string
     public static final String
-            METADATA_ANIME_TITLE="title",
+            METADATA_ANIME_TITLE="title";
 
     //Book metadata string
     public static final String
