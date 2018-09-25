@@ -31,9 +31,6 @@ public class DocumentAdobePhotoshopEntity {
     @Field("path")
     private String path;
 
-    @Field("url")
-    private String url;
-
     @Field("width")
     private int width;
 
@@ -57,13 +54,12 @@ public class DocumentAdobePhotoshopEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePhotoshopEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, int width, int height, String colorMode, int bitsPerSample) {
+    public DocumentAdobePhotoshopEntity(String title, Date created, Date modified, Date lastAccess, String path, int width, int height, String colorMode, int bitsPerSample) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
-        this.url = url;
         this.width = width;
         this.height = height;
         this.colorMode = colorMode;
@@ -116,14 +112,6 @@ public class DocumentAdobePhotoshopEntity {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public int getWidth() {

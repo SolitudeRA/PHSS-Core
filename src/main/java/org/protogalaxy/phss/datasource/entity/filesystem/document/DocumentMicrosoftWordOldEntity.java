@@ -31,9 +31,6 @@ public class DocumentMicrosoftWordOldEntity {
     @Field("path")
     private String path;
 
-    @Field("url")
-    private String url;
-
     @Field("keywords")
     private String keywords;
 
@@ -72,13 +69,12 @@ public class DocumentMicrosoftWordOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftWordOldEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, String keywords, String comments, String appName, long editTime, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
+    public DocumentMicrosoftWordOldEntity(String title, Date created, Date modified, Date lastAccess, String path, String keywords, String comments, String appName, long editTime, int pageCount, int wordCount, int charCount, int lineCount, int parCount) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
-        this.url = url;
         this.keywords = keywords;
         this.comments = comments;
         this.appName = appName;
@@ -136,14 +132,6 @@ public class DocumentMicrosoftWordOldEntity {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getKeywords() {

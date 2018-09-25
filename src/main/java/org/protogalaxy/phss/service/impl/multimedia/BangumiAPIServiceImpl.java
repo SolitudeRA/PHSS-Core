@@ -2,7 +2,9 @@ package org.protogalaxy.phss.service.impl.multimedia;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.anime.*;
 import org.protogalaxy.phss.service.main.multimedia.BangumiAPIService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BangumiAPIServiceImpl implements BangumiAPIService {
     /**
      * Search anime information by keyword

@@ -31,9 +31,6 @@ public class DocumentOpenTextEntity {
     @Field("path")
     private String path;
 
-    @Field("url")
-    private String url;
-
     @Field("word_count")
     private int wordCount;
 
@@ -63,13 +60,12 @@ public class DocumentOpenTextEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentOpenTextEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, int wordCount, int characterCount, int imageCount, int parCount, int tableCount, int pageCount) {
+    public DocumentOpenTextEntity(String title, Date created, Date modified, Date lastAccess, String path, int wordCount, int characterCount, int imageCount, int parCount, int tableCount, int pageCount) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
-        this.url = url;
         this.wordCount = wordCount;
         this.characterCount = characterCount;
         this.imageCount = imageCount;
@@ -124,14 +120,6 @@ public class DocumentOpenTextEntity {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public int getWordCount() {

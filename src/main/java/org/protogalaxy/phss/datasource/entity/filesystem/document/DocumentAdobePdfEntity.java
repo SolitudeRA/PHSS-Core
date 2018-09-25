@@ -31,9 +31,6 @@ public class DocumentAdobePdfEntity {
     @Field("path")
     private String path;
 
-    @Field("url")
-    private String url;
-
     @Field("version")
     private String version;
 
@@ -51,13 +48,12 @@ public class DocumentAdobePdfEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentAdobePdfEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, String version, String producer) {
+    public DocumentAdobePdfEntity(String title, Date created, Date modified, Date lastAccess, String path, String version, String producer) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
-        this.url = url;
         this.version = version;
         this.producer = producer;
     }
@@ -108,14 +104,6 @@ public class DocumentAdobePdfEntity {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getVersion() {

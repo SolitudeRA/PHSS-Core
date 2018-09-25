@@ -31,9 +31,6 @@ public class DocumentMicrosoftPowerpointOldEntity {
     @Field("path")
     private String path;
 
-    @Field("url")
-    private String url;
-
     @Field("app_name")
     private String appName;
 
@@ -75,13 +72,12 @@ public class DocumentMicrosoftPowerpointOldEntity {
     private Date gmtModified;
 
     @PersistenceConstructor
-    public DocumentMicrosoftPowerpointOldEntity(String title, Date created, Date modified, Date lastAccess, String path, String url, String appName, long editTime, int wordCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount, String presentFormat) {
+    public DocumentMicrosoftPowerpointOldEntity(String title, Date created, Date modified, Date lastAccess, String path, String appName, long editTime, int wordCount, int byteCount, int partCount, int slideCount, int noteCount, int hiddenCount, int mmclipCount, String presentFormat) {
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.lastAccess = lastAccess;
         this.path = path;
-        this.url = url;
         this.appName = appName;
         this.editTime = editTime;
         this.wordCount = wordCount;
@@ -140,14 +136,6 @@ public class DocumentMicrosoftPowerpointOldEntity {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getAppName() {
