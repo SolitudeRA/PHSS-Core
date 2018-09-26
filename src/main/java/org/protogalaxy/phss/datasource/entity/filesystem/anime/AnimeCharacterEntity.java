@@ -64,6 +64,9 @@ public class AnimeCharacterEntity {
     @LastModifiedDate
     private Date gmtModified;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AnimeBluRayInfEntity animeBluRayInfEntity;
+
     public AnimeCharacterEntity() {
     }
 

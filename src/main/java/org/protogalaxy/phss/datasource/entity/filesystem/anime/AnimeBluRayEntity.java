@@ -4,7 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
@@ -27,23 +27,27 @@ public class AnimeBluRayEntity {
     private String poster;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
+    @Column(name = "gmt_create", nullable = false)
     @CreatedDate
-    private Date gmtCreate;
+    private ZonedDateTime columnCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
+    @Column(name = "gmt_modified", nullable = false)
     @LastModifiedDate
-    private Date gmtModified;
+    private ZonedDateTime columnModified;
+
+    @OneToOne(mappedBy = "animeBluRayEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private AnimeBluRayInfEntity animeBluRayInfEntity;
 
     public AnimeBluRayEntity() {
     }
 
-    public AnimeBluRayEntity(Integer bangumiId, String title, String titleTranslated, String poster) {
+    public AnimeBluRayEntity(Integer bangumiId, String title, String titleTranslated, String poster, AnimeBluRayInfEntity animeBluRayInfEntity) {
         this.bangumiId = bangumiId;
         this.title = title;
         this.titleTranslated = titleTranslated;
         this.poster = poster;
+        this.animeBluRayInfEntity = animeBluRayInfEntity;
     }
 
     public UUID getUuid() {
@@ -86,19 +90,27 @@ public class AnimeBluRayEntity {
         this.poster = poster;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public ZonedDateTime getColumnCreate() {
+        return columnCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setColumnCreate(ZonedDateTime columnCreate) {
+        this.columnCreate = columnCreate;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public ZonedDateTime getColumnModified() {
+        return columnModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setColumnModified(ZonedDateTime columnModified) {
+        this.columnModified = columnModified;
+    }
+
+    public AnimeBluRayInfEntity getAnimeBluRayInfEntity() {
+        return animeBluRayInfEntity;
+    }
+
+    public void setAnimeBluRayInfEntity(AnimeBluRayInfEntity animeBluRayInfEntity) {
+        this.animeBluRayInfEntity = animeBluRayInfEntity;
     }
 }

@@ -68,7 +68,7 @@ public class StorageServiceImpl implements StorageService {
         for (MultipartFile musicFile : musicFiles) {
             String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());
             Path tempFilePath = cacheService.cacheFile(username, musicFile);
-            Map<String, Object> metadata = metadataService.musicMetadataResolver(username, tempFilePath);
+            Map<String, Object> metadata = metadataService.musicMetadataResolver(tempFilePath);
             try {
                 Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getMusicLocation()).resolve(metadata.get("artist").toString()).resolve(metadata.get("album").toString()).resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
                 musicTrackEntities.add(fileRegisteringService.registerTrack(username, metadata, realPath));

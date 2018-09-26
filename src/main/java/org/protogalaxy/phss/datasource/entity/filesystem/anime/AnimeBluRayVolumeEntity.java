@@ -17,7 +17,6 @@ public class AnimeBluRayVolumeEntity {
     private UUID uuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "anime_bluray_main")
     private AnimeBluRayEntity animeBluRayEntity;
 
     @Column(name = "ep_number")

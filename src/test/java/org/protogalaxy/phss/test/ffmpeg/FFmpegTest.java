@@ -12,6 +12,7 @@ import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.protogalaxy.phss.service.impl.multimedia.MetadataServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,7 +29,7 @@ import java.text.SimpleDateFormat;
 @RunWith(SpringRunner.class)
 public class FFmpegTest {
     @Autowired
-    MusicMetadata musicMetadata;
+    MetadataServiceImpl metadataService;
 
     @Test
     public void singleMetadataTest() {
@@ -73,7 +74,7 @@ public class FFmpegTest {
     @Test
     public void metadataTest() throws Exception{
         Path path = Paths.get("phssStorage/Alpha/test.aiff");
-        System.out.println(musicMetadata.readMetaData(path));
+        System.out.println(metadataService.musicMetadataResolver(path));
     }
 
     @Test
