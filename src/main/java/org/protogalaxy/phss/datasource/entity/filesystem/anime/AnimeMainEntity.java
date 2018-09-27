@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,15 +27,13 @@ public class AnimeMainEntity {
     @Column(name = "poster")
     private String poster;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
     @CreatedDate
-    private Date gmtCreate;
+    @Column(name = "gmt_create")
+    private ZonedDateTime gmtCreate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
     @LastModifiedDate
-    private Date gmtModified;
+    @Column(name = "gmt_modified")
+    private ZonedDateTime gmtModified;
 
     public AnimeMainEntity() {
     }
@@ -86,19 +85,19 @@ public class AnimeMainEntity {
         this.poster = poster;
     }
 
-    public Date getGmtCreate() {
+    public ZonedDateTime getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(ZonedDateTime gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public ZonedDateTime getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
+    public void setGmtModified(ZonedDateTime gmtModified) {
         this.gmtModified = gmtModified;
     }
 }

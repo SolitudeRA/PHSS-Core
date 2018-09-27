@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -49,18 +50,16 @@ public class AnimeSeiyuuEntity {
     private String bwh;
 
     @ManyToOne
-    @Column(name = "firm")
+    @JoinColumn(name = "firm")
     private AnimeFirmEntity animeFirmEntity;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
     @CreatedDate
-    private Date gmtCreate;
+    @Column(name = "gmt_create")
+    private ZonedDateTime columnCreate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
     @LastModifiedDate
-    private Date gmtModified;
+    @Column(name = "gmt_modified")
+    private ZonedDateTime columnModified;
 
     public AnimeSeiyuuEntity(Integer bangumiId, String name, String nameTranslated, String roleName, String image, String gender, Date birth, Integer height, Integer weight, String bloodType, String bwh, AnimeFirmEntity animeFirmEntity) {
         this.bangumiId = bangumiId;
@@ -181,19 +180,19 @@ public class AnimeSeiyuuEntity {
         this.animeFirmEntity = animeFirmEntity;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public ZonedDateTime getColumnCreate() {
+        return columnCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setColumnCreate(ZonedDateTime columnCreate) {
+        this.columnCreate = columnCreate;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public ZonedDateTime getColumnModified() {
+        return columnModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setColumnModified(ZonedDateTime columnModified) {
+        this.columnModified = columnModified;
     }
 }

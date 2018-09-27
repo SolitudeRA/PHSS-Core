@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +20,7 @@ public class AnimeCharacterEntity {
     private Integer bangumiId;
 
     @Column(name = "images")
-    private List<String> images;
+    private String image;
 
     @Column(name = "official_name")
     private String officialName;
@@ -54,25 +55,20 @@ public class AnimeCharacterEntity {
     @Column(name = "role")
     private String role;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
     @CreatedDate
-    private Date gmtCreate;
+    @Column(name = "gmt_create")
+    private ZonedDateTime columnCreate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
     @LastModifiedDate
-    private Date gmtModified;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private AnimeBluRayInfEntity animeBluRayInfEntity;
+    @Column(name = "gmt_modified")
+    private ZonedDateTime columnModified;
 
     public AnimeCharacterEntity() {
     }
 
-    public AnimeCharacterEntity(Integer bangumiId, List<String> images, String officialName, String translatedName, String entity, String gender, Date birthday, String bloodtype, Integer height, Integer weight, String bwh, String ability, String role) {
+    public AnimeCharacterEntity(Integer bangumiId, String image, String officialName, String translatedName, String entity, String gender, Date birthday, String bloodtype, Integer height, Integer weight, String bwh, String ability, String role) {
         this.bangumiId = bangumiId;
-        this.images = images;
+        this.image = image;
         this.officialName = officialName;
         this.translatedName = translatedName;
         this.entity = entity;
@@ -102,12 +98,12 @@ public class AnimeCharacterEntity {
         this.bangumiId = bangumiId;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getOfficialName() {
@@ -198,19 +194,19 @@ public class AnimeCharacterEntity {
         this.role = role;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public ZonedDateTime getColumnCreate() {
+        return columnCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setColumnCreate(ZonedDateTime columnCreate) {
+        this.columnCreate = columnCreate;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public ZonedDateTime getColumnModified() {
+        return columnModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setColumnModified(ZonedDateTime columnModified) {
+        this.columnModified = columnModified;
     }
 }

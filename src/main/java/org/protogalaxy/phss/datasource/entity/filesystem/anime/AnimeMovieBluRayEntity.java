@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +25,8 @@ public class AnimeMovieBluRayEntity {
     @Column(name = "year")
     private Date year;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "character")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "character")
     private List<AnimeCharacterEntity> character;
 
     @Column(name = "duration")
@@ -34,77 +35,78 @@ public class AnimeMovieBluRayEntity {
     @Column(name = "original_work")
     private String originalWork;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "direction")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "direction")
     private List<AnimeStaffEntity> direction;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "producer")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "producer")
     private List<AnimeStaffEntity> producer;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "character_design")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "character_design")
     private List<AnimeStaffEntity> characterDesign;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "storyboard")
-    private AnimeStaffEntity storyboard;
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "storyboard")
+    private List<AnimeStaffEntity> storyboard;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "script")
-    private AnimeStaffEntity script;
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "script")
+    private List<AnimeStaffEntity> script;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "sound_direction")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sound_direction")
     private List<AnimeStaffEntity> soundDirection;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "sound_effects")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sound_effects")
     private List<AnimeStaffEntity> soundEffects;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "sound_work")
-    private AnimeFirmEntity soundWork;
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sound_work")
+    private List<AnimeFirmEntity> soundWork;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "music")
-    private AnimeStaffEntity music;
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "music")
+    private List<AnimeStaffEntity> music;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "music_producer")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "music_producer")
     private List<AnimeStaffEntity> musicProducer;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "art_direction")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "art_direction")
     private List<AnimeStaffEntity> artDirection;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "art_design")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "art_design")
     private List<AnimeStaffEntity> artDesign;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "color_design")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "color_design")
     private List<AnimeStaffEntity> colorDesign;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "key_animation")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "key_animation")
     private List<AnimeStaffEntity> keyAnimation;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "second_key_animation")
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "second_key_animation")
     private List<AnimeStaffEntity> secondKeyAnimation;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
     @CreatedDate
-    private Date gmtCreate;
+    @Column(name = "gmt_create")
+    private ZonedDateTime columnCreate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
     @LastModifiedDate
-    private Date gmtModified;
+    @Column(name = "gmt_modified")
+    private ZonedDateTime columnModified;
 
-    public AnimeMovieBluRayEntity(String nameOfficial, String nameTranslated, Date year, List<AnimeCharacterEntity> character, String duration, String originalWork, List<AnimeStaffEntity> direction, List<AnimeStaffEntity> producer, List<AnimeStaffEntity> characterDesign, AnimeStaffEntity storyboard, AnimeStaffEntity script, List<AnimeStaffEntity> soundDirection, List<AnimeStaffEntity> soundEffects, AnimeFirmEntity soundWork, AnimeStaffEntity music, List<AnimeStaffEntity> musicProducer, List<AnimeStaffEntity> artDirection, List<AnimeStaffEntity> artDesign, List<AnimeStaffEntity> colorDesign, List<AnimeStaffEntity> keyAnimation, List<AnimeStaffEntity> secondKeyAnimation) {
+    public AnimeMovieBluRayEntity() {
+    }
+
+    public AnimeMovieBluRayEntity(String nameOfficial, String nameTranslated, Date year, List<AnimeCharacterEntity> character, String duration, String originalWork, List<AnimeStaffEntity> direction, List<AnimeStaffEntity> producer, List<AnimeStaffEntity> characterDesign, List<AnimeStaffEntity> storyboard, List<AnimeStaffEntity> script, List<AnimeStaffEntity> soundDirection, List<AnimeStaffEntity> soundEffects, List<AnimeFirmEntity> soundWork, List<AnimeStaffEntity> music, List<AnimeStaffEntity> musicProducer, List<AnimeStaffEntity> artDirection, List<AnimeStaffEntity> artDesign, List<AnimeStaffEntity> colorDesign, List<AnimeStaffEntity> keyAnimation, List<AnimeStaffEntity> secondKeyAnimation) {
         this.nameOfficial = nameOfficial;
         this.nameTranslated = nameTranslated;
         this.year = year;
@@ -208,19 +210,19 @@ public class AnimeMovieBluRayEntity {
         this.characterDesign = characterDesign;
     }
 
-    public AnimeStaffEntity getStoryboard() {
+    public List<AnimeStaffEntity> getStoryboard() {
         return storyboard;
     }
 
-    public void setStoryboard(AnimeStaffEntity storyboard) {
+    public void setStoryboard(List<AnimeStaffEntity> storyboard) {
         this.storyboard = storyboard;
     }
 
-    public AnimeStaffEntity getScript() {
+    public List<AnimeStaffEntity> getScript() {
         return script;
     }
 
-    public void setScript(AnimeStaffEntity script) {
+    public void setScript(List<AnimeStaffEntity> script) {
         this.script = script;
     }
 
@@ -240,19 +242,19 @@ public class AnimeMovieBluRayEntity {
         this.soundEffects = soundEffects;
     }
 
-    public AnimeFirmEntity getSoundWork() {
+    public List<AnimeFirmEntity> getSoundWork() {
         return soundWork;
     }
 
-    public void setSoundWork(AnimeFirmEntity soundWork) {
+    public void setSoundWork(List<AnimeFirmEntity> soundWork) {
         this.soundWork = soundWork;
     }
 
-    public AnimeStaffEntity getMusic() {
+    public List<AnimeStaffEntity> getMusic() {
         return music;
     }
 
-    public void setMusic(AnimeStaffEntity music) {
+    public void setMusic(List<AnimeStaffEntity> music) {
         this.music = music;
     }
 
@@ -304,19 +306,19 @@ public class AnimeMovieBluRayEntity {
         this.secondKeyAnimation = secondKeyAnimation;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public ZonedDateTime getColumnCreate() {
+        return columnCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setColumnCreate(ZonedDateTime columnCreate) {
+        this.columnCreate = columnCreate;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public ZonedDateTime getColumnModified() {
+        return columnModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setColumnModified(ZonedDateTime columnModified) {
+        this.columnModified = columnModified;
     }
 }

@@ -26,14 +26,12 @@ public class AnimeBluRayEntity {
     @Column(name = "poster")
     private String poster;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create", nullable = false)
     @CreatedDate
+    @Column(name = "gmt_create", nullable = false)
     private ZonedDateTime columnCreate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified", nullable = false)
     @LastModifiedDate
+    @Column(name = "gmt_modified", nullable = false)
     private ZonedDateTime columnModified;
 
     @OneToOne(mappedBy = "animeBluRayEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

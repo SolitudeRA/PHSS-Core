@@ -4,6 +4,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -35,113 +37,111 @@ public class AnimeMainInfEntity {
     private String url;
 
     //原作
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "original")
-    private AnimeStaffEntity original;
+    private List<AnimeStaffEntity> original;
 
     //原作发行公司
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "original_producer")
-    private AnimeFirmEntity originalProducer;
+    private List<AnimeFirmEntity> originalProducer;
 
     //导演
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "director")
-    private AnimeStaffEntity director;
+    private List<AnimeStaffEntity> director;
 
     //副导演
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "subdirector")
     private List<AnimeStaffEntity> subdirector;
 
     //制片人
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "producer")
-    private AnimeStaffEntity producer;
+    private List<AnimeStaffEntity> producer;
 
     //脚本
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "script")
     private List<AnimeStaffEntity> script;
 
     //分镜
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "storyboard")
     private List<AnimeStaffEntity> storyboard;
 
     //人物设定
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "character_setting")
     private List<AnimeStaffEntity> characterSetting;
 
     //音乐
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "music")
-    private AnimeStaffEntity music;
+    private List<AnimeStaffEntity> music;
 
     //音乐制作
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "music_producer")
-    private AnimeFirmEntity musicProducer;
+    private List<AnimeFirmEntity> musicProducer;
 
     //美术监督
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "art_director")
-    private AnimeStaffEntity artDirector;
+    private List<AnimeStaffEntity> artDirector;
 
     //美术设计
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "art_designer")
-    private AnimeFirmEntity artDesigner;
+    private List<AnimeFirmEntity> artDesigner;
 
     //色彩设计
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "color_designer")
-    private AnimeStaffEntity colorDesigner;
+    private List<AnimeStaffEntity> colorDesigner;
 
     //作画监督
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "animation director")
-    private AnimeStaffEntity animationDirector;
+    private List<AnimeStaffEntity> animationDirector;
 
     //动画制作
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "animation_producer")
-    private AnimeFirmEntity animationProducer;
+    private List<AnimeFirmEntity> animationProducer;
 
     //放送电视台
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @Column(name = "tv_station")
-    private AnimeFirmEntity tvStation;
+    private List<AnimeFirmEntity> tvStation;
 
     @Column(name = "favorite_status")
     private Boolean favoriteStatus;
 
     @Column(name = "last_watched")
-    private Date lastWatched;
+    private LocalDateTime lastWatched;
 
     @Column(name = "last_downloaded")
-    private Date lastDownloaded;
+    private LocalDateTime lastDownloaded;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "anime_id")
     private AnimeMainEntity animeMainEntity;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
     @CreatedDate
-    private Date gmtCreate;
+    @Column(name = "gmt_create")
+    private ZonedDateTime columnCreate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
     @LastModifiedDate
-    private Date gmtModified;
+    @Column(name = "gmt_modified")
+    private ZonedDateTime columnModified;
 
     public AnimeMainInfEntity() {
     }
 
-    public AnimeMainInfEntity(String summary, Date airDate, Date releaseYear, Integer releaseQuarter, String url, AnimeStaffEntity original, AnimeFirmEntity originalProducer, AnimeStaffEntity director, List<AnimeStaffEntity> subdirector, AnimeStaffEntity producer, List<AnimeStaffEntity> script, List<AnimeStaffEntity> storyboard, List<AnimeStaffEntity> characterSetting, AnimeStaffEntity music, AnimeFirmEntity musicProducer, AnimeStaffEntity artDirector, AnimeFirmEntity artDesigner, AnimeStaffEntity colorDesigner, AnimeStaffEntity animationDirector, AnimeFirmEntity animationProducer, AnimeFirmEntity tvStation, Boolean favoriteStatus, Date lastWatched, Date lastDownloaded, AnimeMainEntity animeMainEntity) {
+    public AnimeMainInfEntity(String summary, Date airDate, Date releaseYear, Integer releaseQuarter, String url, List<AnimeStaffEntity> original, List<AnimeFirmEntity> originalProducer, List<AnimeStaffEntity> director, List<AnimeStaffEntity> subdirector, List<AnimeStaffEntity> producer, List<AnimeStaffEntity> script, List<AnimeStaffEntity> storyboard, List<AnimeStaffEntity> characterSetting, List<AnimeStaffEntity> music, List<AnimeFirmEntity> musicProducer, List<AnimeStaffEntity> artDirector, List<AnimeFirmEntity> artDesigner, List<AnimeStaffEntity> colorDesigner, List<AnimeStaffEntity> animationDirector, List<AnimeFirmEntity> animationProducer, List<AnimeFirmEntity> tvStation, Boolean favoriteStatus, LocalDateTime lastWatched, LocalDateTime lastDownloaded, AnimeMainEntity animeMainEntity) {
         this.summary = summary;
         this.airDate = airDate;
         this.releaseYear = releaseYear;
@@ -217,27 +217,27 @@ public class AnimeMainInfEntity {
         this.url = url;
     }
 
-    public AnimeStaffEntity getOriginal() {
+    public List<AnimeStaffEntity> getOriginal() {
         return original;
     }
 
-    public void setOriginal(AnimeStaffEntity original) {
+    public void setOriginal(List<AnimeStaffEntity> original) {
         this.original = original;
     }
 
-    public AnimeFirmEntity getOriginalProducer() {
+    public List<AnimeFirmEntity> getOriginalProducer() {
         return originalProducer;
     }
 
-    public void setOriginalProducer(AnimeFirmEntity originalProducer) {
+    public void setOriginalProducer(List<AnimeFirmEntity> originalProducer) {
         this.originalProducer = originalProducer;
     }
 
-    public AnimeStaffEntity getDirector() {
+    public List<AnimeStaffEntity> getDirector() {
         return director;
     }
 
-    public void setDirector(AnimeStaffEntity director) {
+    public void setDirector(List<AnimeStaffEntity> director) {
         this.director = director;
     }
 
@@ -249,11 +249,11 @@ public class AnimeMainInfEntity {
         this.subdirector = subdirector;
     }
 
-    public AnimeStaffEntity getProducer() {
+    public List<AnimeStaffEntity> getProducer() {
         return producer;
     }
 
-    public void setProducer(AnimeStaffEntity producer) {
+    public void setProducer(List<AnimeStaffEntity> producer) {
         this.producer = producer;
     }
 
@@ -281,67 +281,67 @@ public class AnimeMainInfEntity {
         this.characterSetting = characterSetting;
     }
 
-    public AnimeStaffEntity getMusic() {
+    public List<AnimeStaffEntity> getMusic() {
         return music;
     }
 
-    public void setMusic(AnimeStaffEntity music) {
+    public void setMusic(List<AnimeStaffEntity> music) {
         this.music = music;
     }
 
-    public AnimeFirmEntity getMusicProducer() {
+    public List<AnimeFirmEntity> getMusicProducer() {
         return musicProducer;
     }
 
-    public void setMusicProducer(AnimeFirmEntity musicProducer) {
+    public void setMusicProducer(List<AnimeFirmEntity> musicProducer) {
         this.musicProducer = musicProducer;
     }
 
-    public AnimeStaffEntity getArtDirector() {
+    public List<AnimeStaffEntity> getArtDirector() {
         return artDirector;
     }
 
-    public void setArtDirector(AnimeStaffEntity artDirector) {
+    public void setArtDirector(List<AnimeStaffEntity> artDirector) {
         this.artDirector = artDirector;
     }
 
-    public AnimeFirmEntity getArtDesigner() {
+    public List<AnimeFirmEntity> getArtDesigner() {
         return artDesigner;
     }
 
-    public void setArtDesigner(AnimeFirmEntity artDesigner) {
+    public void setArtDesigner(List<AnimeFirmEntity> artDesigner) {
         this.artDesigner = artDesigner;
     }
 
-    public AnimeStaffEntity getColorDesigner() {
+    public List<AnimeStaffEntity> getColorDesigner() {
         return colorDesigner;
     }
 
-    public void setColorDesigner(AnimeStaffEntity colorDesigner) {
+    public void setColorDesigner(List<AnimeStaffEntity> colorDesigner) {
         this.colorDesigner = colorDesigner;
     }
 
-    public AnimeStaffEntity getAnimationDirector() {
+    public List<AnimeStaffEntity> getAnimationDirector() {
         return animationDirector;
     }
 
-    public void setAnimationDirector(AnimeStaffEntity animationDirector) {
+    public void setAnimationDirector(List<AnimeStaffEntity> animationDirector) {
         this.animationDirector = animationDirector;
     }
 
-    public AnimeFirmEntity getAnimationProducer() {
+    public List<AnimeFirmEntity> getAnimationProducer() {
         return animationProducer;
     }
 
-    public void setAnimationProducer(AnimeFirmEntity animationProducer) {
+    public void setAnimationProducer(List<AnimeFirmEntity> animationProducer) {
         this.animationProducer = animationProducer;
     }
 
-    public AnimeFirmEntity getTvStation() {
+    public List<AnimeFirmEntity> getTvStation() {
         return tvStation;
     }
 
-    public void setTvStation(AnimeFirmEntity tvStation) {
+    public void setTvStation(List<AnimeFirmEntity> tvStation) {
         this.tvStation = tvStation;
     }
 
@@ -353,19 +353,19 @@ public class AnimeMainInfEntity {
         this.favoriteStatus = favoriteStatus;
     }
 
-    public Date getLastWatched() {
+    public LocalDateTime getLastWatched() {
         return lastWatched;
     }
 
-    public void setLastWatched(Date lastWatched) {
+    public void setLastWatched(LocalDateTime lastWatched) {
         this.lastWatched = lastWatched;
     }
 
-    public Date getLastDownloaded() {
+    public LocalDateTime getLastDownloaded() {
         return lastDownloaded;
     }
 
-    public void setLastDownloaded(Date lastDownloaded) {
+    public void setLastDownloaded(LocalDateTime lastDownloaded) {
         this.lastDownloaded = lastDownloaded;
     }
 
@@ -377,19 +377,19 @@ public class AnimeMainInfEntity {
         this.animeMainEntity = animeMainEntity;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public ZonedDateTime getColumnCreate() {
+        return columnCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setColumnCreate(ZonedDateTime columnCreate) {
+        this.columnCreate = columnCreate;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public ZonedDateTime getColumnModified() {
+        return columnModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setColumnModified(ZonedDateTime columnModified) {
+        this.columnModified = columnModified;
     }
 }

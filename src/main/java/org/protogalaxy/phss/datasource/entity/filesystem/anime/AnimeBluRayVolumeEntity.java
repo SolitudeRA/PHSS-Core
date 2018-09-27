@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -28,24 +29,22 @@ public class AnimeBluRayVolumeEntity {
     @Column(name = "title_translated")
     private String titleTranslated;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
     @CreatedDate
-    private Date gmtCreate;
+    @Column(name = "gmt_create")
+    private ZonedDateTime columnCreate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
     @LastModifiedDate
-    private Date gmtModified;
+    @Column(name = "gmt_modified")
+    private ZonedDateTime columnModified;
 
     public AnimeBluRayVolumeEntity() {
     }
 
-    public AnimeBluRayVolumeEntity(AnimeBluRayEntity animeBluRayEntity, List<String> epNumber, List<String> title, List<String> titleTranslated) {
+    public AnimeBluRayVolumeEntity(AnimeBluRayEntity animeBluRayEntity, String epNumber, String title, String titleTranslated) {
         this.animeBluRayEntity = animeBluRayEntity;
-        this.epNumber = String.join("_", epNumber);
-        this.title = String.join("_", title);
-        this.titleTranslated = String.join("_", titleTranslated);
+        this.epNumber = epNumber;
+        this.title = title;
+        this.titleTranslated = titleTranslated;
     }
 
     public UUID getUuid() {
@@ -64,44 +63,43 @@ public class AnimeBluRayVolumeEntity {
         this.animeBluRayEntity = animeBluRayEntity;
     }
 
-    public List<String> getEpNumber() {
-        return Arrays.asList(epNumber.split("_"));
+    public String getEpNumber() {
+        return epNumber;
     }
 
-    public void setEpNumber(List<String> epNumber) {
-        this.epNumber = String.join("_", epNumber);
+    public void setEpNumber(String epNumber) {
+        this.epNumber = epNumber;
     }
 
-    public List<String> getTitle() {
-        return Arrays.asList(epNumber.split("_"));
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
-        this.title = String.join("_", title);
+        this.title = title;
     }
 
-    public List<String> getTitleTranslated() {
-        return Arrays.asList(titleTranslated.split("_"));
+    public String getTitleTranslated() {
+        return titleTranslated;
     }
 
     public void setTitleTranslated(String titleTranslated) {
-        this.titleTranslated = String.join("_", titleTranslated);
+        this.titleTranslated = titleTranslated;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public ZonedDateTime getColumnCreate() {
+        return columnCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setColumnCreate(ZonedDateTime columnCreate) {
+        this.columnCreate = columnCreate;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public ZonedDateTime getColumnModified() {
+        return columnModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setColumnModified(ZonedDateTime columnModified) {
+        this.columnModified = columnModified;
     }
-
 }
