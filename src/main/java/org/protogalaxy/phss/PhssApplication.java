@@ -4,6 +4,7 @@ import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
 
 @SpringBootApplication
 @EnableConfigurationProperties({PhssStorageServiceConfig.class})
