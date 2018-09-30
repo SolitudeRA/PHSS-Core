@@ -36,10 +36,11 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/", "/index", "/user/register", "/user/login").permitAll()
             .anyRequest().authenticated()
-            .and()
 
+            .and().oauth2Login()
 
             //--------------------------Login config------------------------------//
+            .and()
             .formLogin()
             .loginProcessingUrl("/user/login")
             .failureHandler(ajaxAuthFailHandler)
@@ -52,9 +53,10 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
             .logoutUrl("/user/logout")
             .logoutSuccessUrl("/index")
-            .and()
+
 
             //-----------------------Remember-me config---------------------------//
+            .and()
             .rememberMe()
             .key("key");
     }
