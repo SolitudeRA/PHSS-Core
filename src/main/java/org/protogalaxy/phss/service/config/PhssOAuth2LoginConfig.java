@@ -24,16 +24,15 @@ public class PhssOAuth2LoginConfig {
 
     private ClientRegistration bangumiClientRegistration() {
         return ClientRegistration.withRegistrationId("bangumi")
-                                 .clientId("bgm6165b9e794a763e1")
-                                 .clientSecret("48aca6275eb4259de87406ec96120e34")
-                                 .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
-                                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                                 .redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
-                                 .scope("")
-                                 .authorizationUri("https://bgm.tv/oauth/authorize")
-                                 .tokenUri("https://bgm.tv/oauth/access_token")
-                                 .userInfoUri("https://bgm.tv/oauth/token_status")
-                                 .clientName("Bangumi")
-                                 .build();
+                .clientId("bgm6165b9e794a763e1")
+                .clientSecret("48aca6275eb4259de87406ec96120e34")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.POST)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
+                .authorizationUri("https://bgm.tv/oauth/authorize")
+                .scope((String) null)
+                .tokenUri("https://bgm.tv/oauth/access_token")
+                .clientName("Bangumi")
+                .build();
     }
 }
