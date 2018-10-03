@@ -30,8 +30,9 @@ public class PhssOAuth2LoginConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
                 .authorizationUri("https://bgm.tv/oauth/authorize")
-                .scope((String) null)
+                .scope("")
                 .tokenUri("https://bgm.tv/oauth/access_token")
+                .userInfoUri("https://bgm.tv/oauth/token_status")
                 .clientName("Bangumi")
                 .build();
     }
