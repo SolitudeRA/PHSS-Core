@@ -22,7 +22,7 @@ public class AdobeMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.pdf")), handler, metadata, context);
+        parser.parse(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resource/documents/test.pdf")), handler, metadata, context);
         System.out.println(metadata.toString());
     }
 
@@ -34,8 +34,8 @@ public class AdobeMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.psd")), handler, metadata, context);
-        System.out.println(new File("/Users/Luna/Desktop/PHSS-Core/src/test/resources/documents/test.psd"));
+        parser.parse(Files.newInputStream(Paths.get("/Users/Luna/Desktop/PHSS-Core/src/test/resource/documents/test.psd")), handler, metadata, context);
+        System.out.println(new File("/Users/Luna/Desktop/PHSS-Core/src/test/resource/documents/test.psd"));
         System.out.println(metadata.toString());
     }
 }

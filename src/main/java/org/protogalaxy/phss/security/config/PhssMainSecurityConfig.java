@@ -2,7 +2,7 @@ package org.protogalaxy.phss.security.config;
 
 import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
-import org.protogalaxy.phss.security.main.PhssUserDetailsService;
+import org.protogalaxy.phss.security.user.PhssUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

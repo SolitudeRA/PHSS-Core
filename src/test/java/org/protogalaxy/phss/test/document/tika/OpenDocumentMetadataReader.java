@@ -22,7 +22,7 @@ public class OpenDocumentMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.odt" )), handler, metadata, context);
+        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resource\\documents\\test.odt" )), handler, metadata, context);
         System.out.println(metadata.toString());
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         System.out.println(dateFormat.parse(metadata.get("meta:creation-date")));
@@ -35,7 +35,7 @@ public class OpenDocumentMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.ods" )), handler, metadata, context);
+        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resource\\documents\\test.ods" )), handler, metadata, context);
         System.out.println(metadata.toString());
     }
 
@@ -46,7 +46,7 @@ public class OpenDocumentMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.odp" )), handler, metadata, context);
+        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resource\\documents\\test.odp" )), handler, metadata, context);
         System.out.println(metadata.toString());
     }
 }

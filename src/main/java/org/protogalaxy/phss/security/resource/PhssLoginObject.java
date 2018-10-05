@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.security.resources;
+package org.protogalaxy.phss.security.resource;
 
 public class PhssLoginObject {
     private String username;

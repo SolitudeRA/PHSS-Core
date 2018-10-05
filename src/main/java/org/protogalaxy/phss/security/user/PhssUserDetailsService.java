@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.security.main;
+package org.protogalaxy.phss.security.user;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemSpaceEntity;
@@ -30,7 +30,7 @@ public class PhssUserDetailsService implements UserDetailsService {
     @Autowired
     private SettingMainRepository settingMainRepository;
 
-    public UserEntity saveUser(UserEntity userEntity) {
+    public UserEntity save(UserEntity userEntity) {
         userRepository.save(userEntity);
         FileSystemMainEntity fileSystemMainEntity = new FileSystemMainEntity(userEntity);
         filesystemMainRepository.save(fileSystemMainEntity);
@@ -40,11 +40,15 @@ public class PhssUserDetailsService implements UserDetailsService {
         return userEntity;
     }
 
-    public UserEntity loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+    public UserEntity update(UserEntity userEntity){
+        return userRepository.save(userEntity);
     }
 
-    public void removeUserById(UserEntity userEntity) {
-        userRepository.delete(userEntity);
+    public void deleteUserByUsername(String username) throws UsernameNotFoundException {
+        userRepository.delete(userRepository.findByUsername(username));
+    }
+
+    public UserEntity loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
     }
 }

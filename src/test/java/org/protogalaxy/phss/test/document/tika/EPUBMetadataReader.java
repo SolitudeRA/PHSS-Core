@@ -22,7 +22,7 @@ public class EPUBMetadataReader {
     @Test
     public void epubEpublibTest() throws Exception {
         EpubReader reader = new EpubReader();
-        Book book = reader.readEpub(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.epub")));
+        Book book = reader.readEpub(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resource\\documents\\test.epub")));
         System.out.println(book.getTitle());
         for (Author author : book.getMetadata().getAuthors()) {
             System.out.println(author.getFirstname() + author.getLastname());
@@ -58,7 +58,7 @@ public class EPUBMetadataReader {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
-        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.epub")), handler, metadata, context);
+        parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resource\\documents\\test.epub")), handler, metadata, context);
         System.out.println(metadata.toString());
     }
 }
