@@ -40,7 +40,7 @@ public class PhssUserDetailsService implements UserDetailsService {
         return userEntity;
     }
 
-    public UserEntity update(UserEntity userEntity){
+    public UserEntity update(UserEntity userEntity) {
         return userRepository.save(userEntity);
     }
 

@@ -2,6 +2,7 @@ package org.protogalaxy.phss.security.config;
 
 import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
+import org.protogalaxy.phss.security.oauth2.PhssAuthorizationCodeTokenResponseClient;
 import org.protogalaxy.phss.security.user.PhssUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -32,12 +35,16 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
-            //-------------------------Url filter config--------------------------//
+            //--------------------------Url filter config-------------------------//
             .authorizeRequests()
             .antMatchers("/", "/index", "/user/register", "/user/login").permitAll()
             .anyRequest().authenticated()
 
+            //--------------------- ----OAuth2 config-----------------------------//
             .and().oauth2Login()
+            //.tokenEndpoint()
+            //.accessTokenResponseClient(accessTokenResponseClient())
+            //.and()
 
             //--------------------------Login config------------------------------//
             .and()
@@ -48,14 +55,14 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
 
 
-            //-------------------------Logout config------------------------------//
+            //--------------------------Logout config-----------------------------//
             .and()
             .logout()
             .logoutUrl("/user/logout")
             .logoutSuccessUrl("/index")
 
 
-            //-----------------------Remember-me config---------------------------//
+            //------------------------Remember-me config--------------------------//
             .and()
             .rememberMe()
             .key("key");
@@ -82,5 +89,9 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected PhssUserDetailsService userDetailsService() {
         return new PhssUserDetailsService();
+    }
+
+    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
+        return new PhssAuthorizationCodeTokenResponseClient();
     }
 }

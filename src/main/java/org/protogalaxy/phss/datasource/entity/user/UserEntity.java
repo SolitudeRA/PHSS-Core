@@ -8,6 +8,8 @@ import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
 import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
 import org.hibernate.annotations.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +19,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,16 +29,14 @@ import java.util.Set;
 @DynamicInsert
 @Table(name = "user")
 public class UserEntity implements UserDetails, CredentialsContainer {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "username")
     private String username;
 
     @JsonIgnore
-    @Lob
     @Column(name = "password")
     private String password;
 
@@ -50,9 +52,8 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     @Column(name = "password_ext3")
     private String passwordExt3;
 
-    @Lob
     @Column(name = "avatar")
-    private byte[] avatar;
+    private String avatar;
 
     @Column(name = "isEnabled")
     @ColumnDefault("true")
@@ -70,16 +71,14 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     private String authorities;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_create")
-    @CreationTimestamp
-    private Date dateCreate;
+    @CreatedDate
+    private ZonedDateTime dateCreate;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
-    @UpdateTimestamp
-    private Date dateModified;
+    @LastModifiedDate
+    private ZonedDateTime dateModified;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -162,8 +161,7 @@ public class UserEntity implements UserDetails, CredentialsContainer {
      */
     public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity) {
         if (((username == null) || "".equals(username)) || (password == null)) {
-            throw new IllegalArgumentException(
-                    "Cannot pass null or empty values to constructor");
+            throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
         Set<String> roleStrSet = new HashSet<>();
@@ -181,8 +179,12 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.settingMainEntity = settingMainEntity;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override
@@ -227,11 +229,11 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.passwordExt3 = passwordExt3;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -285,15 +287,19 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.authorities = String.join(",", roleStrSet);
     }
 
-    public Date getDateCreate() {
+    public ZonedDateTime getDateCreate() {
         return dateCreate;
     }
 
-    public Date getDateModified() {
+    public void setDateCreate(ZonedDateTime dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public ZonedDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(Date dateModified) {
+    public void setDateModified(ZonedDateTime dateModified) {
         this.dateModified = dateModified;
     }
 
