@@ -31,6 +31,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
 
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) throws OAuth2AuthenticationException {
+
         ClientRegistration clientRegistration = authorizationGrantRequest.getClientRegistration();
 
         // Build the authorization code grant request for the token endpoint
@@ -39,6 +40,23 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         AuthorizationGrant authorizationCodeGrant = new AuthorizationCodeGrant(authorizationCode, redirectUri);
         URI tokenUri = toURI(clientRegistration.getProviderDetails().getTokenUri());
 
+        if (clientRegistration.getClientId()) {
+
+        } else {
+            return nimbusAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri);
+        }
+    }
+
+    /**
+     * Get token response with Nimbus OAuth2 SDK
+     *
+     * @param authorizationGrantRequest Authorization Grant Request
+     * @param clientRegistration        ClientRegistration created in config
+     * @param authorizationCodeGrant    Authorization Code Grant
+     * @param tokenUri                  Token endpoint uri
+     * @return OAuth2AccessTokenResponse
+     */
+    private OAuth2AccessTokenResponse nimbusAuthorizationCodeTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest, ClientRegistration clientRegistration, AuthorizationGrant authorizationCodeGrant, URI tokenUri) {
         // Set the credentials to authenticate the client at the token endpoint
         ClientID clientId = new ClientID(clientRegistration.getClientId());
         Secret clientSecret = new Secret(clientRegistration.getClientSecret());
@@ -52,24 +70,23 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         com.nimbusds.oauth2.sdk.TokenResponse tokenResponse;
         try {
             // Send the Access Token request
-            PhssTokenRequest tokenRequest = new PhssTokenRequest(tokenUri, clientAuthentication, authorizationCodeGrant);
+            TokenRequest tokenRequest = new TokenRequest(tokenUri, clientAuthentication, authorizationCodeGrant);
             HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
             httpRequest.setAccept(MediaType.APPLICATION_JSON_VALUE);
             httpRequest.setConnectTimeout(30000);
             httpRequest.setReadTimeout(30000);
             tokenResponse = com.nimbusds.oauth2.sdk.TokenResponse.parse(httpRequest.send());
         } catch (ParseException pe) {
-            org.springframework.security.oauth2.core.OAuth2Error oauth2Error = new org.springframework.security.oauth2.core.OAuth2Error(INVALID_TOKEN_RESPONSE_ERROR_CODE, "An error occurred parsing the Access Token response: " + pe.getMessage(), null);
+            OAuth2Error oauth2Error = new OAuth2Error(INVALID_TOKEN_RESPONSE_ERROR_CODE, "An error occurred parsing the Access Token response: " + pe.getMessage(), null);
             throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString(), pe);
         } catch (IOException ioe) {
-            throw new AuthenticationServiceException("An error occurred while sending the Access Token Request: " +
-                                                             ioe.getMessage(), ioe);
+            throw new AuthenticationServiceException("An error occurred while sending the Access Token Request: " + ioe.getMessage(), ioe);
         }
 
         if (!tokenResponse.indicatesSuccess()) {
             TokenErrorResponse tokenErrorResponse = (TokenErrorResponse) tokenResponse;
             ErrorObject errorObject = tokenErrorResponse.getErrorObject();
-            org.springframework.security.oauth2.core.OAuth2Error oauth2Error = new OAuth2Error(errorObject.getCode(), errorObject.getDescription(), (errorObject.getURI() != null ? errorObject.getURI().toString() : null));
+            OAuth2Error oauth2Error = new OAuth2Error(errorObject.getCode(), errorObject.getDescription(), (errorObject.getURI() != null ? errorObject.getURI().toString() : null));
             throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString());
         }
 
@@ -88,15 +105,12 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         // originally requested by the client in the Authorization Request
         Set<String> scopes;
         if (CollectionUtils.isEmpty(accessTokenResponse.getTokens().getAccessToken().getScope())) {
-            scopes = new LinkedHashSet<>(
-                    authorizationGrantRequest.getAuthorizationExchange().getAuthorizationRequest().getScopes());
+            scopes = new LinkedHashSet<>(authorizationGrantRequest.getAuthorizationExchange().getAuthorizationRequest().getScopes());
         } else {
-            scopes = new LinkedHashSet<>(
-                    accessTokenResponse.getTokens().getAccessToken().getScope().toStringList());
+            scopes = new LinkedHashSet<>(accessTokenResponse.getTokens().getAccessToken().getScope().toStringList());
         }
 
         Map<String, Object> additionalParameters = new LinkedHashMap<>(accessTokenResponse.getCustomParameters());
-
 
         return OAuth2AccessTokenResponse.withToken(accessToken)
                                         .tokenType(accessTokenType)

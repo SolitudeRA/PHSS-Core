@@ -37,14 +37,14 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().cors().and()
             //--------------------------Url filter config-------------------------//
             .authorizeRequests()
-            .antMatchers("/", "/index", "/user/register", "/user/login").permitAll()
+            .antMatchers("/", "/index", "/user/register", "/user/login", "/login/oauth2/code/*").permitAll()
             .anyRequest().authenticated()
 
             //--------------------- ----OAuth2 config-----------------------------//
             .and().oauth2Login()
-            //.tokenEndpoint()
-            //.accessTokenResponseClient(accessTokenResponseClient())
-            //.and()
+            .tokenEndpoint()
+            .accessTokenResponseClient(accessTokenResponseClient())
+            .and()
 
             //--------------------------Login config------------------------------//
             .and()

@@ -26,7 +26,7 @@ public class PhssOAuth2LoginConfig {
         return ClientRegistration.withRegistrationId("bangumi")
                                  .clientId("bgm6165b9e794a763e1")
                                  .clientSecret("48aca6275eb4259de87406ec96120e34")
-                                 .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
+                                 .clientAuthenticationMethod(ClientAuthenticationMethod.POST)
                                  .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                                  .redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
                                  .authorizationUri("https://bgm.tv/oauth/authorize")

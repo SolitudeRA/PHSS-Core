@@ -3,6 +3,7 @@ package org.protogalaxy.phss.security.oauth2;
 import com.nimbusds.oauth2.sdk.*;
 import com.nimbusds.oauth2.sdk.auth.ClientAuthentication;
 import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
+import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.CommonContentTypes;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.id.ClientID;
@@ -22,11 +23,24 @@ import java.util.Map;
 @Immutable
 public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
 
+
+    /**
+     * The authorisation grant.
+     */
     private final AuthorizationGrant authzGrant;
 
+
+    /**
+     * The requested scope, {@code null} if not specified.
+     */
     private final Scope scope;
 
-    private final Map<String, String> customParams;
+
+    /**
+     * Additional custom request parameters.
+     */
+    private final Map<String,String> customParams;
+
 
     /**
      * Creates a new token request with the specified client
@@ -42,9 +56,9 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      *                   specified.
      */
     public PhssTokenRequest(final URI uri,
-                            final ClientAuthentication clientAuth,
-                            final AuthorizationGrant authzGrant,
-                            final Scope scope) {
+                        final ClientAuthentication clientAuth,
+                        final AuthorizationGrant authzGrant,
+                        final Scope scope) {
 
         this(uri, clientAuth, authzGrant, scope, null);
     }
@@ -68,10 +82,10 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      *                     none.
      */
     public PhssTokenRequest(final URI uri,
-                            final ClientAuthentication clientAuth,
-                            final AuthorizationGrant authzGrant,
-                            final Scope scope,
-                            final Map<String, String> customParams) {
+                        final ClientAuthentication clientAuth,
+                        final AuthorizationGrant authzGrant,
+                        final Scope scope,
+                        final Map<String,String> customParams) {
 
         super(uri, clientAuth);
 
@@ -102,8 +116,8 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      * @param authzGrant The authorisation grant. Must not be {@code null}.
      */
     public PhssTokenRequest(final URI uri,
-                            final ClientAuthentication clientAuth,
-                            final AuthorizationGrant authzGrant) {
+                        final ClientAuthentication clientAuth,
+                        final AuthorizationGrant authzGrant) {
 
         this(uri, clientAuth, authzGrant, null);
     }
@@ -123,9 +137,9 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      *                   specified.
      */
     public PhssTokenRequest(final URI uri,
-                            final ClientID clientID,
-                            final AuthorizationGrant authzGrant,
-                            final Scope scope) {
+                        final ClientID clientID,
+                        final AuthorizationGrant authzGrant,
+                        final Scope scope) {
 
         this(uri, clientID, authzGrant, scope, null);
     }
@@ -150,10 +164,10 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      *                     none.
      */
     public PhssTokenRequest(final URI uri,
-                            final ClientID clientID,
-                            final AuthorizationGrant authzGrant,
-                            final Scope scope,
-                            final Map<String, String> customParams) {
+                        final ClientID clientID,
+                        final AuthorizationGrant authzGrant,
+                        final Scope scope,
+                        final Map<String,String> customParams) {
 
         super(uri, clientID);
 
@@ -189,8 +203,8 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      * @param authzGrant The authorisation grant. Must not be {@code null}.
      */
     public PhssTokenRequest(final URI uri,
-                            final ClientID clientID,
-                            final AuthorizationGrant authzGrant) {
+                        final ClientID clientID,
+                        final AuthorizationGrant authzGrant) {
 
         this(uri, clientID, authzGrant, null);
     }
@@ -208,10 +222,10 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      *                   specified.
      */
     public PhssTokenRequest(final URI uri,
-                            final AuthorizationGrant authzGrant,
-                            final Scope scope) {
+                        final AuthorizationGrant authzGrant,
+                        final Scope scope) {
 
-        this(uri, (ClientID) null, authzGrant, scope);
+        this(uri, (ClientID)null, authzGrant, scope);
     }
 
 
@@ -225,9 +239,9 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      * @param authzGrant The authorisation grant. Must not be {@code null}.
      */
     public PhssTokenRequest(final URI uri,
-                            final AuthorizationGrant authzGrant) {
+                        final AuthorizationGrant authzGrant) {
 
-        this(uri, (ClientID) null, authzGrant, null);
+        this(uri, (ClientID)null, authzGrant, null);
     }
 
 
@@ -264,9 +278,9 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      * </pre>
      *
      * @return The additional custom parameters as a unmodifiable map,
-     * empty map if none.
+     *         empty map if none.
      */
-    public Map<String, String> getCustomParameters() {
+    public Map<String,String> getCustomParameters () {
 
         return customParams;
     }
@@ -276,6 +290,7 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      * Returns the specified custom parameter included in the request body.
      *
      * @param name The parameter name. Must not be {@code null}.
+     *
      * @return The parameter value, {@code null} if not specified.
      */
     public String getCustomParameter(final String name) {
@@ -307,14 +322,11 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
             getClientAuthentication().applyTo(httpRequest);
         }
 
-        Map<String, String> params = httpRequest.getQueryParameters();
+        Map<String,String> params = httpRequest.getQueryParameters();
 
         params.putAll(authzGrant.toParameters());
 
-        if (scope != null && !scope.isEmpty()) {
-            if (scope.toStringList().contains("null")) {
-                params.put("scope", null);
-            }
+        if (scope != null && ! scope.isEmpty()) {
             params.put("scope", scope.toString());
         }
 
@@ -322,7 +334,7 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
             params.put("client_id", getClientID().getValue());
         }
 
-        if (!getCustomParameters().isEmpty()) {
+        if (! getCustomParameters().isEmpty()) {
             params.putAll(getCustomParameters());
         }
 
@@ -336,11 +348,13 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
      * Parses a token request from the specified HTTP request.
      *
      * @param httpRequest The HTTP request. Must not be {@code null}.
+     *
      * @return The token request.
+     *
      * @throws ParseException If the HTTP request couldn't be parsed to a
      *                        token request.
      */
-    public static TokenRequest parse(final HTTPRequest httpRequest)
+    public static PhssTokenRequest parse(final HTTPRequest httpRequest)
             throws ParseException {
 
         // Only HTTP POST accepted
@@ -367,7 +381,7 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
         }
 
         // No fragment! May use query component!
-        Map<String, String> params = httpRequest.getQueryParameters();
+        Map<String,String> params = httpRequest.getQueryParameters();
 
         // Multiple conflicting client auth methods (issue #203)?
         if (clientAuth instanceof ClientSecretBasic) {
@@ -393,7 +407,7 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
             // Parse optional client ID
             String clientIDString = params.get("client_id");
 
-            if (clientIDString != null && !clientIDString.trim().isEmpty())
+            if (clientIDString != null && ! clientIDString.trim().isEmpty())
                 clientID = new ClientID(clientIDString);
 
             if (clientID == null && grant.getType().requiresClientID()) {
@@ -412,9 +426,9 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
         }
 
         // Parse custom parameters
-        Map<String, String> customParams = new HashMap<>();
+        Map<String,String> customParams = new HashMap<>();
 
-        for (Map.Entry<String, String> p : params.entrySet()) {
+        for (Map.Entry<String,String> p: params.entrySet()) {
 
             if (p.getKey().equalsIgnoreCase("grant_type")) {
                 continue; // skip
@@ -440,16 +454,16 @@ public class PhssTokenRequest extends AbstractOptionallyIdentifiedRequest {
                 continue; // skip
             }
 
-            if (!grant.getType().getRequestParameterNames().contains(p.getKey())) {
+            if (! grant.getType().getRequestParameterNames().contains(p.getKey())) {
                 // We have a custom (non-registered) parameter
                 customParams.put(p.getKey(), p.getValue());
             }
         }
 
         if (clientAuth != null) {
-            return new TokenRequest(uri, clientAuth, grant, scope, customParams);
+            return new PhssTokenRequest(uri, clientAuth, grant, scope, customParams);
         } else {
-            return new TokenRequest(uri, clientID, grant, scope, customParams);
+            return new PhssTokenRequest(uri, clientID, grant, scope, customParams);
         }
     }
 }
