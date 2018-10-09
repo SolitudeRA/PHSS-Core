@@ -1,5 +1,7 @@
 package org.protogalaxy.phss.security.oauth2;
 
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.oauth.OAuth20Service;
 import com.nimbusds.oauth2.sdk.*;
 import com.nimbusds.oauth2.sdk.auth.ClientAuthentication;
 import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
@@ -25,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
     private static final String INVALID_TOKEN_RESPONSE_ERROR_CODE = "invalid_token_response";
@@ -40,11 +43,38 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         AuthorizationGrant authorizationCodeGrant = new AuthorizationCodeGrant(authorizationCode, redirectUri);
         URI tokenUri = toURI(clientRegistration.getProviderDetails().getTokenUri());
 
-        if (clientRegistration.getClientId()) {
-
+        // Switch to correct method to get token response(HTTP Param/JSON)
+        if (clientRegistration.getClientId().contains("_scribe")) {
+            return scribeJavaAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri, redirectUri);
         } else {
             return nimbusAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri);
         }
+    }
+
+    /**
+     * Get token response with PHSS custom SDK
+     *
+     * @param authorizationGrantRequest Authorization Grant Request
+     * @param clientRegistration        ClientRegistration created in config
+     * @param authorizationCodeGrant    Authorization Code Grant
+     * @param tokenUri                  Token endpoint uri
+     * @return OAuth2AccessTokenResponse
+     */
+    private OAuth2AccessTokenResponse scribeJavaAuthorizationCodeTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest, ClientRegistration clientRegistration, AuthorizationGrant authorizationCodeGrant, URI tokenUri, URI redirectUri) {
+        final OAuth20Service oAuth20Service = new ServiceBuilder(clientRegistration.getClientId())
+                .apiSecret(clientRegistration.getClientSecret())
+                .callback(redirectUri.toString())
+                .build(BangumiApi20.instance());
+        final com.github.scribejava.core.model.OAuth2AccessToken accessToken;
+        try {
+            accessToken = oAuth20Service.getAccessToken(oAuth20Service.getAuthorizationUrl());
+            return OAuth2AccessTokenResponse.withToken(accessToken.getAccessToken())
+                    .expiresIn(accessToken.getExpiresIn())
+                    .tokenType(OAuth2AccessToken.TokenType.BEARER)
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

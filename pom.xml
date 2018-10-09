@@ -73,6 +73,8 @@
         <junit-jupiter.version>5.3.0-M1</junit-jupiter.version>
         <junit-platform.version>1.3.0-M1</junit-platform.version>
         <jdbc-connector.version>5.1.47</jdbc-connector.version>
+        <!--Tool version-->
+        <scribejava.version>6.0.0</scribejava.version>
     </properties>
 
     <dependencies>
@@ -168,11 +170,6 @@
         </dependency>
         <!--Spring Section -->
         <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>2.0.5.RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring-security.version}</version>
@@ -210,6 +207,12 @@
         </dependency>
         <!--Tool section-->
         <dependency>
+            <groupId>com.github.scribejava</groupId>
+            <artifactId>scribejava-apis</artifactId>
+            <version>${scribejava.version}</version>
+        </dependency>
+        <!-- Multimedia tool section -->
+        <dependency>
             <groupId>nl.siegmann.epublib</groupId>
             <artifactId>epublib-core</artifactId>
             <version>${epublib.version}</version>
@@ -220,7 +223,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Multimedia section -->
+        <!-- Multimedia service section -->
         <dependency>
             <groupId>org.apache.ftpserver</groupId>
             <artifactId>ftpserver-core</artifactId>
