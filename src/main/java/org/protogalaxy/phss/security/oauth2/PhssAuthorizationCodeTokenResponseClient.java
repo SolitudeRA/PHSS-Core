@@ -2,6 +2,8 @@ package org.protogalaxy.phss.security.oauth2;
 
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
+import com.github.scribejava.httpclient.ning.NingHttpClient;
+import com.github.scribejava.httpclient.ning.NingHttpClientConfig;
 import com.nimbusds.oauth2.sdk.*;
 import com.nimbusds.oauth2.sdk.auth.ClientAuthentication;
 import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
@@ -9,6 +11,9 @@ import com.nimbusds.oauth2.sdk.auth.ClientSecretPost;
 import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.id.ClientID;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.AsyncHttpClientConfig;
+import com.ning.http.client.multipart.PartBase;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
@@ -22,12 +27,13 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenRespon
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
+import java.nio.channels.WritableByteChannel;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
     private static final String INVALID_TOKEN_RESPONSE_ERROR_CODE = "invalid_token_response";
@@ -45,7 +51,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
 
         // Switch to correct method to get token response(HTTP Param/JSON)
         if (clientRegistration.getClientId().contains("_scribe")) {
-            return scribeJavaAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri, redirectUri);
+            return scribeJavaAuthorizationCodeTokenResponse(authorizationCode, clientRegistration, authorizationCodeGrant, tokenUri, redirectUri);
         } else {
             return nimbusAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri);
         }
@@ -54,23 +60,32 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
     /**
      * Get token response with PHSS custom SDK
      *
-     * @param authorizationGrantRequest Authorization Grant Request
-     * @param clientRegistration        ClientRegistration created in config
-     * @param authorizationCodeGrant    Authorization Code Grant
-     * @param tokenUri                  Token endpoint uri
+     * @param authorizationCode      Authorization Code
+     * @param clientRegistration     ClientRegistration created in config
+     * @param authorizationCodeGrant Authorization Code Grant
+     * @param tokenUri               Token endpoint uri
      * @return OAuth2AccessTokenResponse
      */
-    private OAuth2AccessTokenResponse scribeJavaAuthorizationCodeTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest, ClientRegistration clientRegistration, AuthorizationGrant authorizationCodeGrant, URI tokenUri, URI redirectUri) {
+    private OAuth2AccessTokenResponse scribeJavaAuthorizationCodeTokenResponse(AuthorizationCode authorizationCode, ClientRegistration clientRegistration, AuthorizationGrant authorizationCodeGrant, URI tokenUri, URI redirectUri) {
+        final com.github.scribejava.core.model.OAuth2AccessToken accessToken;
+        final NingHttpClientConfig clientConfig = new NingHttpClientConfig(new AsyncHttpClientConfig.Builder()
+                                                                                   .setMaxConnections(5)
+                                                                                   .setRequestTimeout(10_000)
+                                                                                   .setAllowPoolingConnections(false)
+                                                                                   .setPooledConnectionIdleTimeout(1_000)
+                                                                                   .setReadTimeout(1_000)
+                                                                                   .build());
         final OAuth20Service oAuth20Service = new ServiceBuilder(clientRegistration.getClientId())
                 .apiSecret(clientRegistration.getClientSecret())
                 .callback(redirectUri.toString())
+                .httpClientConfig(clientConfig)
                 .build(BangumiApi20.instance());
-        final com.github.scribejava.core.model.OAuth2AccessToken accessToken;
         try {
-            accessToken = oAuth20Service.getAccessToken(oAuth20Service.getAuthorizationUrl());
+            accessToken = oAuth20Service.getAccessTokenAsync(authorizationCode.getValue()).get();
             return OAuth2AccessTokenResponse.withToken(accessToken.getAccessToken())
-                    .expiresIn(accessToken.getExpiresIn())
-                    .tokenType(OAuth2AccessToken.TokenType.BEARER)
+                                            .expiresIn(accessToken.getExpiresIn())
+                                            .tokenType(OAuth2AccessToken.TokenType.BEARER)
+                                            .build();
         } catch (Exception e) {
             e.printStackTrace();
         }

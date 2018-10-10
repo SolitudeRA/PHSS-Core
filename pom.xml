@@ -211,6 +211,11 @@
             <artifactId>scribejava-apis</artifactId>
             <version>${scribejava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.scribejava</groupId>
+            <artifactId>scribejava-httpclient-ning</artifactId>
+            <version>${scribejava.version}</version>
+        </dependency>
         <!-- Multimedia tool section -->
         <dependency>
             <groupId>nl.siegmann.epublib</groupId>
@@ -245,7 +250,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${jdbc-connector.version}</version>
         </dependency>
-
         <!--Test Doc section -->
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
