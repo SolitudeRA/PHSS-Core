@@ -2,7 +2,6 @@ package org.protogalaxy.phss.security.oauth2;
 
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import com.github.scribejava.httpclient.ning.NingHttpClient;
 import com.github.scribejava.httpclient.ning.NingHttpClientConfig;
 import com.nimbusds.oauth2.sdk.*;
 import com.nimbusds.oauth2.sdk.auth.ClientAuthentication;
@@ -11,9 +10,7 @@ import com.nimbusds.oauth2.sdk.auth.ClientSecretPost;
 import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.id.ClientID;
-import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.AsyncHttpClientConfig;
-import com.ning.http.client.multipart.PartBase;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
@@ -27,9 +24,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenRespon
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URI;
-import java.nio.channels.WritableByteChannel;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -50,7 +45,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         URI tokenUri = toURI(clientRegistration.getProviderDetails().getTokenUri());
 
         // Switch to correct method to get token response(HTTP Param/JSON)
-        if (clientRegistration.getClientId().contains("_scribe")) {
+        if (clientRegistration.getClientId().endsWith("_scribe")) {
             return scribeJavaAuthorizationCodeTokenResponse(authorizationCode, clientRegistration, authorizationCodeGrant, tokenUri, redirectUri);
         } else {
             return nimbusAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri);
