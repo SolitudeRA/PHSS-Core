@@ -45,7 +45,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         URI tokenUri = toURI(clientRegistration.getProviderDetails().getTokenUri());
 
         // Switch to correct method to get token response(HTTP Param/JSON)
-        if (clientRegistration.getClientId().endsWith("_scribe")) {
+        if (clientRegistration.getRegistrationId().matches("^.*_scribe$")) {
             return scribeJavaAuthorizationCodeTokenResponse(authorizationCode, clientRegistration, authorizationCodeGrant, tokenUri, redirectUri);
         } else {
             return nimbusAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri);

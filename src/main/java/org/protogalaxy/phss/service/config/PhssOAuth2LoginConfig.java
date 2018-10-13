@@ -28,7 +28,7 @@ public class PhssOAuth2LoginConfig {
                                  .clientSecret("48aca6275eb4259de87406ec96120e34")
                                  .clientAuthenticationMethod(ClientAuthenticationMethod.POST)
                                  .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                                 .redirectUriTemplate("{baseUrl}/login/")
+                                 .redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
                                  .authorizationUri("https://bgm.tv/oauth/authorize")
                                  .scope("")
                                  .tokenUri("https://bgm.tv/oauth/access_token")
