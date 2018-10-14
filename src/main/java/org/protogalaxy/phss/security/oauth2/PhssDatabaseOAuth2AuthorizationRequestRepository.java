@@ -2,6 +2,7 @@ package org.protogalaxy.phss.security.oauth2;
 
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,8 @@ public class PhssDatabaseOAuth2AuthorizationRequestRepository implements Authori
      */
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
+        Assert.notNull(request, "Request cannot be null");
+
         return null;
     }
 
@@ -30,7 +33,11 @@ public class PhssDatabaseOAuth2AuthorizationRequestRepository implements Authori
      */
     @Override
     public void saveAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request, HttpServletResponse response) {
-
+        Assert.notNull(request, "Request cannot be null");
+        Assert.notNull(response, "Response cannot be null");
+        if (authorizationRequest == null) {
+            this.removeAuthorizationRequest(request);
+        }
     }
 
     /**

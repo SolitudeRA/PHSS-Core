@@ -45,9 +45,6 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
 
             //--------------------- ----OAuth2 config-----------------------------//
             .and().oauth2Login()
-            .authorizationEndpoint()
-            .authorizationRequestRepository(databaseOAuth2AuthorizationRequestRepository())
-            .and()
             .tokenEndpoint()
             .accessTokenResponseClient(accessTokenResponseClient())
             .and()

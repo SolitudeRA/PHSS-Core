@@ -17,7 +17,7 @@ public class BangumiController {
         this.authorizedClientService = authorizedClientService;
     }
 
-    @RequestMapping("bangumi")
+    @RequestMapping("/bangumi")
     public String bangumi(OAuth2AuthenticationToken authenticationToken) {
         OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(authenticationToken.getAuthorizedClientRegistrationId(), authenticationToken.getName());
         OAuth2AccessToken accessToken = authorizedClient.getAccessToken();

@@ -11,17 +11,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 
 @Configuration
-public class PhssOAuth2LoginConfig {
-    @Bean
-    public OAuth2AuthorizedClientService auth2AuthorizedClientService() {
-        return new InMemoryOAuth2AuthorizedClientService(this.clientRegistrationRepository());
-    }
-
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(this.bangumiClientRegistration());
-    }
-
+public class PhssOAuth2Config {
     private ClientRegistration bangumiClientRegistration() {
         return ClientRegistration.withRegistrationId("bangumi_scribe")
                                  .clientId("bgm6165b9e794a763e1")
@@ -35,4 +25,15 @@ public class PhssOAuth2LoginConfig {
                                  .clientName("Bangumi")
                                  .build();
     }
+
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        return new InMemoryClientRegistrationRepository(this.bangumiClientRegistration());
+    }
+
+    @Bean
+    public OAuth2AuthorizedClientService auth2AuthorizedClientService() {
+        return new InMemoryOAuth2AuthorizedClientService(this.clientRegistrationRepository());
+    }
+
 }

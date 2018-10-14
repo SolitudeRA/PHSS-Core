@@ -333,6 +333,7 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.tokenBangumiRefreshToken = tokenBangumiRefreshToken;
     }
 
+    @JsonIgnore
     public OAuth2AccessTokenResponse getBangumiOAuth2AccessTokenResponse() {
         return OAuth2AccessTokenResponse.withToken(tokenBangumi)
                                         .tokenType(OAuth2AccessToken.TokenType.BEARER)

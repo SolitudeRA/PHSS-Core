@@ -26,10 +26,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
     private static final String INVALID_TOKEN_RESPONSE_ERROR_CODE = "invalid_token_response";
@@ -68,7 +65,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
                                                                                    .setRequestTimeout(10_000)
                                                                                    .setAllowPoolingConnections(false)
                                                                                    .setPooledConnectionIdleTimeout(1_000)
-                                                                                   .setReadTimeout(1_000)
+                                                                                   .setReadTimeout(5_000)
                                                                                    .build());
         final OAuth20Service oAuth20Service = new ServiceBuilder(clientRegistration.getClientId())
                 .apiSecret(clientRegistration.getClientSecret())
@@ -77,8 +74,16 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
                 .build(BangumiApi20.instance());
         try {
             accessToken = oAuth20Service.getAccessTokenAsync(authorizationCode.getValue()).get();
+            Set<String> scopes;
+            if (accessToken.getScope() != null) {
+                scopes = new HashSet<>(Arrays.asList(accessToken.getScope().split(" ")));
+            } else {
+                scopes = new HashSet<>();
+                scopes.add("");
+            }
             return OAuth2AccessTokenResponse.withToken(accessToken.getAccessToken())
                                             .expiresIn(accessToken.getExpiresIn())
+                                            .scopes(scopes)
                                             .tokenType(OAuth2AccessToken.TokenType.BEARER)
                                             .build();
         } catch (Exception e) {
