@@ -11,6 +11,7 @@ import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.ning.http.client.AsyncHttpClientConfig;
+import org.protogalaxy.phss.exception.security.OAuth2FailedException;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
@@ -46,7 +47,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
 
         // Switch to correct method to get token response(HTTP Param/JSON)
         if (clientRegistration.getRegistrationId().matches("^.*_scribe$")) {
-            return scribeJavaAuthorizationCodeTokenResponse(authorizationCode, clientRegistration, authorizationCodeGrant, tokenUri, redirectUri);
+            return scribeJavaAuthorizationCodeTokenResponse(authorizationCode, clientRegistration, redirectUri);
         } else {
             return nimbusAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri);
         }
@@ -55,13 +56,12 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
     /**
      * Get token response with PHSS custom SDK
      *
-     * @param authorizationCode      Authorization Code
-     * @param clientRegistration     ClientRegistration created in config
-     * @param authorizationCodeGrant Authorization Code Grant
-     * @param tokenUri               Token endpoint uri
+     * @param authorizationCode  Authorization Code
+     * @param clientRegistration ClientRegistration created in config
+     * @param redirectUri        Redirect URI
      * @return OAuth2AccessTokenResponse
      */
-    private OAuth2AccessTokenResponse scribeJavaAuthorizationCodeTokenResponse(AuthorizationCode authorizationCode, ClientRegistration clientRegistration, AuthorizationGrant authorizationCodeGrant, URI tokenUri, URI redirectUri) {
+    private OAuth2AccessTokenResponse scribeJavaAuthorizationCodeTokenResponse(AuthorizationCode authorizationCode, ClientRegistration clientRegistration, URI redirectUri) {
         final com.github.scribejava.core.model.OAuth2AccessToken accessToken;
         final NingHttpClientConfig clientConfig = new NingHttpClientConfig(new AsyncHttpClientConfig.Builder()
                                                                                    .setMaxConnections(5)
@@ -84,7 +84,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        throw new OAuth2FailedException("Scribe OAuth2 process failed");
     }
 
     /**

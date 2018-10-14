@@ -13,6 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -69,6 +71,18 @@ public class UserEntity implements UserDetails, CredentialsContainer {
 
     @Column(name = "authorities")
     private String authorities;
+
+    @Column(name = "token_bangumi")
+    private String tokenBangumi;
+
+    @Column(name = "token_bangumi_token_type")
+    private String tokenBangumiTokenType;
+
+    @Column(name = "token_bangumi_expires_in")
+    private Long tokenBangumiExpiresIn;
+
+    @Column(name = "token_bangumi_refresh_token")
+    private String tokenBangumiRefreshToken;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "date_create")
@@ -285,6 +299,45 @@ public class UserEntity implements UserDetails, CredentialsContainer {
             roleStrSet.add(authority.toString().substring(5));
         }
         this.authorities = String.join(",", roleStrSet);
+    }
+
+    public String getTokenBangumi() {
+        return tokenBangumi;
+    }
+
+    public void setTokenBangumi(String tokenBangumi) {
+        this.tokenBangumi = tokenBangumi;
+    }
+
+    public String getTokenBangumiTokenType() {
+        return tokenBangumiTokenType;
+    }
+
+    public void setTokenBangumiTokenType(String tokenBangumiTokenType) {
+        this.tokenBangumiTokenType = tokenBangumiTokenType;
+    }
+
+    public Long getTokenBangumiExpiresIn() {
+        return tokenBangumiExpiresIn;
+    }
+
+    public void setTokenBangumiExpiresIn(Long tokenBangumiExpiresIn) {
+        this.tokenBangumiExpiresIn = tokenBangumiExpiresIn;
+    }
+
+    public String getTokenBangumiRefreshToken() {
+        return tokenBangumiRefreshToken;
+    }
+
+    public void setTokenBangumiRefreshToken(String tokenBangumiRefreshToken) {
+        this.tokenBangumiRefreshToken = tokenBangumiRefreshToken;
+    }
+
+    public OAuth2AccessTokenResponse getBangumiOAuth2AccessTokenResponse() {
+        return OAuth2AccessTokenResponse.withToken(tokenBangumi)
+                                        .tokenType(OAuth2AccessToken.TokenType.BEARER)
+                                        .expiresIn(tokenBangumiExpiresIn)
+                                        .build();
     }
 
     public ZonedDateTime getDateCreate() {

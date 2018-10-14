@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.exception;
+package org.protogalaxy.phss.exception.service;
 
 public class MetadataException extends RuntimeException{
     /**

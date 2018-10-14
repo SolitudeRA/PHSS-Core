@@ -26,7 +26,7 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
-import org.protogalaxy.phss.exception.MetadataException;
+import org.protogalaxy.phss.exception.service.MetadataException;
 import org.protogalaxy.phss.service.impl.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.main.multimedia.MetadataService;

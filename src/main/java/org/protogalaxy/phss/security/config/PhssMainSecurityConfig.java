@@ -3,6 +3,7 @@ package org.protogalaxy.phss.security.config;
 import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
 import org.protogalaxy.phss.security.oauth2.PhssAuthorizationCodeTokenResponseClient;
+import org.protogalaxy.phss.security.oauth2.PhssDatabaseOAuth2AuthorizationRequestRepository;
 import org.protogalaxy.phss.security.user.PhssUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -42,6 +45,9 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
 
             //--------------------- ----OAuth2 config-----------------------------//
             .and().oauth2Login()
+            .authorizationEndpoint()
+            .authorizationRequestRepository(databaseOAuth2AuthorizationRequestRepository())
+            .and()
             .tokenEndpoint()
             .accessTokenResponseClient(accessTokenResponseClient())
             .and()
@@ -89,6 +95,10 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected PhssUserDetailsService userDetailsService() {
         return new PhssUserDetailsService();
+    }
+
+    private AuthorizationRequestRepository<OAuth2AuthorizationRequest> databaseOAuth2AuthorizationRequestRepository() {
+        return new PhssDatabaseOAuth2AuthorizationRequestRepository();
     }
 
     private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
