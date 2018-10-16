@@ -1,5 +1,6 @@
 package org.protogalaxy.phss.security.oauth2;
 
+import org.springframework.http.HttpCookie;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.util.Assert;
@@ -7,7 +8,7 @@ import org.springframework.util.Assert;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PhssDatabaseOAuth2AuthorizationRequestRepository implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
+public class PhssCookieOAuth2AuthorizationRequestRepository implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
     /**
      * Returns the {@link OAuth2AuthorizationRequest} associated to the provided {@code HttpServletRequest}
@@ -19,7 +20,6 @@ public class PhssDatabaseOAuth2AuthorizationRequestRepository implements Authori
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
         Assert.notNull(request, "Request cannot be null");
-
         return null;
     }
 

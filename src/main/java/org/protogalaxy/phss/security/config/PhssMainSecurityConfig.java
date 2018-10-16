@@ -3,7 +3,7 @@ package org.protogalaxy.phss.security.config;
 import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
 import org.protogalaxy.phss.security.oauth2.PhssAuthorizationCodeTokenResponseClient;
-import org.protogalaxy.phss.security.oauth2.PhssDatabaseOAuth2AuthorizationRequestRepository;
+import org.protogalaxy.phss.security.oauth2.PhssCookieOAuth2AuthorizationRequestRepository;
 import org.protogalaxy.phss.security.user.PhssUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -95,7 +95,7 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private AuthorizationRequestRepository<OAuth2AuthorizationRequest> databaseOAuth2AuthorizationRequestRepository() {
-        return new PhssDatabaseOAuth2AuthorizationRequestRepository();
+        return new PhssCookieOAuth2AuthorizationRequestRepository();
     }
 
     private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
