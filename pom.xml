@@ -48,15 +48,15 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.5.RELEASE</version>
+        <version>2.0.6.RELEASE</version>
     </parent>
 
     <properties>
         <!--Metadata reader version-->
-        <javacv.version>1.4.2</javacv.version>
-        <apache-tika.version>1.19</apache-tika.version>
+        <javacv.version>1.4.3</javacv.version>
+        <apache-tika.version>1.19.1</apache-tika.version>
         <apache-poi.version>4.0.0</apache-poi.version>
-        <apache-pdfbox.version>2.0.11</apache-pdfbox.version>
+        <apache-pdfbox.version>2.0.12</apache-pdfbox.version>
         <epublib.version>3.1</epublib.version>
         <sqlite-jdbc.version>3.23.1</sqlite-jdbc.version>
         <jbig2-imageio.version>3.0.1</jbig2-imageio.version>
@@ -66,7 +66,7 @@
         <jupnp.version>2.3.0</jupnp.version>
         <java-jwt.version>3.4.0</java-jwt.version>
         <!--Spring projects version-->
-        <spring-security.version>5.0.8.RELEASE</spring-security.version>
+        <spring-security.version>5.1.1.RELEASE</spring-security.version>
         <spring-hateoas.version>0.25.0.RELEASE</spring-hateoas.version>
         <spring-restdocs.version>2.0.2.RELEASE</spring-restdocs.version>
         <!--Junit version-->

@@ -1,6 +1,5 @@
 package org.protogalaxy.phss.security.oauth2;
 
-import org.springframework.http.HttpCookie;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.util.Assert;
