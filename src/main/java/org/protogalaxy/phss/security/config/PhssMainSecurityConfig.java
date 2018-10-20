@@ -5,6 +5,7 @@ import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
 import org.protogalaxy.phss.security.oauth2.PhssAuthorizationCodeTokenResponseClient;
 import org.protogalaxy.phss.security.oauth2.PhssCookieOAuth2AuthorizationRequestRepository;
 import org.protogalaxy.phss.security.user.PhssUserDetailsService;
+import org.protogalaxy.phss.service.config.PhssOAuth2Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,45 +29,60 @@ import java.util.Collections;
 public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AjaxAuthSuccessHandler ajaxAuthSuccessHandler;
     private final AjaxAuthFailHandler ajaxAuthFailHandler;
+    private final PhssOAuth2Config oAuth2Config;
 
     @Autowired
-    public PhssMainSecurityConfig(AjaxAuthSuccessHandler ajaxAuthSuccessHandler, AjaxAuthFailHandler ajaxAuthFailHandler) {
+    public PhssMainSecurityConfig(AjaxAuthSuccessHandler ajaxAuthSuccessHandler,
+                                  AjaxAuthFailHandler ajaxAuthFailHandler,
+                                  PhssOAuth2Config oAuth2Config) {
         this.ajaxAuthSuccessHandler = ajaxAuthSuccessHandler;
         this.ajaxAuthFailHandler = ajaxAuthFailHandler;
+        this.oAuth2Config = oAuth2Config;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
-            //--------------------------Url filter config-------------------------//
+            //--------------------------Url filter config---------------------------//
             .authorizeRequests()
             .antMatchers("/", "/index", "/user/register", "/user/login", "/login/oauth2/code/*").permitAll()
             .anyRequest().authenticated()
+            .and()
 
-            //--------------------- ----OAuth2 config-----------------------------//
-            .and().oauth2Login()
+
+            //------------------------OAuth2 login config---------------------------//
+            .oauth2Login()
             .tokenEndpoint()
             .accessTokenResponseClient(accessTokenResponseClient())
-            .and()
+            .and().and()
 
-            //--------------------------Login config------------------------------//
-            .and()
+
+            //------------------------OAuth2 client config--------------------------//
+            .oauth2Client()
+            .clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
+            .authorizedClientService(oAuth2Config.auth2AuthorizedClientService())
+            .authorizationCodeGrant()
+            .accessTokenResponseClient(accessTokenResponseClient())
+            .and().and()
+
+
+            //--------------------------Login config--------------------------------//
             .formLogin()
             .loginProcessingUrl("/user/login")
             .failureHandler(ajaxAuthFailHandler)
             .successHandler(ajaxAuthSuccessHandler)
             .permitAll()
-
-
-            //--------------------------Logout config-----------------------------//
             .and()
+
+
+            //--------------------------Logout config-------------------------------//
             .logout()
             .logoutUrl("/user/logout")
             .logoutSuccessUrl("/index")
-
-
-            //------------------------Remember-me config--------------------------//
             .and()
+
+
+            //------------------------Remember-me config----------------------------//
             .rememberMe()
             .key("key");
     }
