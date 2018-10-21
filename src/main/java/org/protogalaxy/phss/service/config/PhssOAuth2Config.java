@@ -7,6 +7,8 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 
@@ -32,8 +34,12 @@ public class PhssOAuth2Config {
     }
 
     @Bean
-    public OAuth2AuthorizedClientService auth2AuthorizedClientService() {
+    public OAuth2AuthorizedClientService oAuth2AuthorizedClientService() {
         return new InMemoryOAuth2AuthorizedClientService(this.clientRegistrationRepository());
     }
 
+    @Bean
+    public OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository() {
+        return new HttpSessionOAuth2AuthorizedClientRepository();
+    }
 }

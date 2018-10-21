@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.server.AuthenticatedPrincipalServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -60,7 +61,7 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
             //------------------------OAuth2 client config--------------------------//
             .oauth2Client()
             .clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
-            .authorizedClientService(oAuth2Config.auth2AuthorizedClientService())
+            .authorizedClientService(oAuth2Config.oAuth2AuthorizedClientService())
             .authorizationCodeGrant()
             .accessTokenResponseClient(accessTokenResponseClient())
             .and().and()
@@ -108,10 +109,6 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected PhssUserDetailsService userDetailsService() {
         return new PhssUserDetailsService();
-    }
-
-    private AuthorizationRequestRepository<OAuth2AuthorizationRequest> databaseOAuth2AuthorizationRequestRepository() {
-        return new PhssCookieOAuth2AuthorizationRequestRepository();
     }
 
     private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
