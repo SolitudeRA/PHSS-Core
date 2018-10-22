@@ -1,7 +1,5 @@
 package org.protogalaxy.phss.service.impl.multimedia;
 
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.epub.EpubReader;
 
 import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hpsf.SummaryInformation;
@@ -436,24 +434,7 @@ public class MetadataServiceImpl implements MetadataService {
         return metadata;
     }
 
-    private Map<String, Object> getEpubMetadata(Path path) throws Exception {
-        Map<String, Object> metadata = new HashMap<>();
-        EpubReader reader = new EpubReader();
-        Book book = reader.readEpub(Files.newInputStream(path));
-        metadata.put(FileConsts.METADATA_BOOK_TITLE, book.getTitle());
-        if (book.getMetadata().getAuthors() != null)
-            metadata.put(FileConsts.METADATA_BOOK_AUTHOR, book.getMetadata().getAuthors().get(0).getFirstname() + book.getMetadata().getAuthors().get(0).getLastname());
-        metadata.put(FileConsts.METADATA_BOOK_PATH, path.toString());
-        metadata.put(FileConsts.METADATA_BOOK_CREATED, FileCommonUtils.getCreated(path));
-        metadata.put(FileConsts.METADATA_BOOK_MODIFIED, FileCommonUtils.getModified(path));
-        metadata.put(FileConsts.METADATA_BOOK_LASTACCESSTIME, FileCommonUtils.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_BOOK_DATE, book.getMetadata().getDates().get(0).getValue());
-        metadata.put(FileConsts.METADATA_BOOK_DESCRIPTION, book.getMetadata().getDescriptions().get(0));
-        metadata.put(FileConsts.METADATA_BOOK_CONTRIBUTOR, book.getMetadata().getContributors().get(0).getFirstname() + book.getMetadata().getContributors().get(0).getLastname());
-        metadata.put(FileConsts.METADATA_BOOK_PUBLISHER, book.getMetadata().getPublishers().get(0));
-        metadata.put(FileConsts.METADATA_BOOK_RIGHT, book.getMetadata().getRights().get(0));
-        metadata.put(FileConsts.METADATA_BOOK_LANGUAGE, book.getMetadata().getLanguage());
-        metadata.put(FileConsts.METADATA_BOOK_COVER, book.getCoverImage().getData());
-        return metadata;
+    private Map<String, Object> getEpubMetadata(Path path) {
+        return null;
     }
 }

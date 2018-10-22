@@ -34,7 +34,7 @@
         </repository>
         <repository>
             <id>psiegman-repo</id>
-            <url>https://github.com/psiegman/mvn-repo/tree/master/releases</url>
+            <url>https://github.com/psiegman/mvn-repo/raw/master/releases</url>
         </repository>
     </repositories>
 
@@ -147,6 +147,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
