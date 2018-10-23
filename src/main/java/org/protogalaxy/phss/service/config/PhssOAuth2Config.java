@@ -1,18 +1,24 @@
 package org.protogalaxy.phss.service.config;
 
+import org.protogalaxy.phss.service.impl.oauth2.bangumi.BangumiApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.web.context.annotation.RequestScope;
 
 @Configuration
 public class PhssOAuth2Config {
@@ -36,20 +42,28 @@ public class PhssOAuth2Config {
     }
 
     @Bean
-    public OAuth2AuthorizedClientService oAuth2AuthorizedClientService() {
-        return new InMemoryOAuth2AuthorizedClientService(this.clientRegistrationRepository());
-    }
-
-    @Bean
     public OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository() {
         return new HttpSessionOAuth2AuthorizedClientRepository();
     }
 
     @Bean
-    public WebClient webClient(ClientRegistrationRepository clientRegistrationRepository, OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository) {
-        ServletOAuth2AuthorizedClientExchangeFilterFunction servletOAuth2AuthorizedClientExchangeFilterFunction = new ServletOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrationRepository, oAuth2AuthorizedClientRepository);
-        return WebClient.builder()
-                        .apply(servletOAuth2AuthorizedClientExchangeFilterFunction.oauth2Configuration())
-                        .build();
+    public AuthorizationRequestRepository<OAuth2AuthorizationRequest> sessionAuthorizationRequestRepository() {
+        return new HttpSessionOAuth2AuthorizationRequestRepository();
+    }
+
+    @Bean
+    @RequestScope
+    public BangumiApi bangumi(OAuth2AuthorizedClientService clientService) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String accessToken = null;
+        if (authentication.getClass().isAssignableFrom(OAuth2AuthenticationToken.class)) {
+            OAuth2AuthenticationToken oAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
+            String clientRegistrationId = oAuth2AuthenticationToken.getAuthorizedClientRegistrationId();
+            if (clientRegistrationId.equals("bangumi_scribe")) {
+                OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(clientRegistrationId, oAuth2AuthenticationToken.getName());
+                accessToken = client.getAccessToken().getTokenValue();
+            }
+        }
+        return new BangumiApi(accessToken);
     }
 }
