@@ -53,19 +53,18 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
 
             //------------------------OAuth2 login config---------------------------//
             .oauth2Login()
+            .clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
+            .authorizedClientRepository(oAuth2Config.oAuth2AuthorizedClientRepository())
+            .authorizationEndpoint()
+            .baseUri("/login/oauth2/authorization")
+            .authorizationRequestRepository(oAuth2Config.sessionAuthorizationRequestRepository())
+            .and()
+            .redirectionEndpoint()
+            .baseUri("/login/oauth2/callback/*")
+            .and()
             .tokenEndpoint()
             .accessTokenResponseClient(accessTokenResponseClient())
             .and().and()
-
-
-            //------------------------OAuth2 client config--------------------------//
-            .oauth2Client()
-            .clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
-            .authorizationCodeGrant()
-            .authorizationRequestRepository(oAuth2Config.sessionAuthorizationRequestRepository())
-            .accessTokenResponseClient(accessTokenResponseClient())
-            .and().and()
-
 
             //--------------------------Login config--------------------------------//
             .formLogin()
