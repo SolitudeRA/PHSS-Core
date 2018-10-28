@@ -43,11 +43,7 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         URI tokenUri = toURI(clientRegistration.getProviderDetails().getTokenUri());
 
         // Switch to correct method to get token response(HTTP Param/JSON)
-        if (clientRegistration.getRegistrationId().matches("^.*_scribe$")) {
-            return scribeJavaAuthorizationCodeTokenResponse(authorizationCode, clientRegistration, redirectUri);
-        } else {
-            return nimbusAuthorizationCodeTokenResponse(authorizationGrantRequest, clientRegistration, authorizationCodeGrant, tokenUri);
-        }
+        return scribeJavaAuthorizationCodeTokenResponse(authorizationCode, clientRegistration, redirectUri);
     }
 
     /**
@@ -92,78 +88,6 @@ public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTok
         throw new OAuth2FailedException("Scribe OAuth2 process failed");
     }
 
-    /**
-     * Get token response with Nimbus OAuth2 SDK
-     *
-     * @param authorizationGrantRequest Authorization Grant Request
-     * @param clientRegistration        ClientRegistration created in config
-     * @param authorizationCodeGrant    Authorization Code Grant
-     * @param tokenUri                  Token endpoint uri
-     * @return OAuth2AccessTokenResponse
-     */
-    private OAuth2AccessTokenResponse nimbusAuthorizationCodeTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest, ClientRegistration clientRegistration, AuthorizationGrant authorizationCodeGrant, URI tokenUri) {
-        // Set the credentials to authenticate the client at the token endpoint
-        ClientID clientId = new ClientID(clientRegistration.getClientId());
-        Secret clientSecret = new Secret(clientRegistration.getClientSecret());
-        ClientAuthentication clientAuthentication;
-        if (ClientAuthenticationMethod.POST.equals(clientRegistration.getClientAuthenticationMethod())) {
-            clientAuthentication = new ClientSecretPost(clientId, clientSecret);
-        } else {
-            clientAuthentication = new ClientSecretBasic(clientId, clientSecret);
-        }
-
-        com.nimbusds.oauth2.sdk.TokenResponse tokenResponse;
-        try {
-            // Send the Access Token request
-            TokenRequest tokenRequest = new TokenRequest(tokenUri, clientAuthentication, authorizationCodeGrant);
-            HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
-            httpRequest.setAccept(MediaType.APPLICATION_JSON_VALUE);
-            httpRequest.setConnectTimeout(30000);
-            httpRequest.setReadTimeout(30000);
-            tokenResponse = com.nimbusds.oauth2.sdk.TokenResponse.parse(httpRequest.send());
-        } catch (ParseException pe) {
-            OAuth2Error oauth2Error = new OAuth2Error(INVALID_TOKEN_RESPONSE_ERROR_CODE, "An error occurred parsing the Access Token response: " + pe.getMessage(), null);
-            throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString(), pe);
-        } catch (IOException ioe) {
-            throw new AuthenticationServiceException("An error occurred while sending the Access Token Request: " + ioe.getMessage(), ioe);
-        }
-
-        if (!tokenResponse.indicatesSuccess()) {
-            TokenErrorResponse tokenErrorResponse = (TokenErrorResponse) tokenResponse;
-            ErrorObject errorObject = tokenErrorResponse.getErrorObject();
-            OAuth2Error oauth2Error = new OAuth2Error(errorObject.getCode(), errorObject.getDescription(), (errorObject.getURI() != null ? errorObject.getURI().toString() : null));
-            throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString());
-        }
-
-        AccessTokenResponse accessTokenResponse = (AccessTokenResponse) tokenResponse;
-
-        String accessToken = accessTokenResponse.getTokens().getAccessToken().getValue();
-        OAuth2AccessToken.TokenType accessTokenType = null;
-        if (OAuth2AccessToken.TokenType.BEARER.getValue().equalsIgnoreCase(accessTokenResponse.getTokens().getAccessToken().getType().getValue())) {
-            accessTokenType = OAuth2AccessToken.TokenType.BEARER;
-        }
-        long expiresIn = accessTokenResponse.getTokens().getAccessToken().getLifetime();
-
-        // As per spec, in section 5.1 Successful Access Token Response
-        // https://tools.ietf.org/html/rfc6749#section-5.1
-        // If AccessTokenResponse.scope is empty, then default to the scope
-        // originally requested by the client in the Authorization Request
-        Set<String> scopes;
-        if (CollectionUtils.isEmpty(accessTokenResponse.getTokens().getAccessToken().getScope())) {
-            scopes = new LinkedHashSet<>(authorizationGrantRequest.getAuthorizationExchange().getAuthorizationRequest().getScopes());
-        } else {
-            scopes = new LinkedHashSet<>(accessTokenResponse.getTokens().getAccessToken().getScope().toStringList());
-        }
-
-        Map<String, Object> additionalParameters = new LinkedHashMap<>(accessTokenResponse.getCustomParameters());
-
-        return OAuth2AccessTokenResponse.withToken(accessToken)
-                                        .tokenType(accessTokenType)
-                                        .expiresIn(expiresIn)
-                                        .scopes(scopes)
-                                        .additionalParameters(additionalParameters)
-                                        .build();
-    }
 
     private static URI toURI(String uriStr) {
         try {

@@ -1,5 +1,6 @@
 package org.protogalaxy.phss.service.config;
 
+import org.protogalaxy.phss.security.oauth2.PhssAuthorizationCodeTokenResponseClient;
 import org.protogalaxy.phss.service.impl.oauth2.bangumi.BangumiApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,13 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
-import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
-import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizedClientRepository;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.client.web.*;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
@@ -28,27 +29,36 @@ public class PhssOAuth2Config {
                                  .clientSecret("48aca6275eb4259de87406ec96120e34")
                                  .clientAuthenticationMethod(ClientAuthenticationMethod.POST)
                                  .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                                 .redirectUriTemplate("{baseUrl}/login/oauth2/callback/{registrationId}")
+                                 .redirectUriTemplate("{baseUrl}/oauth2/code/{registrationId}")
                                  .authorizationUri("https://bgm.tv/oauth/authorize")
-                                 .scope("")
                                  .tokenUri("https://bgm.tv/oauth/access_token")
                                  .clientName("Bangumi")
                                  .build();
     }
 
     @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
+    protected ClientRegistrationRepository clientRegistrationRepository() {
         return new InMemoryClientRegistrationRepository(this.bangumiClientRegistration());
     }
 
     @Bean
-    public OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository() {
+    protected OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository() {
         return new HttpSessionOAuth2AuthorizedClientRepository();
     }
 
     @Bean
-    public AuthorizationRequestRepository<OAuth2AuthorizationRequest> sessionAuthorizationRequestRepository() {
+    protected AuthorizationRequestRepository<OAuth2AuthorizationRequest> authorizationRequestRepository() {
         return new HttpSessionOAuth2AuthorizationRequestRepository();
+    }
+
+    @Bean
+    protected OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository) {
+        return new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, "/oauth2/authorization");
+    }
+
+    @Bean
+    protected OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
+        return new PhssAuthorizationCodeTokenResponseClient();
     }
 
     @Bean

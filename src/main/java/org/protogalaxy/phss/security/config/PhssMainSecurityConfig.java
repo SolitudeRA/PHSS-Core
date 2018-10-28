@@ -14,9 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.server.AuthenticatedPrincipalServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.web.cors.CorsConfiguration;
@@ -30,61 +34,81 @@ import java.util.Collections;
 public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AjaxAuthSuccessHandler ajaxAuthSuccessHandler;
     private final AjaxAuthFailHandler ajaxAuthFailHandler;
-    private final PhssOAuth2Config oAuth2Config;
+    private final ClientRegistrationRepository clientRegistrationRepository;
+    private final OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository;
+    private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
+    private final AuthorizationRequestRepository<OAuth2AuthorizationRequest> oAuth2AuthorizationRequestRepository;
+    private final OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver;
+    private final OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient;
 
     @Autowired
     public PhssMainSecurityConfig(AjaxAuthSuccessHandler ajaxAuthSuccessHandler,
                                   AjaxAuthFailHandler ajaxAuthFailHandler,
-                                  PhssOAuth2Config oAuth2Config) {
+                                  ClientRegistrationRepository clientRegistrationRepository,
+                                  OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository,
+                                  OAuth2AuthorizedClientService oAuth2AuthorizedClientService,
+                                  AuthorizationRequestRepository<OAuth2AuthorizationRequest> oAuth2AuthorizationRequestRepository,
+                                  OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver,
+                                  OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient) {
         this.ajaxAuthSuccessHandler = ajaxAuthSuccessHandler;
         this.ajaxAuthFailHandler = ajaxAuthFailHandler;
-        this.oAuth2Config = oAuth2Config;
+        this.clientRegistrationRepository = clientRegistrationRepository;
+        this.oAuth2AuthorizedClientRepository = oAuth2AuthorizedClientRepository;
+        this.oAuth2AuthorizedClientService = oAuth2AuthorizedClientService;
+        this.oAuth2AuthorizationRequestRepository = oAuth2AuthorizationRequestRepository;
+        this.oAuth2AuthorizationRequestResolver = oAuth2AuthorizationRequestResolver;
+        this.oAuth2AccessTokenResponseClient = oAuth2AccessTokenResponseClient;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and()
-            //--------------------------Url filter config---------------------------//
-            .authorizeRequests()
-            .antMatchers("/", "/index", "/user/register", "/user/login", "/login/oauth2/code/*").permitAll()
-            .anyRequest().authenticated()
-            .and()
+        http
+                //-----------------------------CSRF config------------------------------//
+                .csrf().disable()
 
 
-            //------------------------OAuth2 login config---------------------------//
-            .oauth2Login()
-            .clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
-            .authorizedClientRepository(oAuth2Config.oAuth2AuthorizedClientRepository())
-            .authorizationEndpoint()
-            .baseUri("/login/oauth2/authorization")
-            .authorizationRequestRepository(oAuth2Config.sessionAuthorizationRequestRepository())
-            .and()
-            .redirectionEndpoint()
-            .baseUri("/login/oauth2/callback/*")
-            .and()
-            .tokenEndpoint()
-            .accessTokenResponseClient(accessTokenResponseClient())
-            .and().and()
-
-            //--------------------------Login config--------------------------------//
-            .formLogin()
-            .loginProcessingUrl("/user/login")
-            .failureHandler(ajaxAuthFailHandler)
-            .successHandler(ajaxAuthSuccessHandler)
-            .permitAll()
-            .and()
+                //-----------------------------CORS config------------------------------//
+                .cors().and()
 
 
-            //--------------------------Logout config-------------------------------//
-            .logout()
-            .logoutUrl("/user/logout")
-            .logoutSuccessUrl("/index")
-            .and()
+                //--------------------------Url filter config---------------------------//
+                .authorizeRequests()
+                .antMatchers("/", "/index", "/user/register", "/user/login", "/login/oauth2/code/*").permitAll()
+                .anyRequest().authenticated()
+                .and()
 
 
-            //------------------------Remember-me config----------------------------//
-            .rememberMe()
-            .key("key");
+                //--------------------------Login config--------------------------------//
+                .formLogin()
+                .loginProcessingUrl("/user/login")
+                .failureHandler(ajaxAuthFailHandler)
+                .successHandler(ajaxAuthSuccessHandler)
+                .permitAll()
+                .and()
+
+
+                //--------------------------Logout config-------------------------------//
+                .logout()
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/index")
+                .and()
+
+
+                //------------------------Remember-me config----------------------------//
+                .rememberMe()
+                .key("key")
+                .and()
+
+
+                //-----------------------Oauth2 Client config---------------------------//
+                .oauth2Client()
+                .clientRegistrationRepository(clientRegistrationRepository)
+                .authorizedClientRepository(oAuth2AuthorizedClientRepository)
+                .authorizedClientService(oAuth2AuthorizedClientService)
+                .authorizationCodeGrant()
+                .authorizationRequestRepository(oAuth2AuthorizationRequestRepository)
+                .authorizationRequestResolver(oAuth2AuthorizationRequestResolver)
+                .accessTokenResponseClient(oAuth2AccessTokenResponseClient);
     }
 
     @Bean
@@ -100,7 +124,7 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -108,9 +132,5 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected PhssUserDetailsService userDetailsService() {
         return new PhssUserDetailsService();
-    }
-
-    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
-        return new PhssAuthorizationCodeTokenResponseClient();
     }
 }
