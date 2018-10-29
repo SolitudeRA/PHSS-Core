@@ -2,10 +2,7 @@ package org.protogalaxy.phss.security.config;
 
 import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
-import org.protogalaxy.phss.security.oauth2.PhssAuthorizationCodeTokenResponseClient;
-import org.protogalaxy.phss.security.oauth2.PhssCookieOAuth2AuthorizationRequestRepository;
 import org.protogalaxy.phss.security.user.PhssUserDetailsService;
-import org.protogalaxy.phss.service.config.PhssOAuth2Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,7 +18,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
-import org.springframework.security.oauth2.client.web.server.AuthenticatedPrincipalServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
