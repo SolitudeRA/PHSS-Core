@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.service.config;
 
-import org.protogalaxy.phss.security.oauth2.PhssAuthorizationCodeTokenResponseClient;
+import org.protogalaxy.phss.service.impl.oauth2.PhssAuthorizationCodeTokenResponseClient;
 import org.protogalaxy.phss.service.impl.oauth2.bangumi.BangumiApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;

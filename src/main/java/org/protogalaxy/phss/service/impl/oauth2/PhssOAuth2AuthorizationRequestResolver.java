@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.security.oauth2;
+package org.protogalaxy.phss.service.impl.oauth2;
 
 public class PhssOAuth2AuthorizationRequestResolver {
 }

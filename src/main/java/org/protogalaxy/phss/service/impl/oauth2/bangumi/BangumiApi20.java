@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.security.oauth2;
+package org.protogalaxy.phss.service.impl.oauth2.bangumi;
 
 import com.github.scribejava.apis.openid.OpenIdJsonTokenExtractor;
 import com.github.scribejava.core.builder.api.DefaultApi20;
