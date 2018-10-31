@@ -23,7 +23,7 @@ import org.springframework.web.context.annotation.RequestScope;
 @Configuration
 public class PhssOAuth2Config {
     private ClientRegistration bangumiClientRegistration() {
-        return ClientRegistration.withRegistrationId("bangumi_scribe")
+        return ClientRegistration.withRegistrationId("bangumi")
                                  .clientId("bgm6165b9e794a763e1")
                                  .clientSecret("48aca6275eb4259de87406ec96120e34")
                                  .clientAuthenticationMethod(ClientAuthenticationMethod.POST)
