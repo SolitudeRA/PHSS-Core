@@ -69,7 +69,7 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //--------------------------Url filter config---------------------------//
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/user/register", "/user/login", "/login/oauth2/code/*").permitAll()
+                .antMatchers("/", "/index", "/user/register", "/user/login", "/oauth2/code/*", "/oauth2/authorization/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
 
