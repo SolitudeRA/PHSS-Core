@@ -5,7 +5,7 @@ import org.protogalaxy.phss.service.main.oauth2.ApiBinding;
 
 
 public class BangumiApi extends ApiBinding {
-    private static final String BANGUMI_API_BASE_URL = "https://bgm.tv";
+    private static final String BANGUMI_API_BASE_URL = "https://api.bgm.tv";
 
     public BangumiApi(String accessToken) {
         super(accessToken);
