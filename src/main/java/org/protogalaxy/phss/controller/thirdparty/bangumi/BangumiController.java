@@ -18,6 +18,6 @@ public class BangumiController {
     @ResponseBody
     public String bangumi() {
         BangumiApi bangumiApi = new BangumiApi(oAuth2AuthorizedClientService.loadAuthorizedClient("bangumi", "alpha").getAccessToken().getTokenValue());
-        return bangumiApi.getSubject("90815").toJSONString();
+        return bangumiApi.getSubject(90815,null).toJSONString();
     }
 }

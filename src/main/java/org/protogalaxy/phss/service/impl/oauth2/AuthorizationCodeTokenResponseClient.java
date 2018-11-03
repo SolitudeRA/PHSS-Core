@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.service.impl.oauth2;
 
-import org.protogalaxy.phss.service.impl.oauth2.bangumi.PhssOAuth2AuthorizationCodeGrantRequestEntityConverter;
+import org.protogalaxy.phss.service.impl.oauth2.bangumi.OAuth2AuthorizationCodeGrantRequestEntityConverter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +23,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 
 
-public class PhssAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
+public class AuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
     private static final String INVALID_TOKEN_RESPONSE_ERROR_CODE = "invalid_token_response";
 
-    private Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>> requestEntityConverter = new PhssOAuth2AuthorizationCodeGrantRequestEntityConverter();
+    private Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>> requestEntityConverter = new OAuth2AuthorizationCodeGrantRequestEntityConverter();
 
     private RestOperations restOperations;
 
-    public PhssAuthorizationCodeTokenResponseClient() {
+    public AuthorizationCodeTokenResponseClient() {
         RestTemplate restTemplate = new RestTemplate(Arrays.asList(new FormHttpMessageConverter(), new OAuth2AccessTokenResponseHttpMessageConverter()));
         restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
         this.restOperations = restTemplate;

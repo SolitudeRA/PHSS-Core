@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.service.config;
 
-import org.protogalaxy.phss.service.impl.oauth2.PhssAuthorizationCodeTokenResponseClient;
+import org.protogalaxy.phss.service.impl.oauth2.AuthorizationCodeTokenResponseClient;
 import org.protogalaxy.phss.service.impl.oauth2.bangumi.BangumiApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -22,7 +21,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.web.context.annotation.RequestScope;
 
 @Configuration
-public class PhssOAuth2Config {
+public class OAuth2Config {
     private ClientRegistration bangumiClientRegistration() {
         return ClientRegistration.withRegistrationId("bangumi")
                                  .clientId("bgm6165b9e794a763e1")
@@ -58,7 +57,7 @@ public class PhssOAuth2Config {
 
     @Bean
     protected OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
-        return new PhssAuthorizationCodeTokenResponseClient();
+        return new AuthorizationCodeTokenResponseClient();
     }
 
     @Bean

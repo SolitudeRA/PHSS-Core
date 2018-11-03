@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
-import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
+import org.protogalaxy.phss.security.config.GrantedAuthority;
 import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -21,9 +21,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -142,14 +140,14 @@ public class UserEntity implements UserDetails, CredentialsContainer {
      * @param isAccountNonExpired whether account is not expired
      * @param isAccountNonLocked  whether account is not locked
      */
-    public UserEntity(String username, String password, Set<PhssGrantedAuthority> authoritiesSet, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
+    public UserEntity(String username, String password, Set<GrantedAuthority> authoritiesSet, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
         Set<String> roleStrSet = new HashSet<>();
-        for (PhssGrantedAuthority authority : authoritiesSet) {
+        for (GrantedAuthority authority : authoritiesSet) {
             roleStrSet.add(authority.toString().substring(5));
         }
         this.username = username.toLowerCase();
@@ -173,13 +171,13 @@ public class UserEntity implements UserDetails, CredentialsContainer {
      * @param personalDataEntity   personalDataInf Entity of the user
      * @param settingMainEntity    settingMain Entity of the user
      */
-    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity) {
+    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<GrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
         Set<String> roleStrSet = new HashSet<>();
-        for (PhssGrantedAuthority authority : authoritiesSet) {
+        for (GrantedAuthority authority : authoritiesSet) {
             roleStrSet.add(authority.toString().substring(5));
         }
         this.username = username.toLowerCase();
@@ -284,18 +282,18 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     }
 
     @Override
-    public Set<PhssGrantedAuthority> getAuthorities() {
+    public Set<GrantedAuthority> getAuthorities() {
         String[] authoritiesString = authorities.split(",");
-        Set<PhssGrantedAuthority> authoritiesSet = new HashSet<>();
+        Set<GrantedAuthority> authoritiesSet = new HashSet<>();
         for (String anAuthoritiesString : authoritiesString) {
-            authoritiesSet.add(new PhssGrantedAuthority(("ROLE_" + anAuthoritiesString)));
+            authoritiesSet.add(new GrantedAuthority(("ROLE_" + anAuthoritiesString)));
         }
         return authoritiesSet;
     }
 
-    public void setAuthorities(Set<PhssGrantedAuthority> authoritiesSet) {
+    public void setAuthorities(Set<GrantedAuthority> authoritiesSet) {
         Set<String> roleStrSet = new HashSet<>();
-        for (PhssGrantedAuthority authority : authoritiesSet) {
+        for (GrantedAuthority authority : authoritiesSet) {
             roleStrSet.add(authority.toString().substring(5));
         }
         this.authorities = String.join(",", roleStrSet);

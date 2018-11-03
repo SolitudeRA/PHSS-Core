@@ -4,7 +4,7 @@ import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.exception.path.PathException;
 import org.protogalaxy.phss.exception.storage.StorageException;
-import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
+import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.impl.multimedia.MetadataServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.PathService;
 import org.protogalaxy.phss.service.main.multimedia.MetadataService;
@@ -17,11 +17,11 @@ import java.util.regex.Pattern;
 
 @Service
 public class PathServiceImpl implements PathService {
-    private PhssStorageServiceConfig storageServiceConfig;
+    private StorageServiceConfig storageServiceConfig;
     private MetadataService metadataService;
 
     @Autowired
-    public PathServiceImpl(PhssStorageServiceConfig storageServiceConfig,
+    public PathServiceImpl(StorageServiceConfig storageServiceConfig,
                            MetadataServiceImpl metadataService) {
         this.storageServiceConfig = storageServiceConfig;
         this.metadataService = metadataService;

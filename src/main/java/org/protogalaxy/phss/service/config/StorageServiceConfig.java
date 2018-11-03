@@ -9,7 +9,7 @@ import java.nio.file.Paths;
  * Folder location for storing files
  */
 @ConfigurationProperties(prefix = "storage")
-public class PhssStorageServiceConfig {
+public class StorageServiceConfig {
     private String prefix = "phss_";
 
     private String rootLocation = "phss_storage";

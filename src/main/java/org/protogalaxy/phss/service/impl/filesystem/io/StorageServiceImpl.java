@@ -5,7 +5,7 @@ import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
 import org.protogalaxy.phss.exception.storage.StorageException;
-import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
+import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.impl.filesystem.logic.FileRegisteringServiceImpl;
 import org.protogalaxy.phss.service.impl.multimedia.MetadataServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
@@ -26,7 +26,7 @@ import java.util.Map;
 
 @Service
 public class StorageServiceImpl implements StorageService {
-    private PhssStorageServiceConfig config;
+    private StorageServiceConfig config;
 
     private final PathService pathService;
     private final CacheService cacheService;
@@ -35,7 +35,7 @@ public class StorageServiceImpl implements StorageService {
 
 
     @Autowired
-    public StorageServiceImpl(PhssStorageServiceConfig config,
+    public StorageServiceImpl(StorageServiceConfig config,
                               PathServiceImpl pathService,
                               CacheServiceImpl cacheService,
                               MetadataServiceImpl metadataService,

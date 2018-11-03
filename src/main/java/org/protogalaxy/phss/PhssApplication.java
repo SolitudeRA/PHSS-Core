@@ -1,13 +1,12 @@
 package org.protogalaxy.phss;
 
-import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
+import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.hateoas.config.EnableHypermediaSupport;
 
 @SpringBootApplication
-@EnableConfigurationProperties({PhssStorageServiceConfig.class})
+@EnableConfigurationProperties({StorageServiceConfig.class})
 public class PhssApplication {
     public static void main(String args[]) {
         SpringApplication.run(PhssApplication.class, args);

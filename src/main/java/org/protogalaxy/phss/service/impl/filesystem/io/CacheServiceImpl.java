@@ -2,7 +2,7 @@ package org.protogalaxy.phss.service.impl.filesystem.io;
 
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.exception.storage.StorageTempException;
-import org.protogalaxy.phss.service.config.PhssStorageServiceConfig;
+import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class CacheServiceImpl implements CacheService {
     private final Path imagePoolLocation;
 
     @Autowired
-    public CacheServiceImpl(PhssStorageServiceConfig config) {
+    public CacheServiceImpl(StorageServiceConfig config) {
         this.phssTempPrefix = config.getPrefix();
         this.tempLocation = config.getTempLocation();
         this.imagePoolLocation = config.getImagePoolLocation();

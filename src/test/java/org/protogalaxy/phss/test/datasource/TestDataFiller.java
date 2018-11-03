@@ -12,7 +12,7 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.Filesystem
 import org.protogalaxy.phss.datasource.repository.jpa.personaldata.PersonalDataRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.setting.SettingMainRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.user.UserRepository;
-import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
+import org.protogalaxy.phss.security.config.GrantedAuthority;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +20,6 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -86,9 +85,9 @@ public class TestDataFiller {
     @ParameterizedTest
     @CsvSource({"Alpha,sol123456", "Beta,#$%&!@#", "Charlie,test", "Delta,test"})
     public void userTestCase(String username, String password) {
-        Set<PhssGrantedAuthority> authorities = new HashSet<>();
-        PhssGrantedAuthority authority1 = new PhssGrantedAuthority("ROLE_USER");
-        PhssGrantedAuthority authority2 = new PhssGrantedAuthority("ROLE_ADMIN");
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        GrantedAuthority authority1 = new GrantedAuthority("ROLE_USER");
+        GrantedAuthority authority2 = new GrantedAuthority("ROLE_ADMIN");
         authorities.add(authority1);
         authorities.add(authority2);
         UserEntity userEntity = new UserEntity(username, password, authorities, true, true, true);

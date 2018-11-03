@@ -27,7 +27,7 @@ import java.util.Collections;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
+public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AjaxAuthSuccessHandler ajaxAuthSuccessHandler;
     private final AjaxAuthFailHandler ajaxAuthFailHandler;
     private final ClientRegistrationRepository clientRegistrationRepository;
@@ -38,14 +38,14 @@ public class PhssMainSecurityConfig extends WebSecurityConfigurerAdapter {
     private final OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient;
 
     @Autowired
-    public PhssMainSecurityConfig(AjaxAuthSuccessHandler ajaxAuthSuccessHandler,
-                                  AjaxAuthFailHandler ajaxAuthFailHandler,
-                                  ClientRegistrationRepository clientRegistrationRepository,
-                                  OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository,
-                                  OAuth2AuthorizedClientService oAuth2AuthorizedClientService,
-                                  AuthorizationRequestRepository<OAuth2AuthorizationRequest> oAuth2AuthorizationRequestRepository,
-                                  OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver,
-                                  OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient) {
+    public MainSecurityConfig(AjaxAuthSuccessHandler ajaxAuthSuccessHandler,
+                              AjaxAuthFailHandler ajaxAuthFailHandler,
+                              ClientRegistrationRepository clientRegistrationRepository,
+                              OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository,
+                              OAuth2AuthorizedClientService oAuth2AuthorizedClientService,
+                              AuthorizationRequestRepository<OAuth2AuthorizationRequest> oAuth2AuthorizationRequestRepository,
+                              OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver,
+                              OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient) {
         this.ajaxAuthSuccessHandler = ajaxAuthSuccessHandler;
         this.ajaxAuthFailHandler = ajaxAuthFailHandler;
         this.clientRegistrationRepository = clientRegistrationRepository;
