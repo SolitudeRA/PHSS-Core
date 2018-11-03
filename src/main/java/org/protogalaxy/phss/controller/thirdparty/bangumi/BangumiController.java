@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.controller.thirdparty.bangumi;
 
-import org.protogalaxy.phss.service.impl.oauth2.bangumi.BangumiApi;
+import org.protogalaxy.phss.service.main.oauth2.bangumi.BangumiApi;
+import org.protogalaxy.phss.service.main.oauth2.bangumi.BangumiConsts;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,6 @@ public class BangumiController {
     @ResponseBody
     public String bangumi() {
         BangumiApi bangumiApi = new BangumiApi(oAuth2AuthorizedClientService.loadAuthorizedClient("bangumi", "alpha").getAccessToken().getTokenValue());
-        return bangumiApi.getSubject(90815,null).toJSONString();
+        return bangumiApi.getSubject(90815, BangumiConsts.RESPONSE_GROUP_LARGE).toJSONString();
     }
 }

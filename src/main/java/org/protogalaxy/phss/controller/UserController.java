@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.controller;
 
-import org.protogalaxy.phss.service.impl.user.UserServiceImpl;
+import org.protogalaxy.phss.service.main.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;

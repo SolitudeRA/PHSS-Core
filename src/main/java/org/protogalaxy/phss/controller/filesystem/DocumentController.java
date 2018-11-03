@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.controller.filesystem;
 
-import org.protogalaxy.phss.service.impl.filesystem.io.StorageServiceImpl;
-import org.protogalaxy.phss.service.impl.filesystem.database.DocumentServiceImpl;
+import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
+import org.protogalaxy.phss.service.main.filesystem.database.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
