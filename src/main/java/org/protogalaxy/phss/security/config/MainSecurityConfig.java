@@ -76,10 +76,6 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/user/register").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/oauth2/code/**").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/oauth2/authorization/**").permitAll()
-                .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
 

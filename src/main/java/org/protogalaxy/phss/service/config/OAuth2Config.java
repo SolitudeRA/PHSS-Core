@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.service.config;
 
-import org.protogalaxy.phss.service.main.oauth2.AuthorizationCodeTokenResponseClient;
+import org.protogalaxy.phss.security.oauth2.AuthorizationCodeTokenResponseClient;
 import org.protogalaxy.phss.service.main.oauth2.bangumi.BangumiApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.main.oauth2;
+package org.protogalaxy.phss.security.oauth2;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.RequestEntity;
@@ -7,7 +7,9 @@ import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequestEntityConverter;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.OAuth2AuthorizationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
@@ -25,7 +27,7 @@ import java.util.Arrays;
 public class AuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
     private static final String INVALID_TOKEN_RESPONSE_ERROR_CODE = "invalid_token_response";
 
-    private Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>> requestEntityConverter = new OAuth2AuthorizationCodeGrantRequestEntityConverter();
+    private Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>> requestEntityConverter;
 
     private RestOperations restOperations;
 
@@ -37,6 +39,8 @@ public class AuthorizationCodeTokenResponseClient implements OAuth2AccessTokenRe
 
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
+        requestEntityConverter = getRequestEntityConverter(authorizationCodeGrantRequest.getClientRegistration());
+
         Assert.notNull(authorizationCodeGrantRequest, "authorizationCodeGrantRequest cannot be null");
 
         RequestEntity<?> request = this.requestEntityConverter.convert(authorizationCodeGrantRequest);
@@ -62,6 +66,14 @@ public class AuthorizationCodeTokenResponseClient implements OAuth2AccessTokenRe
         }
 
         return tokenResponse;
+    }
+
+    private Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>> getRequestEntityConverter(ClientRegistration clientRegistration) {
+        if (clientRegistration.getRegistrationId().contains("_default")) {
+            return new OAuth2AuthorizationCodeGrantRequestEntityConverter();
+        } else {
+            return new CustomOAuth2AuthorizationCodeGrantRequestEntityConverter();
+        }
     }
 
     /**
