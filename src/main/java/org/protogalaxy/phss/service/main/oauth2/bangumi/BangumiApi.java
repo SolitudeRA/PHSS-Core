@@ -4,6 +4,9 @@ import org.json.simple.JSONObject;
 import org.protogalaxy.phss.service.interfaces.oauth2.ApiBinding;
 import org.springframework.lang.Nullable;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 
 public class BangumiApi extends ApiBinding {
     private static final String BANGUMI_API_BASE_URL = "https://api.bgm.tv";
@@ -53,8 +56,8 @@ public class BangumiApi extends ApiBinding {
      * @param start         开始条数
      * @param maxResults    每页条数 最多 25
      */
-    public JSONObject searchSubject(String keywords, Integer type, @Nullable String responseGroup, @Nullable Integer start, @Nullable Integer maxResults) {
-        String getUrl = BANGUMI_API_BASE_URL + "/search/subject/" + keywords;
+    public JSONObject searchSubject(String keywords, Integer type, @Nullable String responseGroup, @Nullable Integer start, @Nullable Integer maxResults) throws Exception{
+        String getUrl = BANGUMI_API_BASE_URL + "/search/subject/" + URLEncoder.encode(keywords, StandardCharsets.UTF_8.toString());
         boolean paramFlag = false;
         if (type != null) {
             getUrl += ("?type=" + type);

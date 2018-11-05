@@ -10,6 +10,9 @@ import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 //TODO:Not Completed
 @Entity
@@ -45,6 +48,9 @@ public class PhssOAuth2AuthorizedClientEntity {
 
     @Column(name = "refresh_token_issued_at")
     private Instant refreshTokenIssuedAt;
+
+    public PhssOAuth2AuthorizedClientEntity() {
+    }
 
     public PhssOAuth2AuthorizedClientEntity(ClientRegistration clientRegistration, String principalName, OAuth2AccessToken accessToken, @Nullable OAuth2RefreshToken refreshToken) {
         this.clientRegistrationId = clientRegistration.getRegistrationId();
@@ -118,12 +124,12 @@ public class PhssOAuth2AuthorizedClientEntity {
         this.accessTokenExpiresAt = accessTokenExpiresAt;
     }
 
-    public String getAccessTokenScopes() {
-        return accessTokenScopes;
+    public Set<String> getAccessTokenScopes() {
+        return new HashSet<>(Arrays.asList(accessTokenScopes.split(",")));
     }
 
-    public void setAccessTokenScopes(String accessTokenScopes) {
-        this.accessTokenScopes = accessTokenScopes;
+    public void setAccessTokenScopes(Set<String> accessTokenScopes) {
+        this.accessTokenScopes = String.join(",", accessTokenScopes);
     }
 
     public String getRefreshToken() {
@@ -151,7 +157,8 @@ public class PhssOAuth2AuthorizedClientEntity {
                             OAuth2AccessToken.TokenType.BEARER,
                             this.accessToken,
                             this.accessTokenIssuedAt,
-                            this.accessTokenExpiresAt)
+                            this.accessTokenExpiresAt,
+                            this.getAccessTokenScopes())
             );
         } else {
             return new OAuth2AuthorizedClient(
