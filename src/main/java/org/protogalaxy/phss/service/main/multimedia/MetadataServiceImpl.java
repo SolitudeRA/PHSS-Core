@@ -41,7 +41,6 @@ import java.util.Map;
 import static org.bytedeco.javacpp.avformat.*;
 import static org.bytedeco.javacpp.avutil.*;
 
-//TODO: Complete
 @Service
 public class MetadataServiceImpl implements MetadataService {
     private CacheService cacheService;
@@ -84,29 +83,16 @@ public class MetadataServiceImpl implements MetadataService {
     }
 
     @Override
-    public Map<String, Object> animeMetadataResolver(Path path) throws Exception {
-        Map<String, Object> metadataCurrentMap = new HashMap<>();
-        Map<String, Object> metadataFullMap = new HashMap<>();
+    public Map<String, Object> videoMetadataResolver(Path path) {
+        Map<String, Object> metadataMap = new HashMap<>();
         AVFormatContext avFormatContext = avformat_alloc_context();
-        AVDictionaryEntry entry = null;
         avformat_open_input(avFormatContext, path.toString(), null, null);
         avformat_find_stream_info(avFormatContext, (PointerPointer) null);
-        while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
-            metadataCurrentMap.put(entry.key().getString(), entry.value().getString());
-        }
-
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> movieMetadataResolver(Path path) throws Exception {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> videoMetadataResolver(Path path) throws Exception {
-        AVFormatContext avFormatContext = avformat_alloc_context();
-        return null;
+        av_dict_get(avFormatContext.metadata(), "", null, AV_DICT_IGNORE_SUFFIX).key().getString();
+        metadataMap.put(FileConsts.METADATA_VIDEO_DURATION, formatDuration(avFormatContext.streams(0).duration()));
+        metadataMap.put(FileConsts.METADATA_VIDEO_WIDTH, avFormatContext.streams(0).codecpar().width());
+        metadataMap.put(FileConsts.METADATA_VIDEO_HEIGHT, avFormatContext.streams(0).codecpar().height());
+        return metadataMap;
     }
 
     @Override

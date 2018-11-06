@@ -52,10 +52,12 @@ public final class FileConsts {
             METADATA_AUDIO_BITDEPTH = "bit_depth",
             METADATA_AUDIO_SIZE = "size",
             METADATA_AUDIO_COVER = "cover";
-    //Anime metadata string
+    //Video metadata string
     public static final String
-            METADATA_ANIME_TITLE="title";
-
+            METADATA_VIDEO_TITLE = "title",
+            METADATA_VIDEO_DURATION = "duration",
+            METADATA_VIDEO_WIDTH = "width",
+            METADATA_VIDEO_HEIGHT = "height";
     //Book metadata string
     public static final String
             METADATA_BOOK_TITLE = "title",
@@ -248,6 +250,13 @@ public final class FileConsts {
             METADATA_AUDIO_BITDEPTH,
             METADATA_AUDIO_SIZE,
             METADATA_AUDIO_COVER
+    );
+    //Video metadata List
+    public static List<String> METADATA_VIDEO_FULL_LISt = Arrays.asList(
+            METADATA_VIDEO_TITLE,
+            METADATA_VIDEO_DURATION,
+            METADATA_VIDEO_WIDTH,
+            METADATA_VIDEO_HEIGHT
     );
     //Book metadata Lists
     public static List<String> METADATA_BOOK_STANDARD_LIST = Arrays.asList(

@@ -13,22 +13,6 @@ public interface MetadataService {
     Map<String, Object> musicMetadataResolver(Path path) throws Exception;
 
     /**
-     * Resolve anime file metadata
-     *
-     * @param path Path of the file
-     * @return Anime metadata map of the file
-     */
-    Map<String, Object> animeMetadataResolver(Path path) throws Exception;
-
-    /**
-     * Resolve movie file metadata
-     *
-     * @param path Path of the file
-     * @return Movie metadata map of the file
-     */
-    Map<String, Object> movieMetadataResolver(Path path) throws Exception;
-
-    /**
      * Resolve video file metadata
      *
      * @param path Path of the file

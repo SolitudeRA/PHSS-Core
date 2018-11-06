@@ -53,7 +53,7 @@
 
     <properties>
         <!--Metadata reader version-->
-        <javacv.version>1.4.2</javacv.version>
+        <javacv.version>1.4.3</javacv.version>
         <apache-tika.version>1.19.1</apache-tika.version>
         <apache-poi.version>4.0.0</apache-poi.version>
         <apache-pdfbox.version>2.0.12</apache-pdfbox.version>
