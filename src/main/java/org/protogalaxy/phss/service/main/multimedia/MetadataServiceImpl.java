@@ -97,6 +97,8 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public Map<String, Object> photoMetadataResolver(Path path) throws Exception {
+        Map<String, Object> metadata = new HashMap<>();
+        Metadata tikaMetadata = getTikaMetadata(path);
         return null;
     }
 

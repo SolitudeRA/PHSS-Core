@@ -52,6 +52,8 @@ public final class FileConsts {
             METADATA_AUDIO_BITDEPTH = "bit_depth",
             METADATA_AUDIO_SIZE = "size",
             METADATA_AUDIO_COVER = "cover";
+    public static final String
+            METADATA_PHOTO_TITLE = "";
     //Video metadata string
     public static final String
             METADATA_VIDEO_TITLE = "title",
