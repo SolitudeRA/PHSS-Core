@@ -25,6 +25,7 @@ public class CommonMetadataReader {
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
         parser.parse(Files.newInputStream(Paths.get("W:\\Projects\\PHSS-Core\\src\\test\\resources\\documents\\test.jpg")), handler, metadata, context);
+        System.out.println(metadata.get("Image Width"));
         System.out.println(metadata.toString());
     }
 

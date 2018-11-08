@@ -104,7 +104,14 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public Map<String, Object> illustrationMetadataResolver(Path path) throws Exception {
-        return null;
+        Map<String, Object> metadata = new HashMap<>();
+        Metadata tikaMetadata = getTikaMetadata(path);
+        metadata.put(FileConsts.METADATA_IMAGE_TITLE, path.getFileName());
+        metadata.put(FileConsts.METADATA_IMAGE_CREATED, FileCommonUtils.getCreated(path));
+        metadata.put(FileConsts.METADATA_IMAGE_MODIFIED, FileCommonUtils.getModified(path));
+        metadata.put(FileConsts.METADATA_IMAGE_WIDTH, tikaMetadata.get(FileConsts.METADATA_IMAGE_WIDTH));
+        metadata.put(FileConsts.METADATA_IMAGE_HEIGHT, tikaMetadata.get(FileConsts.METADATA_IMAGE_HEIGHT));
+        return metadata;
     }
 
     @Override

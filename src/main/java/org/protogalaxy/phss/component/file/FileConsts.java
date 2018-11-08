@@ -53,13 +53,21 @@ public final class FileConsts {
             METADATA_AUDIO_SIZE = "size",
             METADATA_AUDIO_COVER = "cover";
     public static final String
-            METADATA_PHOTO_TITLE = "";
+            METADATA_IMAGE_TITLE = "",
+            METADATA_IMAGE_WIDTH = "tiff:ImageWidth",
+            METADATA_IMAGE_HEIGHT = "tiff:ImageLength",
+            METADATA_IMAGE_CREATED = "created",
+            METADATA_IMAGE_MODIFIED = "modified",
+            METADATA_IMAGE_PATH = "path";
     //Video metadata string
     public static final String
             METADATA_VIDEO_TITLE = "title",
             METADATA_VIDEO_DURATION = "duration",
             METADATA_VIDEO_WIDTH = "width",
-            METADATA_VIDEO_HEIGHT = "height";
+            METADATA_VIDEO_HEIGHT = "height",
+            METADATA_VIDEO_CREATED = "created",
+            METADATA_VIDEO_MODIFIED = "modified",
+            METADATA_VIDEO_PATH = "path";
     //Book metadata string
     public static final String
             METADATA_BOOK_TITLE = "title",
@@ -253,12 +261,35 @@ public final class FileConsts {
             METADATA_AUDIO_SIZE,
             METADATA_AUDIO_COVER
     );
-    //Video metadata List
-    public static List<String> METADATA_VIDEO_FULL_LISt = Arrays.asList(
+    //Image metadata Lists
+    public static List<String> METADATA_IMAGE_STANDARD_LIST = Arrays.asList(
+            METADATA_IMAGE_TITLE,
+            METADATA_IMAGE_WIDTH,
+            METADATA_IMAGE_HEIGHT
+    );
+    public static List<String> METADATA_IMAGE_FULL_LIST = Arrays.asList(
+            METADATA_IMAGE_TITLE,
+            METADATA_IMAGE_WIDTH,
+            METADATA_IMAGE_HEIGHT,
+            METADATA_IMAGE_CREATED,
+            METADATA_IMAGE_MODIFIED,
+            METADATA_IMAGE_PATH
+    );
+    //Video metadata Lists
+    public static List<String> METADATA_VIDEO_STANDARD_LIST = Arrays.asList(
             METADATA_VIDEO_TITLE,
             METADATA_VIDEO_DURATION,
             METADATA_VIDEO_WIDTH,
             METADATA_VIDEO_HEIGHT
+    );
+    public static List<String> METADATA_VIDEO_FULL_LISt = Arrays.asList(
+            METADATA_VIDEO_TITLE,
+            METADATA_VIDEO_DURATION,
+            METADATA_VIDEO_WIDTH,
+            METADATA_VIDEO_HEIGHT,
+            METADATA_VIDEO_CREATED,
+            METADATA_VIDEO_MODIFIED,
+            METADATA_VIDEO_PATH
     );
     //Book metadata Lists
     public static List<String> METADATA_BOOK_STANDARD_LIST = Arrays.asList(
