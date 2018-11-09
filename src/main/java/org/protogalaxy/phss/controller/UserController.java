@@ -1,14 +1,17 @@
 package org.protogalaxy.phss.controller;
 
+import org.protogalaxy.phss.datasource.resource.jpa.user.UserResource;
 import org.protogalaxy.phss.service.main.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@ExposesResourceFor(UserResource.class)
 public class UserController {
     private UserServiceImpl userService;
 

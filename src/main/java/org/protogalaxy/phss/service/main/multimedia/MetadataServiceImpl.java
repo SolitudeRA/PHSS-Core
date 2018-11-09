@@ -146,12 +146,7 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public Map<String, Object> bookMetadataResolver(Path path) throws Exception {
-        switch (FileCommonUtils.getMimeType(path)) {
-            case FileConsts.MIME_EBOOK_EPUB:
-                return getEpubMetadata(path);
-            default:
-                throw new MetadataException("MIME type not supported");
-        }
+        return null;
     }
 
     /**
@@ -427,9 +422,5 @@ public class MetadataServiceImpl implements MetadataService {
         ParseContext context = new ParseContext();
         parser.parse(Files.newInputStream(path), handler, metadata, context);
         return metadata;
-    }
-
-    private Map<String, Object> getEpubMetadata(Path path) {
-        return null;
     }
 }
