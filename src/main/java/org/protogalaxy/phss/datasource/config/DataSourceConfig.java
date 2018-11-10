@@ -29,7 +29,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("org.protogalaxy.phss.datasource.repository.jpa")
 @EnableMongoRepositories("org.protogalaxy.phss.datasource.repository.mongodb")
 @EnableRedisRepositories("org.protogalaxy.phss.datasource.repository.redis")
-public class DatasourceConfig {
+public class DataSourceConfig {
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
