@@ -31,8 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getUser(String username) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(userRepository.findByUsername(username));
+    public UserEntity getUser(String username) {
+        return userRepository.findByUsername(username);
     }
 }

@@ -36,19 +36,15 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     @Column(name = "username")
     private String username;
 
-    @JsonIgnore
     @Column(name = "password")
     private String password;
 
-    @JsonIgnore
     @Column(name = "password_ext1")
     private String passwordExt1;
 
-    @JsonIgnore
     @Column(name = "password_ext2")
     private String passwordExt2;
 
-    @JsonIgnore
     @Column(name = "password_ext3")
     private String passwordExt3;
 
