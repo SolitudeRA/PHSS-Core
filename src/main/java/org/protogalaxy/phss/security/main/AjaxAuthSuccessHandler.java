@@ -2,7 +2,7 @@ package org.protogalaxy.phss.security.main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.datasource.entity.user.UserEntity;
-import org.protogalaxy.phss.datasource.resource.main.user.UserResource;
+import org.protogalaxy.phss.datasource.resource.main.entity.user.UserResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

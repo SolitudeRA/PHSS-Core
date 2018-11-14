@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.resource.main.user;
+package org.protogalaxy.phss.datasource.resource.main.entity.user;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class UserResource extends ResourceSupport {
 
-    private Integer userId;
+    private Integer uid;
     private String username;
     private String avatar;
     private Set<PhssGrantedAuthority> authorities;
@@ -26,7 +26,7 @@ public class UserResource extends ResourceSupport {
     private ZonedDateTime dateModified;
 
     public UserResource(UserEntity userEntity) {
-        this.userId = userEntity.getId();
+        this.uid = userEntity.getId();
         this.username = userEntity.getUsername();
         this.avatar = userEntity.getAvatar();
         this.authorities = userEntity.getAuthorities();
@@ -41,7 +41,7 @@ public class UserResource extends ResourceSupport {
     }
 
     public UserResource(Integer id, String username, String avatar, Set<PhssGrantedAuthority> authorities, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity, Boolean isEnabled, Boolean isAccountNonLocked, Boolean isAccountNonExpired, ZonedDateTime dateCreate, ZonedDateTime dateModified) {
-        this.userId = id;
+        this.uid = id;
         this.username = username;
         this.avatar = avatar;
         this.authorities = authorities;
@@ -55,8 +55,8 @@ public class UserResource extends ResourceSupport {
         this.dateModified = dateModified;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUid() {
+        return uid;
     }
 
     public String getUsername() {

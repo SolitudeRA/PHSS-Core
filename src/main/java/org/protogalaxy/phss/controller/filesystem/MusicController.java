@@ -20,43 +20,43 @@ public class MusicController {
         this.musicService = musicService;
     }
 
-    @PostMapping("/upload")
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String handleMusicUpload(@PathVariable String username, @RequestParam("music") MultipartFile file) throws Exception {
         return storageService.storeTrack(username, file);
     }
 
-    @PostMapping("/multiupload")
+    @RequestMapping(value = "/multiupload", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String handleMusicMultiUpload(@PathVariable String username, MultipartFile[] files) throws Exception {
         return storageService.storeTracks(username, files);
     }
 
-    @PostMapping("/album")
+    @RequestMapping(value = "/album", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String listUserAlbum(@PathVariable String username, Pageable pageable) throws Exception {
         return musicService.listUserAlbum(username, pageable);
     }
 
-    @PostMapping("/album/{id}")
+    @RequestMapping(value = "/album/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String getUserAlbumById(@PathVariable String username, @PathVariable int id) throws Exception {
         return musicService.getAlbum(username, id);
     }
 
-    @PostMapping("/album/{id}/track")
+    @RequestMapping(value = "/album/{id}/track", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String listUserTrackByAlbumId(@PathVariable String username, @PathVariable int id) throws Exception {
         return musicService.listTrackByAlbumId(username, id);
     }
 
-    @PostMapping("/search/album")
+    @RequestMapping(value = "/search/album", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String listUserAlbumByTile(@PathVariable String username, String title) throws Exception {
         return musicService.listAlbumByTitle(username, title);
     }
 
-    @PostMapping("/search/track")
+    @RequestMapping(value = "/search/track", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
     public String listUserTrackByTitle(@PathVariable String username, String title) throws Exception {
         return musicService.listTrackByTitle(username, title);

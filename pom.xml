@@ -67,7 +67,6 @@
         <java-jwt.version>3.4.0</java-jwt.version>
         <!--Spring projects version-->
         <spring-security.version>5.1.1.RELEASE</spring-security.version>
-        <spring-hateoas.version>0.25.0.RELEASE</spring-hateoas.version>
         <spring-restdocs.version>2.0.2.RELEASE</spring-restdocs.version>
         <!--Junit version-->
         <junit-jupiter.version>5.3.0-M1</junit-jupiter.version>
@@ -172,6 +171,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
         <!--Spring Section -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -182,11 +185,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-jose</artifactId>
             <version>${spring-security.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.hateoas</groupId>
-            <artifactId>spring-hateoas</artifactId>
-            <version>${spring-hateoas.version}</version>
         </dependency>
         <!--Jwt -->
         <dependency>

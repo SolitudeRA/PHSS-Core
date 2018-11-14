@@ -2,7 +2,7 @@ package org.protogalaxy.phss.datasource.resource.assembler.user;
 
 import org.protogalaxy.phss.controller.UserController;
 import org.protogalaxy.phss.datasource.entity.user.UserEntity;
-import org.protogalaxy.phss.datasource.resource.main.user.UserResource;
+import org.protogalaxy.phss.datasource.resource.main.entity.user.UserResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 public class UserResourceAssembler extends ResourceAssemblerSupport<UserEntity, UserResource> {
