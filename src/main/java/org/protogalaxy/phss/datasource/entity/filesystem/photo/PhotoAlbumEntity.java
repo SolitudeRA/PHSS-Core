@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.album.photo;
+package org.protogalaxy.phss.datasource.entity.filesystem.photo;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.hibernate.annotations.CreationTimestamp;

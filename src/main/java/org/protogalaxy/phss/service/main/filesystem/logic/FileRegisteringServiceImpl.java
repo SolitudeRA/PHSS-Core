@@ -2,10 +2,10 @@ package org.protogalaxy.phss.service.main.filesystem.logic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.component.file.FileConsts;
-import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackInfEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackInfStaticEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.album.photo.PhotoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfStaticEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookInfEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.document.*;
@@ -13,7 +13,7 @@ import org.protogalaxy.phss.datasource.entity.filesystem.illustration.Illustrati
 import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEpisodeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicTrackRepository;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookInfRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;

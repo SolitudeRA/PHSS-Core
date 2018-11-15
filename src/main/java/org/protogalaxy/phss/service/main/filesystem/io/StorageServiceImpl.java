@@ -3,7 +3,7 @@ package org.protogalaxy.phss.service.main.filesystem.io;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.component.file.FileConsts;
-import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringServiceImpl;

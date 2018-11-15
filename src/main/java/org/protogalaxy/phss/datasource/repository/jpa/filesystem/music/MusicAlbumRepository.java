@@ -1,6 +1,6 @@
-package org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music;
+package org.protogalaxy.phss.datasource.repository.jpa.filesystem.music;
 
-import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicAlbumEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

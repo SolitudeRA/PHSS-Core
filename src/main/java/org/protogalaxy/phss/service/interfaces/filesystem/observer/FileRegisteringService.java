@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.service.interfaces.filesystem.observer;
 
-import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.album.photo.PhotoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.illustration.IllustrationEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEpisodeEntity;

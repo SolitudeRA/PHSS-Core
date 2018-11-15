@@ -1,15 +1,14 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.album.music;
+package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.sql.Blob;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 /**
+ * Entity for music album static information
+ *
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
  */
@@ -65,19 +64,14 @@ public class MusicAlbumInfStaticEntity {
     @Column(name = "size")
     private Integer size;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
-    @CreationTimestamp
-    private Date dateAdded;
+    @CreatedDate
+    private ZonedDateTime dateAdded;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
-    @UpdateTimestamp
-    private Date dateModified;
+    @LastModifiedDate
+    private ZonedDateTime dateModified;
 
-    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "album_id")
@@ -90,13 +84,7 @@ public class MusicAlbumInfStaticEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public MusicAlbumInfStaticEntity(String composer, Integer year, MusicAlbumEntity musicAlbumEntity) {
-        this.composer = composer;
-        this.year = year;
-        this.musicAlbumEntity = musicAlbumEntity;
-    }
-
-    public MusicAlbumInfStaticEntity(String artwork, String composer, Integer year, Integer totalTime, Integer trackCount, Integer albumNumber, Integer albumCount, String genreSummary, String genreSub1, String genreSub2, String genreSub3, Integer star, Integer isFavorite, String comment, Integer size, MusicAlbumEntity musicAlbumEntity) {
+    public MusicAlbumInfStaticEntity(String artwork, String composer, Integer year, Integer totalTime, Integer trackCount, Integer albumNumber, Integer albumCount, String genreSummary, String genreSub1, String genreSub2, String genreSub3, Integer star, Integer isFavorite, String comment, Integer size, ZonedDateTime dateAdded, ZonedDateTime dateModified, MusicAlbumEntity musicAlbumEntity) {
         this.artwork = artwork;
         this.composer = composer;
         this.year = year;
@@ -112,6 +100,8 @@ public class MusicAlbumInfStaticEntity {
         this.isFavorite = isFavorite;
         this.comment = comment;
         this.size = size;
+        this.dateAdded = dateAdded;
+        this.dateModified = dateModified;
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
@@ -243,15 +233,19 @@ public class MusicAlbumInfStaticEntity {
         this.size = size;
     }
 
-    public Date getDateAdded() {
+    public ZonedDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public Date getDateModified() {
+    public void setDateAdded(ZonedDateTime dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public ZonedDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(Date dateModified) {
+    public void setDateModified(ZonedDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

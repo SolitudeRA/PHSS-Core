@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.album.photo;
+package org.protogalaxy.phss.datasource.entity.filesystem.photo;
 
 import javax.persistence.*;
 import java.util.UUID;

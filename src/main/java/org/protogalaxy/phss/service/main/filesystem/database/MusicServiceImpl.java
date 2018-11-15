@@ -1,8 +1,8 @@
 package org.protogalaxy.phss.service.main.filesystem.database;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicAlbumRepository;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music.MusicTrackRepository;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
 import org.protogalaxy.phss.service.interfaces.filesystem.database.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

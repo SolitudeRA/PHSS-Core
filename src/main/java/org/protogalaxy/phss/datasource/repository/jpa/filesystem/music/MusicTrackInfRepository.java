@@ -1,6 +1,6 @@
-package org.protogalaxy.phss.datasource.repository.jpa.filesystem.album.music;
+package org.protogalaxy.phss.datasource.repository.jpa.filesystem.music;
 
-import org.protogalaxy.phss.datasource.entity.filesystem.album.music.MusicTrackInfEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

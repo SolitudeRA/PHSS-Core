@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.album.music;
+package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.hibernate.annotations.ColumnDefault;

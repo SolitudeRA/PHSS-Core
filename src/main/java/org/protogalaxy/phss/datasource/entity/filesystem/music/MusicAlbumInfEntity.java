@@ -1,15 +1,18 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.album.music;
+package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
+ * Entity for music album information
+ *
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
  */
@@ -19,25 +22,27 @@ import java.util.Date;
 @Table(name = "album_music_inf")
 public class MusicAlbumInfEntity {
     @Id
-    private int albumId;
+    private Integer albumId;
 
     @Column(name = "playback_count")
     @ColumnDefault("0")
     private Integer playbackCount;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "pass_count")
+    @ColumnDefault("0")
+    private Integer passCount;
+
+    @Column(name = "last_played")
+    private LocalDateTime lastPlayed;
+
     @Column(name = "date_added")
-    @CreationTimestamp
-    private Date dateAdded;
+    @CreatedDate
+    private ZonedDateTime dateAdded;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
-    @UpdateTimestamp
-    private Date dateModified;
+    @LastModifiedDate
+    private ZonedDateTime dateModified;
 
-    @JsonBackReference
     @OneToOne
     @MapsId
     @JoinColumn(name = "album_id")
@@ -50,11 +55,11 @@ public class MusicAlbumInfEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public int getAlbumId() {
+    public Integer getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(int albumId) {
+    public void setAlbumId(Integer albumId) {
         this.albumId = albumId;
     }
 
@@ -66,15 +71,35 @@ public class MusicAlbumInfEntity {
         this.playbackCount = playbackCount;
     }
 
-    public Date getDateAdded() {
+    public Integer getPassCount() {
+        return passCount;
+    }
+
+    public void setPassCount(Integer passCount) {
+        this.passCount = passCount;
+    }
+
+    public LocalDateTime getLastPlayed() {
+        return lastPlayed;
+    }
+
+    public void setLastPlayed(LocalDateTime lastPlayed) {
+        this.lastPlayed = lastPlayed;
+    }
+
+    public ZonedDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public Date getDateModified() {
+    public void setDateAdded(ZonedDateTime dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public ZonedDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(Date dateModified) {
+    public void setDateModified(ZonedDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.album.music;
+package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
