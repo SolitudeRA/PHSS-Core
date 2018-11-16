@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Entity for music album information
@@ -17,20 +18,20 @@ import java.time.ZonedDateTime;
  * @version 1.0.0 SNAPSHOT
  */
 
-@Entity
+@Entity(name = "MusicAlbumInformation")
 @DynamicInsert
-@Table(name = "album_music_inf")
-public class MusicAlbumInfEntity {
+@Table(name = "album_music_info")
+public class MusicAlbumInfoEntity {
     @Id
-    private Integer albumId;
+    private UUID albumUUID;
 
     @Column(name = "playback_count")
     @ColumnDefault("0")
     private Integer playbackCount;
 
-    @Column(name = "pass_count")
+    @Column(name = "skip_count")
     @ColumnDefault("0")
-    private Integer passCount;
+    private Integer skipCount;
 
     @Column(name = "last_played")
     private LocalDateTime lastPlayed;
@@ -43,24 +44,24 @@ public class MusicAlbumInfEntity {
     @LastModifiedDate
     private ZonedDateTime dateModified;
 
-    @OneToOne
     @MapsId
-    @JoinColumn(name = "album_id")
+    @OneToOne
+    @JoinColumn(name = "album_id", nullable = false, updatable = false, unique = true, columnDefinition = "BINARY(16)")
     private MusicAlbumEntity musicAlbumEntity;
 
-    public MusicAlbumInfEntity() {
+    public MusicAlbumInfoEntity() {
     }
 
-    public MusicAlbumInfEntity(MusicAlbumEntity musicAlbumEntity) {
+    public MusicAlbumInfoEntity(MusicAlbumEntity musicAlbumEntity) {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public Integer getAlbumId() {
-        return albumId;
+    public UUID getAlbumUUID() {
+        return albumUUID;
     }
 
-    public void setAlbumId(Integer albumId) {
-        this.albumId = albumId;
+    public void setAlbumUUID(UUID albumUUID) {
+        this.albumUUID = albumUUID;
     }
 
     public Integer getPlaybackCount() {
@@ -71,12 +72,12 @@ public class MusicAlbumInfEntity {
         this.playbackCount = playbackCount;
     }
 
-    public Integer getPassCount() {
-        return passCount;
+    public Integer getSkipCount() {
+        return skipCount;
     }
 
-    public void setPassCount(Integer passCount) {
-        this.passCount = passCount;
+    public void setSkipCount(Integer skipCount) {
+        this.skipCount = skipCount;
     }
 
     public LocalDateTime getLastPlayed() {

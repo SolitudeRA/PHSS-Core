@@ -1,8 +1,5 @@
 package org.protogalaxy.phss.datasource.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
@@ -78,25 +75,20 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     @Column(name = "token_bangumi_refresh_token")
     private String tokenBangumiRefreshToken;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "date_create")
     @CreatedDate
     private ZonedDateTime dateCreate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "date_modified")
     @LastModifiedDate
     private ZonedDateTime dateModified;
 
-    @JsonManagedReference
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private FileSystemMainEntity fileSystemMainEntity;
 
-    @JsonManagedReference
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private PersonalDataEntity personalDataEntity;
 
-    @JsonManagedReference
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private SettingMainEntity settingMainEntity;
 
@@ -327,7 +319,6 @@ public class UserEntity implements UserDetails, CredentialsContainer {
         this.tokenBangumiRefreshToken = tokenBangumiRefreshToken;
     }
 
-    @JsonIgnore
     public OAuth2AccessTokenResponse getBangumiOAuth2AccessTokenResponse() {
         return OAuth2AccessTokenResponse.withToken(tokenBangumi)
                                         .tokenType(OAuth2AccessToken.TokenType.BEARER)

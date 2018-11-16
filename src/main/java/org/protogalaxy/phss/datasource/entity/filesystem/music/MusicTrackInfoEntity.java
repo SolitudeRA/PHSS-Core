@@ -1,13 +1,14 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Entity
 @DynamicInsert
 @Table(name = "track_inf")
-public class MusicTrackInfEntity {
+public class MusicTrackInfoEntity {
     @Id
     private UUID trackId;
 
@@ -26,46 +27,30 @@ public class MusicTrackInfEntity {
     @ColumnDefault("0")
     private Integer playbackCount;
 
-    @Column(name = "playback_date")
-    private Date playbackDate;
-
     @Column(name = "skip_count")
     @ColumnDefault("0")
     private Integer skipCount;
 
-    @Column(name = "skip_date")
-    private Date skipDate;
+    @Column(name = "last_played")
+    private LocalDateTime lastPlayed;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
-    @CreationTimestamp
-    private Date dateAdded;
+    @CreatedDate
+    private ZonedDateTime dateAdded;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
-    @UpdateTimestamp
-    private Date dateModified;
+    @LastModifiedDate
+    private ZonedDateTime dateModified;
 
-    @JsonBackReference
-    @OneToOne
     @MapsId
-    @JoinColumn(name = "track_id")
+    @OneToOne
+    @JoinColumn(name = "track_id", nullable = false, updatable = false, unique = true, columnDefinition = "BINARY(16)")
     private MusicTrackEntity musicTrackEntity;
 
-    public MusicTrackInfEntity() {
+    public MusicTrackInfoEntity() {
     }
 
-    public MusicTrackInfEntity(MusicTrackEntity musicTrackEntity) {
-        this.musicTrackEntity = musicTrackEntity;
-    }
-
-    public MusicTrackInfEntity(Integer playbackCount, Date playbackDate, Integer skipCount, Date skipDate, MusicTrackEntity musicTrackEntity) {
-        this.playbackCount = playbackCount;
-        this.playbackDate = playbackDate;
-        this.skipCount = skipCount;
-        this.skipDate = skipDate;
+    public MusicTrackInfoEntity(MusicTrackEntity musicTrackEntity) {
         this.musicTrackEntity = musicTrackEntity;
     }
 
@@ -85,14 +70,6 @@ public class MusicTrackInfEntity {
         this.playbackCount = playbackCount;
     }
 
-    public Date getPlaybackDate() {
-        return playbackDate;
-    }
-
-    public void setPlaybackDate(Date playbackDate) {
-        this.playbackDate = playbackDate;
-    }
-
     public Integer getSkipCount() {
         return skipCount;
     }
@@ -101,23 +78,27 @@ public class MusicTrackInfEntity {
         this.skipCount = skipCount;
     }
 
-    public Date getSkipDate() {
-        return skipDate;
+    public LocalDateTime getLastPlayed() {
+        return lastPlayed;
     }
 
-    public void setSkipDate(Date skipDate) {
-        this.skipDate = skipDate;
+    public void setLastPlayed(LocalDateTime lastPlayed) {
+        this.lastPlayed = lastPlayed;
     }
 
-    public Date getDateAdded() {
+    public ZonedDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public Date getDateModified() {
+    public void setDateAdded(ZonedDateTime dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public ZonedDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(Date dateModified) {
+    public void setDateModified(ZonedDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

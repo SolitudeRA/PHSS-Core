@@ -1,19 +1,19 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfStaticEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfoStaticEntity;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 public class MusicAlbumResource extends ResourceSupport {
-    private Integer id;
     private String title;
     private String artist;
     private String location;
-    private MusicAlbumInfEntity musicAlbumInf;
-    private MusicAlbumInfStaticEntity musicAlbumInfStatic;
+    private MusicAlbumInfoEntity musicAlbumInf;
+    private MusicAlbumInfoStaticEntity musicAlbumInfStatic;
     private ZonedDateTime dateAdded;
     private ZonedDateTime dateModified;
 
@@ -21,7 +21,6 @@ public class MusicAlbumResource extends ResourceSupport {
     }
 
     public MusicAlbumResource(MusicAlbumEntity musicAlbumEntity) {
-        this.id = musicAlbumEntity.getId();
         this.title = musicAlbumEntity.getTitle();
         this.artist = musicAlbumEntity.getArtist();
         this.location = musicAlbumEntity.getLocation();
@@ -31,8 +30,7 @@ public class MusicAlbumResource extends ResourceSupport {
         this.dateModified = musicAlbumEntity.getDateModified();
     }
 
-    public MusicAlbumResource(Integer id, String title, String artist, String location, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
-        this.id = id;
+    public MusicAlbumResource(String title, String artist, String location, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
         this.title = title;
         this.artist = artist;
         this.location = location;
@@ -40,8 +38,7 @@ public class MusicAlbumResource extends ResourceSupport {
         this.dateModified = dateModified;
     }
 
-    public MusicAlbumResource(Integer id, String title, String artist, String location, MusicAlbumInfEntity musicAlbumInf, MusicAlbumInfStaticEntity musicAlbumInfStatic, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
-        this.id = id;
+    public MusicAlbumResource(String title, String artist, String location, MusicAlbumInfoEntity musicAlbumInf, MusicAlbumInfoStaticEntity musicAlbumInfStatic, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
         this.title = title;
         this.artist = artist;
         this.location = location;
@@ -49,10 +46,6 @@ public class MusicAlbumResource extends ResourceSupport {
         this.musicAlbumInfStatic = musicAlbumInfStatic;
         this.dateAdded = dateAdded;
         this.dateModified = dateModified;
-    }
-
-    public Integer getAlbumId() {
-        return id;
     }
 
     public String getTitle() {
@@ -67,11 +60,11 @@ public class MusicAlbumResource extends ResourceSupport {
         return location;
     }
 
-    public MusicAlbumInfEntity getMusicAlbumInf() {
+    public MusicAlbumInfoEntity getMusicAlbumInf() {
         return musicAlbumInf;
     }
 
-    public MusicAlbumInfStaticEntity getMusicAlbumInfStatic() {
+    public MusicAlbumInfoStaticEntity getMusicAlbumInfStatic() {
         return musicAlbumInfStatic;
     }
 

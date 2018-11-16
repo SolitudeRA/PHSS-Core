@@ -1,14 +1,11 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
@@ -16,21 +13,20 @@ import java.util.UUID;
  * @version 1.0.0 SNAPSHOT
  */
 
-@Entity
+@Entity(name = "MusicTrack")
 @Table(name = "track")
 public class MusicTrackEntity {
-    @JsonIgnore
     @Id
     @GeneratedValue
-    private UUID id;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_TRACK_OWNER_ID"))
-    private FileSystemMainEntity owner;
+    @Column(nullable = false, updatable = false, unique = true, columnDefinition = "BINARY(16)")
+    private UUID uuid;
 
     @ManyToOne
-    @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_TRACK_ALBUM_MUSIC_ID"))
+    @JoinColumn(name = "filesystem_owner_id", foreignKey = @ForeignKey(name = "FK_FILESYSTEM_OWNER_ID_MUSIC_TRACK"))
+    private FileSystemMainEntity fileSystemOwner;
+
+    @ManyToOne
+    @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_ALBUM_ID_MUSIC_TRACK"))
     private MusicAlbumEntity musicAlbumEntity;
 
     @Column(name = "title")
@@ -42,59 +38,57 @@ public class MusicTrackEntity {
     @Column(name = "artist")
     private String artist;
 
-    @Column(name = "album_artist")
-    private String albumArtist;
-
-    @JsonIgnore
     @Column(name = "location")
     private String location;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
-    @CreationTimestamp
-    private Date dateAdded;
+    @CreatedDate
+    private ZonedDateTime dateAdded;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
-    @UpdateTimestamp
-    private Date dateModified;
+    @LastModifiedDate
+    private ZonedDateTime dateModified;
 
-    @JsonManagedReference
     @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private MusicTrackInfEntity trackInformation;
+    private MusicTrackInfoEntity trackInformation;
 
-    @JsonManagedReference
     @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private MusicTrackInfStaticEntity trackInformationStatic;
+    private MusicTrackInfoStaticEntity trackInformationStatic;
 
     public MusicTrackEntity() {
     }
 
-    public MusicTrackEntity(FileSystemMainEntity owner, String title, String album, String artist, String albumArtist, String location) {
-        this.owner = owner;
+    public MusicTrackEntity(FileSystemMainEntity fileSystemOwner, String title, String location) {
+        this.fileSystemOwner = fileSystemOwner;
         this.title = title;
-        this.album = album;
-        this.artist = artist;
-        this.albumArtist = albumArtist;
         this.location = location;
     }
 
-    public UUID getId() {
-        return id;
+    public MusicTrackEntity(FileSystemMainEntity fileSystemOwner, MusicAlbumEntity musicAlbumEntity, String title, String album, String artist, String location, MusicTrackInfoEntity trackInformation, MusicTrackInfoStaticEntity trackInformationStatic) {
+        this.fileSystemOwner = fileSystemOwner;
+        this.musicAlbumEntity = musicAlbumEntity;
+        this.title = title;
+        this.album = album;
+        this.artist = artist;
+        this.location = location;
+        this.trackInformation = trackInformation;
+        this.trackInformationStatic = trackInformationStatic;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public FileSystemMainEntity getOwner() {
-        return owner;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
-    public void setOwner(FileSystemMainEntity owner) {
-        this.owner = owner;
+    public FileSystemMainEntity getFileSystemOwner() {
+        return fileSystemOwner;
+    }
+
+    public void setFileSystemOwner(FileSystemMainEntity fileSystemOwner) {
+        this.fileSystemOwner = fileSystemOwner;
     }
 
     public MusicAlbumEntity getMusicAlbumEntity() {
@@ -129,14 +123,6 @@ public class MusicTrackEntity {
         this.artist = artist;
     }
 
-    public String getAlbumArtist() {
-        return albumArtist;
-    }
-
-    public void setAlbumArtist(String albumArtist) {
-        this.albumArtist = albumArtist;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -145,35 +131,35 @@ public class MusicTrackEntity {
         this.location = location;
     }
 
-    public Date getDateAdded() {
+    public ZonedDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(ZonedDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 
-    public Date getDateModified() {
+    public ZonedDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(Date dateModified) {
+    public void setDateModified(ZonedDateTime dateModified) {
         this.dateModified = dateModified;
     }
 
-    public MusicTrackInfEntity getTrackInformation() {
+    public MusicTrackInfoEntity getTrackInformation() {
         return trackInformation;
     }
 
-    public void setTrackInformation(MusicTrackInfEntity trackInformation) {
+    public void setTrackInformation(MusicTrackInfoEntity trackInformation) {
         this.trackInformation = trackInformation;
     }
 
-    public MusicTrackInfStaticEntity getTrackInformationStatic() {
+    public MusicTrackInfoStaticEntity getTrackInformationStatic() {
         return trackInformationStatic;
     }
 
-    public void setTrackInformationStatic(MusicTrackInfStaticEntity trackInformationStatic) {
+    public void setTrackInformationStatic(MusicTrackInfoStaticEntity trackInformationStatic) {
         this.trackInformationStatic = trackInformationStatic;
     }
 }

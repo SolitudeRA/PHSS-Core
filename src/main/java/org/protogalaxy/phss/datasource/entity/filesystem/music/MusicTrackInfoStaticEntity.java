@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "track_inf_static")
-public class MusicTrackInfStaticEntity {
+public class MusicTrackInfoStaticEntity {
     @Id
     private UUID trackId;
 
@@ -74,15 +74,15 @@ public class MusicTrackInfStaticEntity {
     @JoinColumn(name = "track_id")
     private MusicTrackEntity musicTrackEntity;
 
-    public MusicTrackInfStaticEntity() {
+    public MusicTrackInfoStaticEntity() {
     }
 
-    public MusicTrackInfStaticEntity(String kind, MusicTrackEntity musicTrackEntity) {
+    public MusicTrackInfoStaticEntity(String kind, MusicTrackEntity musicTrackEntity) {
         this.kind = kind;
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfStaticEntity(String size, String duration, String trackNumber, String disc, String date, String genre, String bitRate, String sampleRate, String bitDepth, String artwork, MusicTrackEntity musicTrackEntity) throws Exception {
+    public MusicTrackInfoStaticEntity(String size, String duration, String trackNumber, String disc, String date, String genre, String bitRate, String sampleRate, String bitDepth, String artwork, MusicTrackEntity musicTrackEntity) throws Exception {
         this.size = size;
         this.duration = duration;
         this.trackNumber = trackNumber;

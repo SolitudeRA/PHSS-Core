@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Entity for music album
@@ -18,12 +19,13 @@ import java.time.ZonedDateTime;
 @Table(name = "album_music")
 public class MusicAlbumEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue
+    @Column(nullable = false, updatable = false, unique = true, columnDefinition = "BINARY(16)")
+    private UUID uuid;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "FK_OWNER_ID_MUSIC"))
-    private FileSystemMainEntity owner;
+    @JoinColumn(name = "filesystem_owner_id", foreignKey = @ForeignKey(name = "FK_FILESYSTEM_OWNER_ID_MUSIC_ALBUM"))
+    private FileSystemMainEntity fileSystemOwner;
 
     @Column(name = "title")
     private String title;
@@ -43,31 +45,29 @@ public class MusicAlbumEntity {
     private ZonedDateTime dateModified;
 
     @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private MusicAlbumInfEntity albumInformation;
+    private MusicAlbumInfoEntity albumInformation;
 
     @OneToOne(mappedBy = "musicAlbumEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private MusicAlbumInfStaticEntity albumInformationStatic;
+    private MusicAlbumInfoStaticEntity albumInformationStatic;
 
     public MusicAlbumEntity() {
     }
 
-    public MusicAlbumEntity(FileSystemMainEntity owner, String title, String artist, String location) {
-        this.owner = owner;
+    public MusicAlbumEntity(FileSystemMainEntity fileSystemOwner, String title, String location) {
+        this.fileSystemOwner = fileSystemOwner;
+        this.title = title;
+        this.location = location;
+    }
+
+    public MusicAlbumEntity(FileSystemMainEntity fileSystemOwner, String title, String artist, String location) {
+        this.fileSystemOwner = fileSystemOwner;
         this.title = title;
         this.artist = artist;
         this.location = location;
     }
 
-    public MusicAlbumEntity(FileSystemMainEntity owner, String title, String artist, String location, MusicAlbumInfStaticEntity albumInformationStatic) {
-        this.owner = owner;
-        this.title = title;
-        this.artist = artist;
-        this.location = location;
-        this.albumInformationStatic = albumInformationStatic;
-    }
-
-    public MusicAlbumEntity(FileSystemMainEntity owner, String title, String artist, String location, MusicAlbumInfEntity albumInformation, MusicAlbumInfStaticEntity albumInformationStatic) {
-        this.owner = owner;
+    public MusicAlbumEntity(FileSystemMainEntity fileSystemOwner, String title, String artist, String location, MusicAlbumInfoEntity albumInformation, MusicAlbumInfoStaticEntity albumInformationStatic) {
+        this.fileSystemOwner = fileSystemOwner;
         this.title = title;
         this.artist = artist;
         this.location = location;
@@ -75,20 +75,20 @@ public class MusicAlbumEntity {
         this.albumInformationStatic = albumInformationStatic;
     }
 
-    public Integer getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
-    public FileSystemMainEntity getOwner() {
-        return owner;
+    public FileSystemMainEntity getFileSystemOwner() {
+        return fileSystemOwner;
     }
 
-    public void setOwner(FileSystemMainEntity owner) {
-        this.owner = owner;
+    public void setFileSystemOwner(FileSystemMainEntity fileSystemOwner) {
+        this.fileSystemOwner = fileSystemOwner;
     }
 
     public String getTitle() {
@@ -131,19 +131,19 @@ public class MusicAlbumEntity {
         this.dateModified = dateModified;
     }
 
-    public MusicAlbumInfEntity getAlbumInformation() {
+    public MusicAlbumInfoEntity getAlbumInformation() {
         return albumInformation;
     }
 
-    public void setAlbumInformation(MusicAlbumInfEntity albumInformation) {
+    public void setAlbumInformation(MusicAlbumInfoEntity albumInformation) {
         this.albumInformation = albumInformation;
     }
 
-    public MusicAlbumInfStaticEntity getAlbumInformationStatic() {
+    public MusicAlbumInfoStaticEntity getAlbumInformationStatic() {
         return albumInformationStatic;
     }
 
-    public void setAlbumInformationStatic(MusicAlbumInfStaticEntity albumInformationStatic) {
+    public void setAlbumInformationStatic(MusicAlbumInfoStaticEntity albumInformationStatic) {
         this.albumInformationStatic = albumInformationStatic;
     }
 }
