@@ -9,6 +9,8 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
+ * Entity for music track
+ *
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
  */
@@ -27,7 +29,7 @@ public class MusicTrackEntity {
 
     @ManyToOne
     @JoinColumn(name = "album_id", foreignKey = @ForeignKey(name = "FK_ALBUM_ID_MUSIC_TRACK"))
-    private MusicAlbumEntity musicAlbumEntity;
+    private MusicAlbumEntity musicAlbum;
 
     @Column(name = "title")
     private String title;
@@ -64,9 +66,9 @@ public class MusicTrackEntity {
         this.location = location;
     }
 
-    public MusicTrackEntity(FileSystemMainEntity fileSystemOwner, MusicAlbumEntity musicAlbumEntity, String title, String album, String artist, String location, MusicTrackInfoEntity trackInformation, MusicTrackInfoStaticEntity trackInformationStatic) {
+    public MusicTrackEntity(FileSystemMainEntity fileSystemOwner, MusicAlbumEntity musicAlbum, String title, String album, String artist, String location, MusicTrackInfoEntity trackInformation, MusicTrackInfoStaticEntity trackInformationStatic) {
         this.fileSystemOwner = fileSystemOwner;
-        this.musicAlbumEntity = musicAlbumEntity;
+        this.musicAlbum = musicAlbum;
         this.title = title;
         this.album = album;
         this.artist = artist;
@@ -91,12 +93,12 @@ public class MusicTrackEntity {
         this.fileSystemOwner = fileSystemOwner;
     }
 
-    public MusicAlbumEntity getMusicAlbumEntity() {
-        return musicAlbumEntity;
+    public MusicAlbumEntity getMusicAlbum() {
+        return musicAlbum;
     }
 
-    public void setMusicAlbumEntity(MusicAlbumEntity musicAlbumEntity) {
-        this.musicAlbumEntity = musicAlbumEntity;
+    public void setMusicAlbum(MusicAlbumEntity musicAlbum) {
+        this.musicAlbum = musicAlbum;
     }
 
     public String getTitle() {

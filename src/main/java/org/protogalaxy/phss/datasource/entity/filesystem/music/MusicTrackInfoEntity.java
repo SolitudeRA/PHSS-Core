@@ -12,16 +12,18 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
+ * Entity for music track information
+ *
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
  */
 
-@Entity
+@Entity(name = "MusicTrackInformation")
 @DynamicInsert
 @Table(name = "track_inf")
 public class MusicTrackInfoEntity {
     @Id
-    private UUID trackId;
+    private UUID trackUUID;
 
     @Column(name = "playback_count")
     @ColumnDefault("0")
@@ -54,12 +56,12 @@ public class MusicTrackInfoEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public UUID getTrackId() {
-        return trackId;
+    public UUID getTrackUUID() {
+        return trackUUID;
     }
 
-    public void setTrackId(UUID trackId) {
-        this.trackId = trackId;
+    public void setTrackUUID(UUID trackUUID) {
+        this.trackUUID = trackUUID;
     }
 
     public Integer getPlaybackCount() {

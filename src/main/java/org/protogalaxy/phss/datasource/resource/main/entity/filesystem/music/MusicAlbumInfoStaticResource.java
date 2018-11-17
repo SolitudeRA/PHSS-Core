@@ -5,6 +5,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 public class MusicAlbumInfoStaticResource extends ResourceSupport {
     private String artwork;
@@ -21,7 +22,7 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
 
     private Integer discTotal;
 
-    private String genre;
+    private List<String> genre;
 
     private Float score;
 
@@ -58,7 +59,7 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         this.dateModified = musicAlbumInfoStaticEntity.getDateModified();
     }
 
-    public MusicAlbumInfoStaticResource(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, String genre, Float score, Boolean like, Boolean dislike, String comment, Long sizeTotal, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicAlbumInfoStaticResource(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean like, Boolean dislike, String comment, Long sizeTotal, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
         this.artwork = artwork;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -104,7 +105,7 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         return discTotal;
     }
 
-    public String getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 

@@ -1,163 +1,242 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.Duration;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 /**
+ * Entity for music track static information
+ *
  * @author SolitudeRA
  * @version 1.0.0 SNAPSHOT
  */
 
-@Entity
+@Entity(name = "MusicTrackStaticInformation")
 @Table(name = "track_inf_static")
 public class MusicTrackInfoStaticEntity {
     @Id
-    private UUID trackId;
+    private UUID trackUUID;
 
-    @Column(name = "size")
-    private String size;
+    @Column(name = "album_artist")
+    private String albumArtist;
 
-    @Column(name = "duration")
-    private String duration;
+    @Column(name = "composer")
+    private String composer;
+
+    @Column(name = "release)year")
+    private Integer releaseYear;
 
     @Column(name = "track_number")
-    private String trackNumber;
+    private Integer trackNumber;
 
-    @Column(name = "track_count")
-    private String trackCount;
+    @Column(name = "track_total")
+    private Integer trackTotal;
 
-    @Column(name = "disc")
-    private String disc;
+    @Column(name = "disc_number")
+    private Integer discNumber;
 
-    @Column(name = "date")
-    private String date;
+    @Column(name = "disc_total")
+    private Integer discTotal;
+
+    @Column(name = "score")
+    private Float score;
 
     @Column(name = "genre")
     private String genre;
 
+    @Column(name = "artwork")
+    private String artwork;
+
+    @Column(name = "like")
+    private Boolean like;
+
+    @Column(name = "dislike")
+    private Boolean dislike;
+
+    @Column(name = "comment", columnDefinition = "TEXT")
+    private String comment;
+
     @Column(name = "kind")
     private String kind;
+
+    @Column(name = "duration")
+    private Duration duration;
+
+    @Column(name = "size")
+    private Long size;
 
     @Column(name = "bit_rate")
     private String bitRate;
 
-    @Column(name = "sample_rate")
-    private String sampleRate;
-
     @Column(name = "bit_depth")
     private String bitDepth;
 
-    @Column(name = "artwork")
-    private String artwork;
+    @Column(name = "sample_rate")
+    private String sampleRate;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
     @CreatedDate
-    private Date dateAdded;
+    private ZonedDateTime dateAdded;
 
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
     @LastModifiedDate
-    private Date dateModified;
+    private ZonedDateTime dateModified;
 
-    @JsonBackReference
-    @OneToOne
     @MapsId
-    @JoinColumn(name = "track_id")
+    @OneToOne
+    @JoinColumn(name = "track_id", nullable = false, updatable = false, unique = true, columnDefinition = "BINARY(16)")
     private MusicTrackEntity musicTrackEntity;
 
     public MusicTrackInfoStaticEntity() {
     }
 
-    public MusicTrackInfoStaticEntity(String kind, MusicTrackEntity musicTrackEntity) {
-        this.kind = kind;
+    public MusicTrackInfoStaticEntity(MusicTrackEntity musicTrackEntity) {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfoStaticEntity(String size, String duration, String trackNumber, String disc, String date, String genre, String bitRate, String sampleRate, String bitDepth, String artwork, MusicTrackEntity musicTrackEntity) throws Exception {
-        this.size = size;
-        this.duration = duration;
+    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean like, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
+        this.albumArtist = albumArtist;
+        this.composer = composer;
+        this.releaseYear = releaseYear;
         this.trackNumber = trackNumber;
-        this.disc = disc;
-        this.date = date;
-        this.genre = genre;
-        this.bitRate = bitRate;
-        this.sampleRate = sampleRate;
-        this.bitDepth = bitDepth;
+        this.trackTotal = trackTotal;
+        this.discNumber = discNumber;
+        this.discTotal = discTotal;
+        this.score = score;
+        this.genre = String.join(";", genre);
         this.artwork = artwork;
+        this.like = like;
+        this.dislike = dislike;
+        this.comment = comment;
+        this.kind = kind;
+        this.duration = duration;
+        this.size = size;
+        this.bitRate = bitRate;
+        this.bitDepth = bitDepth;
+        this.sampleRate = sampleRate;
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public UUID getTrackId() {
-        return trackId;
+    public UUID getTrackUUID() {
+        return trackUUID;
     }
 
-    public void setTrackId(UUID trackId) {
-        this.trackId = trackId;
+    public void setTrackUUID(UUID trackUUID) {
+        this.trackUUID = trackUUID;
     }
 
-    public String getSize() {
-        return size;
+    public String getAlbumArtist() {
+        return albumArtist;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setAlbumArtist(String albumArtist) {
+        this.albumArtist = albumArtist;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getComposer() {
+        return composer;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setComposer(String composer) {
+        this.composer = composer;
     }
 
-    public String getTrackNumber() {
+    public Integer getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(Integer releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public Integer getTrackNumber() {
         return trackNumber;
     }
 
-    public void setTrackNumber(String trackNumber) {
+    public void setTrackNumber(Integer trackNumber) {
         this.trackNumber = trackNumber;
     }
 
-    public String getTrackCount() {
-        return trackCount;
+    public Integer getTrackTotal() {
+        return trackTotal;
     }
 
-    public void setTrackCount(String trackCount) {
-        this.trackCount = trackCount;
+    public void setTrackTotal(Integer trackTotal) {
+        this.trackTotal = trackTotal;
     }
 
-    public String getDisc() {
-        return disc;
+    public Integer getDiscNumber() {
+        return discNumber;
     }
 
-    public void setDisc(String disc) {
-        this.disc = disc;
+    public void setDiscNumber(Integer discNumber) {
+        this.discNumber = discNumber;
     }
 
-    public String getDate() {
-        return date;
+    public Integer getDiscTotal() {
+        return discTotal;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDiscTotal(Integer discTotal) {
+        this.discTotal = discTotal;
     }
 
-    public String getGenre() {
-        return genre;
+    public Float getScore() {
+        return score;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setScore(Float score) {
+        this.score = score;
+    }
+
+    public List<String> getGenre() {
+        return Arrays.asList(genre.split(";"));
+    }
+
+    public void setGenre(List<String> genre) {
+        this.genre = String.join(";", genre);
+    }
+
+    public void addGenre(String genre) {
+        this.genre += (";" + genre);
+    }
+
+    public String getArtwork() {
+        return artwork;
+    }
+
+    public void setArtwork(String artwork) {
+        this.artwork = artwork;
+    }
+
+    public Boolean getLike() {
+        return like;
+    }
+
+    public void setLike(Boolean like) {
+        this.like = like;
+    }
+
+    public Boolean getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(Boolean dislike) {
+        this.dislike = dislike;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getKind() {
@@ -168,20 +247,28 @@ public class MusicTrackInfoStaticEntity {
         this.kind = kind;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
     public String getBitRate() {
         return bitRate;
     }
 
     public void setBitRate(String bitRate) {
         this.bitRate = bitRate;
-    }
-
-    public String getSampleRate() {
-        return sampleRate;
-    }
-
-    public void setSampleRate(String sampleRate) {
-        this.sampleRate = sampleRate;
     }
 
     public String getBitDepth() {
@@ -192,24 +279,28 @@ public class MusicTrackInfoStaticEntity {
         this.bitDepth = bitDepth;
     }
 
-    public Date getDateAdded() {
+    public String getSampleRate() {
+        return sampleRate;
+    }
+
+    public void setSampleRate(String sampleRate) {
+        this.sampleRate = sampleRate;
+    }
+
+    public ZonedDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public Date getDateModified() {
+    public void setDateAdded(ZonedDateTime dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public ZonedDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(Date dateModified) {
+    public void setDateModified(ZonedDateTime dateModified) {
         this.dateModified = dateModified;
-    }
-
-    public String getArtwork() {
-        return artwork;
-    }
-
-    public void setArtwork(String artwork) throws Exception {
-        this.artwork = artwork;
     }
 
     public MusicTrackEntity getMusicTrackEntity() {

@@ -6,6 +6,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -80,7 +82,7 @@ public class MusicAlbumInfoStaticEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public MusicAlbumInfoStaticEntity(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, String genre, Float score, Boolean like, Boolean dislike, String comment, Long sizeTotal, MusicAlbumEntity musicAlbumEntity) {
+    public MusicAlbumInfoStaticEntity(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean like, Boolean dislike, String comment, Long sizeTotal, MusicAlbumEntity musicAlbumEntity) {
         this.artwork = artwork;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -88,7 +90,7 @@ public class MusicAlbumInfoStaticEntity {
         this.trackTotal = trackTotal;
         this.discNumber = discNumber;
         this.discTotal = discTotal;
-        this.genre = genre;
+        this.genre = String.join(";", genre);
         this.score = score;
         this.like = like;
         this.dislike = dislike;
@@ -161,12 +163,12 @@ public class MusicAlbumInfoStaticEntity {
         this.discTotal = discTotal;
     }
 
-    public String getGenre() {
-        return genre;
+    public List<String> getGenre() {
+        return Arrays.asList(genre.split(";"));
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenre(List<String> genre) {
+        this.genre = String.join(";", genre);
     }
 
     public Float getScore() {
