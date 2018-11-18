@@ -21,7 +21,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public String getAlbum(String username, int id) throws Exception {
-        return new ObjectMapper().writeValueAsString(musicAlbumRepository.findByOwner_UserEntity_UsernameAndId(username, id));
+        return null;
     }
 
     @Override
@@ -41,12 +41,12 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public String listUserAlbum(String username, Pageable pageable) throws Exception {
-        return new ObjectMapper().writeValueAsString(musicAlbumRepository.findAllByOwner_UserEntity_Username(username, pageable));
+        return null;
     }
 
     @Override
     public String listAlbumByTitle(String username, String title) throws Exception {
-        return new ObjectMapper().writeValueAsString(musicAlbumRepository.findByOwner_UserEntity_UsernameAndTitle(username, title));
+        return null;
     }
 
     @Override
@@ -76,21 +76,21 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public String listTrackByTitle(String username, String title) throws Exception {
-        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByTitleAndOwner_UserEntity_Username(title, username));
+        return null;
     }
 
     @Override
     public String listTrackByAlbum(String username, String album) throws Exception {
-        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByAlbumAndOwner_UserEntity_Username(album, username));
+        return null;
     }
 
     @Override
     public String listTrackByAlbumId(String username, int id) throws Exception {
-        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByMusicAlbumEntity_IdAndOwner_UserEntity_Username(id, username));
+        return null;
     }
 
     @Override
     public String listTracksByArtist(String username, String artist) throws Exception {
-        return new ObjectMapper().writeValueAsString(musicTrackRepository.findByArtistAndOwner_UserEntity_Username(artist, username));
+        return null;
     }
 }

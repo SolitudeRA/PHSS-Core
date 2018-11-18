@@ -5,11 +5,12 @@ import org.protogalaxy.phss.service.main.filesystem.database.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/{username}/music")
+@RequestMapping("/music")
 public class MusicController {
     private final StorageServiceImpl storageService;
     private final MusicServiceImpl musicService;
@@ -21,44 +22,37 @@ public class MusicController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String handleMusicUpload(@PathVariable String username, @RequestParam("music") MultipartFile file) throws Exception {
-        return storageService.storeTrack(username, file);
+    public String handleMusicUpload(@RequestParam("track") MultipartFile file) throws Exception {
+        return storageService.storeTrack(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), file);
     }
 
     @RequestMapping(value = "/multiupload", method = RequestMethod.POST)
-    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String handleMusicMultiUpload(@PathVariable String username, MultipartFile[] files) throws Exception {
-        return storageService.storeTracks(username, files);
+    public String handleMusicMultiUpload(@RequestParam("tracks") MultipartFile[] files) throws Exception {
+        return storageService.storeTracks(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), files);
     }
 
     @RequestMapping(value = "/album", method = RequestMethod.GET)
-    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String listUserAlbum(@PathVariable String username, Pageable pageable) throws Exception {
-        return musicService.listUserAlbum(username, pageable);
+    public String listUserAlbum(Pageable pageable) throws Exception {
+        return musicService.listUserAlbum(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), pageable);
     }
 
     @RequestMapping(value = "/album/{id}", method = RequestMethod.GET)
-    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String getUserAlbumById(@PathVariable String username, @PathVariable int id) throws Exception {
-        return musicService.getAlbum(username, id);
+    public String getUserAlbumById(@PathVariable int id) throws Exception {
+        return musicService.getAlbum(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), id);
     }
 
     @RequestMapping(value = "/album/{id}/track", method = RequestMethod.GET)
-    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String listUserTrackByAlbumId(@PathVariable String username, @PathVariable int id) throws Exception {
-        return musicService.listTrackByAlbumId(username, id);
+    public String listUserTrackByAlbumId(@PathVariable int id) throws Exception {
+        return musicService.listTrackByAlbumId(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), id);
     }
 
     @RequestMapping(value = "/search/album", method = RequestMethod.POST)
-    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String listUserAlbumByTile(@PathVariable String username, String title) throws Exception {
-        return musicService.listAlbumByTitle(username, title);
+    public String listUserAlbumByTile(String title) throws Exception {
+        return musicService.listAlbumByTitle(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), title);
     }
 
     @RequestMapping(value = "/search/track", method = RequestMethod.POST)
-    @PreAuthorize("isFullyAuthenticated() && (#username==principal.username)")
-    public String listUserTrackByTitle(@PathVariable String username, String title) throws Exception {
-        return musicService.listTrackByTitle(username, title);
+    public String listUserTrackByTitle(String title) throws Exception {
+        return musicService.listTrackByTitle(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), title);
     }
 }

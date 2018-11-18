@@ -29,7 +29,7 @@ public class MusicTrackInfoStaticEntity {
     @Column(name = "composer")
     private String composer;
 
-    @Column(name = "release)year")
+    @Column(name = "release_year")
     private Integer releaseYear;
 
     @Column(name = "track_number")
@@ -53,13 +53,13 @@ public class MusicTrackInfoStaticEntity {
     @Column(name = "artwork")
     private String artwork;
 
-    @Column(name = "like")
-    private Boolean like;
+    @Column(name = "love")
+    private Boolean love;
 
     @Column(name = "dislike")
     private Boolean dislike;
 
-    @Column(name = "comment", columnDefinition = "TEXT")
+    @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
     @Column(name = "kind")
@@ -100,7 +100,7 @@ public class MusicTrackInfoStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean like, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
+    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
         this.albumArtist = albumArtist;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -111,7 +111,7 @@ public class MusicTrackInfoStaticEntity {
         this.score = score;
         this.genre = String.join(";", genre);
         this.artwork = artwork;
-        this.like = like;
+        this.love = love;
         this.dislike = dislike;
         this.comment = comment;
         this.kind = kind;
@@ -199,12 +199,8 @@ public class MusicTrackInfoStaticEntity {
         return Arrays.asList(genre.split(";"));
     }
 
-    public void setGenre(List<String> genre) {
+    public void setGenre(String genre) {
         this.genre = String.join(";", genre);
-    }
-
-    public void addGenre(String genre) {
-        this.genre += (";" + genre);
     }
 
     public String getArtwork() {
@@ -215,12 +211,12 @@ public class MusicTrackInfoStaticEntity {
         this.artwork = artwork;
     }
 
-    public Boolean getLike() {
-        return like;
+    public Boolean getLove() {
+        return love;
     }
 
-    public void setLike(Boolean like) {
-        this.like = like;
+    public void setLove(Boolean love) {
+        this.love = love;
     }
 
     public Boolean getDislike() {

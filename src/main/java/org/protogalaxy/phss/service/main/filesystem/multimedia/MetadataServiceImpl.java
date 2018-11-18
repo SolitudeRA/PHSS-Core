@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.main.multimedia;
+package org.protogalaxy.phss.service.main.filesystem.multimedia;
 
 
 import org.apache.poi.hpsf.DocumentSummaryInformation;
@@ -27,7 +27,7 @@ import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.exception.service.MetadataException;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
-import org.protogalaxy.phss.service.interfaces.multimedia.MetadataService;
+import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

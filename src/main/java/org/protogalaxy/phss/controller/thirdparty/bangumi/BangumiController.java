@@ -2,6 +2,7 @@ package org.protogalaxy.phss.controller.thirdparty.bangumi;
 
 import org.protogalaxy.phss.service.main.oauth2.bangumi.BangumiApi;
 import org.protogalaxy.phss.service.main.oauth2.bangumi.BangumiConsts;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,12 @@ public class BangumiController {
 
     public BangumiController(OAuth2AuthorizedClientService oAuth2AuthorizedClientService) {
         this.oAuth2AuthorizedClientService = oAuth2AuthorizedClientService;
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     @RequestMapping("/bangumi")

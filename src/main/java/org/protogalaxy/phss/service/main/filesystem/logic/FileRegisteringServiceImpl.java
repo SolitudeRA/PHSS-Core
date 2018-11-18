@@ -93,26 +93,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
 
     @Override
     public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, Path path) throws Exception {
-        MusicTrackEntity trackEntity = new MusicTrackEntity(
-                filesystemMainRepository.findByUserEntity_Username(username),
-                metadata.get("title").toString(),
-                metadata.get("album").toString(),
-                metadata.get("artist").toString(),
-                metadata.get("album_artist").toString(),
-                path.toString());
-        trackEntity.setTrackInformation(new MusicTrackInfoEntity(trackEntity));
-        trackEntity.setTrackInformationStatic(new MusicTrackInfoStaticEntity(
-                metadata.get("size").toString(),
-                metadata.get("duration").toString(),
-                metadata.get("track").toString(),
-                metadata.get("disc").toString(),
-                metadata.get("date").toString(),
-                metadata.get("artwork").toString(),
-                metadata.get("genre").toString(),
-                metadata.get("bitrate").toString(),
-                metadata.get("sample_rate").toString(),
-                metadata.get("bit_depth").toString(),
-                trackEntity));
+        MusicTrackEntity trackEntity = new MusicTrackEntity();
         musicTrackRepository.save(trackEntity);
         return trackEntity;
     }

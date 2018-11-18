@@ -11,7 +11,7 @@ import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.protogalaxy.phss.service.main.multimedia.MetadataServiceImpl;
+import org.protogalaxy.phss.service.main.filesystem.multimedia.MetadataServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;

@@ -26,7 +26,7 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
 
     private Float score;
 
-    private Boolean like;
+    private Boolean love;
 
     private Boolean dislike;
 
@@ -51,7 +51,7 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         this.discTotal = musicAlbumInfoStaticEntity.getDiscTotal();
         this.genre = musicAlbumInfoStaticEntity.getGenre();
         this.score = musicAlbumInfoStaticEntity.getScore();
-        this.like = musicAlbumInfoStaticEntity.getLike();
+        this.love = musicAlbumInfoStaticEntity.getLove();
         this.dislike = musicAlbumInfoStaticEntity.getDislike();
         this.comment = musicAlbumInfoStaticEntity.getComment();
         this.sizeTotal = musicAlbumInfoStaticEntity.getSizeTotal();
@@ -59,7 +59,7 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         this.dateModified = musicAlbumInfoStaticEntity.getDateModified();
     }
 
-    public MusicAlbumInfoStaticResource(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean like, Boolean dislike, String comment, Long sizeTotal, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicAlbumInfoStaticResource(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean love, Boolean dislike, String comment, Long sizeTotal, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
         this.artwork = artwork;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -69,7 +69,7 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         this.discTotal = discTotal;
         this.genre = genre;
         this.score = score;
-        this.like = like;
+        this.love = love;
         this.dislike = dislike;
         this.comment = comment;
         this.sizeTotal = sizeTotal;
@@ -113,8 +113,8 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         return score;
     }
 
-    public Boolean getLike() {
-        return like;
+    public Boolean getLove() {
+        return love;
     }
 
     public Boolean getDislike() {

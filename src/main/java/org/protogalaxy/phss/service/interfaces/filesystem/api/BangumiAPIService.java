@@ -1,21 +1,16 @@
-package org.protogalaxy.phss.service.main.multimedia;
+package org.protogalaxy.phss.service.interfaces.filesystem.api;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.anime.*;
-import org.protogalaxy.phss.service.interfaces.multimedia.BangumiAPIService;
-import org.springframework.stereotype.Service;
 
-@Service
-public class BangumiAPIServiceImpl implements BangumiAPIService {
+
+public interface BangumiAPIService {
     /**
      * Search anime information by keyword
      *
      * @param keyword Search keyword
      * @return AnimeMainEntity with information
      */
-    @Override
-    public AnimeMainEntity searchAnime(String keyword) {
-        return null;
-    }
+    AnimeMainEntity searchAnime(String keyword);
 
     /**
      * Search character information by keyword
@@ -23,10 +18,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeCharacterEntity with information
      */
-    @Override
-    public AnimeCharacterEntity searchCharacter(String keyword) {
-        return null;
-    }
+    AnimeCharacterEntity searchCharacter(String keyword);
 
     /**
      * Search firm information by keyword
@@ -34,10 +26,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeFirmEntity with information
      */
-    @Override
-    public AnimeFirmEntity searchFirm(String keyword) {
-        return null;
-    }
+    AnimeFirmEntity searchFirm(String keyword);
 
     /**
      * Search seiyuu information by keyword
@@ -45,10 +34,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeSeiyuuEntity with information
      */
-    @Override
-    public AnimeSeiyuuEntity searchSeiyuu(String keyword) {
-        return null;
-    }
+    AnimeSeiyuuEntity searchSeiyuu(String keyword);
 
     /**
      * Search staff information by keyword
@@ -56,10 +42,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeStaffEntity with information
      */
-    @Override
-    public AnimeStaffEntity searchStaff(String keyword) {
-        return null;
-    }
+    AnimeStaffEntity searchStaff(String keyword);
 
     /**
      * Retrieve anime information by Bangumi ID
@@ -67,10 +50,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeMainEntity with information
      */
-    @Override
-    public AnimeMainEntity retrieveAnime(int bangumiId) {
-        return null;
-    }
+    AnimeMainEntity retrieveAnime(int bangumiId);
 
     /**
      * Retrieve character information by Bangumi ID
@@ -78,10 +58,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeCharacterEntity with information
      */
-    @Override
-    public AnimeCharacterEntity retrieveCharacter(int bangumiId) {
-        return null;
-    }
+    AnimeCharacterEntity retrieveCharacter(int bangumiId);
 
     /**
      * Retrieve firm information by Bangumi ID
@@ -89,10 +66,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeFirmEntity with information
      */
-    @Override
-    public AnimeFirmEntity retrieveFirm(int bangumiId) {
-        return null;
-    }
+    AnimeFirmEntity retrieveFirm(int bangumiId);
 
     /**
      * Retrieve seiyuu information by Bangumi ID
@@ -100,10 +74,7 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeSeiyuuEntity with information
      */
-    @Override
-    public AnimeSeiyuuEntity retrieveSeiyuu(int bangumiId) {
-        return null;
-    }
+    AnimeSeiyuuEntity retrieveSeiyuu(int bangumiId);
 
     /**
      * Retrieve staff information by Bangumi ID
@@ -111,8 +82,5 @@ public class BangumiAPIServiceImpl implements BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeStaffEntity with information
      */
-    @Override
-    public AnimeStaffEntity retrieveStaff(int bangumiId) {
-        return null;
-    }
+    AnimeStaffEntity retrieveStaff(int bangumiId);
 }

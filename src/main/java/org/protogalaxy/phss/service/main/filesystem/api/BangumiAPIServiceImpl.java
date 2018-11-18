@@ -1,16 +1,21 @@
-package org.protogalaxy.phss.service.interfaces.multimedia;
+package org.protogalaxy.phss.service.main.filesystem.api;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.anime.*;
+import org.protogalaxy.phss.service.interfaces.filesystem.api.BangumiAPIService;
+import org.springframework.stereotype.Service;
 
-
-public interface BangumiAPIService {
+@Service
+public class BangumiAPIServiceImpl implements BangumiAPIService {
     /**
      * Search anime information by keyword
      *
      * @param keyword Search keyword
      * @return AnimeMainEntity with information
      */
-    AnimeMainEntity searchAnime(String keyword);
+    @Override
+    public AnimeMainEntity searchAnime(String keyword) {
+        return null;
+    }
 
     /**
      * Search character information by keyword
@@ -18,7 +23,10 @@ public interface BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeCharacterEntity with information
      */
-    AnimeCharacterEntity searchCharacter(String keyword);
+    @Override
+    public AnimeCharacterEntity searchCharacter(String keyword) {
+        return null;
+    }
 
     /**
      * Search firm information by keyword
@@ -26,7 +34,10 @@ public interface BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeFirmEntity with information
      */
-    AnimeFirmEntity searchFirm(String keyword);
+    @Override
+    public AnimeFirmEntity searchFirm(String keyword) {
+        return null;
+    }
 
     /**
      * Search seiyuu information by keyword
@@ -34,7 +45,10 @@ public interface BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeSeiyuuEntity with information
      */
-    AnimeSeiyuuEntity searchSeiyuu(String keyword);
+    @Override
+    public AnimeSeiyuuEntity searchSeiyuu(String keyword) {
+        return null;
+    }
 
     /**
      * Search staff information by keyword
@@ -42,7 +56,10 @@ public interface BangumiAPIService {
      * @param keyword Search keyword
      * @return AnimeStaffEntity with information
      */
-    AnimeStaffEntity searchStaff(String keyword);
+    @Override
+    public AnimeStaffEntity searchStaff(String keyword) {
+        return null;
+    }
 
     /**
      * Retrieve anime information by Bangumi ID
@@ -50,7 +67,10 @@ public interface BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeMainEntity with information
      */
-    AnimeMainEntity retrieveAnime(int bangumiId);
+    @Override
+    public AnimeMainEntity retrieveAnime(int bangumiId) {
+        return null;
+    }
 
     /**
      * Retrieve character information by Bangumi ID
@@ -58,7 +78,10 @@ public interface BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeCharacterEntity with information
      */
-    AnimeCharacterEntity retrieveCharacter(int bangumiId);
+    @Override
+    public AnimeCharacterEntity retrieveCharacter(int bangumiId) {
+        return null;
+    }
 
     /**
      * Retrieve firm information by Bangumi ID
@@ -66,7 +89,10 @@ public interface BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeFirmEntity with information
      */
-    AnimeFirmEntity retrieveFirm(int bangumiId);
+    @Override
+    public AnimeFirmEntity retrieveFirm(int bangumiId) {
+        return null;
+    }
 
     /**
      * Retrieve seiyuu information by Bangumi ID
@@ -74,7 +100,10 @@ public interface BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeSeiyuuEntity with information
      */
-    AnimeSeiyuuEntity retrieveSeiyuu(int bangumiId);
+    @Override
+    public AnimeSeiyuuEntity retrieveSeiyuu(int bangumiId) {
+        return null;
+    }
 
     /**
      * Retrieve staff information by Bangumi ID
@@ -82,5 +111,8 @@ public interface BangumiAPIService {
      * @param bangumiId Bangumi object ID
      * @return AnimeStaffEntity with information
      */
-    AnimeStaffEntity retrieveStaff(int bangumiId);
+    @Override
+    public AnimeStaffEntity retrieveStaff(int bangumiId) {
+        return null;
+    }
 }

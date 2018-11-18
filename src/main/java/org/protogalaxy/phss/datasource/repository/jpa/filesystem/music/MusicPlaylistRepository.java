@@ -3,20 +3,11 @@ package org.protogalaxy.phss.datasource.repository.jpa.filesystem.music;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicPlaylistEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.util.List;
+import java.util.UUID;
 
-public interface MusicPlaylistRepository extends JpaRepository<MusicPlaylistEntity, Integer>, CrudRepository<MusicPlaylistEntity, Integer> {
-    @PreAuthorize("isFullyAuthenticated()&&(#username==principal.username)")
-    List<MusicPlaylistEntity> findAllByFileSystemMainEntity_UserEntity_Username(@Param("username") String username);
-
-    @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    List<MusicPlaylistEntity> findAll();
-
-    @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    void deleteAll();
+public interface MusicPlaylistRepository extends JpaRepository<MusicPlaylistEntity, UUID>, CrudRepository<MusicPlaylistEntity, UUID> {
+    List<MusicPlaylistEntity> findAllByFileSystemOwner_UserEntity_Username(String username);
 }

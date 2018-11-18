@@ -5,9 +5,9 @@ import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.exception.path.PathException;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
-import org.protogalaxy.phss.service.main.multimedia.MetadataServiceImpl;
+import org.protogalaxy.phss.service.main.filesystem.multimedia.MetadataServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
-import org.protogalaxy.phss.service.interfaces.multimedia.MetadataService;
+import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

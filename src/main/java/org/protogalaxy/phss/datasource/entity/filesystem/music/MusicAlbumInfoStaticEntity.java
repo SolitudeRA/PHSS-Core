@@ -50,13 +50,13 @@ public class MusicAlbumInfoStaticEntity {
     @Column(name = "score")
     private Float score;
 
-    @Column(name = "like")
-    private Boolean like;
+    @Column(name = "love")
+    private Boolean love;
 
     @Column(name = "dislike")
     private Boolean dislike;
 
-    @Column(name = "comment", columnDefinition = "TEXT")
+    @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
     @Column(name = "size_total")
@@ -72,7 +72,7 @@ public class MusicAlbumInfoStaticEntity {
 
     @MapsId
     @OneToOne
-    @JoinColumn(name = "album_id")
+    @JoinColumn(name = "album_uuid", nullable = false, updatable = false, unique = true, columnDefinition = "BINARY(16)")
     private MusicAlbumEntity musicAlbumEntity;
 
     public MusicAlbumInfoStaticEntity() {
@@ -82,7 +82,7 @@ public class MusicAlbumInfoStaticEntity {
         this.musicAlbumEntity = musicAlbumEntity;
     }
 
-    public MusicAlbumInfoStaticEntity(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean like, Boolean dislike, String comment, Long sizeTotal, MusicAlbumEntity musicAlbumEntity) {
+    public MusicAlbumInfoStaticEntity(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean love, Boolean dislike, String comment, Long sizeTotal, MusicAlbumEntity musicAlbumEntity) {
         this.artwork = artwork;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -92,7 +92,7 @@ public class MusicAlbumInfoStaticEntity {
         this.discTotal = discTotal;
         this.genre = String.join(";", genre);
         this.score = score;
-        this.like = like;
+        this.love = love;
         this.dislike = dislike;
         this.comment = comment;
         this.sizeTotal = sizeTotal;
@@ -179,12 +179,12 @@ public class MusicAlbumInfoStaticEntity {
         this.score = score;
     }
 
-    public Boolean getLike() {
-        return like;
+    public Boolean getLove() {
+        return love;
     }
 
-    public void setLike(Boolean like) {
-        this.like = like;
+    public void setLove(Boolean love) {
+        this.love = love;
     }
 
     public Boolean getDislike() {

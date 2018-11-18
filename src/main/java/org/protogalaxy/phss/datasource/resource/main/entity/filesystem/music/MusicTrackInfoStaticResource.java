@@ -31,7 +31,7 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
 
     private String artwork;
 
-    private Boolean like;
+    private Boolean love;
 
     private Boolean dislike;
 
@@ -68,7 +68,7 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         this.score = musicTrackInfoStaticEntity.getScore();
         this.genre = musicTrackInfoStaticEntity.getGenre();
         this.artwork = musicTrackInfoStaticEntity.getArtwork();
-        this.like = musicTrackInfoStaticEntity.getLike();
+        this.love = musicTrackInfoStaticEntity.getLove();
         this.dislike = musicTrackInfoStaticEntity.getDislike();
         this.comment = musicTrackInfoStaticEntity.getComment();
         this.kind = musicTrackInfoStaticEntity.getKind();
@@ -81,7 +81,7 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         this.dateModified = musicTrackInfoStaticEntity.getDateModified();
     }
 
-    public MusicTrackInfoStaticResource(UUID trackUUID, String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean like, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicTrackInfoStaticResource(UUID trackUUID, String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
         this.trackUUID = trackUUID;
         this.albumArtist = albumArtist;
         this.composer = composer;
@@ -93,7 +93,7 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         this.score = score;
         this.genre = genre;
         this.artwork = artwork;
-        this.like = like;
+        this.love = love;
         this.dislike = dislike;
         this.comment = comment;
         this.kind = kind;
@@ -150,8 +150,8 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         return artwork;
     }
 
-    public Boolean getLike() {
-        return like;
+    public Boolean getLove() {
+        return love;
     }
 
     public Boolean getDislike() {
