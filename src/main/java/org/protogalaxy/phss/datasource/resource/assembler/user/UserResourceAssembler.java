@@ -1,29 +1,29 @@
 package org.protogalaxy.phss.datasource.resource.assembler.user;
 
 import org.protogalaxy.phss.controller.UserController;
-import org.protogalaxy.phss.datasource.entity.user.UserEntity;
-import org.protogalaxy.phss.datasource.resource.main.entity.user.UserResource;
+import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
+import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
-public class UserResourceAssembler extends ResourceAssemblerSupport<UserEntity, UserResource> {
+public class UserResourceAssembler extends ResourceAssemblerSupport<AccountEntity, AccountResource> {
 
     public UserResourceAssembler() {
-        super(UserController.class, UserResource.class);
+        super(UserController.class, AccountResource.class);
     }
 
     @Override
-    public UserResource toResource(UserEntity userEntity) {
-        return new UserResource(userEntity.getId(),
-                                userEntity.getUsername(),
-                                userEntity.getAvatar(),
-                                userEntity.getAuthorities(),
-                                userEntity.getFileSystemMainEntity(),
-                                userEntity.getPersonalDataEntity(),
-                                userEntity.getSettingMainEntity(),
-                                userEntity.isEnabled(),
-                                userEntity.isAccountNonLocked(),
-                                userEntity.isCredentialsNonExpired(),
-                                userEntity.getDateCreate(),
-                                userEntity.getDateModified());
+    public AccountResource toResource(AccountEntity accountEntity) {
+        return new AccountResource(accountEntity.getId(),
+                                   accountEntity.getUsername(),
+                                   accountEntity.getAvatar(),
+                                   accountEntity.getAuthorities(),
+                                   accountEntity.getFileSystemMainEntity(),
+                                   accountEntity.getPersonalDataEntity(),
+                                   accountEntity.getSettingMainEntity(),
+                                   accountEntity.isEnabled(),
+                                   accountEntity.isAccountNonLocked(),
+                                   accountEntity.isCredentialsNonExpired(),
+                                   accountEntity.getDateCreate(),
+                                   accountEntity.getDateModified());
     }
 }

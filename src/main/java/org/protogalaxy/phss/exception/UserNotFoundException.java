@@ -1,4 +1,4 @@
 package org.protogalaxy.phss.exception;
 
-public class UserNotFoundException {
+public class UserNotFoundException extends Throwable {
 }

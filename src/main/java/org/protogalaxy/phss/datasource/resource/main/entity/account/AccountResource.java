@@ -1,16 +1,16 @@
-package org.protogalaxy.phss.datasource.resource.main.entity.user;
+package org.protogalaxy.phss.datasource.resource.main.entity.account;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
-import org.protogalaxy.phss.datasource.entity.user.UserEntity;
+import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
 
-public class UserResource extends ResourceSupport {
+public class AccountResource extends ResourceSupport {
 
     private Integer uid;
     private String username;
@@ -25,22 +25,22 @@ public class UserResource extends ResourceSupport {
     private ZonedDateTime dateCreate;
     private ZonedDateTime dateModified;
 
-    public UserResource(UserEntity userEntity) {
-        this.uid = userEntity.getId();
-        this.username = userEntity.getUsername();
-        this.avatar = userEntity.getAvatar();
-        this.authorities = userEntity.getAuthorities();
-        this.fileSystemMainEntity = userEntity.getFileSystemMainEntity();
-        this.personalDataEntity = userEntity.getPersonalDataEntity();
-        this.settingMainEntity = userEntity.getSettingMainEntity();
-        this.isEnabled = userEntity.isEnabled();
-        this.isAccountNonLocked = userEntity.isAccountNonLocked();
-        this.isAccountNonExpired = userEntity.isAccountNonExpired();
-        this.dateCreate = userEntity.getDateCreate();
-        this.dateModified = userEntity.getDateModified();
+    public AccountResource(AccountEntity accountEntity) {
+        this.uid = accountEntity.getId();
+        this.username = accountEntity.getUsername();
+        this.avatar = accountEntity.getAvatar();
+        this.authorities = accountEntity.getAuthorities();
+        this.fileSystemMainEntity = accountEntity.getFileSystemMainEntity();
+        this.personalDataEntity = accountEntity.getPersonalDataEntity();
+        this.settingMainEntity = accountEntity.getSettingMainEntity();
+        this.isEnabled = accountEntity.isEnabled();
+        this.isAccountNonLocked = accountEntity.isAccountNonLocked();
+        this.isAccountNonExpired = accountEntity.isAccountNonExpired();
+        this.dateCreate = accountEntity.getDateCreate();
+        this.dateModified = accountEntity.getDateModified();
     }
 
-    public UserResource(Integer id, String username, String avatar, Set<PhssGrantedAuthority> authorities, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity, Boolean isEnabled, Boolean isAccountNonLocked, Boolean isAccountNonExpired, ZonedDateTime dateCreate, ZonedDateTime dateModified) {
+    public AccountResource(Integer id, String username, String avatar, Set<PhssGrantedAuthority> authorities, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity, Boolean isEnabled, Boolean isAccountNonLocked, Boolean isAccountNonExpired, ZonedDateTime dateCreate, ZonedDateTime dateModified) {
         this.uid = id;
         this.username = username;
         this.avatar = avatar;

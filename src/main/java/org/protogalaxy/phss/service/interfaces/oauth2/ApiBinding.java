@@ -22,7 +22,7 @@ public abstract class ApiBinding {
 
     private ClientHttpRequestInterceptor getDefaultInterceptor() {
         return (httpRequest, bytes, clientHttpRequestExecution) -> {
-            httpRequest.getHeaders().add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+            httpRequest.getHeaders().add("account-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
             return clientHttpRequestExecution.execute(httpRequest, bytes);
         };
     }
@@ -30,7 +30,7 @@ public abstract class ApiBinding {
     private ClientHttpRequestInterceptor getBearerTokenInterceptor(String accessToken) {
         return (httpRequest, bytes, clientHttpRequestExecution) -> {
             httpRequest.getHeaders().setBearerAuth(accessToken);
-            httpRequest.getHeaders().add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+            httpRequest.getHeaders().add("account-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
             return clientHttpRequestExecution.execute(httpRequest, bytes);
         };
     }

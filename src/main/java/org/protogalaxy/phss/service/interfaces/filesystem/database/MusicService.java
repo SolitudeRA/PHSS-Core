@@ -15,7 +15,7 @@ public interface MusicService {
     /**
      * Get an album
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param id       id of the album
      * @return JSON format string of the album
      */
@@ -46,9 +46,9 @@ public interface MusicService {
     boolean removeAlbum(int id);
 
     /**
-     * List user albums
+     * List account albums
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param pageable data page
      * @return JSON format string of albums
      */
@@ -57,7 +57,7 @@ public interface MusicService {
     /**
      * List albums by name
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param title    title of the albums
      * @return JSON format string of the album
      */
@@ -109,7 +109,7 @@ public interface MusicService {
     /**
      * List tracks by title
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param title    name of the tracks
      * @return JSON format string of the track
      */
@@ -118,7 +118,7 @@ public interface MusicService {
     /**
      * List tracks by album name
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param title    title of the album
      * @return JSON format string of the tracks
      */
@@ -127,7 +127,7 @@ public interface MusicService {
     /**
      * List tracks by album id
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param id       is of the album
      * @return JSON format string of tracks
      */
@@ -136,7 +136,7 @@ public interface MusicService {
     /**
      * List tracks by artist
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param artist   artist of the tracks
      * @return JSON format string of the tracks
      */

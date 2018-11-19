@@ -3,7 +3,7 @@ package org.protogalaxy.phss.datasource.entity.filesystem.main;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.protogalaxy.phss.datasource.entity.user.UserEntity;
+import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -60,13 +60,13 @@ public class FileSystemMainEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "owner_id")
-    private UserEntity userEntity;
+    private AccountEntity accountEntity;
 
     public FileSystemMainEntity() {
     }
 
-    public FileSystemMainEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public FileSystemMainEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 
     public FileSystemMainEntity(Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount) {
@@ -146,11 +146,11 @@ public class FileSystemMainEntity {
         this.gmtModified = gmtModified;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public AccountEntity getAccountEntity() {
+        return accountEntity;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 }

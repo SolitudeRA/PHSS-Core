@@ -115,7 +115,7 @@ public class BangumiApi extends ApiBinding {
      * @param subjectId 条目 ID
      */
     public JSONObject getUserProgress(String username, @Nullable Integer subjectId) {
-        String getUrl = BANGUMI_API_BASE_URL + "/user/" + username + "/progress";
+        String getUrl = BANGUMI_API_BASE_URL + "/account/" + username + "/progress";
         if (subjectId != null) {
             getUrl += ("?subject_id=" + subjectId);
         }
@@ -139,7 +139,7 @@ public class BangumiApi extends ApiBinding {
      * @param username 用户名 也可使用 UID
      */
     public JSONObject getUser(String username) {
-        return restTemplate.getForObject(BANGUMI_API_BASE_URL + "/user/" + username, JSONObject.class);
+        return restTemplate.getForObject(BANGUMI_API_BASE_URL + "/account/" + username, JSONObject.class);
     }
 
     /**
@@ -153,7 +153,7 @@ public class BangumiApi extends ApiBinding {
      * @param responseGroup 默认为 medium。small 时不返回条目详细信息
      */
     public JSONObject getUserCollection(String username, @Nullable String cat, @Nullable String ids, @Nullable String responseGroup) {
-        String getUrl = BANGUMI_API_BASE_URL + "/user/" + username + "/collection";
+        String getUrl = BANGUMI_API_BASE_URL + "/account/" + username + "/collection";
         boolean paramFlag = false;
         if (cat != null) {
             getUrl += ("?cat=" + cat);
@@ -183,7 +183,7 @@ public class BangumiApi extends ApiBinding {
      * @param maxResults  显示条数
      */
     public JSONObject getUserTypeCollection(String username, String subjectType, @Nullable Integer maxResults) {
-        String getUrl = BANGUMI_API_BASE_URL + "/user/" + username + "/collections/" + subjectType;
+        String getUrl = BANGUMI_API_BASE_URL + "/account/" + username + "/collections/" + subjectType;
         if (maxResults != null) {
             getUrl += ("?max_results=" + maxResults);
         }
@@ -198,7 +198,7 @@ public class BangumiApi extends ApiBinding {
      * @param username 用户名
      */
     public JSONObject getUserStatusCollection(String username) {
-        return restTemplate.getForObject(BANGUMI_API_BASE_URL + "/user/" + username + "/collections/status", JSONObject.class);
+        return restTemplate.getForObject(BANGUMI_API_BASE_URL + "/account/" + username + "/collections/status", JSONObject.class);
     }
 
     /**

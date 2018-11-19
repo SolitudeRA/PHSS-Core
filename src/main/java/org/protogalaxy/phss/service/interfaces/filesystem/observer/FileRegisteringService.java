@@ -15,7 +15,7 @@ public interface FileRegisteringService {
     /**
      * Register track in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the music
      * @param path     path of the file
      */
@@ -24,7 +24,7 @@ public interface FileRegisteringService {
     /**
      * Register anime in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the anime
      * @param path     path of the file
      */
@@ -33,7 +33,7 @@ public interface FileRegisteringService {
     /**
      * Register movie in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the movie
      * @param path     path of the file
      */
@@ -42,7 +42,7 @@ public interface FileRegisteringService {
     /**
      * Register video in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the video
      * @param path     path of the file
      */
@@ -51,7 +51,7 @@ public interface FileRegisteringService {
     /**
      * Register photo in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the photo
      * @param path     path of the file
      */
@@ -60,7 +60,7 @@ public interface FileRegisteringService {
     /**
      * Register book in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the book
      * @param path     path of the file
      */
@@ -69,7 +69,7 @@ public interface FileRegisteringService {
     /**
      * Register document in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the document
      * @param path     path of the file
      * @param mimeType MIME type of the document
@@ -79,7 +79,7 @@ public interface FileRegisteringService {
     /**
      * Register illustration in database
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param metadata metadata of the illustration
      * @param path     path of the file
      */

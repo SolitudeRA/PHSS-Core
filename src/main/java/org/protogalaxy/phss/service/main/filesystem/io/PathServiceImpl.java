@@ -30,7 +30,7 @@ public class PathServiceImpl implements PathService {
     /**
      * Persist file in correct path
      *
-     * @param username Name of current user
+     * @param username Name of current account
      * @param mimeType MIME type of the file
      * @param tempPath Temporary path of the file
      * @param metadata Metadata of the file
@@ -44,7 +44,7 @@ public class PathServiceImpl implements PathService {
     /**
      * Switch path with filesystem part
      *
-     * @param username       Name of the user
+     * @param username       Name of the account
      * @param fileSystemPart Part of the filesystem
      * @return Correct path for the part
      */
@@ -75,7 +75,7 @@ public class PathServiceImpl implements PathService {
     /**
      * Switch path with metadata information
      *
-     * @param username       Name of the user
+     * @param username       Name of the account
      * @param tempPath       Temporary path of the file
      * @param fileSystemPart File system part
      * @return Correct path for current MIME type
@@ -151,7 +151,7 @@ public class PathServiceImpl implements PathService {
     /**
      * Change file location
      *
-     * @param username    name of current user
+     * @param username    name of current account
      * @param currentPath current file path
      * @param changedPath path that file to move
      * @return changed file path

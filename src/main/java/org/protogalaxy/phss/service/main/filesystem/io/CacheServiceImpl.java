@@ -34,7 +34,7 @@ public class CacheServiceImpl implements CacheService {
     /**
      * Caching file
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param file     uploaded MultipartFile
      * @return Path of the temp file
      */
@@ -52,7 +52,7 @@ public class CacheServiceImpl implements CacheService {
     /**
      * Caching image from memory
      *
-     * @param username      current user name
+     * @param username      current account name
      * @param bufferedImage buffered image
      * @return Path of the cached image
      */
@@ -71,7 +71,7 @@ public class CacheServiceImpl implements CacheService {
     /**
      * Create temp directory
      *
-     * @param username name of the user
+     * @param username name of the account
      * @return Path of the temp directory
      */
     private Path getUserTempDirectoryPath(String username) {

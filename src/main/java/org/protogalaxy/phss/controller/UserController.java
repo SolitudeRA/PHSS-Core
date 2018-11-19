@@ -2,8 +2,9 @@ package org.protogalaxy.phss.controller;
 
 
 import org.protogalaxy.phss.datasource.resource.assembler.user.UserResourceAssembler;
-import org.protogalaxy.phss.datasource.resource.main.entity.user.UserResource;
-import org.protogalaxy.phss.service.main.user.UserServiceImpl;
+import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResource;
+import org.protogalaxy.phss.exception.UserNotFoundException;
+import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -13,17 +14,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 @RequestMapping(value = "/user")
-@ExposesResourceFor(UserResource.class)
+@ExposesResourceFor(AccountResource.class)
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
-    private UserServiceImpl userService;
+    private AccountServiceImpl userService;
     private UserResourceAssembler userResourceAssembler = new UserResourceAssembler();
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(AccountServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -35,7 +35,7 @@ public class UserController {
 
     @PreAuthorize("isFullyAuthenticated()&&(#username==principal.username)")
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ResponseEntity<UserResource> getUser(@PathVariable String username) {
-        return new ResponseEntity<>(userResourceAssembler.toResource(userService.getUser(username)), HttpStatus.OK);
+    public ResponseEntity<AccountResource> getUser(@PathVariable String username) throws UserNotFoundException {
+        return new ResponseEntity<>(userResourceAssembler.toResource(userService.getAccount(username)), HttpStatus.OK);
     }
 }

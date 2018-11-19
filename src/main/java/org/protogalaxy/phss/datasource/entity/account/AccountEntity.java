@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.user;
+package org.protogalaxy.phss.datasource.entity.account;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
@@ -22,10 +22,10 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "Account")
 @DynamicInsert
-@Table(name = "user")
-public class UserEntity implements UserDetails, CredentialsContainer {
+@Table(name = "account")
+public class AccountEntity implements UserDetails, CredentialsContainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -92,19 +92,34 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private SettingMainEntity settingMainEntity;
 
-    public UserEntity() {
+    public AccountEntity() {
     }
 
     /**
      * User entity simple constructor with default ROLE_USER
      *
-     * @param username            name of the user
-     * @param password            password of the user
+     * @param username name of the account
+     * @param password password of the account
+     */
+    public AccountEntity(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.authorities = "USER";
+        this.isEnabled = true;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+    }
+
+    /**
+     * User entity  constructor with default ROLE_USER and whether account is expired or locked
+     *
+     * @param username            name of the account
+     * @param password            password of the account
      * @param isEnabled           whether account is enabled
      * @param isAccountNonExpired whether account is not expired
      * @param isAccountNonLocked  whether account is not locked
      */
-    public UserEntity(String username, String password, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
+    public AccountEntity(String username, String password, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
@@ -121,14 +136,14 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     /**
      * User entity constructor with authorities
      *
-     * @param username            name of the user
-     * @param password            password of the user
-     * @param authoritiesSet      authorities of the user
+     * @param username            name of the account
+     * @param password            password of the account
+     * @param authoritiesSet      authorities of the account
      * @param isEnabled           whether account is enabled
      * @param isAccountNonExpired whether account is not expired
      * @param isAccountNonLocked  whether account is not locked
      */
-    public UserEntity(String username, String password, Set<PhssGrantedAuthority> authoritiesSet, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
+    public AccountEntity(String username, String password, Set<PhssGrantedAuthority> authoritiesSet, Boolean isEnabled, Boolean isAccountNonExpired, Boolean isAccountNonLocked) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
@@ -149,17 +164,17 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     /**
      * User entity full constructor
      *
-     * @param username             name of the user
-     * @param password             password of the user
-     * @param passwordExt1         USB key content of the user
-     * @param passwordExt2         fingerprint data of the user
-     * @param passwordExt3         face ID data of the user
-     * @param authoritiesSet       authorities of the user
-     * @param fileSystemMainEntity fileSystem entity of the user
-     * @param personalDataEntity   personalDataInf Entity of the user
-     * @param settingMainEntity    settingMain Entity of the user
+     * @param username             name of the account
+     * @param password             password of the account
+     * @param passwordExt1         USB key content of the account
+     * @param passwordExt2         fingerprint data of the account
+     * @param passwordExt3         face ID data of the account
+     * @param authoritiesSet       authorities of the account
+     * @param fileSystemMainEntity fileSystem entity of the account
+     * @param personalDataEntity   personalDataInf Entity of the account
+     * @param settingMainEntity    settingMain Entity of the account
      */
-    public UserEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity) {
+    public AccountEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
@@ -243,7 +258,15 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     }
 
     public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
+        this.isEnabled = enabled;
+    }
+
+    public void enableAccount() {
+        this.isEnabled = true;
+    }
+
+    public void disableAccount() {
+        this.isEnabled = false;
     }
 
     @Override
@@ -252,7 +275,11 @@ public class UserEntity implements UserDetails, CredentialsContainer {
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
-        isAccountNonExpired = accountNonExpired;
+        this.isAccountNonExpired = accountNonExpired;
+    }
+
+    public void expireAccount() {
+        this.isAccountNonExpired = false;
     }
 
     @Override
@@ -262,6 +289,14 @@ public class UserEntity implements UserDetails, CredentialsContainer {
 
     public void setAccountNonLocked(boolean accountNonLocked) {
         isAccountNonLocked = accountNonLocked;
+    }
+
+    public void lockAccount() {
+        this.isAccountNonLocked = false;
+    }
+
+    public void unlockAccount() {
+        this.isAccountNonLocked = true;
     }
 
     @Override

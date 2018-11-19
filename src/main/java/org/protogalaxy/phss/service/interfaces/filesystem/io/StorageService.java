@@ -7,7 +7,7 @@ public interface StorageService {
     /**
      * Store single track
      *
-     * @param username  name of current user
+     * @param username  name of current account
      * @param musicFile uploaded track
      * @return JSON format string of the uploaded track
      */
@@ -16,7 +16,7 @@ public interface StorageService {
     /**
      * Store tracks
      *
-     * @param username   name of current user
+     * @param username   name of current account
      * @param musicFiles uploaded tracks
      * @return JSON format string of the uploaded tracks
      */
@@ -33,7 +33,7 @@ public interface StorageService {
     /**
      * Store single anime
      *
-     * @param username  name of current user
+     * @param username  name of current account
      * @param animeFile uploaded anime
      * @return JSON format string of the uploaded anime
      */
@@ -49,7 +49,7 @@ public interface StorageService {
     /**
      * Store single movie
      *
-     * @param username  name of current user
+     * @param username  name of current account
      * @param movieFile uploaded movie
      * @return JSON format string of the uploaded movie
      */
@@ -65,7 +65,7 @@ public interface StorageService {
     /**
      * Store single video
      *
-     * @param username  name of current user
+     * @param username  name of current account
      * @param videoFile uploaded video
      * @return JSON format string of the uploaded video
      */
@@ -81,7 +81,7 @@ public interface StorageService {
     /**
      * Store single photo
      *
-     * @param username  name of current user
+     * @param username  name of current account
      * @param photoFile uploaded photo
      * @return JSON format string of the uploaded photo
      */
@@ -97,7 +97,7 @@ public interface StorageService {
     /**
      * Store single book
      *
-     * @param username name of current user
+     * @param username name of current account
      * @param bookFile uploaded book
      * @return JSON format string of the uploaded book
      */
@@ -113,7 +113,7 @@ public interface StorageService {
     /**
      * Store single document
      *
-     * @param username     name of current user
+     * @param username     name of current account
      * @param documentFile uploaded document
      * @return JSON format string of the uploaded document
      */
@@ -129,7 +129,7 @@ public interface StorageService {
     /**
      * Store single illustration
      *
-     * @param username         name of current user
+     * @param username         name of current account
      * @param illustrationFile uploaded illustration
      * @return JSON format string of the uploaded illustration
      */

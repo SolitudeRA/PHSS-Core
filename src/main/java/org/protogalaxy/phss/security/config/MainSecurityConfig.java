@@ -72,9 +72,9 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/index").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/user/login").permitAll()
+                .authorizeRequests().antMatchers("/account/login").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/user/register").permitAll()
+                .authorizeRequests().antMatchers("/account/register").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
@@ -91,7 +91,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //--------------------------Logout config-------------------------------//
                 .logout()
-                .logoutUrl("/user/logout")
+                .logoutUrl("/account/logout")
                 .logoutSuccessUrl("/index")
                 .and()
 

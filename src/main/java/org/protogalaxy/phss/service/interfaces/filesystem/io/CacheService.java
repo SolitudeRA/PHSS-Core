@@ -10,7 +10,7 @@ public interface CacheService {
     /**
      * Caching file from MultipartFile
      *
-     * @param username current user name
+     * @param username current account name
      * @param file     uploaded MultipartFile
      * @return Path of the cached file
      */
@@ -19,7 +19,7 @@ public interface CacheService {
     /**
      * Caching image from memory
      *
-     * @param username      current user name
+     * @param username      current account name
      * @param bufferedImage buffered image
      * @return Path of the cached image
      */

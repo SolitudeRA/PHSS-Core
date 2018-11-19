@@ -2,7 +2,7 @@ package org.protogalaxy.phss.datasource.entity.personaldata;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.protogalaxy.phss.datasource.entity.user.UserEntity;
+import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 
 import javax.persistence.*;
 
@@ -17,13 +17,13 @@ public class PersonalDataEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "owner_id")
-    private UserEntity userEntity;
+    private AccountEntity accountEntity;
 
     public PersonalDataEntity() {
     }
 
-    public PersonalDataEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public PersonalDataEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 
     public int getOwnerId() {
@@ -34,11 +34,11 @@ public class PersonalDataEntity {
         this.ownerId = ownerId;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public AccountEntity getAccountEntity() {
+        return accountEntity;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 }

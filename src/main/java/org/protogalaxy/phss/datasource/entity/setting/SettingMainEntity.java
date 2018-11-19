@@ -3,7 +3,7 @@ package org.protogalaxy.phss.datasource.entity.setting;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.protogalaxy.phss.datasource.entity.user.UserEntity;
+import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -33,13 +33,13 @@ public class SettingMainEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "setting_owner_id")
-    private UserEntity userEntity;
+    private AccountEntity accountEntity;
 
     public SettingMainEntity() {
     }
 
-    public SettingMainEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public SettingMainEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 
     public SettingMainEntity(Date gmtCreate, Date gmtModified) {
@@ -67,11 +67,11 @@ public class SettingMainEntity {
         this.gmtModified = gmtModified;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public AccountEntity getAccountEntity() {
+        return accountEntity;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 }

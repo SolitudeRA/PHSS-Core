@@ -9,60 +9,60 @@ public interface DocumentService {
     /**
      * Get a document
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param uuid     uuid of the document
      * @return JSON format string of the document
      */
     String getDocument(String username, UUID uuid);
 
     /**
-     * List all of the user's document
+     * List all of the account's document
      *
-     * @param username name of the user
+     * @param username name of the account
      * @return JSON format string of the documents
      */
     String listUserDocument(String username);
 
     /**
-     * List user's documents by tag
+     * List account's documents by tag
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param tag      tag of documents
      * @return JSON format string of the documents
      */
     String listUserDocumentByTag(String username, String tag);
 
     /**
-     * List user's documents by categories
+     * List account's documents by categories
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param category category of documents
      * @return JSON format string of the documents
      */
     String listUserDocumentByCategories(String username, String category);
 
     /**
-     * Search user's documents by name
+     * Search account's documents by name
      *
-     * @param username     name of the user
+     * @param username     name of the account
      * @param documentName name of documents
      * @return JSON format string of the documents
      */
     String searchUserDocumentByName(String username, String documentName);
 
     /**
-     * Search user's documents by tags
+     * Search account's documents by tags
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param tags     tags of documents
      * @return JSON format string of the documents
      */
     String searchUserDocumentByTags(String username, List<String> tags);
 
     /**
-     * Search user's documents by modified date
+     * Search account's documents by modified date
      *
-     * @param username name os the user
+     * @param username name os the account
      * @param fromDate date where begins
      * @param toDate   date where ends
      * @return JSON format string of the documents
@@ -70,9 +70,9 @@ public interface DocumentService {
     String searchUserDocumentByModifiedDate(String username, Date fromDate, Date toDate);
 
     /**
-     * Search user's documents by last access date
+     * Search account's documents by last access date
      *
-     * @param username name of the user
+     * @param username name of the account
      * @param fromDate date where begins
      * @param toDate   date where ends
      * @return JSON format string of the documents
