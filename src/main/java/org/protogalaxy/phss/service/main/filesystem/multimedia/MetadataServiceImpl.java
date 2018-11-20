@@ -22,6 +22,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
+import org.protogalaxy.phss.component.consts.AudioConsts;
 import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.exception.service.MetadataException;
@@ -52,34 +53,34 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public Map<String, Object> musicMetadataResolver(Path path) throws Exception {
+        Map<String, Object> metadataRawMap = new HashMap<>();
         Map<String, Object> metadataCurrentMap = new HashMap<>();
-        Map<String, Object> metadataFullMap = new HashMap<>();
         AVFormatContext avFormatContext = avformat_alloc_context();
         AVDictionaryEntry entry = null;
         avformat_open_input(avFormatContext, path.toString(), null, null);
         avformat_find_stream_info(avFormatContext, (PointerPointer) null);
         while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
-            metadataCurrentMap.put(entry.key().getString(), entry.value().getString());
+            metadataRawMap.put(entry.key().getString(), entry.value().getString());
         }
-        for (String key : FileConsts.METADATA_AUDIO_STANDARD_LIST) {
-            if (metadataCurrentMap.get(key) != null) {
-                metadataFullMap.put(key, metadataFullMap.get(key));
+        for (String key : AudioConsts.METADATA_AUDIO_STANDARD_LIST) {
+            if (metadataRawMap.get(key) != null) {
+                metadataCurrentMap.put(key, metadataCurrentMap.get(key));
             } else {
-                metadataFullMap.put(key, "");
+                metadataCurrentMap.put(key, "");
             }
         }
-        metadataFullMap.put(FileConsts.METADATA_AUDIO_DURATION, formatDuration(avFormatContext.duration()));
-        metadataFullMap.put(FileConsts.METADATA_AUDIO_BITRATE, formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
-        metadataFullMap.put(FileConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
-        metadataFullMap.put(FileConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
-        metadataFullMap.put(FileConsts.METADATA_AUDIO_SIZE, formatSize(path.toFile().length()));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_DURATION, formatDuration(avFormatContext.duration()));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITRATE, formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SIZE, formatSize(path.toFile().length()));
         avformat_close_input(avFormatContext);
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
         grabber.start();
-        metadataFullMap.put(FileConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(SecurityContextHolder.getContext().getAuthentication().getName(), converter.getBufferedImage(grabber.grabImage())));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(SecurityContextHolder.getContext().getAuthentication().getName(), converter.getBufferedImage(grabber.grabImage())));
         grabber.close();
-        return metadataFullMap;
+        return metadataCurrentMap;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.protogalaxy.phss.service.interfaces.filesystem.database;
 
+import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -15,35 +16,25 @@ public interface MusicService {
     /**
      * Get an album
      *
-     * @param username name of the account
-     * @param id       id of the album
-     * @return JSON format string of the album
+     * @param uuid UUID of the album
+     * @return Resource of the album
      */
-    String getAlbum(String username, int id) throws Exception;
+    MusicAlbumResource getAlbum(String uuid) throws Exception;
 
     /**
      * Update an album
      *
-     * @param album JSON format string of the updated album
-     * @return JSON format string of the updated album
+     * @param musicAlbumResource Resource of the updated album
+     * @return Resource of the updated album
      */
-    String updateAlbum(String album) throws Exception;
-
-    /**
-     * Update counters of the album
-     *
-     * @param counters JSON format string of the updated counters
-     * @return JSON format string of the updated album counters
-     */
-    String updateAlbumCounters(String counters) throws Exception;
+    MusicAlbumResource updateAlbum(MusicAlbumResource musicAlbumResource) throws Exception;
 
     /**
      * Remove an album
      *
-     * @param id id of the album
-     * @return boolean
+     * @param uuid UUID of the album
      */
-    boolean removeAlbum(int id);
+    void removeAlbum(String uuid);
 
     /**
      * List account albums

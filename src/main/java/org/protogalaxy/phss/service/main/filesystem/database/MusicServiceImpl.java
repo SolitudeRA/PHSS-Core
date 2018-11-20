@@ -1,6 +1,5 @@
 package org.protogalaxy.phss.service.main.filesystem.database;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
 import org.protogalaxy.phss.service.interfaces.filesystem.database.MusicService;
@@ -14,7 +13,8 @@ public class MusicServiceImpl implements MusicService {
     private MusicTrackRepository musicTrackRepository;
 
     @Autowired
-    public MusicServiceImpl(MusicAlbumRepository musicAlbumRepository, MusicTrackRepository musicTrackRepository) {
+    public MusicServiceImpl(MusicAlbumRepository musicAlbumRepository,
+                            MusicTrackRepository musicTrackRepository) {
         this.musicAlbumRepository = musicAlbumRepository;
         this.musicTrackRepository = musicTrackRepository;
     }
