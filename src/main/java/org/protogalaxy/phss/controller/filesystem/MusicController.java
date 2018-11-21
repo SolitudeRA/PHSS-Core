@@ -4,8 +4,8 @@ import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.database.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.RequestEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,32 +33,49 @@ public class MusicController {
     }
 
     @RequestMapping(value = "/album", method = RequestMethod.GET)
-    public String listUserAlbum(Pageable pageable) throws Exception {
-        return musicService.listUserAlbum(SecurityContextHolder.getContext().getAuthentication().getName(), pageable);
+    public ResponseEntity listUserAlbum(Pageable pageable) {
+        return new ResponseEntity<>(musicService.listUserAlbum(pageable), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/album/{id}", method = RequestMethod.GET)
-    public String getUserAlbumById(@PathVariable int id) throws Exception {
-        return musicService.getAlbum(SecurityContextHolder.getContext().getAuthentication().getName(), id);
-    }
-
-    @RequestMapping(value = "/album/{uuid}/track", method = RequestMethod.GET)
-    public String listUserTrackByAlbumId(@PathVariable String uuid) throws Exception {
-        return musicService.listTrackByAlbumId(SecurityContextHolder.getContext().getAuthentication().getName(), id);
+    @RequestMapping(value = "/album/{uuid}", method = RequestMethod.GET)
+    public ResponseEntity getAlbum(@PathVariable String uuid) {
+        return new ResponseEntity<>(musicService.getAlbum(uuid), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/album/{uuid}/delete", method = RequestMethod.DELETE)
-    public RequestEntity deleteAlbum(@PathVariable String uuid) {
-
+    public ResponseEntity deleteAlbum(@PathVariable String uuid) {
+        musicService.removeAlbum(uuid);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/search/album", method = RequestMethod.POST)
-    public String listUserAlbumByTile(String title) throws Exception {
-        return musicService.listAlbumByTitle(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), title);
+    @RequestMapping(value = "/album/search", method = RequestMethod.POST)
+    public ResponseEntity searchAlbumByTitle(@RequestParam("title") String title) {
+        return new ResponseEntity<>(musicService.searchAlbumByTitle(title), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/search/track", method = RequestMethod.POST)
-    public String listUserTrackByTitle(String title) throws Exception {
-        return musicService.listTrackByTitle(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), title);
+    @RequestMapping(value = "/album/search", method = RequestMethod.POST)
+    public ResponseEntity searchAlbumByArtist(@RequestParam("artist") String artist) {
+        return new ResponseEntity<>(musicService.searchAlbumByArtist(artist), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/track/{uuid}", method = RequestMethod.GET)
+    public ResponseEntity getTrack(@PathVariable String uuid) {
+        return new ResponseEntity<>(musicService.getTrack(uuid), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/track/{uuid}/delete", method = RequestMethod.DELETE)
+    public ResponseEntity deleteTrack(@PathVariable String uuid) {
+        musicService.removeTrack(uuid);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/track/search", method = RequestMethod.POST)
+    public ResponseEntity searchTrackByTitle(@RequestParam("title") String title) {
+        return new ResponseEntity<>(musicService.searchTrackByTitle(title), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/track/search", method = RequestMethod.POST)
+    public ResponseEntity searchTrackByArtist(@RequestParam("artist") String artist) {
+        return new ResponseEntity<>(musicService.searchTrackByArtist(artist), HttpStatus.OK);
     }
 }

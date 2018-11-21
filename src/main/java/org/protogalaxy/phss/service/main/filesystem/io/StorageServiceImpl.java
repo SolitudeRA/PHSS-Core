@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.component.file.FileCommonUtils;
 import org.protogalaxy.phss.component.file.FileConsts;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringServiceImpl;
@@ -23,6 +25,7 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class StorageServiceImpl implements StorageService {
@@ -32,6 +35,8 @@ public class StorageServiceImpl implements StorageService {
     private final CacheService cacheService;
     private final MetadataService metadataService;
     private final FileRegisteringService fileRegisteringService;
+    private final MusicAlbumRepository musicAlbumRepository;
+    private final MusicTrackRepository musicTrackRepository;
 
 
     @Autowired
@@ -39,12 +44,16 @@ public class StorageServiceImpl implements StorageService {
                               PathServiceImpl pathService,
                               CacheServiceImpl cacheService,
                               MetadataServiceImpl metadataService,
-                              FileRegisteringServiceImpl fileRegisteringService) {
+                              FileRegisteringServiceImpl fileRegisteringService,
+                              MusicAlbumRepository musicAlbumRepository,
+                              MusicTrackRepository musicTrackRepository) {
         this.config = config;
         this.pathService = pathService;
         this.cacheService = cacheService;
         this.metadataService = metadataService;
         this.fileRegisteringService = fileRegisteringService;
+        this.musicAlbumRepository = musicAlbumRepository;
+        this.musicTrackRepository = musicTrackRepository;
     }
 
     @Override

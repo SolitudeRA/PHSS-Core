@@ -13,17 +13,6 @@ public class AccountResourceAssembler extends ResourceAssemblerSupport<AccountEn
 
     @Override
     public AccountResource toResource(AccountEntity accountEntity) {
-        return new AccountResource(accountEntity.getId(),
-                                   accountEntity.getUsername(),
-                                   accountEntity.getAvatar(),
-                                   accountEntity.getAuthorities(),
-                                   accountEntity.getFileSystemMainEntity(),
-                                   accountEntity.getPersonalDataEntity(),
-                                   accountEntity.getSettingMainEntity(),
-                                   accountEntity.isEnabled(),
-                                   accountEntity.isAccountNonLocked(),
-                                   accountEntity.isCredentialsNonExpired(),
-                                   accountEntity.getDateCreate(),
-                                   accountEntity.getDateModified());
+        return new AccountResource(accountEntity);
     }
 }

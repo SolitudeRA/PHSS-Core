@@ -10,7 +10,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface MusicAlbumRepository extends JpaRepository<MusicAlbumEntity, UUID>, CrudRepository<MusicAlbumEntity, UUID> {
-    Page<MusicAlbumEntity> findAllByFileSystemOwner_UserEntity_Username(String username, Pageable pageable);
+    MusicAlbumEntity findByUuid(UUID uuid);
 
-    List<MusicAlbumEntity> findByFileSystemOwner_UserEntity_UsernameAndTitle(String username, String title);
+    void deleteByUuid(UUID uuid);
+
+    Page<MusicAlbumEntity> findAllByFileSystemOwner_AccountEntity_Username(String username, Pageable pageable);
+
+    List<MusicAlbumEntity> findAllByFileSystemOwner_AccountEntity_UsernameAndTitle(String username, String title);
+
+    List<MusicAlbumEntity> findAllByFileSystemOwner_AccountEntity_UsernameAndArtist(String username, String artist);
 }

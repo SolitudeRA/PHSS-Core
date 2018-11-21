@@ -1,8 +1,11 @@
 package org.protogalaxy.phss.service.interfaces.filesystem.database;
 
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
+import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Music management service
@@ -19,7 +22,7 @@ public interface MusicService {
      * @param uuid UUID of the album
      * @return Resource of the album
      */
-    MusicAlbumResource getAlbum(String uuid) throws Exception;
+    MusicAlbumResource getAlbum(String uuid);
 
     /**
      * Update an album
@@ -27,7 +30,7 @@ public interface MusicService {
      * @param musicAlbumResource Resource of the updated album
      * @return Resource of the updated album
      */
-    MusicAlbumResource updateAlbum(MusicAlbumResource musicAlbumResource) throws Exception;
+    MusicAlbumResource updateAlbum(MusicAlbumResource musicAlbumResource);
 
     /**
      * Remove an album
@@ -39,97 +42,65 @@ public interface MusicService {
     /**
      * List account albums
      *
-     * @param username name of the account
-     * @param pageable data page
-     * @return JSON format string of albums
+     * @param pageable Data page
+     * @return Resource List of the albums
      */
-    String listUserAlbum(String username, Pageable pageable) throws Exception;
+    List<MusicAlbumResource> listUserAlbum(Pageable pageable);
 
     /**
-     * List albums by name
+     * Search albums by name
      *
-     * @param username name of the account
-     * @param title    title of the albums
-     * @return JSON format string of the album
+     * @param title Title of the albums
+     * @return Resource list of the albums
      */
-    String listAlbumByTitle(String username, String title) throws Exception;
+    List<MusicAlbumResource> searchAlbumByTitle(String title);
 
     /**
-     * List albums by artist
+     * Search albums by artist
      *
-     * @param ownerId id of the owner
-     * @param Artist  artist of the albums
-     * @return JSON format string of the album
+     * @param artist Artist of the albums
+     * @return Resource list of the albums
      */
-    String listAlbumByArtist(int ownerId, String Artist) throws Exception;
+    List<MusicAlbumResource> searchAlbumByArtist(String artist);
 
 
     /**
      * Get a track
      *
-     * @param id id of the track
-     * @return JSON format string of the track
+     * @param uuid UUID of the track
+     * @return Resource of the track
      */
-    String getTrack(int id) throws Exception;
+    MusicTrackResource getTrack(String uuid);
 
     /**
      * Update a track
      *
-     * @param track JSON format string of the updated track
-     * @return JSON format string of the updated track
+     * @param musicTrackResource Resource of the updated track
+     * @return Resource of the updated track
      */
-    String updateTrack(String track) throws Exception;
-
-    /**
-     * Update counters of the track
-     *
-     * @param counters JSON format string of the updated track counters
-     * @return JSON format string of the updated counters
-     */
-    String updateTrackCounters(String counters) throws Exception;
+    MusicTrackResource updateTrack(MusicTrackResource musicTrackResource);
 
     /**
      * Remove a track
      *
-     * @param id uuid of the track
-     * @return boolean
+     * @param uuid UUID of the track
      */
 
-    boolean removeTrack(int id);
-
-    /**
-     * List tracks by title
-     *
-     * @param username name of the account
-     * @param title    name of the tracks
-     * @return JSON format string of the track
-     */
-    String listTrackByTitle(String username, String title) throws Exception;
+    void removeTrack(String uuid);
 
     /**
-     * List tracks by album name
+     * Search track by title
      *
-     * @param username name of the account
-     * @param title    title of the album
-     * @return JSON format string of the tracks
+     * @param title Name of the tracks
+     * @return Resource list of the tracks
      */
-    String listTrackByAlbum(String username, String title) throws Exception;
+    List<MusicTrackResource> searchTrackByTitle(String title);
 
     /**
-     * List tracks by album id
+     * Search track by artist
      *
-     * @param username name of the account
-     * @param id       is of the album
-     * @return JSON format string of tracks
+     * @param artist Artist of the tracks
+     * @return Resource list of the tracks
      */
-    String listTrackByAlbumId(String username, int id) throws Exception;
-
-    /**
-     * List tracks by artist
-     *
-     * @param username name of the account
-     * @param artist   artist of the tracks
-     * @return JSON format string of the tracks
-     */
-    String listTracksByArtist(String username, String artist) throws Exception;
+    List<MusicTrackResource> searchTrackByArtist(String artist);
 }

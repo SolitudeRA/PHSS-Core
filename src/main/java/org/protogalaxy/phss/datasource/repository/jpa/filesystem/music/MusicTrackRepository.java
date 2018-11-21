@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface MusicTrackRepository extends JpaRepository<MusicTrackEntity, UUID>, CrudRepository<MusicTrackEntity, UUID>, PagingAndSortingRepository<MusicTrackEntity, UUID> {
-    List<MusicTrackEntity> findByTitleAndFileSystemOwner_UserEntity_Username(String title, String username);
+    MusicTrackEntity findByUuid(UUID uuid);
 
-    List<MusicTrackEntity> findByAlbumAndFileSystemOwner_UserEntity_Username(String album, String username);
+    void deleteByUuid(UUID uuid);
 
-    List<MusicTrackEntity> findByArtistAndFileSystemOwner_UserEntity_Username(String artist, String username);
+    List<MusicTrackEntity> findAllByFileSystemOwner_AccountEntity_UsernameAndTitle(String username, String title);
+
+    List<MusicTrackEntity> findAllByFileSystemOwner_AccountEntity_UsernameAndArtist(String username, String artist);
 }
