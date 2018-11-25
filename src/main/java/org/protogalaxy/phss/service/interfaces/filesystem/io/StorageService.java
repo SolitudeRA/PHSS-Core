@@ -1,26 +1,27 @@
 package org.protogalaxy.phss.service.interfaces.filesystem.io;
 
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 public interface StorageService {
     /**
      * Store single track
      *
-     * @param username  name of current account
      * @param musicFile uploaded track
      * @return JSON format string of the uploaded track
      */
-    String storeTrack(String username, MultipartFile musicFile) throws Exception;
+    MusicTrackEntity storeTrack(MultipartFile musicFile) throws Exception;
 
     /**
      * Store tracks
      *
-     * @param username   name of current account
      * @param musicFiles uploaded tracks
      * @return JSON format string of the uploaded tracks
      */
-    String storeTracks(String username, MultipartFile[] musicFiles) throws Exception;
+    List<MusicTrackEntity> storeTracks(MultipartFile[] musicFiles) throws Exception;
 
 
     /**

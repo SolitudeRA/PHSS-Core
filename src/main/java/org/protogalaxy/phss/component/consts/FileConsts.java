@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.component.file;
+package org.protogalaxy.phss.component.consts;
 
 
 import java.util.Arrays;

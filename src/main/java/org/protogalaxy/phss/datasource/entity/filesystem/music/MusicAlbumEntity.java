@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -73,6 +74,23 @@ public class MusicAlbumEntity {
         this.location = location;
         this.albumInformation = albumInformation;
         this.albumInformationStatic = albumInformationStatic;
+    }
+
+    public MusicAlbumEntity updateFromResource(MusicAlbumResource musicAlbumResource) {
+        this.title = musicAlbumResource.getTitle();
+        this.artist = musicAlbumResource.getArtist();
+        this.albumInformationStatic.setArtwork(musicAlbumResource.getArtwork());
+        this.albumInformationStatic.setComposer(musicAlbumResource.getComposer());
+        this.albumInformationStatic.setReleaseYear(musicAlbumResource.getReleaseYear());
+        this.albumInformationStatic.setDurationTotal(musicAlbumResource.getDurationTotal());
+        this.albumInformationStatic.setDiscNumber(musicAlbumResource.getDiscNumber());
+        this.albumInformationStatic.setDiscTotal(musicAlbumResource.getDiscTotal());
+        this.albumInformationStatic.setGenre(musicAlbumResource.getGenre());
+        this.albumInformationStatic.setScore(musicAlbumResource.getScore());
+        this.albumInformationStatic.setLove(musicAlbumResource.getLove());
+        this.albumInformationStatic.setDislike(musicAlbumResource.getDislike());
+        this.albumInformationStatic.setComment(musicAlbumResource.getComment());
+        return this;
     }
 
     public UUID getUuid() {

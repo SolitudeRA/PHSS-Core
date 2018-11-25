@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.service.main.filesystem.io;
 
-import org.protogalaxy.phss.component.file.FileCommonUtils;
-import org.protogalaxy.phss.component.file.FileConsts;
+import org.protogalaxy.phss.component.utils.FileUtils;
+import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.exception.path.PathException;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
@@ -82,7 +82,7 @@ public class PathServiceImpl implements PathService {
      */
     @Override
     public Path metadataPathSwitcher(String username, Path tempPath, String fileSystemPart) {
-        String mimeType = FileCommonUtils.getMimeType(tempPath);
+        String mimeType = FileUtils.getMimeType(tempPath);
         switch (fileSystemPart) {
             case FileConsts.FILESYSTEM_MUSIC:
                 if (Pattern.matches("^audio/.*", mimeType)) {

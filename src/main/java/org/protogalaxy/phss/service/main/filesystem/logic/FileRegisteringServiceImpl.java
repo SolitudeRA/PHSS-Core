@@ -1,10 +1,8 @@
 package org.protogalaxy.phss.service.main.filesystem.logic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.protogalaxy.phss.component.file.FileConsts;
+import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoStaticEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookInfEntity;

@@ -1,13 +1,14 @@
 package org.protogalaxy.phss.service.main.filesystem.database;
 
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
-import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.MusicAlbumResourceAssembler;
-import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.MusicTrackResourceAssembler;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.protogalaxy.phss.service.interfaces.filesystem.database.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,6 @@ import java.util.UUID;
 public class MusicServiceImpl implements MusicService {
     private MusicAlbumRepository musicAlbumRepository;
     private MusicTrackRepository musicTrackRepository;
-    private MusicAlbumResourceAssembler musicAlbumResourceAssembler = new MusicAlbumResourceAssembler();
-    private MusicTrackResourceAssembler musicTrackResourceAssembler = new MusicTrackResourceAssembler();
 
     @Autowired
     public MusicServiceImpl(MusicAlbumRepository musicAlbumRepository,
@@ -37,19 +36,32 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource of the album
      */
     @Override
-    public MusicAlbumResource getAlbum(String uuid) {
-        return musicAlbumResourceAssembler.toResource(musicAlbumRepository.findByUuid(UUID.fromString(uuid)));
+    public MusicAlbumEntity getAlbum(String uuid) {
+        return musicAlbumRepository.findByUuid(UUID.fromString(uuid));
     }
 
     /**
-     * Update an album
+     * Update an album with UUID and resource
      *
+     * @param uuid               UUID of the updated album
      * @param musicAlbumResource Resource of the updated album
-     * @return Resource of the updated album
+     * @return Entity of the updated album
      */
     @Override
-    public MusicAlbumResource updateAlbum(MusicAlbumResource musicAlbumResource) {
-        return null;
+    public MusicAlbumEntity updateAlbumWithUuidAndResource(UUID uuid, MusicAlbumResource musicAlbumResource) {
+        MusicAlbumEntity musicAlbumEntity = musicAlbumRepository.findByUuid(uuid);
+        return musicAlbumRepository.save(musicAlbumEntity.updateFromResource(musicAlbumResource));
+    }
+
+    /**
+     * Update an album with entity
+     *
+     * @param musicAlbumEntity Entity of the updated album
+     * @return Entity of the updated album
+     */
+    @Override
+    public MusicAlbumEntity updateAlbumWithEntity(MusicAlbumEntity musicAlbumEntity) {
+        return musicAlbumRepository.save(musicAlbumEntity);
     }
 
     /**
@@ -69,8 +81,8 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource List of the albums
      */
     @Override
-    public List<MusicAlbumResource> listUserAlbum(Pageable pageable) {
-        return musicAlbumResourceAssembler.toResources(musicAlbumRepository.findAllByFileSystemOwner_AccountEntity_Username(SecurityContextHolder.getContext().getAuthentication().getName(), pageable));
+    public Page<MusicAlbumEntity> listUserAlbum(Pageable pageable) {
+        return musicAlbumRepository.findAllByFileSystemOwner_AccountEntity_Username(SecurityContextHolder.getContext().getAuthentication().getName(), pageable);
     }
 
     /**
@@ -80,8 +92,8 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource list of the albums
      */
     @Override
-    public List<MusicAlbumResource> searchAlbumByTitle(String title) {
-        return musicAlbumResourceAssembler.toResources(musicAlbumRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndTitle(SecurityContextHolder.getContext().getAuthentication().getName(), title));
+    public List<MusicAlbumEntity> searchAlbumByTitle(String title) {
+        return musicAlbumRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndTitle(SecurityContextHolder.getContext().getAuthentication().getName(), title);
     }
 
     /**
@@ -91,8 +103,8 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource list of the albums
      */
     @Override
-    public List<MusicAlbumResource> searchAlbumByArtist(String artist) {
-        return musicAlbumResourceAssembler.toResources(musicAlbumRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndArtist(SecurityContextHolder.getContext().getAuthentication().getName(), artist));
+    public List<MusicAlbumEntity> searchAlbumByArtist(String artist) {
+        return musicAlbumRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndArtist(SecurityContextHolder.getContext().getAuthentication().getName(), artist);
     }
 
     /**
@@ -102,8 +114,8 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource of the track
      */
     @Override
-    public MusicTrackResource getTrack(String uuid) {
-        return musicTrackResourceAssembler.toResource(musicTrackRepository.findByUuid(UUID.fromString(uuid)));
+    public MusicTrackEntity getTrack(String uuid) {
+        return musicTrackRepository.findByUuid(UUID.fromString(uuid));
     }
 
     /**
@@ -113,7 +125,7 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource of the updated track
      */
     @Override
-    public MusicTrackResource updateTrack(MusicTrackResource musicTrackResource) {
+    public MusicTrackEntity updateTrack(MusicTrackResource musicTrackResource) {
         return null;
     }
 
@@ -134,8 +146,8 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource list of the tracks
      */
     @Override
-    public List<MusicTrackResource> searchTrackByTitle(String title) {
-        return musicTrackResourceAssembler.toResources(musicTrackRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndTitle(SecurityContextHolder.getContext().getAuthentication().getName(), title));
+    public List<MusicTrackEntity> searchTrackByTitle(String title) {
+        return musicTrackRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndTitle(SecurityContextHolder.getContext().getAuthentication().getName(), title);
     }
 
     /**
@@ -145,7 +157,7 @@ public class MusicServiceImpl implements MusicService {
      * @return Resource list of the tracks
      */
     @Override
-    public List<MusicTrackResource> searchTrackByArtist(String artist) {
-        return musicTrackResourceAssembler.toResources(musicTrackRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndArtist(SecurityContextHolder.getContext().getAuthentication().getName(), artist));
+    public List<MusicTrackEntity> searchTrackByArtist(String artist) {
+        return musicTrackRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndArtist(SecurityContextHolder.getContext().getAuthentication().getName(), artist);
     }
 }

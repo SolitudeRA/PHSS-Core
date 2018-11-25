@@ -1,11 +1,15 @@
 package org.protogalaxy.phss.service.interfaces.filesystem.database;
 
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Music management service
@@ -22,15 +26,24 @@ public interface MusicService {
      * @param uuid UUID of the album
      * @return Resource of the album
      */
-    MusicAlbumResource getAlbum(String uuid);
+    MusicAlbumEntity getAlbum(String uuid);
 
     /**
-     * Update an album
+     * Update an album with UUID and resource
      *
+     * @param uuid               UUID of the updated album
      * @param musicAlbumResource Resource of the updated album
-     * @return Resource of the updated album
+     * @return Entity of the updated album
      */
-    MusicAlbumResource updateAlbum(MusicAlbumResource musicAlbumResource);
+    MusicAlbumEntity updateAlbumWithUuidAndResource(UUID uuid, MusicAlbumResource musicAlbumResource);
+
+    /**
+     * Update an album with entity
+     *
+     * @param musicAlbumEntity Entity of the updated album
+     * @return Entity of the updated album
+     */
+    MusicAlbumEntity updateAlbumWithEntity(MusicAlbumEntity musicAlbumEntity);
 
     /**
      * Remove an album
@@ -43,42 +56,42 @@ public interface MusicService {
      * List account albums
      *
      * @param pageable Data page
-     * @return Resource List of the albums
+     * @return Entity List of the albums
      */
-    List<MusicAlbumResource> listUserAlbum(Pageable pageable);
+    Page<MusicAlbumEntity> listUserAlbum(Pageable pageable);
 
     /**
      * Search albums by name
      *
      * @param title Title of the albums
-     * @return Resource list of the albums
+     * @return Entity list of the albums
      */
-    List<MusicAlbumResource> searchAlbumByTitle(String title);
+    List<MusicAlbumEntity> searchAlbumByTitle(String title);
 
     /**
      * Search albums by artist
      *
      * @param artist Artist of the albums
-     * @return Resource list of the albums
+     * @return Entity list of the albums
      */
-    List<MusicAlbumResource> searchAlbumByArtist(String artist);
+    List<MusicAlbumEntity> searchAlbumByArtist(String artist);
 
 
     /**
      * Get a track
      *
      * @param uuid UUID of the track
-     * @return Resource of the track
+     * @return Entity of the track
      */
-    MusicTrackResource getTrack(String uuid);
+    MusicTrackEntity getTrack(String uuid);
 
     /**
      * Update a track
      *
      * @param musicTrackResource Resource of the updated track
-     * @return Resource of the updated track
+     * @return Entity of the updated track
      */
-    MusicTrackResource updateTrack(MusicTrackResource musicTrackResource);
+    MusicTrackEntity updateTrack(MusicTrackResource musicTrackResource);
 
     /**
      * Remove a track
@@ -92,15 +105,15 @@ public interface MusicService {
      * Search track by title
      *
      * @param title Name of the tracks
-     * @return Resource list of the tracks
+     * @return Entity list of the tracks
      */
-    List<MusicTrackResource> searchTrackByTitle(String title);
+    List<MusicTrackEntity> searchTrackByTitle(String title);
 
     /**
      * Search track by artist
      *
      * @param artist Artist of the tracks
-     * @return Resource list of the tracks
+     * @return Entity list of the tracks
      */
-    List<MusicTrackResource> searchTrackByArtist(String artist);
+    List<MusicTrackEntity> searchTrackByArtist(String artist);
 }
