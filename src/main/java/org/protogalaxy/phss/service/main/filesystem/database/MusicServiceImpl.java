@@ -119,14 +119,27 @@ public class MusicServiceImpl implements MusicService {
     }
 
     /**
-     * Update a track
+     * Update a track with UUID and resource
      *
+     * @param uuid               UUID of the updated track
      * @param musicTrackResource Resource of the updated track
-     * @return Resource of the updated track
+     * @return Entity of the updated track
      */
     @Override
-    public MusicTrackEntity updateTrack(MusicTrackResource musicTrackResource) {
-        return null;
+    public MusicTrackEntity updateTrackWithUuidAndResource(UUID uuid, MusicTrackResource musicTrackResource) {
+        MusicTrackEntity musicTrackEntity = musicTrackRepository.findByUuid(uuid);
+        return musicTrackRepository.save(musicTrackEntity.updateFromResource(musicTrackResource));
+    }
+
+    /**
+     * Update a track with entity
+     *
+     * @param musicTrackEntity Entity of the updated track
+     * @return Entity of the updated track
+     */
+    @Override
+    public MusicTrackEntity updateTrackWithEntity(MusicTrackEntity musicTrackEntity) {
+        return musicTrackRepository.save(musicTrackEntity);
     }
 
     /**

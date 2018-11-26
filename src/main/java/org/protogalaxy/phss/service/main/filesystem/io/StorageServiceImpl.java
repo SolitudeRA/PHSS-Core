@@ -13,7 +13,7 @@ import org.protogalaxy.phss.service.main.filesystem.multimedia.MetadataServiceIm
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
-import org.protogalaxy.phss.service.interfaces.filesystem.observer.FileRegisteringService;
+import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
 import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

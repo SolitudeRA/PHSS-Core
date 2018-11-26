@@ -1,8 +1,12 @@
 package org.protogalaxy.phss.service.main.filesystem.logic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.protogalaxy.phss.component.consts.AudioConsts;
 import org.protogalaxy.phss.component.consts.FileConsts;
+import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoStaticEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.photo.PhotoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.book.BookInfEntity;
@@ -12,14 +16,14 @@ import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEpisodeEntit
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookInfRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
-import org.protogalaxy.phss.service.interfaces.filesystem.observer.FileRegisteringService;
+import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -41,7 +45,6 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     //Database database repositories
     private final MusicTrackRepository musicTrackRepository;
     private final BookRepository bookRepository;
-    private final BookInfRepository bookInfRepository;
     private final DocumentAdobePdfRepository documentAdobePdfRepository;
     private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
     private final DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
@@ -59,7 +62,6 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                       FilesystemMainRepository filesystemMainRepository,
                                       MusicTrackRepository musicTrackRepository,
                                       BookRepository bookRepository,
-                                      BookInfRepository bookInfRepository,
                                       DocumentAdobePdfRepository documentAdobePdfRepository,
                                       DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
                                       DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
@@ -75,7 +77,6 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
         this.bookRepository = bookRepository;
-        this.bookInfRepository = bookInfRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
         this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
         this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
@@ -90,34 +91,44 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, Path path) throws Exception {
-        MusicTrackEntity trackEntity = new MusicTrackEntity();
+    public MusicTrackEntity registerTrack(Map<String, Object> metadata, Path path) throws Exception {
+        FileSystemMainEntity fileSystemMainEntity = filesystemMainRepository.findByUserEntity_Username(SecurityContextHolder.getContext().getAuthentication().getName());
+        MusicTrackEntity trackEntity = new MusicTrackEntity(fileSystemMainEntity,
+                                                            metadata.get(AudioConsts.METADATA_AUDIO_TITLE).toString(),
+                                                            metadata.get(AudioConsts.METADATA_AUDIO_ALBUM).toString(),
+                                                            metadata.get(AudioConsts.METADATA_AUDIO_ARTIST).toString(),
+                                                            path.toString());
+        MusicTrackInfoEntity trackInfoEntity = new MusicTrackInfoEntity(trackEntity);
+        MusicTrackInfoStaticEntity trackInfoStaticEntity = new MusicTrackInfoStaticEntity(metadata.get(AudioConsts.METADATA_AUDIO_ALBUMARTIST).toString(),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_COMPOSER).toString(),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_RELEASE_YEAR).toString(),
+                                                                                          metadata.get(AudioConsts));
         musicTrackRepository.save(trackEntity);
         return trackEntity;
     }
 
     @Override
-    public AnimeEpisodeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception {
+    public AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public MovieEntity registerMovie(String username, Map<String, String> metadata, Path path) throws Exception {
+    public MovieEntity registerMovie(Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public VideoEntity registerVideo(String username, Map<String, String> metadata, Path path) throws Exception {
+    public VideoEntity registerVideo(Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public PhotoEntity registerPhoto(String username, Map<String, String> metadata, Path path) throws Exception {
+    public PhotoEntity registerPhoto(Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
     @Override
-    public BookEntity registerBook(String username, Map<String, Object> metadata, Path path) throws Exception {
+    public BookEntity registerBook(Map<String, Object> metadata, Path path) throws Exception {
         BookEntity bookEntity = new BookEntity(
                 filesystemMainRepository.findByUserEntity_Username(username),
                 (String) metadata.get(FileConsts.METADATA_BOOK_TITLE),
@@ -138,46 +149,45 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 bookEntity
         );
         bookRepository.save(bookEntity);
-        bookInfRepository.save(bookInfEntity);
         return bookEntity;
     }
 
     @Override
-    public String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception {
+    public String registerDocument(Map<String, Object> metadata, Path path, String mimeType) throws Exception {
         switch (mimeType) {
             case FileConsts.MIME_ADOBE_PDF:
-                return registerAdobePdf(username, metadata, path);
+                return registerAdobePdf(metadata, path);
             case FileConsts.MIME_ADOBE_PHOTOSHOP:
-                return registerAdobePhotoshop(username, metadata, path);
+                return registerAdobePhotoshop(metadata, path);
             case FileConsts.MIME_MICROSOFT_WORD_OLD:
-                return registerMicrosoftWordOld(username, metadata, path);
+                return registerMicrosoftWordOld(metadata, path);
             case FileConsts.MIME_MICROSOFT_EXCEL_OLD:
-                return registerMicrosoftExcelOld(username, metadata, path);
+                return registerMicrosoftExcelOld(metadata, path);
             case FileConsts.MIME_MICROSOFT_POWERPOINT_OLD:
-                return registerMicrosoftPowerpointOld(username, metadata, path);
+                return registerMicrosoftPowerpointOld(metadata, path);
             case FileConsts.MIME_MICROSOFT_WORD:
-                return registerMicrosoftWord(username, metadata, path);
+                return registerMicrosoftWord(metadata, path);
             case FileConsts.MIME_MICROSOFT_EXCEL:
-                return registerMicrosoftExcel(username, metadata, path);
+                return registerMicrosoftExcel(metadata, path);
             case FileConsts.MIME_MICROSOFT_POWERPOINT:
-                return registerMicrosoftPowerpoint(username, metadata, path);
+                return registerMicrosoftPowerpoint(metadata, path);
             case FileConsts.MIME_OPENDOCUMENT_TEXT:
-                return registerOpendocumentText(username, metadata, path);
+                return registerOpendocumentText(metadata, path);
             case FileConsts.MIME_OPENDOCUMENT_SPREADSHEET:
-                return registerOpendocumentSpreadsheet(username, metadata, path);
+                return registerOpendocumentSpreadsheet(metadata, path);
             case FileConsts.MIME_OPENDOCUMENT_PRESENTATION:
-                return registerOpendocumentPresentation(username, metadata, path);
+                return registerOpendocumentPresentation(metadata, path);
             default:
                 return null;
         }
     }
 
     @Override
-    public IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception {
+    public IllustrationEntity registerIllustration(Map<String, String> metadata, Path path) throws Exception {
         return null;
     }
 
-    private String registerAdobePdf(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerAdobePdf(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentAdobePdfEntity documentAdobePdfEntity = new DocumentAdobePdfEntity(
                 (String) metadata.get(FileConsts.METADATA_ADOBE_PDF_TITLE),
@@ -191,7 +201,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentAdobePdfEntity);
     }
 
-    private String registerAdobePhotoshop(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerAdobePhotoshop(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentAdobePhotoshopEntity documentAdobePhotoshopEntity = new DocumentAdobePhotoshopEntity(
                 (String) metadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE),
@@ -207,7 +217,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentAdobePhotoshopEntity);
     }
 
-    private String registerMicrosoftWordOld(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerMicrosoftWordOld(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftWordOldEntity documentMicrosoftWordOldEntity = new DocumentMicrosoftWordOldEntity(
                 (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE),
@@ -228,7 +238,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftWordOldEntity);
     }
 
-    private String registerMicrosoftExcelOld(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerMicrosoftExcelOld(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftExcelOldEntity documentMicrosoftExcelOldEntity = new DocumentMicrosoftExcelOldEntity(
                 (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_TITLE),
@@ -242,7 +252,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftExcelOldEntity);
     }
 
-    private String registerMicrosoftPowerpointOld(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerMicrosoftPowerpointOld(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftPowerpointOldEntity documentMicrosoftPowerpointOldEntity = new DocumentMicrosoftPowerpointOldEntity(
                 (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE),
@@ -264,7 +274,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftPowerpointOldEntity);
     }
 
-    private String registerMicrosoftWord(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerMicrosoftWord(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftWordEntity documentMicrosoftWordEntity = new DocumentMicrosoftWordEntity(
                 (String) metadata.get(FileConsts.METADATA_MICROSOFT_WORD_TITLE),
@@ -283,7 +293,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftWordEntity);
     }
 
-    private String registerMicrosoftExcel(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerMicrosoftExcel(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftExcelEntity documentMicrosoftExcelEntity = new DocumentMicrosoftExcelEntity(
                 (String) metadata.get(FileConsts.METADATA_MICROSOFT_EXCEL_TITLE),
@@ -302,7 +312,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftExcelEntity);
     }
 
-    private String registerMicrosoftPowerpoint(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerMicrosoftPowerpoint(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentMicrosoftPowerpointEntity documentMicrosoftPowerpointEntity = new DocumentMicrosoftPowerpointEntity(
                 (String) metadata.get(FileConsts.METADATA_MICROSOFT_POWERPOINT_TITLE),
@@ -322,7 +332,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentMicrosoftPowerpointEntity);
     }
 
-    private String registerOpendocumentText(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerOpendocumentText(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentOpenTextEntity documentOpenTextEntity = new DocumentOpenTextEntity(
                 (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE),
@@ -340,7 +350,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentOpenTextEntity);
     }
 
-    private String registerOpendocumentSpreadsheet(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerOpendocumentSpreadsheet(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentOpenSpreadsheetEntity documentOpenSpreadsheetEntity = new DocumentOpenSpreadsheetEntity(
                 (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE),
@@ -352,7 +362,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         return mapper.writeValueAsString(documentOpenSpreadsheetEntity);
     }
 
-    private String registerOpendocumentPresentation(String username, Map<String, Object> metadata, Path path) throws Exception {
+    private String registerOpendocumentPresentation(Map<String, Object> metadata, Path path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         DocumentOpenPresentationEntity documentOpenPresentationEntity = new DocumentOpenPresentationEntity(
                 (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE),

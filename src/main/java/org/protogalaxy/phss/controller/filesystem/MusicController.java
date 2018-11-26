@@ -3,6 +3,7 @@ package org.protogalaxy.phss.controller.filesystem;
 import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.MusicAlbumResourceAssembler;
 import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.MusicTrackResourceAssembler;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
+import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.database.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,11 @@ public class MusicController {
     @RequestMapping(value = "/track/{uuid}", method = RequestMethod.GET)
     public ResponseEntity getTrack(@PathVariable String uuid) {
         return new ResponseEntity<>(musicTrackResourceAssembler.toResource(musicService.getTrack(uuid)), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/track/{uuid}/update", method = RequestMethod.PATCH)
+    public ResponseEntity updateTrack(@PathVariable String uuid, MusicTrackResource musicTrackResource) {
+        return new ResponseEntity<>(musicTrackResourceAssembler.toResource(musicService.updateTrackWithUuidAndResource(UUID.fromString(uuid), musicTrackResource)), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/track/{uuid}/delete", method = RequestMethod.DELETE)

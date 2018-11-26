@@ -100,6 +100,25 @@ public class MusicTrackInfoStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
+    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, Float score, String genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
+        this.albumArtist = albumArtist;
+        this.composer = composer;
+        this.releaseYear = releaseYear;
+        this.score = score;
+        this.genre = genre;
+        this.artwork = artwork;
+        this.love = love;
+        this.dislike = dislike;
+        this.comment = comment;
+        this.kind = kind;
+        this.duration = duration;
+        this.size = size;
+        this.bitRate = bitRate;
+        this.bitDepth = bitDepth;
+        this.sampleRate = sampleRate;
+        this.musicTrackEntity = musicTrackEntity;
+    }
+
     public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
         this.albumArtist = albumArtist;
         this.composer = composer;
@@ -199,7 +218,7 @@ public class MusicTrackInfoStaticEntity {
         return Arrays.asList(genre.split(";"));
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(List<String> genre) {
         this.genre = String.join(";", genre);
     }
 

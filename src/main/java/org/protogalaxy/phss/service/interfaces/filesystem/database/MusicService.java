@@ -86,12 +86,21 @@ public interface MusicService {
     MusicTrackEntity getTrack(String uuid);
 
     /**
-     * Update a track
+     * Update a track with UUID and resource
      *
+     * @param uuid               UUID of the updated track
      * @param musicTrackResource Resource of the updated track
      * @return Entity of the updated track
      */
-    MusicTrackEntity updateTrack(MusicTrackResource musicTrackResource);
+    MusicTrackEntity updateTrackWithUuidAndResource(UUID uuid, MusicTrackResource musicTrackResource);
+
+    /**
+     * Update a track with entity
+     *
+     * @param musicTrackEntity Entity of the updated track
+     * @return Entity of the updated track
+     */
+    MusicTrackEntity updateTrackWithEntity(MusicTrackEntity musicTrackEntity);
 
     /**
      * Remove a track

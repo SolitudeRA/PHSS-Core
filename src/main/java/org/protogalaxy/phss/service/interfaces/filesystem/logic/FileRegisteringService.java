@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.interfaces.filesystem.observer;
+package org.protogalaxy.phss.service.interfaces.filesystem.logic;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.photo.PhotoEntity;
@@ -15,73 +15,65 @@ public interface FileRegisteringService {
     /**
      * Register track in database
      *
-     * @param username name of the account
      * @param metadata metadata of the music
      * @param path     path of the file
      */
-    MusicTrackEntity registerTrack(String username, Map<String, Object> metadata, Path path) throws Exception;
+    MusicTrackEntity registerTrack(Map<String, Object> metadata, Path path) throws Exception;
 
     /**
      * Register anime in database
      *
-     * @param username name of the account
      * @param metadata metadata of the anime
      * @param path     path of the file
      */
-    AnimeEpisodeEntity registerAnime(String username, Map<String, String> metadata, Path path) throws Exception;
+    AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path) throws Exception;
 
     /**
      * Register movie in database
      *
-     * @param username name of the account
      * @param metadata metadata of the movie
      * @param path     path of the file
      */
-    MovieEntity registerMovie(String username, Map<String, String> metadata, Path path) throws Exception;
+    MovieEntity registerMovie(Map<String, String> metadata, Path path) throws Exception;
 
     /**
      * Register video in database
      *
-     * @param username name of the account
      * @param metadata metadata of the video
      * @param path     path of the file
      */
-    VideoEntity registerVideo(String username, Map<String, String> metadata, Path path) throws Exception;
+    VideoEntity registerVideo(Map<String, String> metadata, Path path) throws Exception;
 
     /**
      * Register photo in database
      *
-     * @param username name of the account
      * @param metadata metadata of the photo
      * @param path     path of the file
      */
-    PhotoEntity registerPhoto(String username, Map<String, String> metadata, Path path) throws Exception;
+    PhotoEntity registerPhoto(Map<String, String> metadata, Path path) throws Exception;
 
     /**
      * Register book in database
      *
-     * @param username name of the account
      * @param metadata metadata of the book
      * @param path     path of the file
      */
-    BookEntity registerBook(String username, Map<String, Object> metadata, Path path) throws Exception;
+    BookEntity registerBook(Map<String, Object> metadata, Path path) throws Exception;
 
     /**
      * Register document in database
      *
-     * @param username name of the account
      * @param metadata metadata of the document
      * @param path     path of the file
      * @param mimeType MIME type of the document
      */
-    String registerDocument(String username, Map<String, Object> metadata, Path path, String mimeType) throws Exception;
+    String registerDocument(Map<String, Object> metadata, Path path, String mimeType) throws Exception;
 
     /**
      * Register illustration in database
      *
-     * @param username name of the account
      * @param metadata metadata of the illustration
      * @param path     path of the file
      */
-    IllustrationEntity registerIllustration(String username, Map<String, String> metadata, Path path) throws Exception;
+    IllustrationEntity registerIllustration(Map<String, String> metadata, Path path) throws Exception;
 }

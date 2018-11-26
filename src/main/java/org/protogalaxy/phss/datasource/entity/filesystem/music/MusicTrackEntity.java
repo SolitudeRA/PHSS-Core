@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -66,6 +67,24 @@ public class MusicTrackEntity {
         this.location = location;
     }
 
+    public MusicTrackEntity(FileSystemMainEntity fileSystemOwner, String title, String album, String artist, String location) {
+        this.fileSystemOwner = fileSystemOwner;
+        this.title = title;
+        this.album = album;
+        this.artist = artist;
+        this.location = location;
+    }
+
+    public MusicTrackEntity(FileSystemMainEntity fileSystemOwner, String title, String album, String artist, String location, MusicTrackInfoEntity trackInformation, MusicTrackInfoStaticEntity trackInformationStatic) {
+        this.fileSystemOwner = fileSystemOwner;
+        this.title = title;
+        this.album = album;
+        this.artist = artist;
+        this.location = location;
+        this.trackInformation = trackInformation;
+        this.trackInformationStatic = trackInformationStatic;
+    }
+
     public MusicTrackEntity(FileSystemMainEntity fileSystemOwner, MusicAlbumEntity musicAlbum, String title, String album, String artist, String location, MusicTrackInfoEntity trackInformation, MusicTrackInfoStaticEntity trackInformationStatic) {
         this.fileSystemOwner = fileSystemOwner;
         this.musicAlbum = musicAlbum;
@@ -75,6 +94,27 @@ public class MusicTrackEntity {
         this.location = location;
         this.trackInformation = trackInformation;
         this.trackInformationStatic = trackInformationStatic;
+    }
+
+    public MusicTrackEntity updateFromResource(MusicTrackResource musicTrackResource) {
+        this.title = musicTrackResource.getTitle();
+        this.album = musicTrackResource.getAlbum();
+        this.artist = musicTrackResource.getArtist();
+        this.trackInformationStatic.setAlbumArtist(musicTrackResource.getAlbumArtist());
+        this.trackInformationStatic.setComposer(musicTrackResource.getComposer());
+        this.trackInformationStatic.setReleaseYear(musicTrackResource.getReleaseYear());
+        this.trackInformationStatic.setTrackNumber(musicTrackResource.getTrackNumber());
+        this.trackInformationStatic.setTrackTotal(musicTrackResource.getTrackTotal());
+        this.trackInformationStatic.setDiscNumber(musicTrackResource.getDiscNumber());
+        this.trackInformationStatic.setDiscTotal(musicTrackResource.getDiscTotal());
+        this.trackInformationStatic.setScore(musicTrackResource.getScore());
+        this.trackInformationStatic.setGenre(musicTrackResource.getGenre());
+        this.trackInformationStatic.setArtwork(musicTrackResource.getArtwork());
+        this.trackInformationStatic.setLove(musicTrackResource.getLove());
+        this.trackInformationStatic.setDislike(musicTrackResource.getDislike());
+        this.trackInformationStatic.setComment(musicTrackResource.getComment());
+        this.trackInformationStatic.setKind(musicTrackResource.getKind());
+        return this;
     }
 
     public UUID getUuid() {
