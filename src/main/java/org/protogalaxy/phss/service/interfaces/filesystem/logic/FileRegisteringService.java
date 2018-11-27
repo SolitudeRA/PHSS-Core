@@ -18,7 +18,7 @@ public interface FileRegisteringService {
      * @param metadata metadata of the music
      * @param path     path of the file
      */
-    MusicTrackEntity registerTrack(Map<String, Object> metadata, Path path) throws Exception;
+    MusicTrackEntity registerTrack(Map<String, Object> metadata, Path path);
 
     /**
      * Register anime in database
@@ -26,7 +26,7 @@ public interface FileRegisteringService {
      * @param metadata metadata of the anime
      * @param path     path of the file
      */
-    AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path) throws Exception;
+    AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path);
 
     /**
      * Register movie in database
@@ -34,7 +34,7 @@ public interface FileRegisteringService {
      * @param metadata metadata of the movie
      * @param path     path of the file
      */
-    MovieEntity registerMovie(Map<String, String> metadata, Path path) throws Exception;
+    MovieEntity registerMovie(Map<String, String> metadata, Path path);
 
     /**
      * Register video in database
@@ -42,7 +42,7 @@ public interface FileRegisteringService {
      * @param metadata metadata of the video
      * @param path     path of the file
      */
-    VideoEntity registerVideo(Map<String, String> metadata, Path path) throws Exception;
+    VideoEntity registerVideo(Map<String, String> metadata, Path path);
 
     /**
      * Register photo in database
@@ -50,7 +50,7 @@ public interface FileRegisteringService {
      * @param metadata metadata of the photo
      * @param path     path of the file
      */
-    PhotoEntity registerPhoto(Map<String, String> metadata, Path path) throws Exception;
+    PhotoEntity registerPhoto(Map<String, String> metadata, Path path);
 
     /**
      * Register book in database
@@ -75,5 +75,5 @@ public interface FileRegisteringService {
      * @param metadata metadata of the illustration
      * @param path     path of the file
      */
-    IllustrationEntity registerIllustration(Map<String, String> metadata, Path path) throws Exception;
+    IllustrationEntity registerIllustration(Map<String, String> metadata, Path path);
 }

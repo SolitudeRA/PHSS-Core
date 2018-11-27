@@ -4,6 +4,7 @@ import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public interface StorageService {
@@ -29,7 +30,14 @@ public interface StorageService {
      *
      * @param uuid UUID of the file
      */
-    void deleteTrack(String uuid);
+    void deleteTrack(UUID uuid);
+
+    /**
+     * Delete album
+     *
+     * @param uuid UUID of the file
+     */
+    void deleteAlbum(UUID uuid);
 
     /**
      * Store single anime

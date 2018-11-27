@@ -13,7 +13,9 @@ import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PhssUserDetailsService implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
@@ -45,10 +47,14 @@ public class PhssUserDetailsService implements UserDetailsService {
     }
 
     public void deleteUserByUsername(String username) throws UsernameNotFoundException {
-        accountRepository.delete(accountRepository.findByUsername(username));
+        accountRepository.deleteByUsername(username);
     }
 
     public AccountEntity loadUserByUsername(String username) throws UsernameNotFoundException {
-        return accountRepository.findByUsername(username);
+        if (accountRepository.findByUsername(username).isPresent()) {
+            return accountRepository.findByUsername(username).get();
+        } else {
+            throw new UsernameNotFoundException("Invalid account name");
+        }
     }
 }

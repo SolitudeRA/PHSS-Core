@@ -7,6 +7,8 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrac
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.protogalaxy.phss.service.interfaces.filesystem.database.MusicService;
+import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
+import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +20,15 @@ import java.util.UUID;
 
 @Service
 public class MusicServiceImpl implements MusicService {
+    private StorageService storageService;
     private MusicAlbumRepository musicAlbumRepository;
     private MusicTrackRepository musicTrackRepository;
 
     @Autowired
-    public MusicServiceImpl(MusicAlbumRepository musicAlbumRepository,
+    public MusicServiceImpl(StorageServiceImpl storageService,
+                            MusicAlbumRepository musicAlbumRepository,
                             MusicTrackRepository musicTrackRepository) {
+        this.storageService = storageService;
         this.musicAlbumRepository = musicAlbumRepository;
         this.musicTrackRepository = musicTrackRepository;
     }
@@ -71,6 +76,7 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     public void removeAlbum(String uuid) {
+        storageService.deleteAlbum(UUID.fromString(uuid));
         musicAlbumRepository.deleteByUuid(UUID.fromString(uuid));
     }
 
@@ -149,6 +155,7 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     public void removeTrack(String uuid) {
+        storageService.deleteTrack(UUID.fromString(uuid));
         musicTrackRepository.deleteByUuid(UUID.fromString(uuid));
     }
 

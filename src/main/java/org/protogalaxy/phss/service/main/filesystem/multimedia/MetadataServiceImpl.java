@@ -69,11 +69,11 @@ public class MetadataServiceImpl implements MetadataService {
                 metadataCurrentMap.put(key, "");
             }
         }
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_DURATION, MultimediaUtils.formatDuration(avFormatContext.duration()));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_DURATION, MultimediaUtils.formatDurationToMilliSeconds(avFormatContext.duration()));
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITRATE, MultimediaUtils.formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SIZE, FileUtils.formatSize(path.toFile().length()));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SIZE, path.toFile().length());
         avformat_close_input(avFormatContext);
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
@@ -90,7 +90,7 @@ public class MetadataServiceImpl implements MetadataService {
         avformat_open_input(avFormatContext, path.toString(), null, null);
         avformat_find_stream_info(avFormatContext, (PointerPointer) null);
         av_dict_get(avFormatContext.metadata(), "", null, AV_DICT_IGNORE_SUFFIX).key().getString();
-        metadataMap.put(FileConsts.METADATA_VIDEO_DURATION, MultimediaUtils.formatDuration(avFormatContext.streams(0).duration()));
+        metadataMap.put(FileConsts.METADATA_VIDEO_DURATION, MultimediaUtils.formatDurationToMilliSeconds(avFormatContext.streams(0).duration()));
         metadataMap.put(FileConsts.METADATA_VIDEO_WIDTH, avFormatContext.streams(0).codecpar().width());
         metadataMap.put(FileConsts.METADATA_VIDEO_HEIGHT, avFormatContext.streams(0).codecpar().height());
         return metadataMap;

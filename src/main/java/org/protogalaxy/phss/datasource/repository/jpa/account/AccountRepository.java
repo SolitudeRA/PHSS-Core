@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer>, CrudRepository<AccountEntity, Integer> {
     Optional<AccountEntity> findByUsername(String username);
 
+    void deleteByUsername(String username);
+
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     List<AccountEntity> findAll();

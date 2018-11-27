@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import javax.imageio.ImageIO;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 
@@ -91,8 +92,8 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public MusicTrackEntity registerTrack(Map<String, Object> metadata, Path path) throws Exception {
-        FileSystemMainEntity fileSystemMainEntity = filesystemMainRepository.findByUserEntity_Username(SecurityContextHolder.getContext().getAuthentication().getName());
+    public MusicTrackEntity registerTrack(Map<String, Object> metadata, Path path) {
+        FileSystemMainEntity fileSystemMainEntity = filesystemMainRepository.findByAccountEntity_Username(SecurityContextHolder.getContext().getAuthentication().getName());
         MusicTrackEntity trackEntity = new MusicTrackEntity(fileSystemMainEntity,
                                                             metadata.get(AudioConsts.METADATA_AUDIO_TITLE).toString(),
                                                             metadata.get(AudioConsts.METADATA_AUDIO_ALBUM).toString(),
@@ -101,36 +102,58 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         MusicTrackInfoEntity trackInfoEntity = new MusicTrackInfoEntity(trackEntity);
         MusicTrackInfoStaticEntity trackInfoStaticEntity = new MusicTrackInfoStaticEntity(metadata.get(AudioConsts.METADATA_AUDIO_ALBUMARTIST).toString(),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_COMPOSER).toString(),
-                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_RELEASE_YEAR).toString(),
-                                                                                          metadata.get(AudioConsts));
+                                                                                          Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_RELEASE_YEAR).toString()),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_GENRE).toString(),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_COVER).toString(),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_COMMENT).toString(),
+                                                                                          Duration.ofMillis((Long) metadata.get(AudioConsts.METADATA_AUDIO_DURATION)),
+                                                                                          (Long) metadata.get(AudioConsts.METADATA_AUDIO_SIZE),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_BITRATE).toString(),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_BITDEPTH).toString(),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_SAMPLERATE).toString());
+        if (metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().contains("/")) {
+            String[] trackData = metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().split("/");
+            trackInfoStaticEntity.setTrackNumber(Integer.valueOf(trackData[0]));
+            trackInfoStaticEntity.setTrackTotal(Integer.valueOf(trackData[1]));
+        } else {
+            trackInfoStaticEntity.setTrackNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString()));
+        }
+        if (metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString().contains("/")) {
+            String[] discData = metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString().split("/");
+            trackInfoStaticEntity.setDiscNumber(Integer.valueOf(discData[0]));
+            trackInfoStaticEntity.setDiscTotal(Integer.valueOf(discData[1]));
+        } else {
+            trackInfoStaticEntity.setDiscNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString()));
+        }
         musicTrackRepository.save(trackEntity);
         return trackEntity;
     }
 
     @Override
-    public AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path) throws Exception {
+    public AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path){
         return null;
     }
 
     @Override
-    public MovieEntity registerMovie(Map<String, String> metadata, Path path) throws Exception {
+    public MovieEntity registerMovie(Map<String, String> metadata, Path path) {
         return null;
     }
 
     @Override
-    public VideoEntity registerVideo(Map<String, String> metadata, Path path) throws Exception {
+    public VideoEntity registerVideo(Map<String, String> metadata, Path path){
         return null;
     }
 
     @Override
-    public PhotoEntity registerPhoto(Map<String, String> metadata, Path path) throws Exception {
+    public PhotoEntity registerPhoto(Map<String, String> metadata, Path path) {
         return null;
     }
 
     @Override
-    public BookEntity registerBook(Map<String, Object> metadata, Path path) throws Exception {
+    public BookEntity registerBook(Map<String, Object> metadata, Path path) throws Exception{
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         BookEntity bookEntity = new BookEntity(
-                filesystemMainRepository.findByUserEntity_Username(username),
+                filesystemMainRepository.findByAccountEntity_Username(username),
                 (String) metadata.get(FileConsts.METADATA_BOOK_TITLE),
                 (String) metadata.get(FileConsts.METADATA_BOOK_AUTHOR),
                 (String) metadata.get(FileConsts.METADATA_BOOK_PATH));
@@ -153,7 +176,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public String registerDocument(Map<String, Object> metadata, Path path, String mimeType) throws Exception {
+    public String registerDocument(Map<String, Object> metadata, Path path, String mimeType) throws Exception{
         switch (mimeType) {
             case FileConsts.MIME_ADOBE_PDF:
                 return registerAdobePdf(metadata, path);
@@ -183,7 +206,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public IllustrationEntity registerIllustration(Map<String, String> metadata, Path path) throws Exception {
+    public IllustrationEntity registerIllustration(Map<String, String> metadata, Path path) {
         return null;
     }
 

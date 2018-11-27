@@ -5,10 +5,9 @@ import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.exception.path.PathException;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
-import org.protogalaxy.phss.service.main.filesystem.multimedia.MetadataServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
-import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
@@ -18,38 +17,34 @@ import java.util.regex.Pattern;
 @Service
 public class PathServiceImpl implements PathService {
     private StorageServiceConfig storageServiceConfig;
-    private MetadataService metadataService;
 
     @Autowired
-    public PathServiceImpl(StorageServiceConfig storageServiceConfig,
-                           MetadataServiceImpl metadataService) {
+    public PathServiceImpl(StorageServiceConfig storageServiceConfig) {
         this.storageServiceConfig = storageServiceConfig;
-        this.metadataService = metadataService;
     }
 
     /**
      * Persist file in correct path
      *
-     * @param username Name of current account
      * @param mimeType MIME type of the file
      * @param tempPath Temporary path of the file
      * @param metadata Metadata of the file
      * @return Persisted path of the file
      */
     @Override
-    public Path persistFile(String username, String mimeType, Path tempPath, Map<String, Object> metadata) {
+    public Path persistFile(String mimeType, Path tempPath, Map<String, Object> metadata) {
         return null;
     }
 
     /**
      * Switch path with filesystem part
      *
-     * @param username       Name of the account
      * @param fileSystemPart Part of the filesystem
      * @return Correct path for the part
      */
     @Override
-    public Path basePathSwitcher(String username, String fileSystemPart) {
+    public Path basePathSwitcher(String fileSystemPart) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         switch (fileSystemPart) {
             case FileConsts.FILESYSTEM_MUSIC:
                 return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getMusicLocation());
@@ -75,13 +70,13 @@ public class PathServiceImpl implements PathService {
     /**
      * Switch path with metadata information
      *
-     * @param username       Name of the account
      * @param tempPath       Temporary path of the file
      * @param fileSystemPart File system part
      * @return Correct path for current MIME type
      */
     @Override
-    public Path metadataPathSwitcher(String username, Path tempPath, String fileSystemPart) {
+    public Path metadataPathSwitcher(Path tempPath, String fileSystemPart) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String mimeType = FileUtils.getMimeType(tempPath);
         switch (fileSystemPart) {
             case FileConsts.FILESYSTEM_MUSIC:
@@ -151,13 +146,12 @@ public class PathServiceImpl implements PathService {
     /**
      * Change file location
      *
-     * @param username    name of current account
      * @param currentPath current file path
      * @param changedPath path that file to move
      * @return changed file path
      */
     @Override
-    public Path changeLocation(String username, Path currentPath, Path changedPath) {
+    public Path changeLocation(Path currentPath, Path changedPath) {
         return null;
     }
 }
