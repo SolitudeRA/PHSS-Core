@@ -61,7 +61,7 @@ public class CacheServiceImpl implements CacheService {
         String imageName = UUID.randomUUID().toString();
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", outputStream);
+            ImageIO.write(bufferedImage, "jpg", outputStream);
             return Files.write(tempPathCheck(imagePoolLocation.resolve(username).resolve(imageName)), outputStream.toByteArray());
         } catch (IOException e) {
             throw new StorageTempException("Failed to cache image", e);

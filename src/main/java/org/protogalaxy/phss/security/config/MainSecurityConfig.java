@@ -83,7 +83,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //--------------------------Login config--------------------------------//
                 .formLogin()
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/account/login")
                 .successHandler(ajaxAuthSuccessHandler)
                 .failureHandler(ajaxAuthFailHandler)
                 .permitAll()

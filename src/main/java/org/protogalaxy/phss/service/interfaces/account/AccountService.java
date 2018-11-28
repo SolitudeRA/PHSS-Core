@@ -4,7 +4,7 @@ import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.exception.UserNotFoundException;
 
 public interface AccountService {
-    String register(String username, String password) throws Exception;
+    AccountEntity register(String username, String password);
 
     AccountEntity getAccount(Integer id) throws UserNotFoundException;
 

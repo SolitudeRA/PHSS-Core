@@ -60,12 +60,12 @@ public class MusicController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/album/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/album/search/title", method = RequestMethod.POST)
     public ResponseEntity searchAlbumByTitle(@RequestParam("title") String title) {
         return new ResponseEntity<>(musicAlbumResourceAssembler.toResources(musicService.searchAlbumByTitle(title)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/album/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/album/search/artist", method = RequestMethod.POST)
     public ResponseEntity searchAlbumByArtist(@RequestParam("artist") String artist) {
         return new ResponseEntity<>(musicAlbumResourceAssembler.toResources(musicService.searchAlbumByArtist(artist)), HttpStatus.OK);
     }
@@ -86,12 +86,12 @@ public class MusicController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/track/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/track/search/title", method = RequestMethod.POST)
     public ResponseEntity searchTrackByTitle(@RequestParam("title") String title) {
         return new ResponseEntity<>(musicTrackResourceAssembler.toResources(musicService.searchTrackByTitle(title)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/track/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/track/search/artist", method = RequestMethod.POST)
     public ResponseEntity searchTrackByArtist(@RequestParam("artist") String artist) {
         return new ResponseEntity<>(musicTrackResourceAssembler.toResources(musicService.searchTrackByArtist(artist)), HttpStatus.OK);
     }

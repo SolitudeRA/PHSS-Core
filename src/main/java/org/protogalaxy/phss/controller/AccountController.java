@@ -30,8 +30,8 @@ public class AccountController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@Param("username") String username, @Param("password") String password) throws Exception {
-        return accountService.register(username, password);
+    public ResponseEntity<AccountResource> register(@Param("username") String username, @Param("password") String password) throws Exception {
+        return new ResponseEntity<>(accountResourceAssembler.toResource(accountService.register(username, password)), HttpStatus.OK);
     }
 
     @PreAuthorize("isFullyAuthenticated()&&(#username==principal.username)")

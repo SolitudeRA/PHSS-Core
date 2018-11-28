@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -24,14 +23,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String register(String username, String password) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
+    public AccountEntity register(String username, String password){
         AccountEntity accountEntity = new AccountEntity(username, password, true, true, true);
         accountEntity.setFileSystemMainEntity(new FileSystemMainEntity(accountEntity));
         accountEntity.setPersonalDataEntity(new PersonalDataEntity(accountEntity));
         accountEntity.setSettingMainEntity(new SettingMainEntity(accountEntity));
         accountRepository.save(accountEntity);
-        return mapper.writeValueAsString(accountEntity);
+        return accountEntity;
     }
 
     @Override

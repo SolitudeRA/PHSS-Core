@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface MusicPlaylistRepository extends JpaRepository<MusicPlaylistEntity, UUID>, CrudRepository<MusicPlaylistEntity, UUID> {
-    List<MusicPlaylistEntity> findAllByFileSystemOwner_UserEntity_Username(String username);
+    List<MusicPlaylistEntity> findAllByFileSystemOwner_AccountEntity_Username(String username);
 }

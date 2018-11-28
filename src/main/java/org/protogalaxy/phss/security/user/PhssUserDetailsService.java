@@ -13,9 +13,7 @@ import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
 public class PhssUserDetailsService implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
