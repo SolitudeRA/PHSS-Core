@@ -61,6 +61,9 @@ public class AnimeSeiyuuEntity {
     @Column(name = "gmt_modified")
     private ZonedDateTime columnModified;
 
+    public AnimeSeiyuuEntity() {
+    }
+
     public AnimeSeiyuuEntity(Integer bangumiId, String name, String nameTranslated, String roleName, String image, String gender, Date birth, Integer height, Integer weight, String bloodType, String bwh, AnimeFirmEntity animeFirmEntity) {
         this.bangumiId = bangumiId;
         this.name = name;

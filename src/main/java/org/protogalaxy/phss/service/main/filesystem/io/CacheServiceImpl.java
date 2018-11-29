@@ -58,11 +58,11 @@ public class CacheServiceImpl implements CacheService {
      */
     @Override
     public Path cacheImage(String username, BufferedImage bufferedImage) {
-        String imageName = UUID.randomUUID().toString();
+        String imageName = UUID.randomUUID().toString() + ".png";
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "jpg", outputStream);
-            return Files.write(tempPathCheck(imagePoolLocation.resolve(username).resolve(imageName)), outputStream.toByteArray());
+            ImageIO.write(bufferedImage, "png", outputStream);
+            return Files.write(tempPathCheck(imagePoolLocation.resolve(username)).resolve(imageName), outputStream.toByteArray());
         } catch (IOException e) {
             throw new StorageTempException("Failed to cache image", e);
         }

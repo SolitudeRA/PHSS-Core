@@ -15,6 +15,8 @@ import org.protogalaxy.phss.datasource.entity.filesystem.illustration.Illustrati
 import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEpisodeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackInfoRepository;
+import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackInfoStaticRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
@@ -45,6 +47,8 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
 
     //Database database repositories
     private final MusicTrackRepository musicTrackRepository;
+    private final MusicTrackInfoRepository musicTrackInfoRepository;
+    private final MusicTrackInfoStaticRepository musicTrackInfoStaticRepository;
     private final BookRepository bookRepository;
     private final DocumentAdobePdfRepository documentAdobePdfRepository;
     private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
@@ -62,6 +66,8 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     public FileRegisteringServiceImpl(CacheServiceImpl cachingService,
                                       FilesystemMainRepository filesystemMainRepository,
                                       MusicTrackRepository musicTrackRepository,
+                                      MusicTrackInfoRepository musicTrackInfoRepository,
+                                      MusicTrackInfoStaticRepository musicTrackInfoStaticRepository,
                                       BookRepository bookRepository,
                                       DocumentAdobePdfRepository documentAdobePdfRepository,
                                       DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
@@ -77,6 +83,8 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         this.cacheService = cachingService;
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
+        this.musicTrackInfoRepository = musicTrackInfoRepository;
+        this.musicTrackInfoStaticRepository = musicTrackInfoStaticRepository;
         this.bookRepository = bookRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
         this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
@@ -110,7 +118,8 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                                                                           (Long) metadata.get(AudioConsts.METADATA_AUDIO_SIZE),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_BITRATE).toString(),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_BITDEPTH).toString(),
-                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_SAMPLERATE).toString());
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_SAMPLERATE).toString(),
+                                                                                          trackEntity);
         if (metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().contains("/")) {
             String[] trackData = metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().split("/");
             trackInfoStaticEntity.setTrackNumber(Integer.valueOf(trackData[0]));
@@ -125,12 +134,14 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         } else {
             trackInfoStaticEntity.setDiscNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString()));
         }
-        musicTrackRepository.save(trackEntity);
-        return trackEntity;
+        trackEntity = musicTrackRepository.saveAndFlush(trackEntity);
+        musicTrackInfoRepository.save(trackInfoEntity);
+        musicTrackInfoStaticRepository.save(trackInfoStaticEntity);
+        return musicTrackRepository.findByUuid(trackEntity.getUuid());
     }
 
     @Override
-    public AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path){
+    public AnimeEpisodeEntity registerAnime(Map<String, String> metadata, Path path) {
         return null;
     }
 
@@ -140,7 +151,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public VideoEntity registerVideo(Map<String, String> metadata, Path path){
+    public VideoEntity registerVideo(Map<String, String> metadata, Path path) {
         return null;
     }
 
@@ -150,7 +161,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public BookEntity registerBook(Map<String, Object> metadata, Path path) throws Exception{
+    public BookEntity registerBook(Map<String, Object> metadata, Path path) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         BookEntity bookEntity = new BookEntity(
                 filesystemMainRepository.findByAccountEntity_Username(username),
@@ -176,7 +187,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     }
 
     @Override
-    public String registerDocument(Map<String, Object> metadata, Path path, String mimeType) throws Exception{
+    public String registerDocument(Map<String, Object> metadata, Path path, String mimeType) throws Exception {
         switch (mimeType) {
             case FileConsts.MIME_ADOBE_PDF:
                 return registerAdobePdf(metadata, path);

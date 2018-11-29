@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 
 @Entity(name = "MusicTrackStaticInformation")
-@Table(name = "track_inf_static")
+@Table(name = "music_track_info_static")
 public class MusicTrackInfoStaticEntity {
     @Id
     private UUID trackUUID;
@@ -100,7 +100,7 @@ public class MusicTrackInfoStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, String genre, String artwork, String comment, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate) {
+    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, String genre, String artwork, String comment, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
         this.albumArtist = albumArtist;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -112,6 +112,7 @@ public class MusicTrackInfoStaticEntity {
         this.bitRate = bitRate;
         this.bitDepth = bitDepth;
         this.sampleRate = sampleRate;
+        this.musicTrackEntity = musicTrackEntity;
     }
 
     public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {

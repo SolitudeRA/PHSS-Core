@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 
 @Entity(name = "MusicAlbumStaticInformation")
-@Table(name = "album_music_info_static")
+@Table(name = "music_album_info_static")
 public class MusicAlbumInfoStaticEntity {
     @Id
     private UUID albumUUID;

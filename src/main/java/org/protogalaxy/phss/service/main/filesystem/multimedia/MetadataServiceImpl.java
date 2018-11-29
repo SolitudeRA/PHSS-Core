@@ -64,7 +64,7 @@ public class MetadataServiceImpl implements MetadataService {
         }
         for (String key : AudioConsts.METADATA_AUDIO_STANDARD_LIST) {
             if (metadataRawMap.get(key) != null) {
-                metadataCurrentMap.put(key, metadataCurrentMap.get(key));
+                metadataCurrentMap.put(key, metadataRawMap.get(key).toString().trim());
             } else {
                 metadataCurrentMap.put(key, "");
             }

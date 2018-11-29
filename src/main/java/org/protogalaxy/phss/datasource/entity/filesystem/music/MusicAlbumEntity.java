@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 
 @Entity(name = "MusicAlbum")
-@Table(name = "album_music")
+@Table(name = "music_album")
 public class MusicAlbumEntity {
     @Id
     @GeneratedValue

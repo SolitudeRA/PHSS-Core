@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 
 @Entity(name = "MusicTrack")
-@Table(name = "track")
+@Table(name = "music_track")
 public class MusicTrackEntity {
     @Id
     @GeneratedValue
@@ -44,12 +44,12 @@ public class MusicTrackEntity {
     @Column(name = "location")
     private String location;
 
-    @Column(name = "date_added")
     @CreatedDate
+    @Column(name = "date_added")
     private ZonedDateTime dateAdded;
 
-    @Column(name = "date_modified")
     @LastModifiedDate
+    @Column(name = "date_modified")
     private ZonedDateTime dateModified;
 
     @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

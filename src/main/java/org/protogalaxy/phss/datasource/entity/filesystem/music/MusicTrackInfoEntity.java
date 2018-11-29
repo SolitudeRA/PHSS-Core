@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Entity(name = "MusicTrackInformation")
 @DynamicInsert
-@Table(name = "track_inf")
+@Table(name = "music_track_info")
 public class MusicTrackInfoEntity {
     @Id
     private UUID trackUUID;
