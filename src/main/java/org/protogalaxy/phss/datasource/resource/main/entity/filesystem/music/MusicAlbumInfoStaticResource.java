@@ -1,10 +1,10 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfoStaticEntity;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.Duration;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 public class MusicAlbumInfoStaticResource extends ResourceSupport {
@@ -34,9 +34,9 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
 
     private Long sizeTotal;
 
-    private ZonedDateTime dateAdded;
+    private String dateAdded;
 
-    private ZonedDateTime dateModified;
+    private String dateModified;
 
     public MusicAlbumInfoStaticResource() {
     }
@@ -55,11 +55,11 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         this.dislike = musicAlbumInfoStaticEntity.getDislike();
         this.comment = musicAlbumInfoStaticEntity.getComment();
         this.sizeTotal = musicAlbumInfoStaticEntity.getSizeTotal();
-        this.dateAdded = musicAlbumInfoStaticEntity.getDateAdded();
-        this.dateModified = musicAlbumInfoStaticEntity.getDateModified();
+        this.dateAdded = musicAlbumInfoStaticEntity.getDateAdded().toString();
+        this.dateModified = musicAlbumInfoStaticEntity.getDateModified().toString();
     }
 
-    public MusicAlbumInfoStaticResource(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean love, Boolean dislike, String comment, Long sizeTotal, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicAlbumInfoStaticResource(String artwork, String composer, Integer releaseYear, Duration durationTotal, Integer trackTotal, Integer discNumber, Integer discTotal, List<String> genre, Float score, Boolean love, Boolean dislike, String comment, Long sizeTotal, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.artwork = artwork;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -73,8 +73,8 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         this.dislike = dislike;
         this.comment = comment;
         this.sizeTotal = sizeTotal;
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
+        this.dateAdded = dateAdded.toString();
+        this.dateModified = dateModified.toString();
     }
 
     public String getArtwork() {
@@ -129,11 +129,11 @@ public class MusicAlbumInfoStaticResource extends ResourceSupport {
         return sizeTotal;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public String getDateModified() {
         return dateModified;
     }
 }

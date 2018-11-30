@@ -1,21 +1,20 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfoEntity;
 import org.springframework.hateoas.ResourceSupport;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public class MusicAlbumInfoResource extends ResourceSupport {
     private Integer playbackCount;
 
     private Integer skipCount;
 
-    private LocalDateTime lastPlayed;
+    private String lastPlayed;
 
-    private ZonedDateTime dateAdded;
+    private String dateAdded;
 
-    private ZonedDateTime dateModified;
+    private String dateModified;
 
     public MusicAlbumInfoResource() {
     }
@@ -23,17 +22,17 @@ public class MusicAlbumInfoResource extends ResourceSupport {
     public MusicAlbumInfoResource(MusicAlbumInfoEntity musicAlbumInfoEntity) {
         this.playbackCount = musicAlbumInfoEntity.getPlaybackCount();
         this.skipCount = musicAlbumInfoEntity.getSkipCount();
-        this.lastPlayed = musicAlbumInfoEntity.getLastPlayed();
-        this.dateAdded = musicAlbumInfoEntity.getDateAdded();
-        this.dateModified = musicAlbumInfoEntity.getDateModified();
+        this.lastPlayed = musicAlbumInfoEntity.getLastPlayed().toString();
+        this.dateAdded = musicAlbumInfoEntity.getDateAdded().toString();
+        this.dateModified = musicAlbumInfoEntity.getDateModified().toString();
     }
 
-    public MusicAlbumInfoResource(Integer playbackCount, Integer skipCount, LocalDateTime lastPlayed, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicAlbumInfoResource(Integer playbackCount, Integer skipCount, LocalDateTime lastPlayed, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.playbackCount = playbackCount;
         this.skipCount = skipCount;
-        this.lastPlayed = lastPlayed;
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
+        this.lastPlayed = lastPlayed.toString();
+        this.dateAdded = dateAdded.toString();
+        this.dateModified = dateModified.toString();
     }
 
     public Integer getPlaybackCount() {
@@ -44,15 +43,15 @@ public class MusicAlbumInfoResource extends ResourceSupport {
         return skipCount;
     }
 
-    public LocalDateTime getLastPlayed() {
+    public String getLastPlayed() {
         return lastPlayed;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public String getDateModified() {
         return dateModified;
     }
 }

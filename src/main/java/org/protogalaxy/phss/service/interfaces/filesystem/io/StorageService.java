@@ -3,11 +3,20 @@ package org.protogalaxy.phss.service.interfaces.filesystem.io;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 
 
 public interface StorageService {
+    /**
+     * Move file to another path
+     *
+     * @param fromPath Path where file will move from
+     * @param toPath   Path where file will move to
+     */
+    void moveFile(Path fromPath, Path toPath) throws Exception;
+
     /**
      * Store single track
      *
@@ -33,11 +42,11 @@ public interface StorageService {
     void deleteTrack(UUID uuid);
 
     /**
-     * Delete album
+     * Delete music album
      *
      * @param uuid UUID of the file
      */
-    void deleteAlbum(UUID uuid);
+    void deleteMusicAlbum(UUID uuid);
 
     /**
      * Store single anime

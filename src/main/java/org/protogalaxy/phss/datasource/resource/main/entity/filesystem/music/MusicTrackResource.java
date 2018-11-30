@@ -1,13 +1,9 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoEntity;
-import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoStaticEntity;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 public class MusicTrackResource extends ResourceSupport {
@@ -61,11 +57,11 @@ public class MusicTrackResource extends ResourceSupport {
 
     private Integer skipCount;
 
-    private LocalDateTime lastPlayed;
+    private String lastPlayed;
 
-    private ZonedDateTime dateAdded;
+    private String dateAdded;
 
-    private ZonedDateTime dateModified;
+    private String dateModified;
 
     public MusicTrackResource() {
     }
@@ -96,40 +92,13 @@ public class MusicTrackResource extends ResourceSupport {
         this.sampleRate = musicTrackEntity.getTrackInformationStatic().getSampleRate();
         this.playbackCount = musicTrackEntity.getTrackInformation().getPlaybackCount();
         this.skipCount = musicTrackEntity.getTrackInformation().getSkipCount();
-        this.lastPlayed = musicTrackEntity.getTrackInformation().getLastPlayed();
-        this.dateAdded = musicTrackEntity.getDateAdded();
-        this.dateModified = musicTrackEntity.getDateModified();
-    }
-
-    public MusicTrackResource(String title, String album, String artist, String location, ZonedDateTime dateAdded, ZonedDateTime dateModified, MusicTrackInfoEntity trackInformation, MusicTrackInfoStaticEntity trackInformationStatic) {
-        this.title = title;
-        this.album = album;
-        this.artist = artist;
-        this.location = location;
-        this.albumArtist = trackInformationStatic.getAlbumArtist();
-        this.composer = trackInformationStatic.getComposer();
-        this.releaseYear = trackInformationStatic.getReleaseYear();
-        this.trackNumber = trackInformationStatic.getTrackNumber();
-        this.trackTotal = trackInformationStatic.getTrackTotal();
-        this.discNumber = trackInformationStatic.getDiscNumber();
-        this.discTotal = trackInformationStatic.getDiscTotal();
-        this.score = trackInformationStatic.getScore();
-        this.genre = trackInformationStatic.getGenre();
-        this.artwork = trackInformationStatic.getArtwork();
-        this.love = trackInformationStatic.getLove();
-        this.dislike = trackInformationStatic.getDislike();
-        this.comment = trackInformationStatic.getComment();
-        this.kind = trackInformationStatic.getKind();
-        this.duration = trackInformationStatic.getDuration();
-        this.size = trackInformationStatic.getSize();
-        this.bitRate = trackInformationStatic.getBitRate();
-        this.bitDepth = trackInformationStatic.getBitDepth();
-        this.sampleRate = trackInformationStatic.getSampleRate();
-        this.playbackCount = trackInformation.getPlaybackCount();
-        this.skipCount = trackInformation.getSkipCount();
-        this.lastPlayed = trackInformation.getLastPlayed();
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
+        if (musicTrackEntity.getTrackInformation().getLastPlayed() != null) {
+            this.lastPlayed = musicTrackEntity.getTrackInformation().getLastPlayed().toString();
+        } else {
+            this.lastPlayed = null;
+        }
+        this.dateAdded = musicTrackEntity.getDateAdded().toString();
+        this.dateModified = musicTrackEntity.getDateModified().toString();
     }
 
     public String getTitle() {
@@ -232,15 +201,15 @@ public class MusicTrackResource extends ResourceSupport {
         return skipCount;
     }
 
-    public LocalDateTime getLastPlayed() {
+    public String getLastPlayed() {
         return lastPlayed;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public String getDateModified() {
         return dateModified;
     }
 }

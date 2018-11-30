@@ -3,6 +3,7 @@ package org.protogalaxy.phss.datasource.config;
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -26,6 +27,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableEntityLinks
+@EnableJpaAuditing
 @EnableSpringDataWebSupport
 @EnableTransactionManagement
 @EnableJpaRepositories("org.protogalaxy.phss.datasource.repository.jpa")

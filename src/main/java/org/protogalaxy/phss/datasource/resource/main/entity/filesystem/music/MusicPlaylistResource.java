@@ -1,5 +1,6 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicPlaylistEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.springframework.hateoas.ResourceSupport;
@@ -23,6 +24,10 @@ public class MusicPlaylistResource extends ResourceSupport {
 
     private Integer playbackCount;
 
+    private String dateAdded;
+
+    private String dateModified;
+
     public MusicPlaylistResource() {
     }
 
@@ -34,9 +39,11 @@ public class MusicPlaylistResource extends ResourceSupport {
         this.trackTotal = musicPlaylistEntity.getTrackTotal();
         this.durationTotal = musicPlaylistEntity.getDurationTotal();
         this.playbackCount = musicPlaylistEntity.getPlaybackCount();
+        this.dateAdded = musicPlaylistEntity.getDateAdded().toString();
+        this.dateModified = musicPlaylistEntity.getDateModified().toString();
     }
 
-    public MusicPlaylistResource(UUID uuid, String name, String description, List<MusicTrackEntity> list, Integer trackTotal, Duration durationTotal, Integer playbackCount) {
+    public MusicPlaylistResource(UUID uuid, String name, String description, List<MusicTrackEntity> list, Integer trackTotal, Duration durationTotal, Integer playbackCount, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
@@ -44,6 +51,8 @@ public class MusicPlaylistResource extends ResourceSupport {
         this.trackTotal = trackTotal;
         this.durationTotal = durationTotal;
         this.playbackCount = playbackCount;
+        this.dateAdded = dateAdded.toString();
+        this.dateModified = dateModified.toString();
     }
 
     public UUID getUuid() {
@@ -72,5 +81,13 @@ public class MusicPlaylistResource extends ResourceSupport {
 
     public Integer getPlaybackCount() {
         return playbackCount;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public String getDateModified() {
+        return dateModified;
     }
 }

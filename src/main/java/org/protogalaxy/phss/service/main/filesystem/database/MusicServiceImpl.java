@@ -76,7 +76,7 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     public void removeAlbum(String uuid) {
-        storageService.deleteAlbum(UUID.fromString(uuid));
+        storageService.deleteMusicAlbum(UUID.fromString(uuid));
         musicAlbumRepository.deleteByUuid(UUID.fromString(uuid));
     }
 

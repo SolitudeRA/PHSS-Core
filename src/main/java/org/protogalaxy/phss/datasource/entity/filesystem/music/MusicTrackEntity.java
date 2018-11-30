@@ -1,12 +1,13 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @Entity(name = "MusicTrack")
 @Table(name = "music_track")
+@EntityListeners(AuditingEntityListener.class)
 public class MusicTrackEntity {
     @Id
     @GeneratedValue
@@ -46,11 +48,11 @@ public class MusicTrackEntity {
 
     @CreatedDate
     @Column(name = "date_added")
-    private ZonedDateTime dateAdded;
+    private LocalDateTime dateAdded;
 
     @LastModifiedDate
     @Column(name = "date_modified")
-    private ZonedDateTime dateModified;
+    private LocalDateTime dateModified;
 
     @OneToOne(mappedBy = "musicTrackEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private MusicTrackInfoEntity trackInformation;
@@ -173,19 +175,19 @@ public class MusicTrackEntity {
         this.location = location;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(ZonedDateTime dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public LocalDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(ZonedDateTime dateModified) {
+    public void setDateModified(LocalDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

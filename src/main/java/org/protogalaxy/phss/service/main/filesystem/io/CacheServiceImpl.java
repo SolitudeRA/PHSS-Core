@@ -62,7 +62,7 @@ public class CacheServiceImpl implements CacheService {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", outputStream);
-            return Files.write(tempPathCheck(imagePoolLocation.resolve(username)).resolve(imageName), outputStream.toByteArray());
+            return Files.write(tempPathCheck(Paths.get(username).resolve(imagePoolLocation).resolve(imageName)), outputStream.toByteArray());
         } catch (IOException e) {
             throw new StorageTempException("Failed to cache image", e);
         }

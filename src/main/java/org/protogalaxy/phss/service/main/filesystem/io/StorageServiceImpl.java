@@ -58,6 +58,17 @@ public class StorageServiceImpl implements StorageService {
         this.musicAlbumRepository = musicAlbumRepository;
     }
 
+    /**
+     * Move file to another path
+     *
+     * @param fromPath Path where file will move from
+     * @param toPath   Path where file will move to
+     */
+    @Override
+    public void moveFile(Path fromPath, Path toPath) throws Exception {
+        pathService.changeLocation(fromPath, toPath);
+    }
+
     @Override
     public MusicTrackEntity storeTrack(MultipartFile musicFile) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -111,7 +122,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void deleteAlbum(UUID uuid) {
+    public void deleteMusicAlbum(UUID uuid) {
         try {
             Files.delete(Paths.get(musicAlbumRepository.findByUuid(uuid).getLocation()));
         } catch (IOException e) {

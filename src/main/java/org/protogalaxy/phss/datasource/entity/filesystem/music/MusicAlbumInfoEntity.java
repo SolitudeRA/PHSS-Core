@@ -1,14 +1,14 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
 import org.hibernate.annotations.*;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
@@ -18,9 +18,10 @@ import java.util.UUID;
  * @version 1.0.0 SNAPSHOT
  */
 
-@Entity(name = "MusicAlbumInformation")
 @DynamicInsert
 @Table(name = "music_album_info")
+@Entity(name = "MusicAlbumInformation")
+@EntityListeners(AuditingEntityListener.class)
 public class MusicAlbumInfoEntity {
     @Id
     private UUID albumUUID;
@@ -36,13 +37,13 @@ public class MusicAlbumInfoEntity {
     @Column(name = "last_played")
     private LocalDateTime lastPlayed;
 
-    @Column(name = "date_added")
     @CreatedDate
-    private ZonedDateTime dateAdded;
+    @Column(name = "date_added")
+    private LocalDateTime dateAdded;
 
-    @Column(name = "date_modified")
     @LastModifiedDate
-    private ZonedDateTime dateModified;
+    @Column(name = "date_modified")
+    private LocalDateTime dateModified;
 
     @MapsId
     @OneToOne
@@ -88,19 +89,19 @@ public class MusicAlbumInfoEntity {
         this.lastPlayed = lastPlayed;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(ZonedDateTime dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public LocalDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(ZonedDateTime dateModified) {
+    public void setDateModified(LocalDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

@@ -47,8 +47,6 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
 
     //Database database repositories
     private final MusicTrackRepository musicTrackRepository;
-    private final MusicTrackInfoRepository musicTrackInfoRepository;
-    private final MusicTrackInfoStaticRepository musicTrackInfoStaticRepository;
     private final BookRepository bookRepository;
     private final DocumentAdobePdfRepository documentAdobePdfRepository;
     private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
@@ -66,8 +64,6 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
     public FileRegisteringServiceImpl(CacheServiceImpl cachingService,
                                       FilesystemMainRepository filesystemMainRepository,
                                       MusicTrackRepository musicTrackRepository,
-                                      MusicTrackInfoRepository musicTrackInfoRepository,
-                                      MusicTrackInfoStaticRepository musicTrackInfoStaticRepository,
                                       BookRepository bookRepository,
                                       DocumentAdobePdfRepository documentAdobePdfRepository,
                                       DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
@@ -83,8 +79,6 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         this.cacheService = cachingService;
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
-        this.musicTrackInfoRepository = musicTrackInfoRepository;
-        this.musicTrackInfoStaticRepository = musicTrackInfoStaticRepository;
         this.bookRepository = bookRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
         this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
@@ -134,10 +128,9 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         } else {
             trackInfoStaticEntity.setDiscNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString()));
         }
-        trackEntity = musicTrackRepository.saveAndFlush(trackEntity);
-        musicTrackInfoRepository.save(trackInfoEntity);
-        musicTrackInfoStaticRepository.save(trackInfoStaticEntity);
-        return musicTrackRepository.findByUuid(trackEntity.getUuid());
+        trackEntity.setTrackInformation(trackInfoEntity);
+        trackEntity.setTrackInformationStatic(trackInfoStaticEntity);
+        return musicTrackRepository.saveAndFlush(trackEntity);
     }
 
     @Override

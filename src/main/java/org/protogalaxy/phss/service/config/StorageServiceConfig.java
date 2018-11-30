@@ -12,9 +12,9 @@ import java.nio.file.Paths;
 public class StorageServiceConfig {
     private String prefix = "phss_";
 
-    private String rootLocation = "phss_storage";
+    private String rootLocation = "PHSS_Storage";
 
-    private String tempLocation = "phss_temp";
+    private String tempLocation = "PHSS_Temp";
 
     private String musicLocation = "music";
 
@@ -47,7 +47,7 @@ public class StorageServiceConfig {
     }
 
     public Path getMusicLocation() {
-        return Paths.get(rootLocation).resolve(musicLocation);
+        return Paths.get(musicLocation);
     }
 
     public Path getAnimeLocation() {

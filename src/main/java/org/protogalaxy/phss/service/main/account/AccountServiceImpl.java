@@ -23,13 +23,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountEntity register(String username, String password){
+    public AccountEntity register(String username, String password) {
         AccountEntity accountEntity = new AccountEntity(username, password, true, true, true);
         accountEntity.setFileSystemMainEntity(new FileSystemMainEntity(accountEntity));
         accountEntity.setPersonalDataEntity(new PersonalDataEntity(accountEntity));
         accountEntity.setSettingMainEntity(new SettingMainEntity(accountEntity));
-        accountRepository.save(accountEntity);
-        return accountEntity;
+        return accountRepository.saveAndFlush(accountEntity);
     }
 
     @Override

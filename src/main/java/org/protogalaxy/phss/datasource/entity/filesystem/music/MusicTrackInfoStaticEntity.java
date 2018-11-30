@@ -1,11 +1,12 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Duration;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -17,8 +18,9 @@ import java.util.UUID;
  * @version 1.0.0 SNAPSHOT
  */
 
-@Entity(name = "MusicTrackStaticInformation")
 @Table(name = "music_track_info_static")
+@Entity(name = "MusicTrackStaticInformation")
+@EntityListeners(AuditingEntityListener.class)
 public class MusicTrackInfoStaticEntity {
     @Id
     private UUID trackUUID;
@@ -80,13 +82,13 @@ public class MusicTrackInfoStaticEntity {
     @Column(name = "sample_rate")
     private String sampleRate;
 
-    @Column(name = "date_added")
     @CreatedDate
-    private ZonedDateTime dateAdded;
+    @Column(name = "date_added")
+    private LocalDateTime dateAdded;
 
-    @Column(name = "date_modified")
     @LastModifiedDate
-    private ZonedDateTime dateModified;
+    @Column(name = "date_modified")
+    private LocalDateTime dateModified;
 
     @MapsId
     @OneToOne
@@ -298,19 +300,19 @@ public class MusicTrackInfoStaticEntity {
         this.sampleRate = sampleRate;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(ZonedDateTime dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public LocalDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(ZonedDateTime dateModified) {
+    public void setDateModified(LocalDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

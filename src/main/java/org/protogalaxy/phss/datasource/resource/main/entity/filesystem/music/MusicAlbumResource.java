@@ -1,13 +1,12 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicAlbumInfoStaticEntity;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 public class MusicAlbumResource extends ResourceSupport {
@@ -29,9 +28,9 @@ public class MusicAlbumResource extends ResourceSupport {
     private Long sizeTotal;
     private Integer playbackCount;
     private Integer skipCount;
-    private LocalDateTime lastPlayed;
-    private ZonedDateTime dateAdded;
-    private ZonedDateTime dateModified;
+    private String lastPlayed;
+    private String dateAdded;
+    private String dateModified;
 
     public MusicAlbumResource() {
     }
@@ -55,20 +54,20 @@ public class MusicAlbumResource extends ResourceSupport {
         this.sizeTotal = musicAlbumEntity.getAlbumInformationStatic().getSizeTotal();
         this.playbackCount = musicAlbumEntity.getAlbumInformation().getPlaybackCount();
         this.skipCount = musicAlbumEntity.getAlbumInformation().getSkipCount();
-        this.lastPlayed = musicAlbumEntity.getAlbumInformation().getLastPlayed();
-        this.dateAdded = musicAlbumEntity.getDateAdded();
-        this.dateModified = musicAlbumEntity.getDateModified();
+        this.lastPlayed = musicAlbumEntity.getAlbumInformation().getLastPlayed().toString();
+        this.dateAdded = musicAlbumEntity.getDateAdded().toString();
+        this.dateModified = musicAlbumEntity.getDateModified().toString();
     }
 
-    public MusicAlbumResource(String title, String artist, String location, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicAlbumResource(String title, String artist, String location, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.title = title;
         this.artist = artist;
         this.location = location;
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
+        this.dateAdded = dateAdded.toString();
+        this.dateModified = dateModified.toString();
     }
 
-    public MusicAlbumResource(String title, String artist, String location, MusicAlbumInfoEntity musicAlbumInf, MusicAlbumInfoStaticEntity musicAlbumInfStatic, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicAlbumResource(String title, String artist, String location, MusicAlbumInfoEntity musicAlbumInf, MusicAlbumInfoStaticEntity musicAlbumInfStatic, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.title = title;
         this.artist = artist;
         this.location = location;
@@ -87,9 +86,9 @@ public class MusicAlbumResource extends ResourceSupport {
         this.sizeTotal = musicAlbumInfStatic.getSizeTotal();
         this.playbackCount = musicAlbumInf.getPlaybackCount();
         this.skipCount = musicAlbumInf.getSkipCount();
-        this.lastPlayed = musicAlbumInf.getLastPlayed();
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
+        this.lastPlayed = musicAlbumInf.getLastPlayed().toString();
+        this.dateAdded = dateAdded.toString();
+        this.dateModified = dateModified.toString();
     }
 
     public String getTitle() {
@@ -164,15 +163,15 @@ public class MusicAlbumResource extends ResourceSupport {
         return skipCount;
     }
 
-    public LocalDateTime getLastPlayed() {
+    public String getLastPlayed() {
         return lastPlayed;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public String getDateModified() {
         return dateModified;
     }
 }

@@ -1,8 +1,12 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -10,8 +14,9 @@ import java.util.List;
 import java.util.UUID;
 
 @DynamicInsert
-@Entity(name = "MusicPlaylist")
 @Table(name = "music_playlist")
+@Entity(name = "MusicPlaylist")
+@EntityListeners(AuditingEntityListener.class)
 public class MusicPlaylistEntity {
     @Id
     @GeneratedValue
@@ -28,7 +33,7 @@ public class MusicPlaylistEntity {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @OneToMany(cascade = CascadeType.DETACH,orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.DETACH, orphanRemoval = true)
     @Column(name = "list")
     private List<MusicTrackEntity> list;
 
@@ -41,6 +46,14 @@ public class MusicPlaylistEntity {
     @Column(name = "playback_count")
     @ColumnDefault("0")
     private Integer playbackCount;
+
+    @CreatedDate
+    @Column(name = "date_added")
+    private LocalDateTime dateAdded;
+
+    @LastModifiedDate
+    @Column(name = "date_modified")
+    private LocalDateTime dateModified;
 
     public MusicPlaylistEntity() {
     }
@@ -125,5 +138,21 @@ public class MusicPlaylistEntity {
 
     public void setPlaybackCount(Integer playbackCount) {
         this.playbackCount = playbackCount;
+    }
+
+    public LocalDateTime getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(LocalDateTime dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public LocalDateTime getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(LocalDateTime dateModified) {
+        this.dateModified = dateModified;
     }
 }

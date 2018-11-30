@@ -1,10 +1,10 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoStaticEntity;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.Duration;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,9 +49,9 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
 
     private String sampleRate;
 
-    private ZonedDateTime dateAdded;
+    private String dateAdded;
 
-    private ZonedDateTime dateModified;
+    private String dateModified;
 
     public MusicTrackInfoStaticResource() {
     }
@@ -77,11 +77,11 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         this.bitRate = musicTrackInfoStaticEntity.getBitRate();
         this.bitDepth = musicTrackInfoStaticEntity.getBitDepth();
         this.sampleRate = musicTrackInfoStaticEntity.getSampleRate();
-        this.dateAdded = musicTrackInfoStaticEntity.getDateAdded();
-        this.dateModified = musicTrackInfoStaticEntity.getDateModified();
+        this.dateAdded = musicTrackInfoStaticEntity.getDateAdded().toString();
+        this.dateModified = musicTrackInfoStaticEntity.getDateModified().toString();
     }
 
-    public MusicTrackInfoStaticResource(UUID trackUUID, String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicTrackInfoStaticResource(UUID trackUUID, String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.trackUUID = trackUUID;
         this.albumArtist = albumArtist;
         this.composer = composer;
@@ -102,8 +102,8 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         this.bitRate = bitRate;
         this.bitDepth = bitDepth;
         this.sampleRate = sampleRate;
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
+        this.dateAdded = dateAdded.toString();
+        this.dateModified = dateModified.toString();
     }
 
     public UUID getTrackUUID() {
@@ -186,11 +186,11 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         return sampleRate;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public String getDateModified() {
         return dateModified;
     }
 }

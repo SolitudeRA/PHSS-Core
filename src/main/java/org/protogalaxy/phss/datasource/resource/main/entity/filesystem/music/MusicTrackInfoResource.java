@@ -1,19 +1,18 @@
 package org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoEntity;
 import org.springframework.hateoas.ResourceSupport;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class MusicTrackInfoResource extends ResourceSupport {
     private UUID trackUUID;
     private Integer playbackCount;
     private Integer skipCount;
-    private LocalDateTime lastPlayed;
-    private ZonedDateTime dateAdded;
-    private ZonedDateTime dateModified;
+    private String lastPlayed;
+    private String dateAdded;
+    private String dateModified;
 
     public MusicTrackInfoResource() {
     }
@@ -22,18 +21,18 @@ public class MusicTrackInfoResource extends ResourceSupport {
         this.trackUUID = musicTrackInfoEntity.getTrackUUID();
         this.playbackCount = musicTrackInfoEntity.getPlaybackCount();
         this.skipCount = musicTrackInfoEntity.getSkipCount();
-        this.lastPlayed = musicTrackInfoEntity.getLastPlayed();
-        this.dateAdded = musicTrackInfoEntity.getDateAdded();
-        this.dateModified = musicTrackInfoEntity.getDateModified();
+        this.lastPlayed = musicTrackInfoEntity.getLastPlayed().toString();
+        this.dateAdded = musicTrackInfoEntity.getDateAdded().toString();
+        this.dateModified = musicTrackInfoEntity.getDateModified().toString();
     }
 
-    public MusicTrackInfoResource(UUID trackUUID, Integer playbackCount, Integer skipCount, LocalDateTime lastPlayed, ZonedDateTime dateAdded, ZonedDateTime dateModified) {
+    public MusicTrackInfoResource(UUID trackUUID, Integer playbackCount, Integer skipCount, LocalDateTime lastPlayed, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.trackUUID = trackUUID;
         this.playbackCount = playbackCount;
         this.skipCount = skipCount;
-        this.lastPlayed = lastPlayed;
-        this.dateAdded = dateAdded;
-        this.dateModified = dateModified;
+        this.lastPlayed = lastPlayed.toString();
+        this.dateAdded = dateAdded.toString();
+        this.dateModified = dateModified.toString();
     }
 
     public UUID getTrackUUID() {
@@ -48,15 +47,15 @@ public class MusicTrackInfoResource extends ResourceSupport {
         return skipCount;
     }
 
-    public LocalDateTime getLastPlayed() {
+    public String getLastPlayed() {
         return lastPlayed;
     }
 
-    public ZonedDateTime getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public ZonedDateTime getDateModified() {
+    public String getDateModified() {
         return dateModified;
     }
 }

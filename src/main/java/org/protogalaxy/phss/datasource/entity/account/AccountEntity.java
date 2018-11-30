@@ -1,5 +1,6 @@
 package org.protogalaxy.phss.datasource.entity.account;
 
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
@@ -7,6 +8,7 @@ import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
 import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,13 +20,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "Account")
 @DynamicInsert
 @Table(name = "account")
+@Entity(name = "Account")
+@EntityListeners(AuditingEntityListener.class)
 public class AccountEntity implements UserDetails, CredentialsContainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,11 +79,11 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
 
     @Column(name = "date_create")
     @CreatedDate
-    private ZonedDateTime dateCreate;
+    private LocalDateTime dateCreate;
 
     @Column(name = "date_modified")
     @LastModifiedDate
-    private ZonedDateTime dateModified;
+    private LocalDateTime dateModified;
 
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private FileSystemMainEntity fileSystemMainEntity;
@@ -361,19 +363,19 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
                                         .build();
     }
 
-    public ZonedDateTime getDateCreate() {
+    public LocalDateTime getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(ZonedDateTime dateCreate) {
+    public void setDateCreate(LocalDateTime dateCreate) {
         this.dateCreate = dateCreate;
     }
 
-    public ZonedDateTime getDateModified() {
+    public LocalDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(ZonedDateTime dateModified) {
+    public void setDateModified(LocalDateTime dateModified) {
         this.dateModified = dateModified;
     }
 
