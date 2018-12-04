@@ -14,6 +14,6 @@ public class MainTestConfiguration implements RestDocsMockMvcConfigurationCustom
      */
     @Override
     public void customize(MockMvcRestDocumentationConfigurer configurer) {
-        configurer.snippets().withTemplateFormat(TemplateFormats.markdown());
+        configurer.snippets().withTemplateFormat(TemplateFormats.asciidoctor());
     }
 }

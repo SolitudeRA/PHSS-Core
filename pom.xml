@@ -66,7 +66,7 @@
         <jupnp.version>2.3.0</jupnp.version>
         <java-jwt.version>3.4.0</java-jwt.version>
         <!--Spring projects version-->
-        <spring-security.version>5.1.1.RELEASE</spring-security.version>
+        <spring-security.version>5.1.2.RELEASE</spring-security.version>
         <spring-restdocs.version>2.0.2.RELEASE</spring-restdocs.version>
         <!--Junit version-->
         <junit-jupiter.version>5.3.0-M1</junit-jupiter.version>
@@ -265,6 +265,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
     </dependencies>
 
 
@@ -298,6 +303,31 @@
                         <version>${spring-restdocs.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/static/docs
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.build.directory}/generated-docs
+                                    </directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>

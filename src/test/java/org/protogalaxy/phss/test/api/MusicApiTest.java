@@ -1,21 +1,29 @@
 package org.protogalaxy.phss.test.api;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.protogalaxy.phss.controller.filesystem.MusicController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+
+import javax.servlet.http.Cookie;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.*;
@@ -23,24 +31,29 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SpringBootTest
+@AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @RunWith(SpringRunner.class)
-@WebMvcTest(MusicController.class)
 @ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
 public class MusicApiTest {
-    private static final String urlBase = "/album";
+    private static final String urlBase = "/music";
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
     @BeforeEach
-    public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentationContextProvider) {
+    public void setUp(RestDocumentationContextProvider restDocumentationContextProvider) throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                                       .apply(documentationConfiguration(restDocumentationContextProvider))
                                       .build();
     }
 
     @Test
+    @WithMockUser(username = "alpha", password = "test")
     public void index() throws Exception {
         this.mockMvc.perform(get(urlBase).accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
@@ -54,15 +67,16 @@ public class MusicApiTest {
     }
 
     @Test
+    @WithMockUser(username = "alpha", password = "test")
     public void uploadTrack() throws Exception {
-        this.mockMvc.perform(multipart(urlBase + "/upload")
-                                     .file("track", "test".getBytes())
-                                     .accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(multipart(urlBase + "/upload").file("track", "test".getBytes())
+                                                           .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(document("upload-album"));
     }
 
     @Test
+    @WithMockUser(username = "alpha", password = "test")
     public void listUserAlbum() throws Exception {
         this.mockMvc.perform(get(urlBase + "/album").accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
@@ -70,8 +84,9 @@ public class MusicApiTest {
     }
 
     @Test
-    public void getAlbumByUUID(String uuid) throws Exception {
-        this.mockMvc.perform(get(urlBase + "/album/" + uuid).accept(MediaType.APPLICATION_JSON))
+    @WithMockUser(username = "alpha", password = "test")
+    public void getAlbumByUUID() throws Exception {
+        this.mockMvc.perform(get(urlBase + "/album/").accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(document("get-album-by-uuid"));
     }
