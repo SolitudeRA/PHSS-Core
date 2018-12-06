@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -56,7 +57,7 @@ public class MusicApiTest {
     @WithMockUser(username = "alpha", password = "test")
     public void testCase_1_uploadTrack() throws Exception {
         this.mockMvc.perform(fileUpload(urlBase + "/upload")
-                                     .file("track", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath()))
+                                     .file(new MockMultipartFile("track", "MEGALOBOX.aiff", "multipart/form-data", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath())))
                                      .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(document("upload-album", responseFields(
@@ -68,8 +69,8 @@ public class MusicApiTest {
     @WithMockUser(username = "alpha", password = "test")
     public void testCase_2_uploadTracks() throws Exception {
         this.mockMvc.perform(fileUpload(urlBase + "/multiupload")
-                                     .file("tracks", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath()))
-                                     .file("tracks", Files.readAllBytes(Paths.get("src/test/resources/files/ちいさな冒険者.aiff").toAbsolutePath()))
+                                     .file("MEGALOBOX.aiff", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath()))
+                                     .file("ちいさな冒険者.aiff", Files.readAllBytes(Paths.get("src/test/resources/files/ちいさな冒険者.aiff").toAbsolutePath()))
                                      .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(document("upload-albums"));
