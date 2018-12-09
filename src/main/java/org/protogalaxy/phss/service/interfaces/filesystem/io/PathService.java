@@ -5,16 +5,6 @@ import java.util.Map;
 
 public interface PathService {
     /**
-     * Persist file in correct path
-     *
-     * @param mimeType MIME type of the file
-     * @param tempPath Temporary path of the file
-     * @param metadata Metadata of the file
-     * @return Persisted path of the file
-     */
-    Path persistFile(String mimeType, Path tempPath, Map<String, Object> metadata);
-
-    /**
      * Switch path with filesystem part
      *
      * @param fileSystemPart Part of the filesystem
@@ -32,11 +22,17 @@ public interface PathService {
     Path metadataPathSwitcher(Path tempPath, String fileSystemPart);
 
     /**
-     * Change file location
+     * Check path
      *
-     * @param currentPath current file path
-     * @param changedPath path that file to move
-     * @return changed file path
+     * @param path path to check
+     * @return checked path
      */
-    Path changeLocation(Path currentPath, Path changedPath);
+    Path pathCheck(Path path);
+
+    /**
+     * Get a temp directory
+     *
+     * @return Path of the temp directory
+     */
+    Path getTempDirectory();
 }

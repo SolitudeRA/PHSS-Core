@@ -5,6 +5,7 @@ import org.protogalaxy.phss.exception.storage.StorageTempException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,29 +21,24 @@ import java.util.UUID;
 
 @Service
 public class CacheServiceImpl implements CacheService {
-    private final String phssTempPrefix;
-    private final Path tempLocation;
-    private final Path imagePoolLocation;
+    private final StorageServiceConfig storageServiceConfig;
 
     @Autowired
-    public CacheServiceImpl(StorageServiceConfig config) {
-        this.phssTempPrefix = config.getPrefix();
-        this.tempLocation = config.getTempLocation();
-        this.imagePoolLocation = config.getImagePoolLocation();
+    public CacheServiceImpl(StorageServiceConfig storageServiceConfig) {
+        this.storageServiceConfig = storageServiceConfig;
     }
 
     /**
      * Caching file
      *
-     * @param username name of the account
-     * @param file     uploaded MultipartFile
+     * @param file uploaded MultipartFile
      * @return Path of the temp file
      */
     @Override
-    public Path cacheFile(String username, MultipartFile file) {
+    public Path cacheFile(MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
-            Path tempDirectory = getUserTempDirectoryPath(username);
+            Path tempDirectory = getUserTempDirectoryPath();
             return Files.write(tempDirectory.resolve(filename), file.getBytes());
         } catch (IOException e) {
             throw new StorageTempException("Fail to create temp file", e);
@@ -52,17 +48,20 @@ public class CacheServiceImpl implements CacheService {
     /**
      * Caching image from memory
      *
-     * @param username      current account name
      * @param bufferedImage buffered image
      * @return Path of the cached image
      */
     @Override
-    public Path cacheImage(String username, BufferedImage bufferedImage) {
+    public Path cacheImage(BufferedImage bufferedImage) {
         String imageName = UUID.randomUUID().toString() + ".png";
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
             ImageIO.write(bufferedImage, "png", outputStream);
-            return Files.write(tempPathCheck(Paths.get(username).resolve(imagePoolLocation).resolve(imageName)), outputStream.toByteArray());
+            return Files.write(tempPathCheck(storageServiceConfig.getRootLocation()
+                                                                 .resolve(SecurityContextHolder.getContext().getAuthentication().getName())
+                                                                 .resolve(storageServiceConfig.getImagePoolLocation()))
+                                       .resolve(imageName), outputStream.toByteArray());
         } catch (IOException e) {
             throw new StorageTempException("Failed to cache image", e);
         }
@@ -71,12 +70,11 @@ public class CacheServiceImpl implements CacheService {
     /**
      * Create temp directory
      *
-     * @param username name of the account
      * @return Path of the temp directory
      */
-    private Path getUserTempDirectoryPath(String username) {
+    private Path getUserTempDirectoryPath() {
         try {
-            return Files.createTempDirectory(tempPathCheck(tempLocation.resolve(Paths.get(username))), phssTempPrefix);
+            return Files.createTempDirectory(tempPathCheck(storageServiceConfig.getTempLocation().resolve(SecurityContextHolder.getContext().getAuthentication().getName())), storageServiceConfig.getPrefix());
         } catch (IOException e) {
             throw new StorageTempException("Fail to create temp directory", e);
         }

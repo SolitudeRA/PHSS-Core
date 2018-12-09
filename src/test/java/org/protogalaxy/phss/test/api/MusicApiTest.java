@@ -60,9 +60,7 @@ public class MusicApiTest {
                                      .file(new MockMultipartFile("track", "MEGALOBOX.aiff", "multipart/form-data", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath())))
                                      .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andDo(document("upload-album", responseFields(
-                            fieldWithPath("")
-                    )));
+                    .andDo(document("upload-album"));
     }
 
     @Test

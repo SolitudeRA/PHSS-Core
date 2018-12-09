@@ -104,7 +104,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         MusicTrackInfoEntity trackInfoEntity = new MusicTrackInfoEntity(trackEntity);
         MusicTrackInfoStaticEntity trackInfoStaticEntity = new MusicTrackInfoStaticEntity(metadata.get(AudioConsts.METADATA_AUDIO_ALBUMARTIST).toString(),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_COMPOSER).toString(),
-                                                                                          Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_RELEASE_YEAR).toString()),
+                                                                                          checkIntegerString(metadata.get(AudioConsts.METADATA_AUDIO_RELEASE_YEAR).toString()),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_GENRE).toString(),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_COVER).toString(),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_COMMENT).toString(),
@@ -165,7 +165,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (Date) metadata.get(FileConsts.METADATA_BOOK_CREATED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_MODIFIED),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_LASTACCESSTIME),
-                cacheService.cacheImage(username, ImageIO.read((InputStream) metadata.get(FileConsts.METADATA_BOOK_COVER))).toString(),
+                cacheService.cacheImage(ImageIO.read((InputStream) metadata.get(FileConsts.METADATA_BOOK_COVER))).toString(),
                 (Date) metadata.get(FileConsts.METADATA_BOOK_DATE),
                 (String) metadata.get(FileConsts.METADATA_BOOK_DESCRIPTION),
                 (String) metadata.get(FileConsts.METADATA_BOOK_CONTRIBUTOR),
@@ -399,5 +399,13 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_PATH));
         documentOpenPresentationRepository.save(documentOpenPresentationEntity);
         return mapper.writeValueAsString(documentOpenPresentationEntity);
+    }
+
+    private Integer checkIntegerString(String integer) {
+        if (integer != null && !integer.equals("")) {
+            return Integer.valueOf(integer);
+        } else {
+            return null;
+        }
     }
 }

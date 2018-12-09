@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.service.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,35 +52,35 @@ public class StorageServiceConfig {
     }
 
     public Path getAnimeLocation() {
-        return Paths.get(rootLocation).resolve(animeLocation);
+        return Paths.get(animeLocation);
     }
 
     public Path getMovieLocation() {
-        return Paths.get(rootLocation).resolve(movieLocation);
+        return Paths.get(movieLocation);
     }
 
     public Path getVideoLocation() {
-        return Paths.get(rootLocation).resolve(videoLocation);
+        return Paths.get(videoLocation);
     }
 
     public Path getBookLocation() {
-        return Paths.get(rootLocation).resolve(bookLocation);
+        return Paths.get(bookLocation);
     }
 
     public Path getDocumentLocation() {
-        return Paths.get(rootLocation).resolve(documentLocation);
+        return Paths.get(documentLocation);
     }
 
     public Path getIllustrationLocation() {
-        return Paths.get(rootLocation).resolve(illustrationLocation);
+        return Paths.get(illustrationLocation);
     }
 
     public Path getPhotoLocation() {
-        return Paths.get(rootLocation).resolve(photoLocation);
+        return Paths.get(photoLocation);
     }
 
     public Path getImagePoolLocation() {
-        return Paths.get(rootLocation).resolve(imagePoolLocation);
+        return Paths.get(imagePoolLocation);
     }
 
     public void setPrefix(String prefix) {

@@ -66,22 +66,22 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public void moveFile(Path fromPath, Path toPath) throws Exception {
-        pathService.changeLocation(fromPath, toPath);
+        Files.move(fromPath, toPath);
     }
 
     @Override
     public MusicTrackEntity storeTrack(MultipartFile musicFile) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
-        Path tempFilePath = cacheService.cacheFile(username, musicFile);
+        Path tempFilePath = cacheService.cacheFile(musicFile);
         Map<String, Object> metadata = metadataService.musicMetadataResolver(tempFilePath);
         try {
-            Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation()
-                                                                     .resolve(username)
-                                                                     .resolve(config.getMusicLocation())
-                                                                     .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ARTIST).toString())
-                                                                     .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ALBUM).toString())
-                                                                     .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
+            Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation()
+                                                                                 .resolve(username)
+                                                                                 .resolve(config.getMusicLocation())
+                                                                                 .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ARTIST).toString())
+                                                                                 .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ALBUM).toString())
+                                                                                 .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
             return fileRegisteringService.registerTrack(metadata, realPath);
         } catch (IOException e) {
             throw new StorageException("Could not register file", e);
@@ -94,15 +94,15 @@ public class StorageServiceImpl implements StorageService {
         List<MusicTrackEntity> musicTrackEntities = new ArrayList<>();
         for (MultipartFile musicFile : musicFiles) {
             String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());
-            Path tempFilePath = cacheService.cacheFile(username, musicFile);
+            Path tempFilePath = cacheService.cacheFile(musicFile);
             Map<String, Object> metadata = metadataService.musicMetadataResolver(tempFilePath);
             try {
-                Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation()
-                                                                         .resolve(username)
-                                                                         .resolve(config.getMusicLocation())
-                                                                         .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ARTIST).toString())
-                                                                         .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ALBUM).toString())
-                                                                         .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
+                Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation()
+                                                                                     .resolve(username)
+                                                                                     .resolve(config.getMusicLocation())
+                                                                                     .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ARTIST).toString())
+                                                                                     .resolve(metadata.get(AudioConsts.METADATA_AUDIO_ALBUM).toString())
+                                                                                     .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
                 musicTrackEntities.add(fileRegisteringService.registerTrack(metadata, realPath));
             } catch (IOException e) {
                 throw new StorageException("Could not register file", e);
@@ -174,10 +174,10 @@ public class StorageServiceImpl implements StorageService {
     public String storeBook(String username, MultipartFile bookFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(bookFile.getOriginalFilename());
-        Path tempFilePath = cacheService.cacheFile(username, bookFile);
+        Path tempFilePath = cacheService.cacheFile(bookFile);
         Map<String, Object> metadata = metadataService.bookMetadataResolver(tempFilePath);
         try {
-            Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getBookLocation()).resolve(metadata.get(FileConsts.METADATA_BOOK_AUTHOR).toString()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
+            Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation().resolve(username).resolve(config.getBookLocation()).resolve(metadata.get(FileConsts.METADATA_BOOK_AUTHOR).toString()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerBook(metadata, realPath));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
@@ -193,11 +193,11 @@ public class StorageServiceImpl implements StorageService {
     public String storeDocument(String username, MultipartFile documentFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(documentFile.getOriginalFilename());
-        Path tempFilePath = cacheService.cacheFile(username, documentFile);
+        Path tempFilePath = cacheService.cacheFile(documentFile);
         String mimeType = FileUtils.getMimeType(tempFilePath);
         Map<String, Object> metadata = metadataService.documentMetadataResolver(tempFilePath);
         try {
-            Path realPath = Files.move(tempFilePath, pathCheck(config.getRootLocation().resolve(username).resolve(config.getDocumentLocation()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
+            Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation().resolve(username).resolve(config.getDocumentLocation()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerDocument(metadata, realPath, mimeType));
         } catch (IOException e) {
             throw new StorageException("Could not move temp file", e);
@@ -217,18 +217,5 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public void deleteIllustration(String uuid) {
 
-    }
-
-    private Path pathCheck(Path path) {
-        try {
-            if (Files.notExists(path)) {
-                Files.createDirectories(path);
-                return path;
-            } else {
-                return path;
-            }
-        } catch (IOException e) {
-            throw new StorageException("Path check " + path.toString() + " error", e);
-        }
     }
 }

@@ -78,7 +78,7 @@ public class MetadataServiceImpl implements MetadataService {
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
         grabber.start();
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(SecurityContextHolder.getContext().getAuthentication().getName(), converter.getBufferedImage(grabber.grabImage())));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(converter.getBufferedImage(grabber.grabImage())));
         grabber.close();
         return metadataCurrentMap;
     }

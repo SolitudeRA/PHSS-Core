@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -21,19 +23,6 @@ public class PathServiceImpl implements PathService {
     @Autowired
     public PathServiceImpl(StorageServiceConfig storageServiceConfig) {
         this.storageServiceConfig = storageServiceConfig;
-    }
-
-    /**
-     * Persist file in correct path
-     *
-     * @param mimeType MIME type of the file
-     * @param tempPath Temporary path of the file
-     * @param metadata Metadata of the file
-     * @return Persisted path of the file
-     */
-    @Override
-    public Path persistFile(String mimeType, Path tempPath, Map<String, Object> metadata) {
-        return null;
     }
 
     /**
@@ -144,14 +133,31 @@ public class PathServiceImpl implements PathService {
     }
 
     /**
-     * Change file location
+     * Check path
      *
-     * @param currentPath current file path
-     * @param changedPath path that file to move
-     * @return changed file path
+     * @param path path to check
+     * @return checked path
      */
     @Override
-    public Path changeLocation(Path currentPath, Path changedPath) {
+    public Path pathCheck(Path path) {
+        try {
+            if (Files.notExists(path)) {
+                return Files.createDirectories(path);
+            } else {
+                return path;
+            }
+        } catch (IOException e) {
+            throw new StorageException("Path check " + path.toString() + " error", e);
+        }
+    }
+
+    /**
+     * Get a temp directory
+     *
+     * @return Path of the temp directory
+     */
+    @Override
+    public Path getTempDirectory() {
         return null;
     }
 }

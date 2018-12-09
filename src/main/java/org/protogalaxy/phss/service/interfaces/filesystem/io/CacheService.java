@@ -10,18 +10,16 @@ public interface CacheService {
     /**
      * Caching file from MultipartFile
      *
-     * @param username current account name
-     * @param file     uploaded MultipartFile
+     * @param file uploaded MultipartFile
      * @return Path of the cached file
      */
-    Path cacheFile(String username, MultipartFile file);
+    Path cacheFile(MultipartFile file);
 
     /**
      * Caching image from memory
      *
-     * @param username      current account name
      * @param bufferedImage buffered image
      * @return Path of the cached image
      */
-    Path cacheImage(String username, BufferedImage bufferedImage);
+    Path cacheImage(BufferedImage bufferedImage);
 }
