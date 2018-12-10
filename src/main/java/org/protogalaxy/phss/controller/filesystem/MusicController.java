@@ -31,12 +31,12 @@ public class MusicController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity handleMusicUpload(@RequestParam("track") MultipartFile file) throws Exception {
-        return new ResponseEntity<>(musicTrackResourceAssembler.toResource(storageService.storeTrack(file)), HttpStatus.OK);
+        return new ResponseEntity<>(musicTrackResourceAssembler.toResource(storageService.storeTrack(file)), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/multiupload", method = RequestMethod.POST)
     public ResponseEntity handleMusicMultiUpload(@RequestParam("tracks") MultipartFile[] files) throws Exception {
-        return new ResponseEntity<>(musicTrackResourceAssembler.toResources(storageService.storeTracks(files)), HttpStatus.OK);
+        return new ResponseEntity<>(musicTrackResourceAssembler.toResources(storageService.storeTracks(files)), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/album", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class MusicController {
     @RequestMapping(value = "/album/{uuid}/delete", method = RequestMethod.DELETE)
     public ResponseEntity deleteAlbum(@PathVariable String uuid) {
         musicService.removeAlbum(uuid);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/album/search/title", method = RequestMethod.POST)

@@ -65,15 +65,14 @@ public class MetadataServiceImpl implements MetadataService {
         for (String key : AudioConsts.METADATA_AUDIO_STANDARD_LIST) {
             if (metadataRawMap.get(key) != null) {
                 metadataCurrentMap.put(key, metadataRawMap.get(key).toString().trim());
-            } else {
-                metadataCurrentMap.put(key, "");
             }
         }
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_DURATION, MultimediaUtils.formatDurationToMilliSeconds(avFormatContext.duration()));
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITRATE, MultimediaUtils.formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SIZE, path.toFile().length());
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SIZE, Files.size(path));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_MD5, FileUtils.getMD5(path));
         avformat_close_input(avFormatContext);
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();

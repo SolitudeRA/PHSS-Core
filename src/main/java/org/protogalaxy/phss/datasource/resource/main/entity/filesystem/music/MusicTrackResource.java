@@ -19,7 +19,7 @@ public class MusicTrackResource extends ResourceSupport {
 
     private String composer;
 
-    private Integer releaseYear;
+    private String releaseYear;
 
     private Integer trackNumber;
 
@@ -125,7 +125,7 @@ public class MusicTrackResource extends ResourceSupport {
         return composer;
     }
 
-    public Integer getReleaseYear() {
+    public String getReleaseYear() {
         return releaseYear;
     }
 

@@ -1,5 +1,7 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -32,7 +34,7 @@ public class MusicTrackInfoStaticEntity {
     private String composer;
 
     @Column(name = "release_year")
-    private Integer releaseYear;
+    private String releaseYear;
 
     @Column(name = "track_number")
     private Integer trackNumber;
@@ -82,6 +84,9 @@ public class MusicTrackInfoStaticEntity {
     @Column(name = "sample_rate")
     private String sampleRate;
 
+    @Column(name = "md5")
+    private String md5;
+
     @CreatedDate
     @Column(name = "date_added")
     private LocalDateTime dateAdded;
@@ -102,22 +107,18 @@ public class MusicTrackInfoStaticEntity {
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, String genre, String artwork, String comment, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
-        this.albumArtist = albumArtist;
-        this.composer = composer;
-        this.releaseYear = releaseYear;
-        this.genre = genre;
-        this.artwork = artwork;
-        this.comment = comment;
+
+    public MusicTrackInfoStaticEntity(Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, String md5, MusicTrackEntity musicTrackEntity) {
         this.duration = duration;
         this.size = size;
         this.bitRate = bitRate;
         this.bitDepth = bitDepth;
         this.sampleRate = sampleRate;
+        this.md5 = md5;
         this.musicTrackEntity = musicTrackEntity;
     }
 
-    public MusicTrackInfoStaticEntity(String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
+    public MusicTrackInfoStaticEntity(String albumArtist, String composer, String releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, MusicTrackEntity musicTrackEntity) {
         this.albumArtist = albumArtist;
         this.composer = composer;
         this.releaseYear = releaseYear;
@@ -164,11 +165,11 @@ public class MusicTrackInfoStaticEntity {
         this.composer = composer;
     }
 
-    public Integer getReleaseYear() {
+    public String getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Integer releaseYear) {
+    public void setReleaseYear(String releaseYear) {
         this.releaseYear = releaseYear;
     }
 
@@ -218,6 +219,10 @@ public class MusicTrackInfoStaticEntity {
 
     public void setGenre(List<String> genre) {
         this.genre = String.join(";", genre);
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getArtwork() {
@@ -298,6 +303,14 @@ public class MusicTrackInfoStaticEntity {
 
     public void setSampleRate(String sampleRate) {
         this.sampleRate = sampleRate;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
     }
 
     public LocalDateTime getDateAdded() {

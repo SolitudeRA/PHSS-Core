@@ -59,18 +59,47 @@ public class MusicApiTest {
         this.mockMvc.perform(fileUpload(urlBase + "/upload")
                                      .file(new MockMultipartFile("track", "MEGALOBOX.aiff", "multipart/form-data", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath())))
                                      .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andDo(document("upload-album"));
+                    .andExpect(status().isCreated())
+                    .andDo(document("upload-album", responseFields(
+                            fieldWithPath("title").description("Title of the track"),
+                            fieldWithPath("album").description("Album of the track"),
+                            fieldWithPath("artist").description("Artist of the track"),
+                            fieldWithPath("location").description("Address of the track"),
+                            fieldWithPath("albumArtist").description("Album artist of the track"),
+                            fieldWithPath("composer").description("Composer of the track"),
+                            fieldWithPath("releaseYear").description("Release year of the track"),
+                            fieldWithPath("trackNumber").description("Track number of the disc"),
+                            fieldWithPath("trackTotal").description("Total tracks of the disc"),
+                            fieldWithPath("discNumber").description("Disc number of discs"),
+                            fieldWithPath("discTotal").description("Total discs"),
+                            fieldWithPath("score").description("Score of the track"),
+                            fieldWithPath("genre").description("Genre list of the track"),
+                            fieldWithPath("artwork").description("Artwork address of the track"),
+                            fieldWithPath("love").description("Whether you love the track"),
+                            fieldWithPath("dislike").description("Whether you don't like the track"),
+                            fieldWithPath("comment").description("Comment of the track"),
+                            fieldWithPath("kind").description("Kind of the track"),
+                            fieldWithPath("duration").description("Duration of the track"),
+                            fieldWithPath("size").description("Size of the track"),
+                            fieldWithPath("bitRate").description("Bitrate of the track"),
+                            fieldWithPath("bitDepth").description("Bitdepth of the track"),
+                            fieldWithPath("sampleRate").description("Sample rate of the track"),
+                            fieldWithPath("playbackCount").description("Playback count of the track"),
+                            fieldWithPath("skipCount").description("Skip count of the track"),
+                            fieldWithPath("lastPlayed").description("Last played time of the track"),
+                            fieldWithPath("dateAdded").description("Added date of the track"),
+                            fieldWithPath("dateModified").description("Modified date of the track")
+                    )));
     }
 
     @Test
     @WithMockUser(username = "alpha", password = "test")
     public void testCase_2_uploadTracks() throws Exception {
         this.mockMvc.perform(fileUpload(urlBase + "/multiupload")
-                                     .file("MEGALOBOX.aiff", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath()))
-                                     .file("ちいさな冒険者.aiff", Files.readAllBytes(Paths.get("src/test/resources/files/ちいさな冒険者.aiff").toAbsolutePath()))
+                                     .file(new MockMultipartFile("tracks", "淘汰.aiff", "multipart/form-data", Files.readAllBytes(Paths.get("src/test/resources/files/淘汰.aiff").toAbsolutePath())))
+                                     .file(new MockMultipartFile("tracks", "ちいさな冒険者.aiff", "multipart/form-data", Files.readAllBytes(Paths.get("src/test/resources/files/ちいさな冒険者.aiff").toAbsolutePath())))
                                      .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
+                    .andExpect(status().isCreated())
                     .andDo(document("upload-albums"));
     }
 

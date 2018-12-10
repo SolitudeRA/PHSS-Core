@@ -102,31 +102,47 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                                             metadata.get(AudioConsts.METADATA_AUDIO_ARTIST).toString(),
                                                             path.toString());
         MusicTrackInfoEntity trackInfoEntity = new MusicTrackInfoEntity(trackEntity);
-        MusicTrackInfoStaticEntity trackInfoStaticEntity = new MusicTrackInfoStaticEntity(metadata.get(AudioConsts.METADATA_AUDIO_ALBUMARTIST).toString(),
-                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_COMPOSER).toString(),
-                                                                                          checkIntegerString(metadata.get(AudioConsts.METADATA_AUDIO_RELEASE_YEAR).toString()),
-                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_GENRE).toString(),
-                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_COVER).toString(),
-                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_COMMENT).toString(),
-                                                                                          Duration.ofMillis((Long) metadata.get(AudioConsts.METADATA_AUDIO_DURATION)),
+        MusicTrackInfoStaticEntity trackInfoStaticEntity = new MusicTrackInfoStaticEntity(Duration.ofMillis((Long) metadata.get(AudioConsts.METADATA_AUDIO_DURATION)),
                                                                                           (Long) metadata.get(AudioConsts.METADATA_AUDIO_SIZE),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_BITRATE).toString(),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_BITDEPTH).toString(),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_SAMPLERATE).toString(),
+                                                                                          metadata.get(AudioConsts.METADATA_AUDIO_MD5).toString(),
                                                                                           trackEntity);
-        if (metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().contains("/")) {
-            String[] trackData = metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().split("/");
-            trackInfoStaticEntity.setTrackNumber(Integer.valueOf(trackData[0]));
-            trackInfoStaticEntity.setTrackTotal(Integer.valueOf(trackData[1]));
-        } else {
-            trackInfoStaticEntity.setTrackNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString()));
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_ARTWORK))
+            trackInfoStaticEntity.setArtwork(metadata.get(AudioConsts.METADATA_AUDIO_ARTWORK).toString());
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_ALBUMARTIST))
+            trackInfoStaticEntity.setAlbumArtist(metadata.get(AudioConsts.METADATA_AUDIO_ALBUMARTIST).toString());
+        else trackInfoStaticEntity.setAlbumArtist("");
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_COMPOSER))
+            trackInfoStaticEntity.setComposer(metadata.get(AudioConsts.METADATA_AUDIO_COMPOSER).toString());
+        else trackInfoStaticEntity.setComposer("");
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_RELEASE_YEAR))
+            trackInfoStaticEntity.setReleaseYear(metadata.get(AudioConsts.METADATA_AUDIO_RELEASE_YEAR).toString());
+        else trackInfoStaticEntity.setReleaseYear("");
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_GENRE))
+            trackInfoStaticEntity.setGenre(metadata.get(AudioConsts.METADATA_AUDIO_GENRE).toString());
+        else trackInfoStaticEntity.setGenre("");
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_COMMENT))
+            trackInfoStaticEntity.setComment(metadata.get(AudioConsts.METADATA_AUDIO_COMMENT).toString());
+        else trackInfoStaticEntity.setComment("");
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_TRACK)) {
+            if (metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().contains("/")) {
+                String[] trackData = metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().split("/");
+                trackInfoStaticEntity.setTrackNumber(Integer.valueOf(trackData[0]));
+                trackInfoStaticEntity.setTrackTotal(Integer.valueOf(trackData[1]));
+            } else {
+                trackInfoStaticEntity.setTrackNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString()));
+            }
         }
-        if (metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString().contains("/")) {
-            String[] discData = metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString().split("/");
-            trackInfoStaticEntity.setDiscNumber(Integer.valueOf(discData[0]));
-            trackInfoStaticEntity.setDiscTotal(Integer.valueOf(discData[1]));
-        } else {
-            trackInfoStaticEntity.setDiscNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString()));
+        if (metadata.containsKey(AudioConsts.METADATA_AUDIO_DISC)) {
+            if (metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString().contains("/")) {
+                String[] discData = metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString().split("/");
+                trackInfoStaticEntity.setDiscNumber(Integer.valueOf(discData[0]));
+                trackInfoStaticEntity.setDiscTotal(Integer.valueOf(discData[1]));
+            } else {
+                trackInfoStaticEntity.setDiscNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString()));
+            }
         }
         trackEntity.setTrackInformation(trackInfoEntity);
         trackEntity.setTrackInformationStatic(trackInfoStaticEntity);

@@ -15,7 +15,7 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
 
     private String composer;
 
-    private Integer releaseYear;
+    private String releaseYear;
 
     private Integer trackNumber;
 
@@ -81,7 +81,7 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         this.dateModified = musicTrackInfoStaticEntity.getDateModified().toString();
     }
 
-    public MusicTrackInfoStaticResource(UUID trackUUID, String albumArtist, String composer, Integer releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, LocalDateTime dateAdded, LocalDateTime dateModified) {
+    public MusicTrackInfoStaticResource(UUID trackUUID, String albumArtist, String composer, String releaseYear, Integer trackNumber, Integer trackTotal, Integer discNumber, Integer discTotal, Float score, List<String> genre, String artwork, Boolean love, Boolean dislike, String comment, String kind, Duration duration, Long size, String bitRate, String bitDepth, String sampleRate, LocalDateTime dateAdded, LocalDateTime dateModified) {
         this.trackUUID = trackUUID;
         this.albumArtist = albumArtist;
         this.composer = composer;
@@ -118,7 +118,7 @@ public class MusicTrackInfoStaticResource extends ResourceSupport {
         return composer;
     }
 
-    public Integer getReleaseYear() {
+    public String getReleaseYear() {
         return releaseYear;
     }
 
