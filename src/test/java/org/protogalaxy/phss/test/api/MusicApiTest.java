@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -60,35 +61,91 @@ public class MusicApiTest {
                                      .file(new MockMultipartFile("track", "MEGALOBOX.aiff", "multipart/form-data", Files.readAllBytes(Paths.get("src/test/resources/files/MEGALOBOX.aiff").toAbsolutePath())))
                                      .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
-                    .andDo(document("upload-album", responseFields(
-                            fieldWithPath("title").description("Title of the track"),
-                            fieldWithPath("album").description("Album of the track"),
-                            fieldWithPath("artist").description("Artist of the track"),
-                            fieldWithPath("location").description("Address of the track"),
-                            fieldWithPath("albumArtist").description("Album artist of the track"),
-                            fieldWithPath("composer").description("Composer of the track"),
-                            fieldWithPath("releaseYear").description("Release year of the track"),
-                            fieldWithPath("trackNumber").description("Track number of the disc"),
-                            fieldWithPath("trackTotal").description("Total tracks of the disc"),
-                            fieldWithPath("discNumber").description("Disc number of discs"),
-                            fieldWithPath("discTotal").description("Total discs"),
-                            fieldWithPath("score").description("Score of the track"),
-                            fieldWithPath("genre").description("Genre list of the track"),
-                            fieldWithPath("artwork").description("Artwork address of the track"),
-                            fieldWithPath("love").description("Whether you love the track"),
-                            fieldWithPath("dislike").description("Whether you don't like the track"),
-                            fieldWithPath("comment").description("Comment of the track"),
-                            fieldWithPath("kind").description("Kind of the track"),
-                            fieldWithPath("duration").description("Duration of the track"),
-                            fieldWithPath("size").description("Size of the track"),
-                            fieldWithPath("bitRate").description("Bitrate of the track"),
-                            fieldWithPath("bitDepth").description("Bitdepth of the track"),
-                            fieldWithPath("sampleRate").description("Sample rate of the track"),
-                            fieldWithPath("playbackCount").description("Playback count of the track"),
-                            fieldWithPath("skipCount").description("Skip count of the track"),
-                            fieldWithPath("lastPlayed").description("Last played time of the track"),
-                            fieldWithPath("dateAdded").description("Added date of the track"),
-                            fieldWithPath("dateModified").description("Modified date of the track")
+                    .andDo(document("upload-track", responseFields(
+                            fieldWithPath("title")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Title of the track"),
+                            fieldWithPath("album")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Album of the track"),
+                            fieldWithPath("artist")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Artist of the track"),
+                            fieldWithPath("location")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Address of the track"),
+                            fieldWithPath("albumArtist")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Album artist of the track"),
+                            fieldWithPath("composer")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Composer of the track"),
+                            fieldWithPath("releaseYear")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Release year of the track"),
+                            fieldWithPath("trackNumber")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Track number of the disc"),
+                            fieldWithPath("trackTotal")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Total tracks of the disc"),
+                            fieldWithPath("discNumber")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Disc number of discs"),
+                            fieldWithPath("discTotal")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Total discs"),
+                            fieldWithPath("score")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Score of the track"),
+                            fieldWithPath("genre")
+                                    .type(JsonFieldType.ARRAY)
+                                    .description("Genre list of the track"),
+                            fieldWithPath("artwork")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Artwork address of the track"),
+                            fieldWithPath("love")
+                                    .type(JsonFieldType.BOOLEAN)
+                                    .description("Whether you love the track"),
+                            fieldWithPath("dislike")
+                                    .type(JsonFieldType.BOOLEAN)
+                                    .description("Whether you don't like the track"),
+                            fieldWithPath("comment")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Comment of the track"),
+                            fieldWithPath("kind")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Kind of the track"),
+                            fieldWithPath("duration")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Duration of the track"),
+                            fieldWithPath("size")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Size of the track"),
+                            fieldWithPath("bitRate")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Bitrate of the track"),
+                            fieldWithPath("bitDepth")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Bitdepth of the track"),
+                            fieldWithPath("sampleRate")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Sample rate of the track"),
+                            fieldWithPath("playbackCount")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Playback count of the track"),
+                            fieldWithPath("skipCount")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Skip count of the track"),
+                            fieldWithPath("lastPlayed")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Last played time of the track"),
+                            fieldWithPath("dateAdded")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Added date of the track"),
+                            fieldWithPath("dateModified")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Modified date of the track")
                     )));
     }
 
@@ -100,7 +157,95 @@ public class MusicApiTest {
                                      .file(new MockMultipartFile("tracks", "ちいさな冒険者.aiff", "multipart/form-data", Files.readAllBytes(Paths.get("src/test/resources/files/ちいさな冒険者.aiff").toAbsolutePath())))
                                      .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
-                    .andDo(document("upload-albums"));
+                    .andDo(document("upload-tracks", responseFields(
+                            fieldWithPath("[].title")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Title of the track"),
+                            fieldWithPath("[].album")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Album of the track"),
+                            fieldWithPath("[].artist")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Artist of the track"),
+                            fieldWithPath("[].location")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Address of the track"),
+                            fieldWithPath("[].albumArtist")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Album artist of the track"),
+                            fieldWithPath("[].composer")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Composer of the track"),
+                            fieldWithPath("[].releaseYear")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Release year of the track"),
+                            fieldWithPath("[].trackNumber")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Track number of the disc"),
+                            fieldWithPath("[].trackTotal")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Total tracks of the disc"),
+                            fieldWithPath("[].discNumber")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Disc number of discs"),
+                            fieldWithPath("[].discTotal")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Total discs"),
+                            fieldWithPath("[].score")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Score of the track"),
+                            fieldWithPath("[].genre")
+                                    .type(JsonFieldType.ARRAY)
+                                    .description("Genre list of the track"),
+                            fieldWithPath("[].artwork")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Artwork address of the track"),
+                            fieldWithPath("[].love")
+                                    .type(JsonFieldType.BOOLEAN)
+                                    .description("Whether you love the track"),
+                            fieldWithPath("[].dislike")
+                                    .type(JsonFieldType.BOOLEAN)
+                                    .description("Whether you don't like the track"),
+                            fieldWithPath("[].comment")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Comment of the track"),
+                            fieldWithPath("[].kind")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Kind of the track"),
+                            fieldWithPath("[].duration")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Duration of the track"),
+                            fieldWithPath("[].size")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Size of the track"),
+                            fieldWithPath("[].bitRate")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Bitrate of the track"),
+                            fieldWithPath("[].bitDepth")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Bitdepth of the track"),
+                            fieldWithPath("[].sampleRate")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Sample rate of the track"),
+                            fieldWithPath("[].playbackCount")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Playback count of the track"),
+                            fieldWithPath("[].skipCount")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Skip count of the track"),
+                            fieldWithPath("[].lastPlayed")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Last played time of the track"),
+                            fieldWithPath("[].dateAdded")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Added date of the track"),
+                            fieldWithPath("[].dateModified")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Modified date of the track"),
+                            fieldWithPath("[].links")
+                                    .type(JsonFieldType.ARRAY)
+                                    .description("Other links")
+                    )));
     }
 
 
@@ -109,7 +254,95 @@ public class MusicApiTest {
     public void testCase_3_listUserAlbum() throws Exception {
         this.mockMvc.perform(get(urlBase + "/album").accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andDo(document("list-user-album"));
+                    .andDo(document("list-user-album", responseFields(
+                            fieldWithPath("[].title")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Title of the track"),
+                            fieldWithPath("[].album")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Album of the track"),
+                            fieldWithPath("[].artist")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Artist of the track"),
+                            fieldWithPath("[].location")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Address of the track"),
+                            fieldWithPath("[].albumArtist")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Album artist of the track"),
+                            fieldWithPath("[].composer")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Composer of the track"),
+                            fieldWithPath("[].releaseYear")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Release year of the track"),
+                            fieldWithPath("[].trackNumber")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Track number of the disc"),
+                            fieldWithPath("[].trackTotal")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Total tracks of the disc"),
+                            fieldWithPath("[].discNumber")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Disc number of discs"),
+                            fieldWithPath("[].discTotal")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Total discs"),
+                            fieldWithPath("[].score")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Score of the track"),
+                            fieldWithPath("[].genre")
+                                    .type(JsonFieldType.ARRAY)
+                                    .description("Genre list of the track"),
+                            fieldWithPath("[].artwork")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Artwork address of the track"),
+                            fieldWithPath("[].love")
+                                    .type(JsonFieldType.BOOLEAN)
+                                    .description("Whether you love the track"),
+                            fieldWithPath("[].dislike")
+                                    .type(JsonFieldType.BOOLEAN)
+                                    .description("Whether you don't like the track"),
+                            fieldWithPath("[].comment")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Comment of the track"),
+                            fieldWithPath("[].kind")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Kind of the track"),
+                            fieldWithPath("[].duration")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Duration of the track"),
+                            fieldWithPath("[].size")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Size of the track"),
+                            fieldWithPath("[].bitRate")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Bitrate of the track"),
+                            fieldWithPath("[].bitDepth")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Bitdepth of the track"),
+                            fieldWithPath("[].sampleRate")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Sample rate of the track"),
+                            fieldWithPath("[].playbackCount")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Playback count of the track"),
+                            fieldWithPath("[].skipCount")
+                                    .type(JsonFieldType.NUMBER)
+                                    .description("Skip count of the track"),
+                            fieldWithPath("[].lastPlayed")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Last played time of the track"),
+                            fieldWithPath("[].dateAdded")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Added date of the track"),
+                            fieldWithPath("[].dateModified")
+                                    .type(JsonFieldType.STRING)
+                                    .description("Modified date of the track"),
+                            fieldWithPath("[].links")
+                                    .type(JsonFieldType.ARRAY)
+                                    .description("Other links")
+                    )));
     }
 
     @Test

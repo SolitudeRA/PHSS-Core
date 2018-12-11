@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.service.interfaces.account;
 
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
-import org.protogalaxy.phss.exception.UserNotFoundException;
+import org.protogalaxy.phss.exception.account.UserNotFoundException;
 
 public interface AccountService {
     AccountEntity register(String username, String password);

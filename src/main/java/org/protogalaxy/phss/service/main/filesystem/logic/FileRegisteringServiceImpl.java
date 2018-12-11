@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.service.main.filesystem.logic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.component.consts.AudioConsts;
 import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
@@ -15,12 +16,11 @@ import org.protogalaxy.phss.datasource.entity.filesystem.illustration.Illustrati
 import org.protogalaxy.phss.datasource.entity.filesystem.anime.AnimeEpisodeEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.movie.MovieEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.video.VideoEntity;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackInfoRepository;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackInfoStaticRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
+import org.protogalaxy.phss.exception.service.FileRegisteringServiceException;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
@@ -29,7 +29,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Date;
@@ -102,6 +104,9 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                                             metadata.get(AudioConsts.METADATA_AUDIO_ARTIST).toString(),
                                                             path.toString());
         MusicTrackInfoEntity trackInfoEntity = new MusicTrackInfoEntity(trackEntity);
+        trackInfoEntity.setPlaybackCount(0);
+        trackInfoEntity.setSkipCount(0);
+        trackInfoEntity.setLastPlayed(LocalDateTime.parse("1996-2-5T00:00:00.720"));
         MusicTrackInfoStaticEntity trackInfoStaticEntity = new MusicTrackInfoStaticEntity(Duration.ofMillis((Long) metadata.get(AudioConsts.METADATA_AUDIO_DURATION)),
                                                                                           (Long) metadata.get(AudioConsts.METADATA_AUDIO_SIZE),
                                                                                           metadata.get(AudioConsts.METADATA_AUDIO_BITRATE).toString(),
@@ -111,6 +116,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                                                                                           trackEntity);
         if (metadata.containsKey(AudioConsts.METADATA_AUDIO_ARTWORK))
             trackInfoStaticEntity.setArtwork(metadata.get(AudioConsts.METADATA_AUDIO_ARTWORK).toString());
+        else trackInfoStaticEntity.setArtwork("");
         if (metadata.containsKey(AudioConsts.METADATA_AUDIO_ALBUMARTIST))
             trackInfoStaticEntity.setAlbumArtist(metadata.get(AudioConsts.METADATA_AUDIO_ALBUMARTIST).toString());
         else trackInfoStaticEntity.setAlbumArtist("");
@@ -126,6 +132,7 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
         if (metadata.containsKey(AudioConsts.METADATA_AUDIO_COMMENT))
             trackInfoStaticEntity.setComment(metadata.get(AudioConsts.METADATA_AUDIO_COMMENT).toString());
         else trackInfoStaticEntity.setComment("");
+        trackInfoStaticEntity.setKind(metadata.get(AudioConsts.METADATA_AUDIO_KIND).toString());
         if (metadata.containsKey(AudioConsts.METADATA_AUDIO_TRACK)) {
             if (metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().contains("/")) {
                 String[] trackData = metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString().split("/");
@@ -133,7 +140,11 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 trackInfoStaticEntity.setTrackTotal(Integer.valueOf(trackData[1]));
             } else {
                 trackInfoStaticEntity.setTrackNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_TRACK).toString()));
+                trackInfoStaticEntity.setTrackTotal(0);
             }
+        } else {
+            trackInfoStaticEntity.setTrackNumber(0);
+            trackInfoStaticEntity.setTrackTotal(0);
         }
         if (metadata.containsKey(AudioConsts.METADATA_AUDIO_DISC)) {
             if (metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString().contains("/")) {
@@ -142,8 +153,15 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 trackInfoStaticEntity.setDiscTotal(Integer.valueOf(discData[1]));
             } else {
                 trackInfoStaticEntity.setDiscNumber(Integer.valueOf(metadata.get(AudioConsts.METADATA_AUDIO_DISC).toString()));
+                trackInfoStaticEntity.setDiscTotal(0);
             }
+        } else {
+            trackInfoStaticEntity.setDiscNumber(0);
+            trackInfoStaticEntity.setDiscTotal(0);
         }
+        trackInfoStaticEntity.setScore(5F);
+        trackInfoStaticEntity.setLove(false);
+        trackInfoStaticEntity.setDislike(false);
         trackEntity.setTrackInformation(trackInfoEntity);
         trackEntity.setTrackInformationStatic(trackInfoStaticEntity);
         return musicTrackRepository.saveAndFlush(trackEntity);
@@ -415,13 +433,5 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (String) metadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_PATH));
         documentOpenPresentationRepository.save(documentOpenPresentationEntity);
         return mapper.writeValueAsString(documentOpenPresentationEntity);
-    }
-
-    private Integer checkIntegerString(String integer) {
-        if (integer != null && !integer.equals("")) {
-            return Integer.valueOf(integer);
-        } else {
-            return null;
-        }
     }
 }

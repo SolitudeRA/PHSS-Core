@@ -1,12 +1,11 @@
 package org.protogalaxy.phss.service.main.account;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
-import org.protogalaxy.phss.exception.UserNotFoundException;
+import org.protogalaxy.phss.exception.account.UserNotFoundException;
 import org.protogalaxy.phss.service.interfaces.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

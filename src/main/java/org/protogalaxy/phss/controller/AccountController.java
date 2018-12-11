@@ -3,13 +3,12 @@ package org.protogalaxy.phss.controller;
 
 import org.protogalaxy.phss.datasource.resource.assembler.account.AccountResourceAssembler;
 import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResource;
-import org.protogalaxy.phss.exception.UserNotFoundException;
+import org.protogalaxy.phss.exception.account.UserNotFoundException;
 import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

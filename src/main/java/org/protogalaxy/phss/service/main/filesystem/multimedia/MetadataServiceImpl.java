@@ -1,6 +1,7 @@
 package org.protogalaxy.phss.service.main.filesystem.multimedia;
 
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hslf.extractor.PowerPointExtractor;
@@ -72,12 +73,13 @@ public class MetadataServiceImpl implements MetadataService {
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SIZE, Files.size(path));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_KIND, FilenameUtils.getExtension(path.getFileName().toString()));
         metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_MD5, FileUtils.getMD5(path));
         avformat_close_input(avFormatContext);
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
         grabber.start();
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_COVER, cacheService.cacheImage(converter.getBufferedImage(grabber.grabImage())));
+        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_ARTWORK, cacheService.cacheImage(converter.getBufferedImage(grabber.grabImage())));
         grabber.close();
         return metadataCurrentMap;
     }

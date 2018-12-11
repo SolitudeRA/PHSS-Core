@@ -7,6 +7,7 @@ import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
+import org.protogalaxy.phss.exception.service.FileRegisteringServiceException;
 import org.protogalaxy.phss.exception.storage.StorageException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringServiceImpl;
@@ -69,12 +70,28 @@ public class StorageServiceImpl implements StorageService {
         Files.move(fromPath, toPath);
     }
 
+    /**
+     * Store single track
+     *
+     * @param musicFile uploaded track
+     * @return JSON format string of the uploaded track
+     */
     @Override
     public MusicTrackEntity storeTrack(MultipartFile musicFile) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
         Path tempFilePath = cacheService.cacheFile(musicFile);
         Map<String, Object> metadata = metadataService.musicMetadataResolver(tempFilePath);
+        //Check whether file already exists
+        if (musicTrackRepository.findByFileSystemOwner_AccountEntity_UsernameAndTrackInformationStatic_Md5(SecurityContextHolder.getContext().getAuthentication().getName(), metadata.get(AudioConsts.METADATA_AUDIO_MD5).toString()).isPresent()) {
+            try {
+                Files.delete(tempFilePath);
+            } catch (IOException e) {
+                throw new StorageException("File delete failed", e);
+            }
+            throw new FileRegisteringServiceException("Track already exist");
+        }
+        //Move track to correct path & register in database
         try {
             Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation()
                                                                                  .resolve(username)
@@ -88,6 +105,12 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
+    /**
+     * Store tracks
+     *
+     * @param musicFiles uploaded tracks
+     * @return JSON format string of the uploaded tracks
+     */
     @Override
     public List<MusicTrackEntity> storeTracks(MultipartFile[] musicFiles) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -20,8 +20,9 @@ public final class AudioConsts {
             METADATA_AUDIO_SAMPLERATE = "sample_rate",
             METADATA_AUDIO_BITDEPTH = "bit_depth",
             METADATA_AUDIO_SIZE = "size",
+            METADATA_AUDIO_ARTWORK = "cover",
             METADATA_AUDIO_MD5 = "md5",
-            METADATA_AUDIO_ARTWORK = "cover";
+            METADATA_AUDIO_KIND = "kind";
 
     public static List<String> METADATA_AUDIO_STANDARD_LIST = Arrays.asList(
             METADATA_AUDIO_TITLE,
@@ -51,7 +52,8 @@ public final class AudioConsts {
             METADATA_AUDIO_SAMPLERATE,
             METADATA_AUDIO_BITDEPTH,
             METADATA_AUDIO_SIZE,
+            METADATA_AUDIO_ARTWORK,
             METADATA_AUDIO_MD5,
-            METADATA_AUDIO_ARTWORK
+            METADATA_AUDIO_KIND
     );
 }
