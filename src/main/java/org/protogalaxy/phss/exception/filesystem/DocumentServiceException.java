@@ -1,8 +1,9 @@
-package org.protogalaxy.phss.exception.account;
+package org.protogalaxy.phss.exception.filesystem;
 
 import org.protogalaxy.phss.exception.PhssErrorCode;
+import org.protogalaxy.phss.exception.PhssException;
 
-public class UserNotFoundException extends AccountServiceException {
+public class DocumentServiceException extends PhssException {
     /**
      * Constructs a new runtime exception with {@code PhssErrorCode} as its
      * detail message.  The cause is not initialized, and may subsequently be
@@ -11,7 +12,7 @@ public class UserNotFoundException extends AccountServiceException {
      * @param errorCode the error code object (which is saved for later retrieval
      *                  by the {@link #getErrorCode()} method).
      */
-    public UserNotFoundException(PhssErrorCode errorCode) {
+    public DocumentServiceException(PhssErrorCode errorCode) {
         super(errorCode);
     }
 
@@ -25,8 +26,9 @@ public class UserNotFoundException extends AccountServiceException {
      *                  by the {@link #getErrorCode()} method).
      * @param cause     the cause (which is saved for later retrieval by the
      *                  {@link #getCause()} method).  (A <tt>null</tt> value is
+     *                  permitted, and indicates that the cause is nonexistent or
      */
-    public UserNotFoundException(PhssErrorCode errorCode, Throwable cause) {
+    public DocumentServiceException(PhssErrorCode errorCode, Throwable cause) {
         super(errorCode, cause);
     }
 }

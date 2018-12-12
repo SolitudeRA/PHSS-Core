@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.controller;
+package org.protogalaxy.phss.controller.account;
 
 
 import org.protogalaxy.phss.datasource.resource.assembler.account.AccountResourceAssembler;
@@ -29,7 +29,7 @@ public class AccountController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<AccountResource> register(@Param("username") String username, @Param("password") String password) throws Exception {
+    public ResponseEntity<AccountResource> register(@Param("username") String username, @Param("password") String password) {
         return new ResponseEntity<>(accountResourceAssembler.toResource(accountService.register(username, password)), HttpStatus.OK);
     }
 

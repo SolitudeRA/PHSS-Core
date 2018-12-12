@@ -8,7 +8,7 @@ import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
 import org.protogalaxy.phss.exception.service.FileRegisteringServiceException;
-import org.protogalaxy.phss.exception.storage.StorageException;
+import org.protogalaxy.phss.exception.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.multimedia.MetadataServiceImpl;
@@ -87,7 +87,7 @@ public class StorageServiceImpl implements StorageService {
             try {
                 Files.delete(tempFilePath);
             } catch (IOException e) {
-                throw new StorageException("File delete failed", e);
+                throw new StorageServiceException("File delete failed", e);
             }
             throw new FileRegisteringServiceException("Track already exist");
         }
@@ -101,7 +101,7 @@ public class StorageServiceImpl implements StorageService {
                                                                                  .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
             return fileRegisteringService.registerTrack(metadata, realPath);
         } catch (IOException e) {
-            throw new StorageException("Could not register file", e);
+            throw new StorageServiceException("Could not register file", e);
         }
     }
 
@@ -128,7 +128,7 @@ public class StorageServiceImpl implements StorageService {
                                                                                      .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
                 musicTrackEntities.add(fileRegisteringService.registerTrack(metadata, realPath));
             } catch (IOException e) {
-                throw new StorageException("Could not register file", e);
+                throw new StorageServiceException("Could not register file", e);
             }
         }
         return musicTrackEntities;
@@ -139,7 +139,7 @@ public class StorageServiceImpl implements StorageService {
         try {
             Files.delete(Paths.get(musicTrackRepository.findByUuid(uuid).getLocation()));
         } catch (IOException e) {
-            throw new StorageException("Could not delete file", e);
+            throw new StorageServiceException("Could not delete file", e);
         }
 
     }
@@ -149,7 +149,7 @@ public class StorageServiceImpl implements StorageService {
         try {
             Files.delete(Paths.get(musicAlbumRepository.findByUuid(uuid).getLocation()));
         } catch (IOException e) {
-            throw new StorageException("Could not delete files", e);
+            throw new StorageServiceException("Could not delete files", e);
         }
     }
 
@@ -203,7 +203,7 @@ public class StorageServiceImpl implements StorageService {
             Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation().resolve(username).resolve(config.getBookLocation()).resolve(metadata.get(FileConsts.METADATA_BOOK_AUTHOR).toString()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerBook(metadata, realPath));
         } catch (IOException e) {
-            throw new StorageException("Could not move temp file", e);
+            throw new StorageServiceException("Could not move temp file", e);
         }
     }
 
@@ -223,7 +223,7 @@ public class StorageServiceImpl implements StorageService {
             Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation().resolve(username).resolve(config.getDocumentLocation()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);
             return mapper.writeValueAsString(fileRegisteringService.registerDocument(metadata, realPath, mimeType));
         } catch (IOException e) {
-            throw new StorageException("Could not move temp file", e);
+            throw new StorageServiceException("Could not move temp file", e);
         }
     }
 

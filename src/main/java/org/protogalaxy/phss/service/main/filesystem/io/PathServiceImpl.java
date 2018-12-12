@@ -2,8 +2,8 @@ package org.protogalaxy.phss.service.main.filesystem.io;
 
 import org.protogalaxy.phss.component.utils.FileUtils;
 import org.protogalaxy.phss.component.consts.FileConsts;
-import org.protogalaxy.phss.exception.path.PathException;
-import org.protogalaxy.phss.exception.storage.StorageException;
+import org.protogalaxy.phss.exception.path.PathServiceException;
+import org.protogalaxy.phss.exception.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
@@ -52,7 +51,7 @@ public class PathServiceImpl implements PathService {
             case FileConsts.FILESYSTEM_BOOK:
                 return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getBookLocation());
             default:
-                throw new PathException("Invalid filesystem part");
+                throw new PathServiceException("Invalid filesystem part");
         }
     }
 
@@ -72,37 +71,37 @@ public class PathServiceImpl implements PathService {
                 if (Pattern.matches("^audio/.*", mimeType)) {
                     return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getMusicLocation());
                 } else {
-                    throw new PathException("Incorrect or unsupported mime type");
+                    throw new PathServiceException("Incorrect or unsupported mime type");
                 }
             case FileConsts.FILESYSTEM_ANIME:
                 if (Pattern.matches("^video/.*", mimeType)) {
                     return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getAnimeLocation());
                 } else {
-                    throw new PathException("Incorrect or unsupported mime type");
+                    throw new PathServiceException("Incorrect or unsupported mime type");
                 }
             case FileConsts.FILESYSTEM_MOVIE:
                 if (Pattern.matches("^video/.*", mimeType)) {
                     return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getMovieLocation());
                 } else {
-                    throw new PathException("Incorrect or unsupported mime type");
+                    throw new PathServiceException("Incorrect or unsupported mime type");
                 }
             case FileConsts.FILESYSTEM_VIDEO:
                 if (Pattern.matches("^video/.*", mimeType)) {
                     return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getVideoLocation());
                 } else {
-                    throw new PathException("Incorrect or unsupported mime type");
+                    throw new PathServiceException("Incorrect or unsupported mime type");
                 }
             case FileConsts.FILESYSTEM_PHOTO:
                 if (Pattern.matches("^image/.*", mimeType)) {
                     return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getPhotoLocation());
                 } else {
-                    throw new PathException("Incorrect or unsupported mime type");
+                    throw new PathServiceException("Incorrect or unsupported mime type");
                 }
             case FileConsts.FILESYSTEM_ILLUSTRATION:
                 if (Pattern.matches("^image/.*", mimeType)) {
                     return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getIllustrationLocation());
                 } else {
-                    throw new PathException("Incorrect or unsupported mime type");
+                    throw new PathServiceException("Incorrect or unsupported mime type");
                 }
             case FileConsts.FILESYSTEM_DOCUMENT:
             case FileConsts.FILESYSTEM_BOOK:
@@ -125,10 +124,10 @@ public class PathServiceImpl implements PathService {
                     case FileConsts.MIME_EBOOK_IBOOKS:
                         return storageServiceConfig.getRootLocation().resolve(username).resolve(storageServiceConfig.getBookLocation());
                     default:
-                        throw new StorageException("Unsupported document MIME type");
+                        throw new StorageServiceException("Unsupported document MIME type");
                 }
             default:
-                throw new PathException("Invalid filesystem part");
+                throw new PathServiceException("Invalid filesystem part");
         }
     }
 
@@ -147,7 +146,7 @@ public class PathServiceImpl implements PathService {
                 return path;
             }
         } catch (IOException e) {
-            throw new StorageException("Path check " + path.toString() + " error", e);
+            throw new StorageServiceException("Path check " + path.toString() + " error", e);
         }
     }
 

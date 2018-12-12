@@ -4,7 +4,7 @@ import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.Music
 import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.MusicTrackResourceAssembler;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
-import org.protogalaxy.phss.exception.storage.StorageException;
+import org.protogalaxy.phss.exception.storage.StorageServiceException;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.database.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class MusicController {
     public ResponseEntity handleMusicUpload(@RequestParam("track") MultipartFile file) throws Exception {
         try {
             return new ResponseEntity<>(musicTrackResourceAssembler.toResource(storageService.storeTrack(file)), HttpStatus.CREATED);
-        } catch (StorageException e) {
+        } catch (StorageServiceException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

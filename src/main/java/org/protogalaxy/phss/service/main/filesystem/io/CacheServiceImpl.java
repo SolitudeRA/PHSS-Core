@@ -1,7 +1,6 @@
 package org.protogalaxy.phss.service.main.filesystem.io;
 
-import org.protogalaxy.phss.exception.storage.StorageException;
-import org.protogalaxy.phss.exception.storage.StorageTempException;
+import org.protogalaxy.phss.exception.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -41,7 +39,7 @@ public class CacheServiceImpl implements CacheService {
             Path tempDirectory = getUserTempDirectoryPath();
             return Files.write(tempDirectory.resolve(filename), file.getBytes());
         } catch (IOException e) {
-            throw new StorageTempException("Fail to create temp file", e);
+            throw new StorageTempServiceException("Fail to create temp file", e);
         }
     }
 
@@ -63,7 +61,7 @@ public class CacheServiceImpl implements CacheService {
                                                                  .resolve(storageServiceConfig.getImagePoolLocation()))
                                        .resolve(imageName), outputStream.toByteArray());
         } catch (IOException e) {
-            throw new StorageTempException("Failed to cache image", e);
+            throw new StorageTempServiceException("Failed to cache image", e);
         }
     }
 
@@ -76,7 +74,7 @@ public class CacheServiceImpl implements CacheService {
         try {
             return Files.createTempDirectory(tempPathCheck(storageServiceConfig.getTempLocation().resolve(SecurityContextHolder.getContext().getAuthentication().getName())), storageServiceConfig.getPrefix());
         } catch (IOException e) {
-            throw new StorageTempException("Fail to create temp directory", e);
+            throw new StorageTempServiceException("Fail to create temp directory", e);
         }
     }
 
@@ -88,7 +86,7 @@ public class CacheServiceImpl implements CacheService {
                 return path;
             }
         } catch (IOException e) {
-            throw new StorageException("Temp path check " + path.toString() + " error", e);
+            throw new StorageServiceException("Temp path check " + path.toString() + " error", e);
         }
     }
 }

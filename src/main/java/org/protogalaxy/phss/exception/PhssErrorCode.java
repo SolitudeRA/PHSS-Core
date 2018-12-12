@@ -3,19 +3,35 @@ package org.protogalaxy.phss.exception;
 
 public enum PhssErrorCode {
 
-    ACCOUNT_ALREADY_EXISTS(10101, "Account already exists");
+    ACCOUNT_ALREADY_EXISTS(10101, "Account already exists"),
 
-    private final int value;
+    ACCOUNT_INVALID_ID(10102, "Invalid ID"),
+
+    ACCOUNT_INVALID_USERNAME(10103, "Invalid username"),
+
+    ACCOUNT_INVALID_PASSWORD(10104, "Invalid password"),
+
+    ACCOUNT_NOT_ENABLED(10105, "Account not enabled"),
+
+    ACCOUNT_IS_LOCKED(10106, "Account is locked"),
+
+    ACCOUNT_IS_EXPIRED(10107, "Account is expired"),
+
+    ACCOUNT_AUTHORITIES_NOT_ALLOWED(10108, "Account authorities not allowed"),
+
+    FILESYSTEM_FILE_ALREADY_EXISTS(10201, "File already exists");
+
+    private final int errorCode;
 
     private final String information;
 
     PhssErrorCode(int value, String information) {
-        this.value = value;
+        this.errorCode = value;
         this.information = information;
     }
 
-    public int getValue() {
-        return value;
+    public int getErrorCode() {
+        return errorCode;
     }
 
     public String getInformation() {
@@ -41,7 +57,7 @@ public enum PhssErrorCode {
      */
     @Override
     public String toString() {
-        return this.value + " " + name();
+        return this.errorCode + " " + name();
     }
 
     /**
@@ -67,7 +83,7 @@ public enum PhssErrorCode {
      */
     public static PhssErrorCode resolve(int errorCode) {
         for (PhssErrorCode phssErrorCodeSample : values()) {
-            if (phssErrorCodeSample.value == errorCode) {
+            if (phssErrorCodeSample.errorCode == errorCode) {
                 return phssErrorCodeSample;
             }
         }
@@ -84,31 +100,31 @@ public enum PhssErrorCode {
 
         SERVER_ERROR(3);
 
-        private final int value;
+        private final int mainSeriesCode;
 
-        MainSeries(int value) {
-            this.value = value;
+        MainSeries(int mainSeriesCode) {
+            this.mainSeriesCode = mainSeriesCode;
         }
 
         /**
-         * Return the integer value of this status series. Ranges from 1 to 5.
+         * Return the integer value of this status series. Ranges from 1 to 3.
          */
-        public int getValue() {
-            return value;
+        public int getMainSeriesCode() {
+            return mainSeriesCode;
         }
 
         public static PhssErrorCode.MainSeries valueOf(int code) {
             int seriesCode = code / 10000;
-            for (PhssErrorCode.MainSeries series : values()) {
-                if (series.value == seriesCode) {
-                    return series;
+            for (PhssErrorCode.MainSeries mainSeries : values()) {
+                if (mainSeries.mainSeriesCode == seriesCode) {
+                    return mainSeries;
                 }
             }
             throw new IllegalArgumentException("No matching constant for [" + code + "]");
         }
 
         public static PhssErrorCode.MainSeries valueOf(PhssErrorCode phssErrorCode) {
-            return valueOf(phssErrorCode.value);
+            return valueOf(phssErrorCode.errorCode);
         }
     }
 
@@ -134,31 +150,31 @@ public enum PhssErrorCode {
 
         FILESYSTEM_ILLUSTRATION_SERVICE(9);
 
-        private final int value;
+        private final int serviceSeriesCode;
 
-        ServiceSeries(int value) {
-            this.value = value;
+        ServiceSeries(int serviceSeriesCode) {
+            this.serviceSeriesCode = serviceSeriesCode;
         }
 
         /**
-         * Return the integer value of this status series. Ranges from 1 to 5.
+         * Return the integer value of this status series. Ranges from 1 to 9.
          */
-        public int getValue() {
-            return value;
+        public int getServiceSeriesCode() {
+            return this.serviceSeriesCode;
         }
 
         public static PhssErrorCode.ServiceSeries valueOf(int code) {
             int seriesCode = code % 10000 / 1000;
-            for (PhssErrorCode.ServiceSeries series : values()) {
-                if (series.value == seriesCode) {
-                    return series;
+            for (PhssErrorCode.ServiceSeries serviceSeries : values()) {
+                if (serviceSeries.serviceSeriesCode == seriesCode) {
+                    return serviceSeries;
                 }
             }
             throw new IllegalArgumentException("No matching constant for [" + code + "]");
         }
 
         public static PhssErrorCode.ServiceSeries valueOf(PhssErrorCode phssErrorCode) {
-            return valueOf(phssErrorCode.value);
+            return valueOf(phssErrorCode.errorCode);
         }
     }
 }

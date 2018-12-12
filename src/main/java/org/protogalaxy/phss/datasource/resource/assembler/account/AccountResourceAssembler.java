@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.datasource.resource.assembler.account;
 
-import org.protogalaxy.phss.controller.AccountController;
+import org.protogalaxy.phss.controller.account.AccountController;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
