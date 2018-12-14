@@ -34,6 +34,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
      */
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        PhssException phssException;
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
@@ -41,14 +42,16 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         try {
             ObjectMapper mapper = new ObjectMapper();
             if (ex instanceof AccountServiceException) {
-                response.getWriter().write(mapper.writeValueAsString(ex));
+                phssException = (PhssException) ex;
+                response.getWriter().write(mapper.writeValueAsString(phssException));
             } else {
                 response.getWriter().write(ex.getMessage());
             }
         } catch (IOException e) {
-            logger.error("Client" + e.getMessage(), e);
+            logger.error("Client unreachable" + e.getMessage(), e);
             e.printStackTrace();
         }
-        return null;
+
+        return new ModelAndView();
     }
 }

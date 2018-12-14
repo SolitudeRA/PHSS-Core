@@ -1,22 +1,22 @@
 package org.protogalaxy.phss.exception;
 
 public class PhssException extends RuntimeException {
-    private PhssErrorCode errorCode;
+    private PhssErrorCodeMain errorCode;
 
     /**
-     * Constructs a new runtime exception with {@code PhssErrorCode} as its
+     * Constructs a new runtime exception with {@code PhssErrorCodeMain} as its
      * detail message.  The cause is not initialized, and may subsequently be
      * initialized by a call to {@link #initCause}.
      *
      * @param errorCode the error code object (which is saved for later retrieval
      *                  by the {@link #getErrorCode()} method).
      */
-    public PhssException(PhssErrorCode errorCode) {
+    public PhssException(PhssErrorCodeMain errorCode) {
         this.errorCode = errorCode;
     }
 
     /**
-     * Constructs a new runtime exception with the specified {@code PhssErrorCode} and
+     * Constructs a new runtime exception with the specified {@code PhssErrorCodeMain} and
      * cause.  <p>Note that the detail message associated with
      * {@code cause} is <i>not</i> automatically incorporated in
      * this runtime exception's detail message.
@@ -28,16 +28,16 @@ public class PhssException extends RuntimeException {
      *                  permitted, and indicates that the cause is nonexistent or
      *                  unknown.)
      */
-    public PhssException(PhssErrorCode errorCode, Throwable cause) {
+    public PhssException(PhssErrorCodeMain errorCode, Throwable cause) {
         super(errorCode.getInformation(), cause);
         this.errorCode = errorCode;
     }
 
-    public PhssErrorCode getErrorCode() {
+    public PhssErrorCodeMain getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(PhssErrorCode errorCode) {
+    public void setErrorCode(PhssErrorCodeMain errorCode) {
         this.errorCode = errorCode;
     }
 }
