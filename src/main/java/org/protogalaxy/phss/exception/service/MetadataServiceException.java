@@ -1,9 +1,8 @@
 package org.protogalaxy.phss.exception.service;
 
-import org.protogalaxy.phss.exception.PhssErrorCodeMain;
-import org.protogalaxy.phss.exception.PhssException;
+import org.protogalaxy.phss.exception.main.PhssErrorCodeMain;
 
-public class MetadataServiceException extends PhssException {
+public class MetadataServiceException extends RuntimeException {
     /**
      * Constructs a new runtime exception with {@code PhssErrorCodeMain} as its
      * detail message.  The cause is not initialized, and may subsequently be

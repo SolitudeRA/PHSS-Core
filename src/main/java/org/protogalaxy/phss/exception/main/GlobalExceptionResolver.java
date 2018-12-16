@@ -1,7 +1,6 @@
-package org.protogalaxy.phss.exception;
+package org.protogalaxy.phss.exception.main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.protogalaxy.phss.exception.account.AccountServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -34,22 +33,26 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
      */
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        PhssException phssException;
+        PhssCustomException phssCustomException;
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Cache-Control", "no-cache, must-revalidate");
         try {
             ObjectMapper mapper = new ObjectMapper();
-            if (ex instanceof AccountServiceException) {
-                phssException = (PhssException) ex;
-                response.getWriter().write(mapper.writeValueAsString(phssException));
+            if (ex instanceof PhssCustomException) {
+                phssCustomException = (PhssCustomException) ex;
+                response.getWriter().write(mapper.writeValueAsString(phssCustomException));
             } else {
                 response.getWriter().write(ex.getMessage());
             }
         } catch (IOException e) {
             logger.error("Client unreachable" + e.getMessage(), e);
             e.printStackTrace();
+        } finally {
+            if (logger.isDebugEnabled()) {
+                logger.debug("");
+            }
         }
 
         return new ModelAndView();

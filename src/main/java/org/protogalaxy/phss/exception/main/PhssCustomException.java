@@ -1,6 +1,6 @@
-package org.protogalaxy.phss.exception;
+package org.protogalaxy.phss.exception.main;
 
-public class PhssException extends RuntimeException {
+public class PhssCustomException extends RuntimeException{
     private PhssErrorCodeMain errorCode;
 
     /**
@@ -11,7 +11,7 @@ public class PhssException extends RuntimeException {
      * @param errorCode the error code object (which is saved for later retrieval
      *                  by the {@link #getErrorCode()} method).
      */
-    public PhssException(PhssErrorCodeMain errorCode) {
+    public PhssCustomException(PhssErrorCodeMain errorCode) {
         this.errorCode = errorCode;
     }
 
@@ -28,7 +28,7 @@ public class PhssException extends RuntimeException {
      *                  permitted, and indicates that the cause is nonexistent or
      *                  unknown.)
      */
-    public PhssException(PhssErrorCodeMain errorCode, Throwable cause) {
+    public PhssCustomException(PhssErrorCodeMain errorCode, Throwable cause) {
         super(errorCode.getInformation(), cause);
         this.errorCode = errorCode;
     }

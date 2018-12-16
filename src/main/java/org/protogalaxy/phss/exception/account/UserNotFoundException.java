@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.exception.account;
 
-import org.protogalaxy.phss.exception.PhssErrorCodeMain;
+import org.protogalaxy.phss.exception.main.PhssErrorCodeMain;
 
 public class UserNotFoundException extends AccountServiceException {
     /**

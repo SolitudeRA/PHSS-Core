@@ -1,9 +1,8 @@
 package org.protogalaxy.phss.exception.filesystem;
 
-import org.protogalaxy.phss.exception.PhssErrorCodeMain;
-import org.protogalaxy.phss.exception.PhssException;
+import org.protogalaxy.phss.exception.main.PhssErrorCodeMain;
 
-public class DocumentServiceException extends PhssException {
+public class DocumentServiceException extends RuntimeException {
     /**
      * Constructs a new runtime exception with {@code PhssErrorCodeMain} as its
      * detail message.  The cause is not initialized, and may subsequently be

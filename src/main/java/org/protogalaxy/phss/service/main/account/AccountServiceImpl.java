@@ -5,7 +5,7 @@ import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
-import org.protogalaxy.phss.exception.PhssErrorCodeMain;
+import org.protogalaxy.phss.exception.main.PhssErrorCodeMain;
 import org.protogalaxy.phss.exception.account.AccountServiceException;
 import org.protogalaxy.phss.exception.account.UserNotFoundException;
 import org.protogalaxy.phss.service.interfaces.account.AccountService;

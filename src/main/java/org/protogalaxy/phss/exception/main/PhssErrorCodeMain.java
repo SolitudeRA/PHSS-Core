@@ -1,5 +1,7 @@
-package org.protogalaxy.phss.exception;
+package org.protogalaxy.phss.exception.main;
 
+
+import org.protogalaxy.phss.exception.PhssErrorCode;
 
 public enum PhssErrorCodeMain implements PhssErrorCode {
 

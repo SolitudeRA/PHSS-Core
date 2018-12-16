@@ -1,9 +1,8 @@
 package org.protogalaxy.phss.exception.storage;
 
-import org.protogalaxy.phss.exception.PhssErrorCodeMain;
-import org.protogalaxy.phss.exception.PhssException;
+import org.protogalaxy.phss.exception.main.PhssErrorCodeMain;
 
-public class StorageServiceException extends PhssException {
+public class StorageServiceException extends RuntimeException {
     /**
      * Constructs a new runtime exception with {@code PhssErrorCodeMain} as its
      * detail message.  The cause is not initialized, and may subsequently be

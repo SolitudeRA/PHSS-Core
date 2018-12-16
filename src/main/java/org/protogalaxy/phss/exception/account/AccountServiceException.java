@@ -1,9 +1,8 @@
 package org.protogalaxy.phss.exception.account;
 
-import org.protogalaxy.phss.exception.PhssErrorCodeMain;
-import org.protogalaxy.phss.exception.PhssException;
+import org.protogalaxy.phss.exception.main.PhssErrorCodeMain;
 
-public class AccountServiceException extends PhssException {
+public class AccountServiceException extends RuntimeException {
     /**
      * Constructs a new runtime exception with {@code PhssErrorCodeMain} as its
      * detail message.  The cause is not initialized, and may subsequently be
