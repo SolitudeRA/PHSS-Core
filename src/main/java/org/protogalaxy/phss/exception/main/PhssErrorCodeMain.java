@@ -43,8 +43,8 @@ public enum PhssErrorCodeMain implements PhssErrorCode {
     /**
      * Returns the error code main series of this error code.
      */
-    public PhssErrorCodeMainSeries mainSeries() {
-        return PhssErrorCodeMainSeries.valueOf(this);
+    public PhssErrorCodeBaseSeries mainSeries() {
+        return PhssErrorCodeBaseSeries.valueOf(this);
     }
 
     /**

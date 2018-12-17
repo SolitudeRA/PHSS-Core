@@ -2,7 +2,7 @@ package org.protogalaxy.phss.exception.main;
 
 import org.protogalaxy.phss.exception.PhssErrorCode;
 
-public enum  PhssErrorCodeServiceSeries {
+public enum PhssErrorCodeServiceSeries {
     ACCOUNT_SERVICE(1),
 
     FILESYSTEM_MUSIC_SERVICE(2),

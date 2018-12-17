@@ -6,11 +6,5 @@ public interface PhssErrorCode {
 
     String getInformation();
 
-    static PhssErrorCode valueOf(int errorCode) {
-        return null;
-    }
 
-    static PhssErrorCode resolve(int errorCode) {
-        return null;
-    }
 }
