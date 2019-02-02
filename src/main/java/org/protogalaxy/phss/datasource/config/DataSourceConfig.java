@@ -32,13 +32,12 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableJpaRepositories("org.protogalaxy.phss.datasource.repository.jpa")
 @EnableMongoRepositories("org.protogalaxy.phss.datasource.repository.mongodb")
-@EnableRedisRepositories("org.protogalaxy.phss.datasource.repository.redis")
 public class DataSourceConfig {
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/protogalaxy?useSSL=true");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/protogalaxy");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;

@@ -39,7 +39,7 @@ public class CacheServiceImpl implements CacheService {
             Path tempDirectory = getUserTempDirectoryPath();
             return Files.write(tempDirectory.resolve(filename), file.getBytes());
         } catch (IOException e) {
-            throw new StorageTempServiceException("Fail to create temp file", e);
+            throw new StorageServiceException("Fail to create temp file", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class CacheServiceImpl implements CacheService {
                                                                  .resolve(storageServiceConfig.getImagePoolLocation()))
                                        .resolve(imageName), outputStream.toByteArray());
         } catch (IOException e) {
-            throw new StorageTempServiceException("Failed to cache image", e);
+            throw new StorageServiceException("Failed to cache image", e);
         }
     }
 
@@ -74,7 +74,7 @@ public class CacheServiceImpl implements CacheService {
         try {
             return Files.createTempDirectory(tempPathCheck(storageServiceConfig.getTempLocation().resolve(SecurityContextHolder.getContext().getAuthentication().getName())), storageServiceConfig.getPrefix());
         } catch (IOException e) {
-            throw new StorageTempServiceException("Fail to create temp directory", e);
+            throw new StorageServiceException("Fail to create temp directory", e);
         }
     }
 

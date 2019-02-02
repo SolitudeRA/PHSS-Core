@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
             accountEntity.setSettingMainEntity(new SettingMainEntity(accountEntity));
             return accountRepository.saveAndFlush(accountEntity);
         } else {
-            throw new AccountServiceException(PhssErrorCodeMain.ACCOUNT_ALREADY_EXISTS);
+            throw new AccountServiceException("ACCOUNT_ALREADY_EXISTS");
         }
     }
 
@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
         if (accountEntityContainer.isPresent()) {
             return accountEntityContainer.get();
         } else {
-            throw new UserNotFoundException(PhssErrorCodeMain.ACCOUNT_INVALID_ID);
+            throw new UserNotFoundException("ACCOUNT_INVALID_ID");
         }
     }
 
@@ -55,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
         if (accountEntityContainer.isPresent()) {
             return accountEntityContainer.get();
         } else {
-            throw new UserNotFoundException(PhssErrorCodeMain.ACCOUNT_INVALID_USERNAME);
+            throw new UserNotFoundException("ACCOUNT_INVALID_USERNAME");
         }
     }
 
@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
             accountEntity.enableAccount();
             accountRepository.saveAndFlush(accountEntity);
         } else {
-            throw new UserNotFoundException(PhssErrorCodeMain.ACCOUNT_INVALID_USERNAME);
+            throw new UserNotFoundException("ACCOUNT_INVALID_USERNAME");
         }
     }
 
@@ -81,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
             accountEntity.disableAccount();
             accountRepository.saveAndFlush(accountEntity);
         } else {
-            throw new UserNotFoundException(PhssErrorCodeMain.ACCOUNT_INVALID_USERNAME);
+            throw new UserNotFoundException("ACCOUNT_INVALID_USERNAME");
         }
     }
 
@@ -94,7 +94,7 @@ public class AccountServiceImpl implements AccountService {
             accountEntity.lockAccount();
             accountRepository.saveAndFlush(accountEntity);
         } else {
-            throw new UserNotFoundException(PhssErrorCodeMain.ACCOUNT_INVALID_USERNAME);
+            throw new UserNotFoundException("ACCOUNT_INVALID_USERNAME");
         }
     }
 
@@ -107,7 +107,7 @@ public class AccountServiceImpl implements AccountService {
             accountEntity.unlockAccount();
             accountRepository.saveAndFlush(accountEntity);
         } else {
-            throw new UserNotFoundException(PhssErrorCodeMain.ACCOUNT_INVALID_USERNAME);
+            throw new UserNotFoundException("ACCOUNT_INVALID_USERNAME");
         }
     }
 
@@ -120,7 +120,7 @@ public class AccountServiceImpl implements AccountService {
             accountEntity.expireAccount();
             accountRepository.saveAndFlush(accountEntity);
         } else {
-            throw new UserNotFoundException(PhssErrorCodeMain.ACCOUNT_INVALID_USERNAME);
+            throw new UserNotFoundException("ACCOUNT_INVALID_USERNAME");
         }
     }
 }
