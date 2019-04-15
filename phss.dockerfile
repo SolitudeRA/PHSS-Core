@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 LABEL maintainer="solitude@protogalaxy.me"
 
-RUN apt-get apt-get update && install openjdk-8-jdk
+RUN apt-get update && apt-get install openjdk-8-jdk
 
 RUN apt-get install mysql-server mysql-client \
 && default_password=$(cat /etc/mysql/debian.cnf | grep -E -o -m 1 '\w{16}') \
