@@ -22,6 +22,7 @@ import javax.persistence.Table;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @DynamicInsert
 @Table(name = "account")
@@ -29,8 +30,8 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class AccountEntity implements UserDetails, CredentialsContainer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue
+    private UUID uuid;
 
     @Column(name = "username")
     private String username;
@@ -196,12 +197,12 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.settingMainEntity = settingMainEntity;
     }
 
-    public Integer getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     @Override

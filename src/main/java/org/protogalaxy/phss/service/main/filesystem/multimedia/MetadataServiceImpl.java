@@ -27,7 +27,7 @@ import org.protogalaxy.phss.component.consts.AudioConsts;
 import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.component.utils.FileUtils;
 import org.protogalaxy.phss.component.utils.MultimediaUtils;
-import org.protogalaxy.phss.exception.service.MetadataServiceException;
+import org.protogalaxy.phss.exception.application.filesystem.real.file.InvalidMimeTypeUtilsException;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
@@ -141,7 +141,7 @@ public class MetadataServiceImpl implements MetadataService {
             case FileConsts.MIME_OPENDOCUMENT_PRESENTATION:
                 return getMetadataOpenDocumentPresentation(path);
             default:
-                throw new MetadataServiceException("MIME type not supported");
+                throw new InvalidMimeTypeUtilsException("MIME type not supported");
         }
     }
 

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.UUID;
+
 public class PhssUserDetailsService implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
@@ -44,8 +46,8 @@ public class PhssUserDetailsService implements UserDetailsService {
         return accountRepository.save(accountEntity);
     }
 
-    public void deleteUserByUsername(String username) throws UsernameNotFoundException {
-        accountRepository.deleteByUsername(username);
+    public void deleteUserByUuid(UUID uuid) throws UsernameNotFoundException {
+        accountRepository.deleteByUuid(uuid);
     }
 
     public AccountEntity loadUserByUsername(String username) throws UsernameNotFoundException {

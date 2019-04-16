@@ -20,7 +20,6 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrac
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
-import org.protogalaxy.phss.exception.service.FileRegisteringServiceException;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
@@ -29,9 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Date;

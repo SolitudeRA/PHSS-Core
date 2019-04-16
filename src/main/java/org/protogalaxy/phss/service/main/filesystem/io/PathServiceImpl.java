@@ -2,8 +2,8 @@ package org.protogalaxy.phss.service.main.filesystem.io;
 
 import org.protogalaxy.phss.component.utils.FileUtils;
 import org.protogalaxy.phss.component.consts.FileConsts;
-import org.protogalaxy.phss.exception.path.PathServiceException;
-import org.protogalaxy.phss.exception.storage.StorageServiceException;
+import org.protogalaxy.phss.exception.application.filesystem.real.path.PathServiceException;
+import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
 import org.springframework.beans.factory.annotation.Autowired;

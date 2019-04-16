@@ -1,6 +1,6 @@
 package org.protogalaxy.phss;
 
-import org.protogalaxy.phss.exception.main.GlobalExceptionResolver;
+import org.protogalaxy.phss.exception.GlobalExceptionResolver;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

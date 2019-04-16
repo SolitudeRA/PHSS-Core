@@ -7,8 +7,8 @@ import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
-import org.protogalaxy.phss.exception.service.FileRegisteringServiceException;
-import org.protogalaxy.phss.exception.storage.StorageServiceException;
+import org.protogalaxy.phss.exception.application.filesystem.real.file.FileUtilsException;
+import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.multimedia.MetadataServiceImpl;
@@ -89,7 +89,7 @@ public class StorageServiceImpl implements StorageService {
             } catch (IOException e) {
                 throw new StorageServiceException("File delete failed", e);
             }
-            throw new FileRegisteringServiceException("Track already exist");
+            throw new FileUtilsException("Track already exist");
         }
         //Move track to correct path & register in database
         try {

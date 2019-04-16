@@ -1,7 +1,6 @@
 package org.protogalaxy.phss.component.utils;
 
-import org.bytedeco.javacv.FrameGrabber;
-import org.protogalaxy.phss.exception.component.file.FileUtilsException;
+import org.protogalaxy.phss.exception.application.filesystem.real.file.FileUtilsException;
 
 import java.io.IOException;
 import java.nio.file.Files;

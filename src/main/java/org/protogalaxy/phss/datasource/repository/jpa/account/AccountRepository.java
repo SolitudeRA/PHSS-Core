@@ -8,18 +8,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RepositoryRestResource(collectionResourceRel = "accounts", path = "accounts")
-public interface AccountRepository extends JpaRepository<AccountEntity, Integer>, CrudRepository<AccountEntity, Integer> {
+public interface AccountRepository extends JpaRepository<AccountEntity, UUID>, CrudRepository<AccountEntity, UUID> {
+
     Optional<AccountEntity> findByUsername(String username);
 
-    void deleteByUsername(String username);
+    Optional<AccountEntity> findByUuid(UUID uuid);
+
+    void deleteByUuid(UUID uuid);
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     List<AccountEntity> findAll();
-
-    @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    void deleteAll();
 }

@@ -4,7 +4,7 @@ import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.Music
 import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.MusicTrackResourceAssembler;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
-import org.protogalaxy.phss.exception.storage.StorageServiceException;
+import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.database.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
