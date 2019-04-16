@@ -9,10 +9,11 @@ import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class AccountResource extends ResourceSupport {
 
-    private Integer uid;
+    private UUID uuid;
     private String username;
     private String avatar;
     private Set<PhssGrantedAuthority> authorities;
@@ -26,7 +27,7 @@ public class AccountResource extends ResourceSupport {
     private String dateModified;
 
     public AccountResource(AccountEntity accountEntity) {
-        this.uid = accountEntity.getId();
+        this.uuid = accountEntity.getUuid();
         this.username = accountEntity.getUsername();
         this.avatar = accountEntity.getAvatar();
         this.authorities = accountEntity.getAuthorities();
@@ -40,8 +41,8 @@ public class AccountResource extends ResourceSupport {
         this.dateModified = accountEntity.getDateModified().toString();
     }
 
-    public AccountResource(Integer id, String username, String avatar, Set<PhssGrantedAuthority> authorities, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity, Boolean isEnabled, Boolean isAccountNonLocked, Boolean isAccountNonExpired, LocalDateTime dateCreate, LocalDateTime dateModified) {
-        this.uid = id;
+    public AccountResource(UUID uuid, String username, String avatar, Set<PhssGrantedAuthority> authorities, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity, Boolean isEnabled, Boolean isAccountNonLocked, Boolean isAccountNonExpired, LocalDateTime dateCreate, LocalDateTime dateModified) {
+        this.uuid = uuid;
         this.username = username;
         this.avatar = avatar;
         this.authorities = authorities;
@@ -55,8 +56,8 @@ public class AccountResource extends ResourceSupport {
         this.dateModified = dateModified.toString();
     }
 
-    public Integer getUid() {
-        return uid;
+    public UUID getUuid() {
+        return uuid;
     }
 
     public String getUsername() {
