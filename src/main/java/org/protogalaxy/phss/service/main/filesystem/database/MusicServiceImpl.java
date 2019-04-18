@@ -7,25 +7,20 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrac
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.protogalaxy.phss.service.interfaces.filesystem.database.MusicService;
-import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
-import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
 public class MusicServiceImpl implements MusicService {
     private StorageService storageService;
     private MusicAlbumRepository musicAlbumRepository;
     private MusicTrackRepository musicTrackRepository;
 
-    @Autowired
-    public MusicServiceImpl(StorageServiceImpl storageService,
+    public MusicServiceImpl(StorageService storageService,
                             MusicAlbumRepository musicAlbumRepository,
                             MusicTrackRepository musicTrackRepository) {
         this.storageService = storageService;

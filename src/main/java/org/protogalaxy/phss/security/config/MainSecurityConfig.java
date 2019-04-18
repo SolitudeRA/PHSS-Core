@@ -1,8 +1,8 @@
 package org.protogalaxy.phss.security.config;
 
+import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
 import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
-import org.protogalaxy.phss.security.user.PhssUserDetailsService;
 import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -133,8 +133,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        return new AccountServiceImpl();
+    protected UserDetailsService userDetailsService(AccountRepository accountRepository) {
+        return new AccountServiceImpl(accountRepository);
     }
 }

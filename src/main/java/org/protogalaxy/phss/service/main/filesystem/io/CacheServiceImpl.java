@@ -3,9 +3,7 @@ package org.protogalaxy.phss.service.main.filesystem.io;
 import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,11 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 
-@Service
 public class CacheServiceImpl implements CacheService {
     private final StorageServiceConfig storageServiceConfig;
 
-    @Autowired
     public CacheServiceImpl(StorageServiceConfig storageServiceConfig) {
         this.storageServiceConfig = storageServiceConfig;
     }

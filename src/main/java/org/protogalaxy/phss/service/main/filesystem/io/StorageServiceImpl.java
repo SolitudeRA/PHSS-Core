@@ -2,7 +2,7 @@ package org.protogalaxy.phss.service.main.filesystem.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.component.consts.AudioConsts;
-import org.protogalaxy.phss.component.utils.FileUtils;
+import org.protogalaxy.phss.component.utilities.FileUtilities;
 import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
@@ -10,16 +10,12 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrac
 import org.protogalaxy.phss.exception.application.filesystem.real.file.FileUtilsException;
 import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
-import org.protogalaxy.phss.service.main.filesystem.logic.FileRegisteringServiceImpl;
-import org.protogalaxy.phss.service.main.filesystem.multimedia.MetadataServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
 import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
 import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Service
 public class StorageServiceImpl implements StorageService {
     private StorageServiceConfig config;
 
@@ -42,12 +37,11 @@ public class StorageServiceImpl implements StorageService {
     private final MusicAlbumRepository musicAlbumRepository;
 
 
-    @Autowired
     public StorageServiceImpl(StorageServiceConfig config,
-                              PathServiceImpl pathService,
-                              CacheServiceImpl cacheService,
-                              MetadataServiceImpl metadataService,
-                              FileRegisteringServiceImpl fileRegisteringService,
+                              PathService pathService,
+                              CacheService cacheService,
+                              MetadataService metadataService,
+                              FileRegisteringService fileRegisteringService,
                               MusicTrackRepository musicTrackRepository,
                               MusicAlbumRepository musicAlbumRepository) {
         this.config = config;
@@ -217,7 +211,7 @@ public class StorageServiceImpl implements StorageService {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(documentFile.getOriginalFilename());
         Path tempFilePath = cacheService.cacheFile(documentFile);
-        String mimeType = FileUtils.getMimeType(tempFilePath);
+        String mimeType = FileUtilities.getMimeType(tempFilePath);
         Map<String, Object> metadata = metadataService.documentMetadataResolver(tempFilePath);
         try {
             Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation().resolve(username).resolve(config.getDocumentLocation()).resolve(filename)), StandardCopyOption.REPLACE_EXISTING);

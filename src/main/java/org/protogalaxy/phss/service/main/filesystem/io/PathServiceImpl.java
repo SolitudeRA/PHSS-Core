@@ -1,25 +1,21 @@
 package org.protogalaxy.phss.service.main.filesystem.io;
 
-import org.protogalaxy.phss.component.utils.FileUtils;
+import org.protogalaxy.phss.component.utilities.FileUtilities;
 import org.protogalaxy.phss.component.consts.FileConsts;
 import org.protogalaxy.phss.exception.application.filesystem.real.path.PathServiceException;
 import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
-@Service
 public class PathServiceImpl implements PathService {
     private StorageServiceConfig storageServiceConfig;
 
-    @Autowired
     public PathServiceImpl(StorageServiceConfig storageServiceConfig) {
         this.storageServiceConfig = storageServiceConfig;
     }
@@ -65,7 +61,7 @@ public class PathServiceImpl implements PathService {
     @Override
     public Path metadataPathSwitcher(Path tempPath, String fileSystemPart) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        String mimeType = FileUtils.getMimeType(tempPath);
+        String mimeType = FileUtilities.getMimeType(tempPath);
         switch (fileSystemPart) {
             case FileConsts.FILESYSTEM_MUSIC:
                 if (Pattern.matches("^audio/.*", mimeType)) {

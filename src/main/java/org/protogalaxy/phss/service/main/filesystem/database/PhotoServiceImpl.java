@@ -1,7 +1,6 @@
 package org.protogalaxy.phss.service.main.filesystem.database;
 
-import org.springframework.stereotype.Service;
+import org.protogalaxy.phss.service.interfaces.filesystem.database.PhotoService;
 
-@Service
-public class PhotoServiceImpl {
+public class PhotoServiceImpl implements PhotoService {
 }

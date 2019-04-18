@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.component.utils;
+package org.protogalaxy.phss.component.utilities;
 
 import org.protogalaxy.phss.exception.application.filesystem.real.file.FileUtilsException;
 
@@ -9,7 +9,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.MessageDigest;
 import java.util.Date;
 
-public class FileUtils {
+public class FileUtilities {
     private static char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     /**

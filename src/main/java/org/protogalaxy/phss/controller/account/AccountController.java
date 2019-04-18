@@ -24,7 +24,7 @@ public class AccountController {
     private AccountResourceAssembler accountResourceAssembler = new AccountResourceAssembler();
 
     @Autowired
-    public AccountController(AccountServiceImpl accountService) {
+    public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 

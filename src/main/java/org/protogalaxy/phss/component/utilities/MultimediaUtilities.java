@@ -1,8 +1,8 @@
-package org.protogalaxy.phss.component.utils;
+package org.protogalaxy.phss.component.utilities;
 
 import static org.bytedeco.javacpp.avutil.AV_TIME_BASE;
 
-public class MultimediaUtils {
+public class MultimediaUtilities {
     /**
      * Format track duration string
      *

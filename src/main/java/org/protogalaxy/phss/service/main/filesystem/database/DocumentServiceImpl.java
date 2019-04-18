@@ -1,12 +1,11 @@
 package org.protogalaxy.phss.service.main.filesystem.database;
 
 import org.protogalaxy.phss.service.interfaces.filesystem.database.DocumentService;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
 public class DocumentServiceImpl implements DocumentService {
+
     @Override
     public String getDocument(String username, UUID uuid){
         return null;

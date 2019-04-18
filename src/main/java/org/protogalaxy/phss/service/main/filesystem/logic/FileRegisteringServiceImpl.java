@@ -20,12 +20,9 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrac
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
 import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
-import org.protogalaxy.phss.service.main.filesystem.io.CacheServiceImpl;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.io.InputStream;
@@ -34,59 +31,55 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 
-@Service
 public class FileRegisteringServiceImpl implements FileRegisteringService {
     //Services
     private final CacheService cacheService;
 
-
     //Database core repositories
     private final FilesystemMainRepository filesystemMainRepository;
-
 
     //Database database repositories
     private final MusicTrackRepository musicTrackRepository;
     private final BookRepository bookRepository;
     private final DocumentAdobePdfRepository documentAdobePdfRepository;
     private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
-    private final DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
-    private final DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository;
-    private final DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository;
     private final DocumentMicrosoftWordRepository documentMicrosoftWordRepository;
+    private final DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
     private final DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository;
+    private final DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository;
     private final DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository;
+    private final DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository;
     private final DocumentOpenTextRepository documentOpenTextRepository;
     private final DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository;
     private final DocumentOpenPresentationRepository documentOpenPresentationRepository;
 
-    @Autowired
-    public FileRegisteringServiceImpl(CacheServiceImpl cachingService,
+    public FileRegisteringServiceImpl(CacheService cacheService,
                                       FilesystemMainRepository filesystemMainRepository,
                                       MusicTrackRepository musicTrackRepository,
                                       BookRepository bookRepository,
                                       DocumentAdobePdfRepository documentAdobePdfRepository,
                                       DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
-                                      DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
-                                      DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository,
-                                      DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository,
                                       DocumentMicrosoftWordRepository documentMicrosoftWordRepository,
+                                      DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
                                       DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository,
+                                      DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository,
                                       DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository,
+                                      DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository,
                                       DocumentOpenTextRepository documentOpenTextRepository,
                                       DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository,
                                       DocumentOpenPresentationRepository documentOpenPresentationRepository) {
-        this.cacheService = cachingService;
+        this.cacheService = cacheService;
         this.filesystemMainRepository = filesystemMainRepository;
         this.musicTrackRepository = musicTrackRepository;
         this.bookRepository = bookRepository;
         this.documentAdobePdfRepository = documentAdobePdfRepository;
         this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
-        this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
-        this.documentMicrosoftExcelOldRepository = documentMicrosoftExcelOldRepository;
-        this.documentMicrosoftPowerpointOldRepository = documentMicrosoftPowerpointOldRepository;
         this.documentMicrosoftWordRepository = documentMicrosoftWordRepository;
+        this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
         this.documentMicrosoftExcelRepository = documentMicrosoftExcelRepository;
+        this.documentMicrosoftExcelOldRepository = documentMicrosoftExcelOldRepository;
         this.documentMicrosoftPowerpointRepository = documentMicrosoftPowerpointRepository;
+        this.documentMicrosoftPowerpointOldRepository = documentMicrosoftPowerpointOldRepository;
         this.documentOpenTextRepository = documentOpenTextRepository;
         this.documentOpenSpreadsheetRepository = documentOpenSpreadsheetRepository;
         this.documentOpenPresentationRepository = documentOpenPresentationRepository;
