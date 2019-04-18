@@ -5,7 +5,6 @@ import org.protogalaxy.phss.datasource.resource.assembler.account.AccountResourc
 import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResource;
 import org.protogalaxy.phss.exception.application.base.account.AccountServiceException;
 import org.protogalaxy.phss.service.interfaces.account.AccountService;
-import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.hateoas.ExposesResourceFor;

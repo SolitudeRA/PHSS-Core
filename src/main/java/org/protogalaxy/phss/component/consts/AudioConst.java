@@ -3,12 +3,12 @@ package org.protogalaxy.phss.component.consts;
 import java.util.Arrays;
 import java.util.List;
 
-public final class AudioConsts {
+public final class AudioConst {
     public static final String
             METADATA_AUDIO_TITLE = "title",
             METADATA_AUDIO_ALBUM = "album",
             METADATA_AUDIO_ARTIST = "artist",
-            METADATA_AUDIO_ALBUMARTIST = "album_artist",
+            METADATA_AUDIO_ALBUM_ARTIST = "album_artist",
             METADATA_AUDIO_COMPOSER = "composer",
             METADATA_AUDIO_RELEASE_YEAR = "date",
             METADATA_AUDIO_TRACK = "track",
@@ -17,8 +17,8 @@ public final class AudioConsts {
             METADATA_AUDIO_COMMENT = "comment",
             METADATA_AUDIO_DURATION = "duration",
             METADATA_AUDIO_BITRATE = "bitrate",
-            METADATA_AUDIO_SAMPLERATE = "sample_rate",
-            METADATA_AUDIO_BITDEPTH = "bit_depth",
+            METADATA_AUDIO_SAMPLE_RATE = "sample_rate",
+            METADATA_AUDIO_BIT_DEPTH = "bit_depth",
             METADATA_AUDIO_SIZE = "size",
             METADATA_AUDIO_ARTWORK = "cover",
             METADATA_AUDIO_MD5 = "md5",
@@ -28,7 +28,7 @@ public final class AudioConsts {
             METADATA_AUDIO_TITLE,
             METADATA_AUDIO_ALBUM,
             METADATA_AUDIO_ARTIST,
-            METADATA_AUDIO_ALBUMARTIST,
+            METADATA_AUDIO_ALBUM_ARTIST,
             METADATA_AUDIO_COMPOSER,
             METADATA_AUDIO_RELEASE_YEAR,
             METADATA_AUDIO_TRACK,
@@ -40,7 +40,7 @@ public final class AudioConsts {
             METADATA_AUDIO_TITLE,
             METADATA_AUDIO_ALBUM,
             METADATA_AUDIO_ARTIST,
-            METADATA_AUDIO_ALBUMARTIST,
+            METADATA_AUDIO_ALBUM_ARTIST,
             METADATA_AUDIO_COMPOSER,
             METADATA_AUDIO_RELEASE_YEAR,
             METADATA_AUDIO_TRACK,
@@ -49,8 +49,8 @@ public final class AudioConsts {
             METADATA_AUDIO_COMMENT,
             METADATA_AUDIO_DURATION,
             METADATA_AUDIO_BITRATE,
-            METADATA_AUDIO_SAMPLERATE,
-            METADATA_AUDIO_BITDEPTH,
+            METADATA_AUDIO_SAMPLE_RATE,
+            METADATA_AUDIO_BIT_DEPTH,
             METADATA_AUDIO_SIZE,
             METADATA_AUDIO_ARTWORK,
             METADATA_AUDIO_MD5,

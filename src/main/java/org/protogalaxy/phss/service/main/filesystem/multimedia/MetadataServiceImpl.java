@@ -23,8 +23,8 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
-import org.protogalaxy.phss.component.consts.AudioConsts;
-import org.protogalaxy.phss.component.consts.FileConsts;
+import org.protogalaxy.phss.component.consts.AudioConst;
+import org.protogalaxy.phss.component.consts.FileConst;
 import org.protogalaxy.phss.component.utilities.FileUtilities;
 import org.protogalaxy.phss.component.utilities.MultimediaUtilities;
 import org.protogalaxy.phss.exception.application.filesystem.real.file.InvalidMimeTypeUtilsException;
@@ -57,23 +57,23 @@ public class MetadataServiceImpl implements MetadataService {
         while ((entry = av_dict_get(avFormatContext.metadata(), "", entry, AV_DICT_IGNORE_SUFFIX)) != null) {
             metadataRawMap.put(entry.key().getString(), entry.value().getString());
         }
-        for (String key : AudioConsts.METADATA_AUDIO_STANDARD_LIST) {
+        for (String key : AudioConst.METADATA_AUDIO_STANDARD_LIST) {
             if (metadataRawMap.get(key) != null) {
                 metadataCurrentMap.put(key, metadataRawMap.get(key).toString().trim());
             }
         }
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_DURATION, MultimediaUtilities.formatDurationToMilliSeconds(avFormatContext.duration()));
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITRATE, MultimediaUtilities.formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SAMPLERATE, avFormatContext.streams(0).codecpar().sample_rate());
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_BITDEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_SIZE, Files.size(path));
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_KIND, FilenameUtils.getExtension(path.getFileName().toString()));
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_MD5, FileUtilities.getMD5(path));
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_DURATION, MultimediaUtilities.formatDurationToMilliSeconds(avFormatContext.duration()));
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_BITRATE, MultimediaUtilities.formatBitrate(avFormatContext.streams(0).codecpar().bit_rate()));
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_SAMPLE_RATE, avFormatContext.streams(0).codecpar().sample_rate());
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_BIT_DEPTH, avFormatContext.streams(0).codecpar().bits_per_raw_sample());
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_SIZE, Files.size(path));
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_KIND, FilenameUtils.getExtension(path.getFileName().toString()));
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_MD5, FileUtilities.getMD5(path));
         avformat_close_input(avFormatContext);
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(path.toFile());
         Java2DFrameConverter converter = new Java2DFrameConverter();
         grabber.start();
-        metadataCurrentMap.put(AudioConsts.METADATA_AUDIO_ARTWORK, cacheService.cacheImage(converter.getBufferedImage(grabber.grabImage())));
+        metadataCurrentMap.put(AudioConst.METADATA_AUDIO_ARTWORK, cacheService.cacheImage(converter.getBufferedImage(grabber.grabImage())));
         grabber.close();
         return metadataCurrentMap;
     }
@@ -85,9 +85,9 @@ public class MetadataServiceImpl implements MetadataService {
         avformat_open_input(avFormatContext, path.toString(), null, null);
         avformat_find_stream_info(avFormatContext, (PointerPointer) null);
         av_dict_get(avFormatContext.metadata(), "", null, AV_DICT_IGNORE_SUFFIX).key().getString();
-        metadataMap.put(FileConsts.METADATA_VIDEO_DURATION, MultimediaUtilities.formatDurationToMilliSeconds(avFormatContext.streams(0).duration()));
-        metadataMap.put(FileConsts.METADATA_VIDEO_WIDTH, avFormatContext.streams(0).codecpar().width());
-        metadataMap.put(FileConsts.METADATA_VIDEO_HEIGHT, avFormatContext.streams(0).codecpar().height());
+        metadataMap.put(FileConst.METADATA_VIDEO_DURATION, MultimediaUtilities.formatDurationToMilliSeconds(avFormatContext.streams(0).duration()));
+        metadataMap.put(FileConst.METADATA_VIDEO_WIDTH, avFormatContext.streams(0).codecpar().width());
+        metadataMap.put(FileConst.METADATA_VIDEO_HEIGHT, avFormatContext.streams(0).codecpar().height());
         return metadataMap;
     }
 
@@ -102,38 +102,38 @@ public class MetadataServiceImpl implements MetadataService {
     public Map<String, Object> illustrationMetadataResolver(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
-        metadata.put(FileConsts.METADATA_IMAGE_TITLE, path.getFileName());
-        metadata.put(FileConsts.METADATA_IMAGE_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_IMAGE_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_IMAGE_WIDTH, tikaMetadata.get(FileConsts.METADATA_IMAGE_WIDTH));
-        metadata.put(FileConsts.METADATA_IMAGE_HEIGHT, tikaMetadata.get(FileConsts.METADATA_IMAGE_HEIGHT));
+        metadata.put(FileConst.METADATA_IMAGE_TITLE, path.getFileName());
+        metadata.put(FileConst.METADATA_IMAGE_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_IMAGE_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_IMAGE_WIDTH, tikaMetadata.get(FileConst.METADATA_IMAGE_WIDTH));
+        metadata.put(FileConst.METADATA_IMAGE_HEIGHT, tikaMetadata.get(FileConst.METADATA_IMAGE_HEIGHT));
         return metadata;
     }
 
     @Override
     public Map<String, Object> documentMetadataResolver(Path path) throws Exception {
         switch (FileUtilities.getMimeType(path)) {
-            case FileConsts.MIME_ADOBE_PDF:
+            case FileConst.MIME_ADOBE_PDF:
                 return getMetadataAdobePdf(path);
-            case FileConsts.MIME_ADOBE_PHOTOSHOP:
+            case FileConst.MIME_ADOBE_PHOTOSHOP:
                 return getMetadataAdobePhotoshop(path);
-            case FileConsts.MIME_MICROSOFT_WORD:
+            case FileConst.MIME_MICROSOFT_WORD:
                 return getMetadataMicroSoftWord(path);
-            case FileConsts.MIME_MICROSOFT_EXCEL:
+            case FileConst.MIME_MICROSOFT_EXCEL:
                 return getMetadataMicroSoftExcel(path);
-            case FileConsts.MIME_MICROSOFT_POWERPOINT:
+            case FileConst.MIME_MICROSOFT_POWERPOINT:
                 return getMetadataMicroSoftPowerpoint(path);
-            case FileConsts.MIME_MICROSOFT_WORD_OLD:
+            case FileConst.MIME_MICROSOFT_WORD_OLD:
                 return getMetadataMicroSoftWordOld(path);
-            case FileConsts.MIME_MICROSOFT_EXCEL_OLD:
+            case FileConst.MIME_MICROSOFT_EXCEL_OLD:
                 return getMetadataMicroSoftExcelOld(path);
-            case FileConsts.MIME_MICROSOFT_POWERPOINT_OLD:
+            case FileConst.MIME_MICROSOFT_POWERPOINT_OLD:
                 return getMetadataMicroSoftPowerpointOld(path);
-            case FileConsts.MIME_OPENDOCUMENT_TEXT:
+            case FileConst.MIME_OPENDOCUMENT_TEXT:
                 return getMetadataOpenDocumentText(path);
-            case FileConsts.MIME_OPENDOCUMENT_SPREADSHEET:
+            case FileConst.MIME_OPENDOCUMENT_SPREADSHEET:
                 return getMetadataOpenDocumentSpreadsheet(path);
-            case FileConsts.MIME_OPENDOCUMENT_PRESENTATION:
+            case FileConst.MIME_OPENDOCUMENT_PRESENTATION:
                 return getMetadataOpenDocumentPresentation(path);
             default:
                 throw new InvalidMimeTypeUtilsException("MIME type not supported");
@@ -154,27 +154,27 @@ public class MetadataServiceImpl implements MetadataService {
     private Map<String, Object> getMetadataAdobePdf(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_TITLE, path.getFileName());
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_CREATOR, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_CREATOR));
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_VERSION, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_VERSION));
-        metadata.put(FileConsts.METADATA_ADOBE_PDF_PRODUCER, tikaMetadata.get(FileConsts.METADATA_ADOBE_PDF_PRODUCER));
+        metadata.put(FileConst.METADATA_ADOBE_PDF_TITLE, path.getFileName());
+        metadata.put(FileConst.METADATA_ADOBE_PDF_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_ADOBE_PDF_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_ADOBE_PDF_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_ADOBE_PDF_CREATOR, tikaMetadata.get(FileConst.METADATA_ADOBE_PDF_CREATOR));
+        metadata.put(FileConst.METADATA_ADOBE_PDF_VERSION, tikaMetadata.get(FileConst.METADATA_ADOBE_PDF_VERSION));
+        metadata.put(FileConst.METADATA_ADOBE_PDF_PRODUCER, tikaMetadata.get(FileConst.METADATA_ADOBE_PDF_PRODUCER));
         return metadata;
     }
 
     private Map<String, Object> getMetadataAdobePhotoshop(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_TITLE, path.getFileName());
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_WIDTH));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_HEIGHT));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_COLORMODE, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_COLORMODE));
-        metadata.put(FileConsts.METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE, tikaMetadata.get(FileConsts.METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE));
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_TITLE, path.getFileName());
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_WIDTH, tikaMetadata.get(FileConst.METADATA_ADOBE_PHOTOSHOP_WIDTH));
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_HEIGHT, tikaMetadata.get(FileConst.METADATA_ADOBE_PHOTOSHOP_HEIGHT));
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_COLORMODE, tikaMetadata.get(FileConst.METADATA_ADOBE_PHOTOSHOP_COLORMODE));
+        metadata.put(FileConst.METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE, tikaMetadata.get(FileConst.METADATA_ADOBE_PHOTOSHOP_BITSPERSAMPLE));
         return metadata;
     }
 
@@ -183,19 +183,19 @@ public class MetadataServiceImpl implements MetadataService {
         XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
         POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_TITLE, coreProperties.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CREATOR, coreProperties.getCreator());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_MODIFIER, coreProperties.getLastModifiedByUser());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_APPLICATION, extendedProperties.getApplication());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_APPVERSION, extendedProperties.getAppVersion());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERS, extendedProperties.getCharacters());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_LINES, extendedProperties.getLines());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_PAGES, extendedProperties.getPages());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_PARAGRAPHS, extendedProperties.getParagraphs());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_TITLE, coreProperties.getTitle());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_CREATOR, coreProperties.getCreator());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_MODIFIER, coreProperties.getLastModifiedByUser());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_APPLICATION, extendedProperties.getApplication());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_APPVERSION, extendedProperties.getAppVersion());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_CHARACTERS, extendedProperties.getCharacters());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_LINES, extendedProperties.getLines());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_PAGES, extendedProperties.getPages());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_PARAGRAPHS, extendedProperties.getParagraphs());
         return metadata;
     }
 
@@ -204,19 +204,19 @@ public class MetadataServiceImpl implements MetadataService {
         XSSFExcelExtractor extractor = new XSSFExcelExtractor(new XSSFWorkbook(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
         POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_TITLE, coreProperties.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CREATOR, coreProperties.getCreator());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_MODIFIER, coreProperties.getLastModifiedByUser());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_APPLICATION, extendedProperties.getApplication());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_APPVERSION, extendedProperties.getAppVersion());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CHARACTERS, extendedProperties.getCharacters());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_LINES, extendedProperties.getLines());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_PAGES, extendedProperties.getPages());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_PARAGRAPHS, extendedProperties.getParagraphs());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_TITLE, coreProperties.getTitle());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_CREATOR, coreProperties.getCreator());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_MODIFIER, coreProperties.getLastModifiedByUser());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_APPLICATION, extendedProperties.getApplication());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_APPVERSION, extendedProperties.getAppVersion());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_CHARACTERS, extendedProperties.getCharacters());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_LINES, extendedProperties.getLines());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_PAGES, extendedProperties.getPages());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_PARAGRAPHS, extendedProperties.getParagraphs());
         return metadata;
     }
 
@@ -225,20 +225,20 @@ public class MetadataServiceImpl implements MetadataService {
         XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(new XMLSlideShow(Files.newInputStream(path)));
         POIXMLProperties.CoreProperties coreProperties = extractor.getCoreProperties();
         POIXMLProperties.ExtendedProperties extendedProperties = extractor.getExtendedProperties();
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_TITLE, coreProperties.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CREATOR, coreProperties.getCreator());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_MODIFIER, coreProperties.getLastModifiedByUser());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPLICATION, extendedProperties.getApplication());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_APPVERSION, extendedProperties.getAppVersion());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERS, extendedProperties.getCharacters());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_LINES, extendedProperties.getLines());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PAGES, extendedProperties.getPages());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PARAGRAPHS, extendedProperties.getParagraphs());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_PRESENTATIONFORMAT, extendedProperties.getPresentationFormat());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_TITLE, coreProperties.getTitle());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_CREATOR, coreProperties.getCreator());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_MODIFIER, coreProperties.getLastModifiedByUser());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_APPLICATION, extendedProperties.getApplication());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_APPVERSION, extendedProperties.getAppVersion());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_CHARACTERS, extendedProperties.getCharacters());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_CHARACTERSWITHSPACES, extendedProperties.getCharactersWithSpaces());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_LINES, extendedProperties.getLines());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_PAGES, extendedProperties.getPages());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_PARAGRAPHS, extendedProperties.getParagraphs());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_PRESENTATIONFORMAT, extendedProperties.getPresentationFormat());
         return metadata;
     }
 
@@ -247,21 +247,21 @@ public class MetadataServiceImpl implements MetadataService {
         WordExtractor extractor = new WordExtractor(Files.newInputStream(path));
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
         DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_TITLE, summaryInformation.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CREATOR, summaryInformation.getAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_MODIFIER, summaryInformation.getLastAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_KEYWORDS, summaryInformation.getKeywords());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_COMMENTS, summaryInformation.getComments());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_APPNAME, summaryInformation.getApplicationName());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_EDITTIME, summaryInformation.getEditTime());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_PAGECOUNT, summaryInformation.getPageCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_WORDCOUNT, summaryInformation.getWordCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_CHARCOUNT, summaryInformation.getCharCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_LINECOUNT, documentSummaryInformation.getLineCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_WORD_OLD_PARCOUNT, documentSummaryInformation.getParCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_TITLE, summaryInformation.getTitle());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_CREATOR, summaryInformation.getAuthor());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_MODIFIER, summaryInformation.getLastAuthor());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_KEYWORDS, summaryInformation.getKeywords());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_COMMENTS, summaryInformation.getComments());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_APPNAME, summaryInformation.getApplicationName());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_EDITTIME, summaryInformation.getEditTime());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_PAGECOUNT, summaryInformation.getPageCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_WORDCOUNT, summaryInformation.getWordCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_CHARCOUNT, summaryInformation.getCharCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_LINECOUNT, documentSummaryInformation.getLineCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_WORD_OLD_PARCOUNT, documentSummaryInformation.getParCount());
         return metadata;
     }
 
@@ -270,14 +270,14 @@ public class MetadataServiceImpl implements MetadataService {
         ExcelExtractor extractor = new ExcelExtractor(new HSSFWorkbook(Files.newInputStream(path)));
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
         DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_TITLE, summaryInformation.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_CREATOR, summaryInformation.getAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_MODIFIER, summaryInformation.getLastAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_APPNAME, summaryInformation.getApplicationName());
-        metadata.put(FileConsts.METADATA_MICROSOFT_EXCEL_OLD_DOCPARTS, documentSummaryInformation.getDocparts());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_TITLE, summaryInformation.getTitle());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_CREATOR, summaryInformation.getAuthor());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_MODIFIER, summaryInformation.getLastAuthor());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_APPNAME, summaryInformation.getApplicationName());
+        metadata.put(FileConst.METADATA_MICROSOFT_EXCEL_OLD_DOCPARTS, documentSummaryInformation.getDocparts());
         return metadata;
     }
 
@@ -286,22 +286,22 @@ public class MetadataServiceImpl implements MetadataService {
         PowerPointExtractor extractor = new PowerPointExtractor(Files.newInputStream(path));
         SummaryInformation summaryInformation = extractor.getSummaryInformation();
         DocumentSummaryInformation documentSummaryInformation = extractor.getDocSummaryInformation();
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE, summaryInformation.getTitle());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_CREATOR, summaryInformation.getAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIER, summaryInformation.getLastAuthor());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_APPNAME, summaryInformation.getApplicationName());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_EDITTIME, summaryInformation.getEditTime());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_WORDCOUNT, summaryInformation.getWordCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PRESFORMAT, documentSummaryInformation.getPresentationFormat());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_BYTECOUNT, documentSummaryInformation.getByteCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_PARCOUNT, documentSummaryInformation.getParCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_SLIDECOUNT, documentSummaryInformation.getSlideCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_NOTECOUNT, documentSummaryInformation.getNoteCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_HIDDENCOUNT, documentSummaryInformation.getHiddenCount());
-        metadata.put(FileConsts.METADATA_MICROSOFT_POWERPOINT_OLD_MMCLIPCOUNT, documentSummaryInformation.getMMClipCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_TITLE, summaryInformation.getTitle());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_CREATOR, summaryInformation.getAuthor());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_MODIFIER, summaryInformation.getLastAuthor());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_APPNAME, summaryInformation.getApplicationName());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_EDITTIME, summaryInformation.getEditTime());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_WORDCOUNT, summaryInformation.getWordCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_PRESFORMAT, documentSummaryInformation.getPresentationFormat());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_BYTECOUNT, documentSummaryInformation.getByteCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_PARCOUNT, documentSummaryInformation.getParCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_SLIDECOUNT, documentSummaryInformation.getSlideCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_NOTECOUNT, documentSummaryInformation.getNoteCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_HIDDENCOUNT, documentSummaryInformation.getHiddenCount());
+        metadata.put(FileConst.METADATA_MICROSOFT_POWERPOINT_OLD_MMCLIPCOUNT, documentSummaryInformation.getMMClipCount());
         return metadata;
     }
 
@@ -309,42 +309,42 @@ public class MetadataServiceImpl implements MetadataService {
     private Map<String, Object> getMetadataOpenDocumentText(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TITLE));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_CREATOR));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_MODIFIER));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_WORDCOUNT, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_WORDCOUNT));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_CHARACTERCOUNT, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_CHARACTERCOUNT));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_IMAGECOUNT, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_IMAGECOUNT));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_PARCOUNT, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_PARCOUNT));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_TABLECOUNT, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_TABLECOUNT));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_TEXT_PAGECOUNT, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_TEXT_PAGECOUNT));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_TITLE, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_TITLE));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_CREATOR, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_CREATOR));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_MODIFIER, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_MODIFIER));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_WORDCOUNT, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_WORDCOUNT));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_CHARACTERCOUNT, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_CHARACTERCOUNT));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_IMAGECOUNT, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_IMAGECOUNT));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_PARCOUNT, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_PARCOUNT));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_TABLECOUNT, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_TABLECOUNT));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_TEXT_PAGECOUNT, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_TEXT_PAGECOUNT));
         return metadata;
     }
 
     private Map<String, Object> getMetadataOpenDocumentSpreadsheet(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_TITLE));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_CREATOR));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_SPREADSHEET_MODIFIER));
         return metadata;
     }
 
     private Map<String, Object> getMetadataOpenDocumentPresentation(Path path) throws Exception {
         Map<String, Object> metadata = new HashMap<>();
         Metadata tikaMetadata = getTikaMetadata(path);
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_TITLE));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATED, FileUtilities.getCreated(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIED, FileUtilities.getModified(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR));
-        metadata.put(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER, tikaMetadata.get(FileConsts.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_TITLE, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_TITLE));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_CREATED, FileUtilities.getCreated(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIED, FileUtilities.getModified(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_LASTACCESSTIME, FileUtilities.getLastAccessTime(path));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_CREATOR));
+        metadata.put(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER, tikaMetadata.get(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_MODIFIER));
         return metadata;
     }
 

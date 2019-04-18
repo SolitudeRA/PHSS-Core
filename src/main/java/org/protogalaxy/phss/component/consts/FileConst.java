@@ -4,7 +4,7 @@ package org.protogalaxy.phss.component.consts;
 import java.util.Arrays;
 import java.util.List;
 
-public final class FileConsts {
+public final class FileConst {
     //Filesystem parts
     public static final String
             FILESYSTEM_MUSIC = "music",
