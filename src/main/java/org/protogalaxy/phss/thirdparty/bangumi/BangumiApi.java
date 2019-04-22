@@ -1,7 +1,7 @@
-package org.protogalaxy.phss.service.main.oauth2.bangumi;
+package org.protogalaxy.phss.thirdparty.bangumi;
 
 import org.json.simple.JSONObject;
-import org.protogalaxy.phss.service.interfaces.oauth2.ApiBinding;
+import org.protogalaxy.phss.thirdparty.config.ApiBinding;
 import org.springframework.lang.Nullable;
 
 import java.net.URLEncoder;

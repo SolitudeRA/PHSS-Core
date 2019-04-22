@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.main.oauth2.bangumi;
+package org.protogalaxy.phss.thirdparty.bangumi;
 
 public final class BangumiConsts {
     /**

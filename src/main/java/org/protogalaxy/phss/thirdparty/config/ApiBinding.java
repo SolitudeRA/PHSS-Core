@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.service.interfaces.oauth2;
+package org.protogalaxy.phss.thirdparty.config;
 
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
