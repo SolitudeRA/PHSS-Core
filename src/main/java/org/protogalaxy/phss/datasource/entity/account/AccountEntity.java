@@ -39,6 +39,9 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "password_ext1")
     private String passwordExt1;
 
@@ -51,20 +54,17 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name = "authorities")
+    private String authorities;
+
     @Column(name = "isEnabled")
-    @ColumnDefault("true")
     private Boolean isEnabled;
 
     @Column(name = "isAccountNonExpired")
-    @ColumnDefault("true")
     private Boolean isAccountNonExpired;
 
     @Column(name = "isAccountNonLocked")
-    @ColumnDefault("true")
     private Boolean isAccountNonLocked;
-
-    @Column(name = "authorities")
-    private String authorities;
 
     @Column(name = "token_bangumi")
     private String tokenBangumi;
@@ -78,12 +78,12 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     @Column(name = "token_bangumi_refresh_token")
     private String tokenBangumiRefreshToken;
 
-    @Column(name = "date_create")
     @CreatedDate
+    @Column(name = "date_create")
     private LocalDateTime dateCreate;
 
-    @Column(name = "date_modified")
     @LastModifiedDate
+    @Column(name = "date_modified")
     private LocalDateTime dateModified;
 
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -99,7 +99,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     }
 
     /**
-     * User entity simple constructor with default ROLE_USER
+     * User entity default constructor with default authority ROLE_USER
      *
      * @param username name of the account
      * @param password password of the account
@@ -205,7 +205,6 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.uuid = uuid;
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
@@ -214,13 +213,20 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.username = username.toLowerCase();
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPasswordExt1() {
@@ -255,59 +261,30 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.avatar = avatar;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return this.isEnabled;
+    public Boolean getEnabled() {
+        return isEnabled;
     }
 
     public void setEnabled(boolean enabled) {
         this.isEnabled = enabled;
     }
 
-    public void enableAccount() {
-        this.isEnabled = true;
-    }
-
-    public void disableAccount() {
-        this.isEnabled = false;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return this.isAccountNonExpired;
+    public Boolean getAccountNonExpired() {
+        return isAccountNonExpired;
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
         this.isAccountNonExpired = accountNonExpired;
     }
 
-    public void expireAccount() {
-        this.isAccountNonExpired = false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return this.isAccountNonLocked;
+    public Boolean getAccountNonLocked() {
+        return isAccountNonLocked;
     }
 
     public void setAccountNonLocked(boolean accountNonLocked) {
         isAccountNonLocked = accountNonLocked;
     }
 
-    public void lockAccount() {
-        this.isAccountNonLocked = false;
-    }
-
-    public void unlockAccount() {
-        this.isAccountNonLocked = true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
     public Set<PhssGrantedAuthority> getAuthorities() {
         String[] authoritiesString = authorities.split(",");
         Set<PhssGrantedAuthority> authoritiesSet = new HashSet<>();
@@ -323,6 +300,46 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
             roleStrSet.add(authority.toString().substring(5));
         }
         this.authorities = String.join(",", roleStrSet);
+    }
+
+    public boolean isAccountNonExpired() {
+        return this.isAccountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return this.isAccountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return this.isEnabled;
+    }
+
+    public void eraseCredentials() {
+        this.setPassword("7355608");
+    }
+
+    public void enableAccount() {
+        this.setEnabled(true);
+    }
+
+    public void disableAccount() {
+        this.setEnabled(false);
+    }
+
+    public void lockAccount() {
+        this.setAccountNonLocked(false);
+    }
+
+    public void unlockAccount() {
+        this.setAccountNonLocked(true);
+    }
+
+    public void expireAccount() {
+        this.setAccountNonExpired(false);
     }
 
     public String getTokenBangumi() {
@@ -402,10 +419,5 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
 
     public void setSettingMainEntity(SettingMainEntity settingMainEntity) {
         this.settingMainEntity = settingMainEntity;
-    }
-
-    @Override
-    public void eraseCredentials() {
-        password = null;
     }
 }
