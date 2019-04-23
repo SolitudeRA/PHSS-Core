@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.thirdparty.bangumi;
+package org.protogalaxy.phss.manager.bangumi;
 
 public final class BangumiConsts {
     /**

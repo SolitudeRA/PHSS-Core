@@ -4,6 +4,7 @@ import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
+import org.protogalaxy.phss.datasource.entity.thirdparty.BangumiOAuth2Entity;
 import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
 import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,9 +25,21 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@DynamicInsert
+/**
+ * Main account entity
+ *
+ * @see SettingMainEntity
+ * @see FileSystemMainEntity
+ * @see PersonalDataEntity
+ * @see BangumiOAuth2Entity
+ *
+ * @author SolitudeRA
+ * @since v1.0
+ */
+
+@Entity
 @Table(name = "account")
-@Entity(name = "Account")
+@DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 public class AccountEntity implements UserDetails, CredentialsContainer {
     @Id
@@ -66,21 +79,9 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     @Column(name = "isAccountNonLocked")
     private Boolean isAccountNonLocked;
 
-    @Column(name = "token_bangumi")
-    private String tokenBangumi;
-
-    @Column(name = "token_bangumi_token_type")
-    private String tokenBangumiTokenType;
-
-    @Column(name = "token_bangumi_expires_in")
-    private Long tokenBangumiExpiresIn;
-
-    @Column(name = "token_bangumi_refresh_token")
-    private String tokenBangumiRefreshToken;
-
     @CreatedDate
-    @Column(name = "date_create")
-    private LocalDateTime dateCreate;
+    @Column(name = "date_created")
+    private LocalDateTime dateCreated;
 
     @LastModifiedDate
     @Column(name = "date_modified")
@@ -94,6 +95,9 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
 
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private SettingMainEntity settingMainEntity;
+
+    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private BangumiOAuth2Entity bangumiOAuth2Entity;
 
     public AccountEntity() {
     }
@@ -114,7 +118,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     }
 
     /**
-     * User entity  constructor with default ROLE_USER and whether account is expired or locked
+     * User entity constructor with default ROLE_USER and whether account is expired or locked
      *
      * @param username            name of the account
      * @param password            password of the account
@@ -265,23 +269,23 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         return isEnabled;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.isEnabled = enabled;
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
     }
 
     public Boolean getAccountNonExpired() {
         return isAccountNonExpired;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.isAccountNonExpired = accountNonExpired;
+    public void setAccountNonExpired(Boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
     }
 
     public Boolean getAccountNonLocked() {
         return isAccountNonLocked;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
+    public void setAccountNonLocked(Boolean accountNonLocked) {
         isAccountNonLocked = accountNonLocked;
     }
 
@@ -315,7 +319,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     }
 
     public boolean isEnabled() {
-        return this.isEnabled;
+        return this.getEnabled();
     }
 
     public void eraseCredentials() {
@@ -342,51 +346,12 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.setAccountNonExpired(false);
     }
 
-    public String getTokenBangumi() {
-        return tokenBangumi;
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
     }
 
-    public void setTokenBangumi(String tokenBangumi) {
-        this.tokenBangumi = tokenBangumi;
-    }
-
-    public String getTokenBangumiTokenType() {
-        return tokenBangumiTokenType;
-    }
-
-    public void setTokenBangumiTokenType(String tokenBangumiTokenType) {
-        this.tokenBangumiTokenType = tokenBangumiTokenType;
-    }
-
-    public Long getTokenBangumiExpiresIn() {
-        return tokenBangumiExpiresIn;
-    }
-
-    public void setTokenBangumiExpiresIn(Long tokenBangumiExpiresIn) {
-        this.tokenBangumiExpiresIn = tokenBangumiExpiresIn;
-    }
-
-    public String getTokenBangumiRefreshToken() {
-        return tokenBangumiRefreshToken;
-    }
-
-    public void setTokenBangumiRefreshToken(String tokenBangumiRefreshToken) {
-        this.tokenBangumiRefreshToken = tokenBangumiRefreshToken;
-    }
-
-    public OAuth2AccessTokenResponse getBangumiOAuth2AccessTokenResponse() {
-        return OAuth2AccessTokenResponse.withToken(tokenBangumi)
-                                        .tokenType(OAuth2AccessToken.TokenType.BEARER)
-                                        .expiresIn(tokenBangumiExpiresIn)
-                                        .build();
-    }
-
-    public LocalDateTime getDateCreate() {
-        return dateCreate;
-    }
-
-    public void setDateCreate(LocalDateTime dateCreate) {
-        this.dateCreate = dateCreate;
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public LocalDateTime getDateModified() {
@@ -419,5 +384,13 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
 
     public void setSettingMainEntity(SettingMainEntity settingMainEntity) {
         this.settingMainEntity = settingMainEntity;
+    }
+
+    public BangumiOAuth2Entity getBangumiOAuth2Entity() {
+        return bangumiOAuth2Entity;
+    }
+
+    public void setBangumiOAuth2Entity(BangumiOAuth2Entity bangumiOAuth2Entity) {
+        this.bangumiOAuth2Entity = bangumiOAuth2Entity;
     }
 }

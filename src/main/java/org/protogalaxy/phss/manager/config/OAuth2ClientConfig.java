@@ -1,9 +1,9 @@
-package org.protogalaxy.phss.thirdparty.config;
+package org.protogalaxy.phss.manager.config;
 
 import org.protogalaxy.phss.datasource.repository.jpa.security.PhssOAuth2AuthorizedClientRepository;
 import org.protogalaxy.phss.security.oauth2.AuthorizationCodeTokenResponseClient;
 import org.protogalaxy.phss.security.oauth2.DatabaseOAuth2AuthorizedClientService;
-import org.protogalaxy.phss.thirdparty.bangumi.BangumiApi;
+import org.protogalaxy.phss.manager.bangumi.BangumiApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;

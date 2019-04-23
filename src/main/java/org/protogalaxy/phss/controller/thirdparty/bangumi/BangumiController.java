@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.controller.thirdparty.bangumi;
 
-import org.protogalaxy.phss.thirdparty.bangumi.BangumiApi;
-import org.protogalaxy.phss.thirdparty.bangumi.BangumiConsts;
+import org.protogalaxy.phss.manager.bangumi.BangumiApi;
+import org.protogalaxy.phss.manager.bangumi.BangumiConsts;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.stereotype.Controller;

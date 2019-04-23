@@ -1,88 +1,82 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.main;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @DynamicInsert
 @Table(name = "filesystem_main")
 public class FileSystemMainEntity {
-    @JsonIgnore
     @Id
-    private int ownerId;
+    private UUID ownerId;
 
     @Column(name = "album_count")
-    @ColumnDefault("0")
     private Integer albumCount;
 
     @Column(name = "track_count")
-    @ColumnDefault("0")
     private Integer trackCount;
 
-    @Column(name = "book_count")
-    @ColumnDefault("0")
-    private Integer bookCount;
-
-    @Column(name = "illustration_count")
-    @ColumnDefault("0")
-    private Integer illustrationCount;
+    @Column(name = "anime_count")
+    private Integer animeCount;
 
     @Column(name = "movie_count")
-    @ColumnDefault("0")
     private Integer movieCount;
 
+    @Column(name = "video_count")
+    private Integer videoCount;
+
+    @Column(name = "book_count")
+    private Integer bookCount;
+
+    @Column(name = "document_count")
+    private Integer documentCount;
+
+    @Column(name = "illustration_count")
+    private Integer illustrationCount;
+
     @Column(name = "photo_count")
-    @ColumnDefault("0")
     private Integer photoCount;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_create")
-    @CreationTimestamp
-    private Date gmtCreate;
+    @CreatedDate
+    @Column(name = "date_created")
+    private LocalDateTime dateCreated;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "gmt_modified")
-    @UpdateTimestamp
-    private Date gmtModified;
+    @LastModifiedDate
+    @Column(name = "date_modified")
+    private LocalDateTime dateModified;
 
-    @JsonBackReference
-    @OneToOne
     @MapsId
-    @JoinColumn(name = "owner_id")
+    @OneToOne
+    @JoinColumn(name = "owner_uuid")
     private AccountEntity accountEntity;
 
     public FileSystemMainEntity() {
     }
 
     public FileSystemMainEntity(AccountEntity accountEntity) {
+        this.albumCount = 0;
+        this.trackCount = 0;
+        this.animeCount = 0;
+        this.movieCount = 0;
+        this.videoCount = 0;
+        this.bookCount = 0;
+        this.documentCount = 0;
+        this.illustrationCount = 0;
+        this.photoCount = 0;
         this.accountEntity = accountEntity;
     }
 
-    public FileSystemMainEntity(Integer albumCount, Integer trackCount, Integer bookCount, Integer illustrationCount, Integer movieCount, Integer photoCount) {
-        this.albumCount = albumCount;
-        this.trackCount = trackCount;
-        this.bookCount = bookCount;
-        this.illustrationCount = illustrationCount;
-        this.movieCount = movieCount;
-        this.photoCount = photoCount;
-    }
-
-    public int getOwnerId() {
+    public UUID getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(int ownerId) {
+    public void setOwnerId(UUID ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -102,20 +96,12 @@ public class FileSystemMainEntity {
         this.trackCount = trackCount;
     }
 
-    public Integer getBookCount() {
-        return bookCount;
+    public Integer getAnimeCount() {
+        return animeCount;
     }
 
-    public void setBookCount(Integer bookCount) {
-        this.bookCount = bookCount;
-    }
-
-    public Integer getIllustrationCount() {
-        return illustrationCount;
-    }
-
-    public void setIllustrationCount(Integer illustrationCount) {
-        this.illustrationCount = illustrationCount;
+    public void setAnimeCount(Integer animeCount) {
+        this.animeCount = animeCount;
     }
 
     public Integer getMovieCount() {
@@ -126,6 +112,38 @@ public class FileSystemMainEntity {
         this.movieCount = movieCount;
     }
 
+    public Integer getVideoCount() {
+        return videoCount;
+    }
+
+    public void setVideoCount(Integer videoCount) {
+        this.videoCount = videoCount;
+    }
+
+    public Integer getBookCount() {
+        return bookCount;
+    }
+
+    public void setBookCount(Integer bookCount) {
+        this.bookCount = bookCount;
+    }
+
+    public Integer getDocumentCount() {
+        return documentCount;
+    }
+
+    public void setDocumentCount(Integer documentCount) {
+        this.documentCount = documentCount;
+    }
+
+    public Integer getIllustrationCount() {
+        return illustrationCount;
+    }
+
+    public void setIllustrationCount(Integer illustrationCount) {
+        this.illustrationCount = illustrationCount;
+    }
+
     public Integer getPhotoCount() {
         return photoCount;
     }
@@ -134,16 +152,20 @@ public class FileSystemMainEntity {
         this.photoCount = photoCount;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public LocalDateTime getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(LocalDateTime dateModified) {
+        this.dateModified = dateModified;
     }
 
     public AccountEntity getAccountEntity() {

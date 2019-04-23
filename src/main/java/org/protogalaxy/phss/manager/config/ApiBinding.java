@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.thirdparty.config;
+package org.protogalaxy.phss.manager.config;
 
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;

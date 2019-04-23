@@ -37,7 +37,7 @@ public class AccountResource extends ResourceSupport {
         this.isEnabled = accountEntity.isEnabled();
         this.isAccountNonLocked = accountEntity.isAccountNonLocked();
         this.isAccountNonExpired = accountEntity.isAccountNonExpired();
-        this.dateCreate = accountEntity.getDateCreate().toString();
+        this.dateCreate = accountEntity.getDateCreated().toString();
         this.dateModified = accountEntity.getDateModified().toString();
     }
 

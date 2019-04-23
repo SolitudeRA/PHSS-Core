@@ -1,7 +1,7 @@
-package org.protogalaxy.phss.thirdparty.bangumi;
+package org.protogalaxy.phss.manager.bangumi;
 
 import org.json.simple.JSONObject;
-import org.protogalaxy.phss.thirdparty.config.ApiBinding;
+import org.protogalaxy.phss.manager.config.ApiBinding;
 import org.springframework.lang.Nullable;
 
 import java.net.URLEncoder;
