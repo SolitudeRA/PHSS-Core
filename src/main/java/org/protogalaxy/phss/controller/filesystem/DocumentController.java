@@ -1,5 +1,7 @@
 package org.protogalaxy.phss.controller.filesystem;
 
+import org.protogalaxy.phss.service.interfaces.filesystem.database.DocumentService;
+import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.database.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,11 @@ import java.awt.print.Pageable;
 @RestController
 @RequestMapping("/{username}/document")
 public class DocumentController {
-    private final StorageServiceImpl storageService;
-    private final DocumentServiceImpl documentService;
+    private final StorageService storageService;
+    private final DocumentService documentService;
 
     @Autowired
-    public DocumentController(StorageServiceImpl storageService, DocumentServiceImpl documentService) {
+    public DocumentController(StorageService storageService, DocumentService documentService) {
         this.storageService = storageService;
         this.documentService = documentService;
     }

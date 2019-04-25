@@ -2,7 +2,7 @@ package org.protogalaxy.phss.service.main.account;
 
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
-import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
+import org.protogalaxy.phss.datasource.entity.setting.SettingsMainEntity;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
 import org.protogalaxy.phss.exception.application.base.account.AccountServiceException;
@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
                 AccountEntity accountEntity = new AccountEntity(username, password);
                 accountEntity.setFileSystemMainEntity(new FileSystemMainEntity(accountEntity));
                 accountEntity.setPersonalDataEntity(new PersonalDataEntity(accountEntity));
-                accountEntity.setSettingMainEntity(new SettingMainEntity(accountEntity));
+                accountEntity.setSettingsMainEntity(new SettingsMainEntity(accountEntity));
                 return accountRepository.saveAndFlush(accountEntity);
             }
         } catch (DataAccessException e) {

@@ -5,6 +5,8 @@ import org.protogalaxy.phss.datasource.resource.assembler.filesystem.music.Music
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicAlbumResource;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
+import org.protogalaxy.phss.service.interfaces.filesystem.database.MusicService;
+import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
 import org.protogalaxy.phss.service.main.filesystem.io.StorageServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.database.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/music")
 public class MusicController {
-    private final MusicServiceImpl musicService;
-    private final StorageServiceImpl storageService;
+    private final MusicService musicService;
+    private final StorageService storageService;
     private final MusicAlbumResourceAssembler musicAlbumResourceAssembler = new MusicAlbumResourceAssembler();
     private final MusicTrackResourceAssembler musicTrackResourceAssembler = new MusicTrackResourceAssembler();
 
     @Autowired
-    public MusicController(StorageServiceImpl storageService, MusicServiceImpl musicService) {
+    public MusicController(StorageService storageService, MusicService musicService) {
         this.storageService = storageService;
         this.musicService = musicService;
     }

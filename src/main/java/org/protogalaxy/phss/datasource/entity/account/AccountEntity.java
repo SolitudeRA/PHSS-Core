@@ -3,7 +3,7 @@ package org.protogalaxy.phss.datasource.entity.account;
 import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
-import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
+import org.protogalaxy.phss.datasource.entity.setting.SettingsMainEntity;
 import org.protogalaxy.phss.datasource.entity.thirdparty.BangumiOAuth2Entity;
 import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
 import org.hibernate.annotations.*;
@@ -13,8 +13,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -28,7 +26,7 @@ import java.util.UUID;
 /**
  * Main account entity
  *
- * @see SettingMainEntity
+ * @see SettingsMainEntity
  * @see FileSystemMainEntity
  * @see PersonalDataEntity
  * @see BangumiOAuth2Entity
@@ -94,7 +92,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     private PersonalDataEntity personalDataEntity;
 
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private SettingMainEntity settingMainEntity;
+    private SettingsMainEntity settingsMainEntity;
 
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private BangumiOAuth2Entity bangumiOAuth2Entity;
@@ -179,9 +177,9 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
      * @param authoritiesSet       authorities of the account
      * @param fileSystemMainEntity fileSystem entity of the account
      * @param personalDataEntity   personalDataInf Entity of the account
-     * @param settingMainEntity    settingMain Entity of the account
+     * @param settingsMainEntity    settingMain Entity of the account
      */
-    public AccountEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingMainEntity settingMainEntity) {
+    public AccountEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingsMainEntity settingsMainEntity) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
@@ -198,7 +196,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.authorities = String.join(",", roleStrSet);
         this.fileSystemMainEntity = fileSystemMainEntity;
         this.personalDataEntity = personalDataEntity;
-        this.settingMainEntity = settingMainEntity;
+        this.settingsMainEntity = settingsMainEntity;
     }
 
     public UUID getUuid() {
@@ -378,12 +376,12 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.personalDataEntity = personalDataEntity;
     }
 
-    public SettingMainEntity getSettingMainEntity() {
-        return settingMainEntity;
+    public SettingsMainEntity getSettingsMainEntity() {
+        return settingsMainEntity;
     }
 
-    public void setSettingMainEntity(SettingMainEntity settingMainEntity) {
-        this.settingMainEntity = settingMainEntity;
+    public void setSettingsMainEntity(SettingsMainEntity settingsMainEntity) {
+        this.settingsMainEntity = settingsMainEntity;
     }
 
     public BangumiOAuth2Entity getBangumiOAuth2Entity() {

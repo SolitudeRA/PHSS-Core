@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.datasource.entity.setting.runtime;
 
-import org.protogalaxy.phss.datasource.entity.setting.SettingMainEntity;
+import org.protogalaxy.phss.datasource.entity.setting.SettingsMainEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -23,7 +23,7 @@ public class SettingRuntimePluginEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "setting_owner_id")
-    private SettingMainEntity settingMainEntity;
+    private SettingsMainEntity settingsMainEntity;
 
     public SettingRuntimePluginEntity() {
     }
@@ -53,11 +53,11 @@ public class SettingRuntimePluginEntity {
         this.gmtModified = gmtModified;
     }
 
-    public SettingMainEntity getSettingMainEntity() {
-        return settingMainEntity;
+    public SettingsMainEntity getSettingsMainEntity() {
+        return settingsMainEntity;
     }
 
-    public void setSettingMainEntity(SettingMainEntity settingMainEntity) {
-        this.settingMainEntity = settingMainEntity;
+    public void setSettingsMainEntity(SettingsMainEntity settingsMainEntity) {
+        this.settingsMainEntity = settingsMainEntity;
     }
 }
