@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.hateoas.config.EnableEntityLinks;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -36,7 +34,7 @@ public class DataSourceConfig {
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/protogalaxy");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/protogalaxy?characterEncoding=utf8&useSSL=true");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;
@@ -75,10 +73,5 @@ public class DataSourceConfig {
     @Bean
     public MongoTemplate mongoTemplate(){
         return new MongoTemplate(mongoClient(), "protogalaxy");
-    }
-
-    @Bean
-    public LettuceConnectionFactory redisConnectionFactory(){
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration("localhost", 6379));
     }
 }

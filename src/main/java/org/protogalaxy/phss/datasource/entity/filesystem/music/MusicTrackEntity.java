@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.music;
 
 import org.joda.time.LocalDateTime;
-import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

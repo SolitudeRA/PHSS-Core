@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDateTime;
 import org.protogalaxy.phss.component.consts.AudioConst;
 import org.protogalaxy.phss.component.consts.FileConst;
-import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoEntity;
 import org.protogalaxy.phss.datasource.entity.filesystem.music.MusicTrackInfoStaticEntity;

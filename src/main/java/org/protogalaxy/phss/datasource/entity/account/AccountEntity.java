@@ -1,8 +1,7 @@
 package org.protogalaxy.phss.datasource.entity.account;
 
 import org.joda.time.LocalDateTime;
-import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
-import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingsMainEntity;
 import org.protogalaxy.phss.datasource.entity.thirdparty.BangumiOAuth2Entity;
 import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
@@ -28,7 +27,6 @@ import java.util.UUID;
  *
  * @see SettingsMainEntity
  * @see FileSystemMainEntity
- * @see PersonalDataEntity
  * @see BangumiOAuth2Entity
  *
  * @author SolitudeRA
@@ -86,13 +84,10 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     private LocalDateTime dateModified;
 
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private FileSystemMainEntity fileSystemMainEntity;
-
-    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private PersonalDataEntity personalDataEntity;
-
-    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private SettingsMainEntity settingsMainEntity;
+
+    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private FileSystemMainEntity fileSystemMainEntity;
 
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private BangumiOAuth2Entity bangumiOAuth2Entity;
@@ -176,10 +171,9 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
      * @param passwordExt3         face ID data of the account
      * @param authoritiesSet       authorities of the account
      * @param fileSystemMainEntity fileSystem entity of the account
-     * @param personalDataEntity   personalDataInf Entity of the account
      * @param settingsMainEntity    settingMain Entity of the account
      */
-    public AccountEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, PersonalDataEntity personalDataEntity, SettingsMainEntity settingsMainEntity) {
+    public AccountEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity,  SettingsMainEntity settingsMainEntity) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
@@ -195,7 +189,6 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.passwordExt3 = passwordExt3;
         this.authorities = String.join(",", roleStrSet);
         this.fileSystemMainEntity = fileSystemMainEntity;
-        this.personalDataEntity = personalDataEntity;
         this.settingsMainEntity = settingsMainEntity;
     }
 
@@ -366,14 +359,6 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
 
     public void setFileSystemMainEntity(FileSystemMainEntity fileSystemMainEntity) {
         this.fileSystemMainEntity = fileSystemMainEntity;
-    }
-
-    public PersonalDataEntity getPersonalDataEntity() {
-        return personalDataEntity;
-    }
-
-    public void setPersonalDataEntity(PersonalDataEntity personalDataEntity) {
-        this.personalDataEntity = personalDataEntity;
     }
 
     public SettingsMainEntity getSettingsMainEntity() {

@@ -1,6 +1,6 @@
 package org.protogalaxy.phss.datasource.repository.jpa.filesystem.main;
 
-import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;

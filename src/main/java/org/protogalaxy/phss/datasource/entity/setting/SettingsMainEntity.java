@@ -1,11 +1,6 @@
 package org.protogalaxy.phss.datasource.entity.setting;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -27,10 +22,9 @@ public class SettingsMainEntity {
     @Column(name = "modified_date")
     private Date modifiedDate;
 
-    @JsonBackReference
-    @OneToOne
     @MapsId
-    @JoinColumn(name = "setting_owner_id")
+    @OneToOne
+    @JoinColumn(name = "owner_uuid")
     private AccountEntity accountEntity;
 
     public SettingsMainEntity() {

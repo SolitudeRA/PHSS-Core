@@ -1,9 +1,8 @@
 package org.protogalaxy.phss.datasource.entity.filesystem.book;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 
 import javax.persistence.*;
 import java.util.Date;

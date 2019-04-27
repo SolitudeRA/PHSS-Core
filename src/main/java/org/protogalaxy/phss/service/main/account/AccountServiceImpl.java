@@ -1,7 +1,6 @@
 package org.protogalaxy.phss.service.main.account;
 
-import org.protogalaxy.phss.datasource.entity.filesystem.main.FileSystemMainEntity;
-import org.protogalaxy.phss.datasource.entity.personaldata.PersonalDataEntity;
+import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingsMainEntity;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
@@ -44,7 +43,6 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
             } else {
                 AccountEntity accountEntity = new AccountEntity(username, password);
                 accountEntity.setFileSystemMainEntity(new FileSystemMainEntity(accountEntity));
-                accountEntity.setPersonalDataEntity(new PersonalDataEntity(accountEntity));
                 accountEntity.setSettingsMainEntity(new SettingsMainEntity(accountEntity));
                 return accountRepository.saveAndFlush(accountEntity);
             }

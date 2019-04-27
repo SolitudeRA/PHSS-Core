@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.datasource.entity.filesystem.main;
+package org.protogalaxy.phss.datasource.entity.filesystem;
 
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.hibernate.annotations.DynamicInsert;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "filesystem_main")
 public class FileSystemMainEntity {
     @Id
-    private UUID ownerId;
+    private UUID ownerUUID;
 
     @Column(name = "album_count")
     private Integer albumCount;
@@ -43,6 +43,15 @@ public class FileSystemMainEntity {
     @Column(name = "photo_count")
     private Integer photoCount;
 
+    @Column(name = "file_total")
+    private Integer fileTotal;
+
+    @Column(name = "space_available")
+    private Long spaceAvailable;
+
+    @Column(name = "space_total")
+    private Long spaceTotal;
+
     @CreatedDate
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
@@ -69,15 +78,16 @@ public class FileSystemMainEntity {
         this.documentCount = 0;
         this.illustrationCount = 0;
         this.photoCount = 0;
+        this.fileTotal = 0;
         this.accountEntity = accountEntity;
     }
 
-    public UUID getOwnerId() {
-        return ownerId;
+    public UUID getOwnerUUID() {
+        return ownerUUID;
     }
 
-    public void setOwnerId(UUID ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerUUID(UUID ownerUUID) {
+        this.ownerUUID = ownerUUID;
     }
 
     public Integer getAlbumCount() {
@@ -150,6 +160,30 @@ public class FileSystemMainEntity {
 
     public void setPhotoCount(Integer photoCount) {
         this.photoCount = photoCount;
+    }
+
+    public Integer getFileTotal() {
+        return fileTotal;
+    }
+
+    public void setFileTotal(Integer fileTotal) {
+        this.fileTotal = fileTotal;
+    }
+
+    public Long getSpaceAvailable() {
+        return spaceAvailable;
+    }
+
+    public void setSpaceAvailable(Long spaceAvailable) {
+        this.spaceAvailable = spaceAvailable;
+    }
+
+    public Long getSpaceTotal() {
+        return spaceTotal;
+    }
+
+    public void setSpaceTotal(Long spaceTotal) {
+        this.spaceTotal = spaceTotal;
     }
 
     public LocalDateTime getDateCreated() {
