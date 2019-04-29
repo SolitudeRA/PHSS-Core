@@ -5,7 +5,6 @@ import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingsMainEntity;
 import org.protogalaxy.phss.datasource.entity.thirdparty.BangumiOAuth2Entity;
 import org.protogalaxy.phss.security.config.PhssGrantedAuthority;
-import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -35,7 +34,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "account")
-@DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 public class AccountEntity implements UserDetails, CredentialsContainer {
     @Id

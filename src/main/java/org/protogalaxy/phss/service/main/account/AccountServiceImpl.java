@@ -9,20 +9,28 @@ import org.protogalaxy.phss.exception.application.base.account.PhssErrorCodeAppl
 import org.protogalaxy.phss.exception.application.database.DatabaseException;
 import org.protogalaxy.phss.exception.application.database.PhssErrorCodeApplicationDatabaseSeries;
 import org.protogalaxy.phss.service.interfaces.account.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class AccountServiceImpl implements AccountService, UserDetailsService {
+
+    @Autowired
     private AccountRepository accountRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public AccountServiceImpl() {
     }
 
     @Override
@@ -41,7 +49,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
             if (accountRepository.findByUsername(username).isPresent()) {
                 throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_ALREADY_EXISTS);
             } else {
-                AccountEntity accountEntity = new AccountEntity(username, password);
+                AccountEntity accountEntity = new AccountEntity(username, passwordEncoder.encode(password));
                 accountEntity.setFileSystemMainEntity(new FileSystemMainEntity(accountEntity));
                 accountEntity.setSettingsMainEntity(new SettingsMainEntity(accountEntity));
                 return accountRepository.saveAndFlush(accountEntity);

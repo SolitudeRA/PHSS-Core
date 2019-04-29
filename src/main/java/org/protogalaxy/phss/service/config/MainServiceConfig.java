@@ -9,8 +9,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MainServiceConfig {
 
-    @Bean
-    public AccountService accountService(AccountRepository accountRepository){
-        return new AccountServiceImpl(accountRepository);
-    }
 }

@@ -6,6 +6,8 @@ import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
 import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,12 +26,13 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Collections;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
+public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     private final AjaxAuthSuccessHandler ajaxAuthSuccessHandler;
     private final AjaxAuthFailHandler ajaxAuthFailHandler;
     private final ClientRegistrationRepository clientRegistrationRepository;
@@ -59,7 +62,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) throws Exception {
         http
                 //-----------------------------CSRF config------------------------------//
                 .csrf().disable()
@@ -106,13 +109,13 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //-----------------------Oauth2 Client config---------------------------//
                 .oauth2Client()
+                .authorizedClientService(oAuth2AuthorizedClientService)
                 .clientRegistrationRepository(clientRegistrationRepository)
                 .authorizedClientRepository(oAuth2AuthorizedClientRepository)
-                .authorizedClientService(oAuth2AuthorizedClientService)
                 .authorizationCodeGrant()
-                .authorizationRequestRepository(oAuth2AuthorizationRequestRepository)
+                .accessTokenResponseClient(oAuth2AccessTokenResponseClient)
                 .authorizationRequestResolver(oAuth2AuthorizationRequestResolver)
-                .accessTokenResponseClient(oAuth2AccessTokenResponseClient);
+                .authorizationRequestRepository(oAuth2AuthorizationRequestRepository);
     }
 
     @Bean
@@ -128,12 +131,20 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    protected PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    protected UserDetailsService userDetailsService(AccountRepository accountRepository) {
-        return new AccountServiceImpl(accountRepository);
+    public UserDetailsService userDetailsService() {
+        return new AccountServiceImpl();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(this.userDetailsService());
+        return daoAuthenticationProvider;
     }
 }
