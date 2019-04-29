@@ -1,6 +1,5 @@
 package org.protogalaxy.phss.security.config;
 
-import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
 import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
 import org.protogalaxy.phss.service.main.account.AccountServiceImpl;

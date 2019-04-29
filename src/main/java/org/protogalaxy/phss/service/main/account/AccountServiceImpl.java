@@ -24,10 +24,8 @@ import java.util.UUID;
 @Service
 public class AccountServiceImpl implements AccountService, UserDetailsService {
 
-    @Autowired
     private AccountRepository accountRepository;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public AccountServiceImpl() {
@@ -147,5 +145,15 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
         } else {
             throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_USERNAME_OR_PASSWORD);
         }
+    }
+
+    @Autowired
+    public void setAccountRepository(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }
