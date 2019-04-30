@@ -4,6 +4,7 @@ import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Entity
 @DynamicInsert
 @Table(name = "filesystem_main")
+@EntityListeners(AuditingEntityListener.class)
 public class FileSystemMainEntity {
     @Id
     private UUID ownerUUID;

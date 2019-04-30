@@ -60,7 +60,6 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
         this.oAuth2AccessTokenResponseClient = oAuth2AccessTokenResponseClient;
     }
 
-    @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 //-----------------------------CSRF config------------------------------//

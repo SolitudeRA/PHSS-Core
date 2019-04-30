@@ -3,24 +3,26 @@ package org.protogalaxy.phss.datasource.entity.setting;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "settings_main")
+@EntityListeners(AuditingEntityListener.class)
 public class SettingsMainEntity {
     @Id
     private UUID ownerId;
 
     @CreatedDate
-    @Column(name = "created_date")
-    private Date createDate;
+    @Column(name = "date_created")
+    private LocalDateTime createDate;
 
     @LastModifiedDate
-    @Column(name = "modified_date")
-    private Date modifiedDate;
+    @Column(name = "date_modified")
+    private LocalDateTime modifiedDate;
 
     @MapsId
     @OneToOne
@@ -34,11 +36,6 @@ public class SettingsMainEntity {
         this.accountEntity = accountEntity;
     }
 
-    public SettingsMainEntity(Date createDate, Date modifiedDate) {
-        this.createDate = createDate;
-        this.modifiedDate = modifiedDate;
-    }
-
     public UUID getOwnerId() {
         return ownerId;
     }
@@ -47,19 +44,19 @@ public class SettingsMainEntity {
         this.ownerId = ownerId;
     }
 
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public Date getModifiedDate() {
+    public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
