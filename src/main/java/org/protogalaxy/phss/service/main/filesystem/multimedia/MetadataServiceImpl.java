@@ -1,6 +1,5 @@
 package org.protogalaxy.phss.service.main.filesystem.multimedia;
 
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hpsf.SummaryInformation;
@@ -30,6 +29,8 @@ import org.protogalaxy.phss.component.utilities.MultimediaUtilities;
 import org.protogalaxy.phss.exception.application.filesystem.real.file.InvalidMimeTypeUtilsException;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,11 +40,11 @@ import java.util.Map;
 import static org.bytedeco.javacpp.avformat.*;
 import static org.bytedeco.javacpp.avutil.*;
 
+@Service
 public class MetadataServiceImpl implements MetadataService {
     private CacheService cacheService;
 
-    public MetadataServiceImpl(CacheService cacheService) {
-        this.cacheService = cacheService;
+    public MetadataServiceImpl() {
     }
 
     @Override
@@ -349,13 +350,11 @@ public class MetadataServiceImpl implements MetadataService {
     }
 
     private Map<String, Object> getMetadataMarkdown(Path path) {
-        Map<String, Object> metadata = new HashMap<>();
-        return metadata;
+        return new HashMap<>();
     }
 
     private Map<String, Object> getMetadataLatex(Path path) {
-        Map<String, Object> metadata = new HashMap<>();
-        return metadata;
+        return new HashMap<>();
     }
 
     private Metadata getTikaMetadata(Path path) throws Exception {
@@ -365,5 +364,10 @@ public class MetadataServiceImpl implements MetadataService {
         ParseContext context = new ParseContext();
         parser.parse(Files.newInputStream(path), handler, metadata, context);
         return metadata;
+    }
+
+    @Autowired
+    public void setCacheService(CacheService cacheService) {
+        this.cacheService = cacheService;
     }
 }

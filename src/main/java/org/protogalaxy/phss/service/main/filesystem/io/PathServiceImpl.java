@@ -6,18 +6,20 @@ import org.protogalaxy.phss.exception.application.filesystem.real.path.PathServi
 import org.protogalaxy.phss.exception.application.filesystem.real.storage.StorageServiceException;
 import org.protogalaxy.phss.service.config.StorageServiceConfig;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
+@Service
 public class PathServiceImpl implements PathService {
     private StorageServiceConfig storageServiceConfig;
 
-    public PathServiceImpl(StorageServiceConfig storageServiceConfig) {
-        this.storageServiceConfig = storageServiceConfig;
+    public PathServiceImpl() {
     }
 
     /**
@@ -154,5 +156,10 @@ public class PathServiceImpl implements PathService {
     @Override
     public Path getTempDirectory() {
         return null;
+    }
+
+    @Autowired
+    public void setStorageServiceConfig(StorageServiceConfig storageServiceConfig) {
+        this.storageServiceConfig = storageServiceConfig;
     }
 }

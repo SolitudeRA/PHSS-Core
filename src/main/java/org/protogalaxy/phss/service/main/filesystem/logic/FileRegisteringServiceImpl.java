@@ -22,7 +22,9 @@ import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.Filesystem
 import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.io.InputStream;
@@ -31,79 +33,51 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 
+@Service
 public class FileRegisteringServiceImpl implements FileRegisteringService {
     //Services
-    private final CacheService cacheService;
+    private CacheService cacheService;
 
     //Database core repositories
-    private final FilesystemMainRepository filesystemMainRepository;
+    private FilesystemMainRepository filesystemMainRepository;
 
     //Database database repositories
-    private final MusicTrackRepository musicTrackRepository;
-    private final BookRepository bookRepository;
-    private final DocumentAdobePdfRepository documentAdobePdfRepository;
-    private final DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
-    private final DocumentMicrosoftWordRepository documentMicrosoftWordRepository;
-    private final DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
-    private final DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository;
-    private final DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository;
-    private final DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository;
-    private final DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository;
-    private final DocumentOpenTextRepository documentOpenTextRepository;
-    private final DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository;
-    private final DocumentOpenPresentationRepository documentOpenPresentationRepository;
+    private MusicTrackRepository musicTrackRepository;
+    private BookRepository bookRepository;
+    private DocumentAdobePdfRepository documentAdobePdfRepository;
+    private DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository;
+    private DocumentMicrosoftWordRepository documentMicrosoftWordRepository;
+    private DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository;
+    private DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository;
+    private DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository;
+    private DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository;
+    private DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository;
+    private DocumentOpenTextRepository documentOpenTextRepository;
+    private DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository;
+    private DocumentOpenPresentationRepository documentOpenPresentationRepository;
 
-    public FileRegisteringServiceImpl(CacheService cacheService,
-                                      FilesystemMainRepository filesystemMainRepository,
-                                      MusicTrackRepository musicTrackRepository,
-                                      BookRepository bookRepository,
-                                      DocumentAdobePdfRepository documentAdobePdfRepository,
-                                      DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
-                                      DocumentMicrosoftWordRepository documentMicrosoftWordRepository,
-                                      DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
-                                      DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository,
-                                      DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository,
-                                      DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository,
-                                      DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository,
-                                      DocumentOpenTextRepository documentOpenTextRepository,
-                                      DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository,
-                                      DocumentOpenPresentationRepository documentOpenPresentationRepository) {
-        this.cacheService = cacheService;
-        this.filesystemMainRepository = filesystemMainRepository;
-        this.musicTrackRepository = musicTrackRepository;
-        this.bookRepository = bookRepository;
-        this.documentAdobePdfRepository = documentAdobePdfRepository;
-        this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
-        this.documentMicrosoftWordRepository = documentMicrosoftWordRepository;
-        this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
-        this.documentMicrosoftExcelRepository = documentMicrosoftExcelRepository;
-        this.documentMicrosoftExcelOldRepository = documentMicrosoftExcelOldRepository;
-        this.documentMicrosoftPowerpointRepository = documentMicrosoftPowerpointRepository;
-        this.documentMicrosoftPowerpointOldRepository = documentMicrosoftPowerpointOldRepository;
-        this.documentOpenTextRepository = documentOpenTextRepository;
-        this.documentOpenSpreadsheetRepository = documentOpenSpreadsheetRepository;
-        this.documentOpenPresentationRepository = documentOpenPresentationRepository;
+    public FileRegisteringServiceImpl() {
     }
 
     @Override
     public MusicTrackEntity registerTrack(Map<String, Object> metadata, Path path) {
         FileSystemMainEntity fileSystemMainEntity = filesystemMainRepository.findByAccountEntity_Username(SecurityContextHolder.getContext().getAuthentication().getName());
         MusicTrackEntity trackEntity = new MusicTrackEntity(fileSystemMainEntity,
-                                                            metadata.get(AudioConst.METADATA_AUDIO_TITLE).toString(),
-                                                            metadata.get(AudioConst.METADATA_AUDIO_ALBUM).toString(),
-                                                            metadata.get(AudioConst.METADATA_AUDIO_ARTIST).toString(),
-                                                            path.toString());
+                metadata.get(AudioConst.METADATA_AUDIO_TITLE).toString(),
+                metadata.get(AudioConst.METADATA_AUDIO_ALBUM).toString(),
+                metadata.get(AudioConst.METADATA_AUDIO_ARTIST).toString(),
+                path.toString());
         MusicTrackInfoEntity trackInfoEntity = new MusicTrackInfoEntity(trackEntity);
         trackInfoEntity.setPlaybackCount(0);
         trackInfoEntity.setSkipCount(0);
         trackInfoEntity.setLastPlayed(LocalDateTime.parse("1996-2-5T00:00:00.720"));
         MusicTrackInfoStaticEntity trackInfoStaticEntity = new MusicTrackInfoStaticEntity(Duration.ofMillis((Long) metadata.get(AudioConst.METADATA_AUDIO_DURATION)),
-                                                                                          (Long) metadata.get(AudioConst.METADATA_AUDIO_SIZE),
-                                                                                          metadata.get(AudioConst.METADATA_AUDIO_BITRATE).toString(),
-                                                                                          metadata.get(AudioConst.METADATA_AUDIO_BIT_DEPTH).toString(),
-                                                                                          metadata.get(AudioConst.METADATA_AUDIO_SAMPLE_RATE).toString(),
-                                                                                          metadata.get(AudioConst.METADATA_AUDIO_MD5).toString(),
-                                                                                          trackEntity);
+                (Long) metadata.get(AudioConst.METADATA_AUDIO_SIZE),
+                metadata.get(AudioConst.METADATA_AUDIO_BITRATE).toString(),
+                metadata.get(AudioConst.METADATA_AUDIO_BIT_DEPTH).toString(),
+                metadata.get(AudioConst.METADATA_AUDIO_SAMPLE_RATE).toString(),
+                metadata.get(AudioConst.METADATA_AUDIO_MD5).toString(),
+                trackEntity);
         if (metadata.containsKey(AudioConst.METADATA_AUDIO_ARTWORK))
             trackInfoStaticEntity.setArtwork(metadata.get(AudioConst.METADATA_AUDIO_ARTWORK).toString());
         else trackInfoStaticEntity.setArtwork("");
@@ -423,5 +397,80 @@ public class FileRegisteringServiceImpl implements FileRegisteringService {
                 (String) metadata.get(FileConst.METADATA_OPENDOCUMENT_PRESENTATION_PATH));
         documentOpenPresentationRepository.save(documentOpenPresentationEntity);
         return mapper.writeValueAsString(documentOpenPresentationEntity);
+    }
+
+    @Autowired
+    public void setCacheService(CacheService cacheService) {
+        this.cacheService = cacheService;
+    }
+
+    @Autowired
+    public void setFilesystemMainRepository(FilesystemMainRepository filesystemMainRepository) {
+        this.filesystemMainRepository = filesystemMainRepository;
+    }
+
+    @Autowired
+    public void setMusicTrackRepository(MusicTrackRepository musicTrackRepository) {
+        this.musicTrackRepository = musicTrackRepository;
+    }
+
+    @Autowired
+    public void setBookRepository(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    @Autowired
+    public void setDocumentAdobePdfRepository(DocumentAdobePdfRepository documentAdobePdfRepository) {
+        this.documentAdobePdfRepository = documentAdobePdfRepository;
+    }
+
+    @Autowired
+    public void setDocumentAdobePhotoshopRepository(DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository) {
+        this.documentAdobePhotoshopRepository = documentAdobePhotoshopRepository;
+    }
+
+    @Autowired
+    public void setDocumentMicrosoftWordRepository(DocumentMicrosoftWordRepository documentMicrosoftWordRepository) {
+        this.documentMicrosoftWordRepository = documentMicrosoftWordRepository;
+    }
+
+    @Autowired
+    public void setDocumentMicrosoftWordOldRepository(DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository) {
+        this.documentMicrosoftWordOldRepository = documentMicrosoftWordOldRepository;
+    }
+
+    @Autowired
+    public void setDocumentMicrosoftExcelRepository(DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository) {
+        this.documentMicrosoftExcelRepository = documentMicrosoftExcelRepository;
+    }
+
+    @Autowired
+    public void setDocumentMicrosoftExcelOldRepository(DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository) {
+        this.documentMicrosoftExcelOldRepository = documentMicrosoftExcelOldRepository;
+    }
+
+    @Autowired
+    public void setDocumentMicrosoftPowerpointRepository(DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository) {
+        this.documentMicrosoftPowerpointRepository = documentMicrosoftPowerpointRepository;
+    }
+
+    @Autowired
+    public void setDocumentMicrosoftPowerpointOldRepository(DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository) {
+        this.documentMicrosoftPowerpointOldRepository = documentMicrosoftPowerpointOldRepository;
+    }
+
+    @Autowired
+    public void setDocumentOpenTextRepository(DocumentOpenTextRepository documentOpenTextRepository) {
+        this.documentOpenTextRepository = documentOpenTextRepository;
+    }
+
+    @Autowired
+    public void setDocumentOpenSpreadsheetRepository(DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository) {
+        this.documentOpenSpreadsheetRepository = documentOpenSpreadsheetRepository;
+    }
+
+    @Autowired
+    public void setDocumentOpenPresentationRepository(DocumentOpenPresentationRepository documentOpenPresentationRepository) {
+        this.documentOpenPresentationRepository = documentOpenPresentationRepository;
     }
 }

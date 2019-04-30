@@ -15,7 +15,9 @@ import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
 import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
 import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,31 +28,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class StorageServiceImpl implements StorageService {
     private StorageServiceConfig config;
 
-    private final PathService pathService;
-    private final CacheService cacheService;
-    private final MetadataService metadataService;
-    private final FileRegisteringService fileRegisteringService;
-    private final MusicTrackRepository musicTrackRepository;
-    private final MusicAlbumRepository musicAlbumRepository;
+    private PathService pathService;
+    private CacheService cacheService;
+    private MetadataService metadataService;
+    private FileRegisteringService fileRegisteringService;
+    private MusicTrackRepository musicTrackRepository;
+    private MusicAlbumRepository musicAlbumRepository;
 
 
-    public StorageServiceImpl(StorageServiceConfig config,
-                              PathService pathService,
-                              CacheService cacheService,
-                              MetadataService metadataService,
-                              FileRegisteringService fileRegisteringService,
-                              MusicTrackRepository musicTrackRepository,
-                              MusicAlbumRepository musicAlbumRepository) {
-        this.config = config;
-        this.pathService = pathService;
-        this.cacheService = cacheService;
-        this.metadataService = metadataService;
-        this.fileRegisteringService = fileRegisteringService;
-        this.musicTrackRepository = musicTrackRepository;
-        this.musicAlbumRepository = musicAlbumRepository;
+    public StorageServiceImpl() {
     }
 
     /**
@@ -59,7 +49,6 @@ public class StorageServiceImpl implements StorageService {
      * @param fromPath Path where file will move from
      * @param toPath   Path where file will move to
      */
-    @Override
     public void moveFile(Path fromPath, Path toPath) throws Exception {
         Files.move(fromPath, toPath);
     }
@@ -70,7 +59,6 @@ public class StorageServiceImpl implements StorageService {
      * @param musicFile uploaded track
      * @return JSON format string of the uploaded track
      */
-    @Override
     public MusicTrackEntity storeTrack(MultipartFile musicFile) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String fileName = StringUtils.cleanPath(musicFile.getOriginalFilename());//Get File name
@@ -88,11 +76,11 @@ public class StorageServiceImpl implements StorageService {
         //Move track to correct path & register in database
         try {
             Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation()
-                                                                                 .resolve(username)
-                                                                                 .resolve(config.getMusicLocation())
-                                                                                 .resolve(metadata.get(AudioConst.METADATA_AUDIO_ARTIST).toString())
-                                                                                 .resolve(metadata.get(AudioConst.METADATA_AUDIO_ALBUM).toString())
-                                                                                 .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
+                    .resolve(username)
+                    .resolve(config.getMusicLocation())
+                    .resolve(metadata.get(AudioConst.METADATA_AUDIO_ARTIST).toString())
+                    .resolve(metadata.get(AudioConst.METADATA_AUDIO_ALBUM).toString())
+                    .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
             return fileRegisteringService.registerTrack(metadata, realPath);
         } catch (IOException e) {
             throw new StorageServiceException("Could not register file", e);
@@ -105,7 +93,6 @@ public class StorageServiceImpl implements StorageService {
      * @param musicFiles uploaded tracks
      * @return JSON format string of the uploaded tracks
      */
-    @Override
     public List<MusicTrackEntity> storeTracks(MultipartFile[] musicFiles) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<MusicTrackEntity> musicTrackEntities = new ArrayList<>();
@@ -115,11 +102,11 @@ public class StorageServiceImpl implements StorageService {
             Map<String, Object> metadata = metadataService.musicMetadataResolver(tempFilePath);
             try {
                 Path realPath = Files.move(tempFilePath, pathService.pathCheck(config.getRootLocation()
-                                                                                     .resolve(username)
-                                                                                     .resolve(config.getMusicLocation())
-                                                                                     .resolve(metadata.get(AudioConst.METADATA_AUDIO_ARTIST).toString())
-                                                                                     .resolve(metadata.get(AudioConst.METADATA_AUDIO_ALBUM).toString())
-                                                                                     .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
+                        .resolve(username)
+                        .resolve(config.getMusicLocation())
+                        .resolve(metadata.get(AudioConst.METADATA_AUDIO_ARTIST).toString())
+                        .resolve(metadata.get(AudioConst.METADATA_AUDIO_ALBUM).toString())
+                        .resolve(fileName)), StandardCopyOption.REPLACE_EXISTING);
                 musicTrackEntities.add(fileRegisteringService.registerTrack(metadata, realPath));
             } catch (IOException e) {
                 throw new StorageServiceException("Could not register file", e);
@@ -128,7 +115,6 @@ public class StorageServiceImpl implements StorageService {
         return musicTrackEntities;
     }
 
-    @Override
     public void deleteTrack(UUID uuid) {
         try {
             Files.delete(Paths.get(musicTrackRepository.findByUuid(uuid).getLocation()));
@@ -138,7 +124,6 @@ public class StorageServiceImpl implements StorageService {
 
     }
 
-    @Override
     public void deleteMusicAlbum(UUID uuid) {
         try {
             Files.delete(Paths.get(musicAlbumRepository.findByUuid(uuid).getLocation()));
@@ -147,47 +132,38 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-    @Override
     public String storeAnime(String username, MultipartFile animeFile) throws Exception {
         return null;
     }
 
-    @Override
     public void deleteAnime(String uuid) {
 
     }
 
-    @Override
     public String storeMovie(String username, MultipartFile movieFile) throws Exception {
         return null;
     }
 
-    @Override
     public void deleteMovie(String uuid) {
 
     }
 
-    @Override
     public String storeVideo(String username, MultipartFile videoFile) throws Exception {
         return null;
     }
 
-    @Override
     public void deleteVideo(String uuid) {
 
     }
 
-    @Override
     public String storePhoto(String username, MultipartFile photoFile) throws Exception {
         return null;
     }
 
-    @Override
     public void deletePhoto(String uuid) {
 
     }
 
-    @Override
     public String storeBook(String username, MultipartFile bookFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(bookFile.getOriginalFilename());
@@ -201,12 +177,10 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-    @Override
     public void deleteBook(String uuid) {
 
     }
 
-    @Override
     public String storeDocument(String username, MultipartFile documentFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String filename = StringUtils.cleanPath(documentFile.getOriginalFilename());
@@ -221,18 +195,50 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-    @Override
     public void deleteDocument(String uuid) {
 
     }
 
-    @Override
     public String storeIllustration(String username, MultipartFile illustrationFile) {
         return null;
     }
 
-    @Override
     public void deleteIllustration(String uuid) {
 
+    }
+
+    @Autowired
+    public void setConfig(StorageServiceConfig config) {
+        this.config = config;
+    }
+
+    @Autowired
+    public void setPathService(PathService pathService) {
+        this.pathService = pathService;
+    }
+
+    @Autowired
+    public void setCacheService(CacheService cacheService) {
+        this.cacheService = cacheService;
+    }
+
+    @Autowired
+    public void setMetadataService(MetadataService metadataService) {
+        this.metadataService = metadataService;
+    }
+
+    @Autowired
+    public void setFileRegisteringService(FileRegisteringService fileRegisteringService) {
+        this.fileRegisteringService = fileRegisteringService;
+    }
+
+    @Autowired
+    public void setMusicTrackRepository(MusicTrackRepository musicTrackRepository) {
+        this.musicTrackRepository = musicTrackRepository;
+    }
+
+    @Autowired
+    public void setMusicAlbumRepository(MusicAlbumRepository musicAlbumRepository) {
+        this.musicAlbumRepository = musicAlbumRepository;
     }
 }

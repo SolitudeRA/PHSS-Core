@@ -1,17 +1,11 @@
 package org.protogalaxy.phss.service.config;
 
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.book.BookRepository;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.main.FilesystemMainRepository;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicAlbumRepository;
-import org.protogalaxy.phss.datasource.repository.jpa.filesystem.music.MusicTrackRepository;
-import org.protogalaxy.phss.datasource.repository.mongodb.document.*;
 import org.protogalaxy.phss.service.interfaces.filesystem.api.BangumiAPIService;
 import org.protogalaxy.phss.service.interfaces.filesystem.database.*;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.CacheService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.PathService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;
 import org.protogalaxy.phss.service.interfaces.filesystem.logic.FileRegisteringService;
-import org.protogalaxy.phss.service.interfaces.filesystem.multimedia.MetadataService;
 import org.protogalaxy.phss.service.main.filesystem.api.BangumiAPIServiceImpl;
 import org.protogalaxy.phss.service.main.filesystem.database.*;
 import org.protogalaxy.phss.service.main.filesystem.io.CacheServiceImpl;
@@ -24,20 +18,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FileSystemConfig {
     @Bean
-    public MusicService musicService(StorageService storageService,
-                                     MusicAlbumRepository musicAlbumRepository,
-                                     MusicTrackRepository musicTrackRepository) {
-        return new MusicServiceImpl(storageService, musicAlbumRepository, musicTrackRepository);
+    public MusicService musicService() {
+        return new MusicServiceImpl();
     }
 
     @Bean
     public MovieService movieService() {
         return new MovieServiceImpl();
-    }
-
-    @Bean
-    public BangumiAPIService bangumiAPIService() {
-        return new BangumiAPIServiceImpl();
     }
 
     @Bean
@@ -56,56 +43,27 @@ public class FileSystemConfig {
     }
 
     @Bean
-    public StorageService storageService(StorageServiceConfig storageServiceConfig,
-                                         PathService pathService,
-                                         CacheService cacheService,
-                                         MetadataService metadataService,
-                                         FileRegisteringService fileRegisteringService,
-                                         MusicTrackRepository musicTrackRepository,
-                                         MusicAlbumRepository musicAlbumRepository) {
-        return new StorageServiceImpl(storageServiceConfig, pathService, cacheService, metadataService, fileRegisteringService, musicTrackRepository, musicAlbumRepository);
+    public StorageService storageService() {
+        return new StorageServiceImpl();
     }
 
     @Bean
-    public PathService pathService(StorageServiceConfig storageServiceConfig) {
-        return new PathServiceImpl(storageServiceConfig);
+    public PathService pathService() {
+        return new PathServiceImpl();
     }
 
     @Bean
-    public CacheService cacheService(StorageServiceConfig storageServiceConfig) {
-        return new CacheServiceImpl(storageServiceConfig);
+    public CacheService cacheService() {
+        return new CacheServiceImpl();
     }
 
     @Bean
-    public FileRegisteringService fileRegisteringService(CacheService cacheService,
-                                                         FilesystemMainRepository filesystemMainRepository,
-                                                         MusicTrackRepository musicTrackRepository,
-                                                         BookRepository bookRepository,
-                                                         DocumentAdobePdfRepository documentAdobePdfRepository,
-                                                         DocumentAdobePhotoshopRepository documentAdobePhotoshopRepository,
-                                                         DocumentMicrosoftWordOldRepository documentMicrosoftWordOldRepository,
-                                                         DocumentMicrosoftExcelOldRepository documentMicrosoftExcelOldRepository,
-                                                         DocumentMicrosoftPowerpointOldRepository documentMicrosoftPowerpointOldRepository,
-                                                         DocumentMicrosoftWordRepository documentMicrosoftWordRepository,
-                                                         DocumentMicrosoftExcelRepository documentMicrosoftExcelRepository,
-                                                         DocumentMicrosoftPowerpointRepository documentMicrosoftPowerpointRepository,
-                                                         DocumentOpenTextRepository documentOpenTextRepository,
-                                                         DocumentOpenSpreadsheetRepository documentOpenSpreadsheetRepository,
-                                                         DocumentOpenPresentationRepository documentOpenPresentationRepository) {
-        return new FileRegisteringServiceImpl(cacheService,
-                filesystemMainRepository,
-                musicTrackRepository,
-                bookRepository,
-                documentAdobePdfRepository,
-                documentAdobePhotoshopRepository,
-                documentMicrosoftWordRepository,
-                documentMicrosoftWordOldRepository,
-                documentMicrosoftExcelRepository,
-                documentMicrosoftExcelOldRepository,
-                documentMicrosoftPowerpointRepository,
-                documentMicrosoftPowerpointOldRepository,
-                documentOpenTextRepository,
-                documentOpenSpreadsheetRepository,
-                documentOpenPresentationRepository);
+    public FileRegisteringService fileRegisteringService() {
+        return new FileRegisteringServiceImpl();
+    }
+
+    @Bean
+    public BangumiAPIService bangumiAPIService() {
+        return new BangumiAPIServiceImpl();
     }
 }

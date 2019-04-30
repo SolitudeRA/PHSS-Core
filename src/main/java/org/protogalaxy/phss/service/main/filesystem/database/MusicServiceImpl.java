@@ -8,6 +8,7 @@ import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.Mus
 import org.protogalaxy.phss.datasource.resource.main.entity.filesystem.music.MusicTrackResource;
 import org.protogalaxy.phss.service.interfaces.filesystem.database.MusicService;
 import org.protogalaxy.phss.service.interfaces.filesystem.io.StorageService;;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,14 +21,8 @@ public class MusicServiceImpl implements MusicService {
     private MusicAlbumRepository musicAlbumRepository;
     private MusicTrackRepository musicTrackRepository;
 
-    public MusicServiceImpl(StorageService storageService,
-                            MusicAlbumRepository musicAlbumRepository,
-                            MusicTrackRepository musicTrackRepository) {
-        this.storageService = storageService;
-        this.musicAlbumRepository = musicAlbumRepository;
-        this.musicTrackRepository = musicTrackRepository;
+    public MusicServiceImpl() {
     }
-
 
     /**
      * Get an album
@@ -174,5 +169,20 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public List<MusicTrackEntity> searchTrackByArtist(String artist) {
         return musicTrackRepository.findAllByFileSystemOwner_AccountEntity_UsernameAndArtist(SecurityContextHolder.getContext().getAuthentication().getName(), artist);
+    }
+
+    @Autowired
+    public void setStorageService(StorageService storageService) {
+        this.storageService = storageService;
+    }
+
+    @Autowired
+    public void setMusicAlbumRepository(MusicAlbumRepository musicAlbumRepository) {
+        this.musicAlbumRepository = musicAlbumRepository;
+    }
+
+    @Autowired
+    public void setMusicTrackRepository(MusicTrackRepository musicTrackRepository) {
+        this.musicTrackRepository = musicTrackRepository;
     }
 }
