@@ -1,4 +1,4 @@
-package org.protogalaxy.phss.security.main;
+package org.protogalaxy.phss.security.authentication;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;

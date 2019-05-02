@@ -1,7 +1,8 @@
-package org.protogalaxy.phss.security.main;
+package org.protogalaxy.phss.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
+import org.protogalaxy.phss.datasource.resource.assembler.account.AccountResourceAssembler;
 import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -19,10 +20,11 @@ public class AjaxAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandle
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         ObjectMapper mapper = new ObjectMapper();
-        AccountEntity userDetails = (AccountEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AccountResourceAssembler accountResourceAssembler = new AccountResourceAssembler();
+        AccountResource accountResource = accountResourceAssembler.toResource((AccountEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         response.setStatus(200);
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().print(mapper.writeValueAsString(new AccountResource(userDetails)));
+        response.getWriter().print(mapper.writeValueAsString(accountResource));
     }
 }

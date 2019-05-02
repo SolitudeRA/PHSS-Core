@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.security.config;
 
-import org.protogalaxy.phss.security.main.AjaxAuthFailHandler;
-import org.protogalaxy.phss.security.main.AjaxAuthSuccessHandler;
+import org.protogalaxy.phss.security.authentication.AjaxAuthFailHandler;
+import org.protogalaxy.phss.security.authentication.AjaxAuthSuccessHandler;
 import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -117,7 +117,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
         configuration.setAllowedOrigins(Collections.singletonList("*"));
@@ -129,13 +129,13 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public UserDetailsService userDetailsService() {
+        return new AccountServiceImpl();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new AccountServiceImpl();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

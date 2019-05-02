@@ -1,7 +1,7 @@
 package org.protogalaxy.phss.security.oauth2;
 
 
-import org.protogalaxy.phss.datasource.entity.security.PhssOAuth2AuthorizedClientEntity;
+import org.protogalaxy.phss.datasource.entity.security.OAuth2AuthorizedClientEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.security.PhssOAuth2AuthorizedClientRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -48,7 +48,7 @@ public class DatabaseOAuth2AuthorizedClientService implements OAuth2AuthorizedCl
     public void saveAuthorizedClient(OAuth2AuthorizedClient authorizedClient, Authentication principal) {
         Assert.notNull(authorizedClient, "authorizedClient cannot be null");
         Assert.notNull(principal, "principal cannot be null");
-        authorizedClientRepository.save(new PhssOAuth2AuthorizedClientEntity(authorizedClient.getClientRegistration(),
+        authorizedClientRepository.save(new OAuth2AuthorizedClientEntity(authorizedClient.getClientRegistration(),
                                                                              principal.getName(),
                                                                              authorizedClient.getAccessToken(),
                                                                              authorizedClient.getRefreshToken()));

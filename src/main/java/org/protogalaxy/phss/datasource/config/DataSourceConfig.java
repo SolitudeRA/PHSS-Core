@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 @EnableMongoRepositories("org.protogalaxy.phss.datasource.repository.mongodb")
 public class DataSourceConfig {
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/protogalaxy?characterEncoding=utf8&useSSL=true");
@@ -41,7 +41,7 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setShowSql(true);
         jpaVendorAdapter.setGenerateDdl(true);
@@ -54,24 +54,24 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
 
     @Bean
-    public MongoClient mongoClient(){
+    public MongoClient mongoClient() {
         return new MongoClient("localhost", 27017);
     }
 
     @Bean
-    public MongoDbFactory mongoDbFactory(){
+    public MongoDbFactory mongoDbFactory() {
         return new SimpleMongoDbFactory(mongoClient(), "protogalaxy");
     }
 
     @Bean
-    public MongoTemplate mongoTemplate(){
+    public MongoTemplate mongoTemplate() {
         return new MongoTemplate(mongoClient(), "protogalaxy");
     }
 }

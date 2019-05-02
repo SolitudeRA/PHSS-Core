@@ -19,14 +19,14 @@ public enum PhssErrorCodeBaseSeries {
     }
 
     /**
-     * Return the integer code value of this main series. Ranges from 0x1 to 0x3.
+     * Return the integer code value of this authentication series. Ranges from 0x1 to 0x3.
      */
     public int getBaseSeriesCode() {
         return this.baseSeriesCode;
     }
 
     /**
-     * Return the information of the main series code
+     * Return the information of the authentication series code
      */
     public String getInformation() {
         return this.information;

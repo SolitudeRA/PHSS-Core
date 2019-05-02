@@ -14,10 +14,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-//TODO:Not Completed
 @Entity
 @Table(name = "oauth2_authorized_client")
-public class PhssOAuth2AuthorizedClientEntity {
+public class OAuth2AuthorizedClientEntity {
     @Id
     @GeneratedValue
     private Integer id;
@@ -49,10 +48,10 @@ public class PhssOAuth2AuthorizedClientEntity {
     @Column(name = "refresh_token_issued_at")
     private Instant refreshTokenIssuedAt;
 
-    public PhssOAuth2AuthorizedClientEntity() {
+    public OAuth2AuthorizedClientEntity() {
     }
 
-    public PhssOAuth2AuthorizedClientEntity(ClientRegistration clientRegistration, String principalName, OAuth2AccessToken accessToken, @Nullable OAuth2RefreshToken refreshToken) {
+    public OAuth2AuthorizedClientEntity(ClientRegistration clientRegistration, String principalName, OAuth2AccessToken accessToken, @Nullable OAuth2RefreshToken refreshToken) {
         this.clientRegistrationId = clientRegistration.getRegistrationId();
         this.principalName = principalName;
         this.accessToken = accessToken.getTokenValue();
