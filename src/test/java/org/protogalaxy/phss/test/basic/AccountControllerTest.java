@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.*;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
-
-import javax.servlet.http.Cookie;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -28,8 +27,6 @@ public class AccountControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private Cookie[] cookies;
-
     @Test
     public void accountTest_1_registerAccount() throws Exception {
         this.mockMvc.perform(post("/account/register")
@@ -42,40 +39,50 @@ public class AccountControllerTest {
     @Test
     public void accountTest_2_login() throws Exception {
         RequestBuilder requestBuilder = formLogin().loginProcessingUrl("/account/login").user("test").password("123456");
-        this.cookies = this.mockMvc.perform(requestBuilder)
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getCookies();
+        this.mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void accountTest_2_retrieveAccount() throws Exception {
-        this.mockMvc.perform(get("test").cookie(cookies))
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    public void accountTest_3_retrieveAccount() throws Exception {
+        this.mockMvc.perform(get("/account/test"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("test"));
     }
 
     @Test
-    public void accountTest_3_enableAccount() throws Exception {
-
-    }
-
-    @Test
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
     public void accountTest_4_disableAccount() throws Exception {
-
+        this.mockMvc.perform(patch("/account/test/enable"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void accountTest_5_lockAccount() throws Exception {
-
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    public void accountTest_5_enableAccount() throws Exception {
+        this.mockMvc.perform(patch("/account/test/disable"))
+                .andExpect(status().isOk());
     }
 
     @Test
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
     public void accountTest_6_unlockAccount() throws Exception {
-
+        this.mockMvc.perform(patch("/account/test/unlock"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void accountTest_7_expireAccount() throws Exception {
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    public void accountTest_7_lockAccount() throws Exception {
+        this.mockMvc.perform(patch("/account/test/lock"))
+                .andExpect(status().isOk());
+    }
 
+    @Test
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    public void accountTest_8_expireAccount() throws Exception {
+        this.mockMvc.perform(patch("/account/test/expire"))
+                .andExpect(status().isOk());
     }
 }

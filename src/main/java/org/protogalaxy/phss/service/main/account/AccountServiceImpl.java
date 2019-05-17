@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
+@Service(value = "accountService")
 public class AccountServiceImpl implements AccountService, UserDetailsService {
 
     private AccountRepository accountRepository;
