@@ -24,11 +24,10 @@ import java.util.UUID;
 /**
  * Main account entity
  *
+ * @author SolitudeRA
  * @see SettingsMainEntity
  * @see FileSystemMainEntity
  * @see BangumiOAuth2Entity
- *
- * @author SolitudeRA
  * @since v1.0
  */
 
@@ -81,13 +80,13 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     @Column(name = "date_modified")
     private LocalDateTime dateModified;
 
-    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private SettingsMainEntity settingsMainEntity;
 
-    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private FileSystemMainEntity fileSystemMainEntity;
 
-    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private BangumiOAuth2Entity bangumiOAuth2Entity;
 
     public AccountEntity() {
@@ -111,9 +110,9 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     /**
      * User entity constructor with authorities
      *
-     * @param username            name of the account
-     * @param password            password of the account
-     * @param authoritiesSet      authorities of the account
+     * @param username       name of the account
+     * @param password       password of the account
+     * @param authoritiesSet authorities of the account
      */
     public AccountEntity(String username, String password, Set<PhssGrantedAuthority> authoritiesSet) {
         if (((username == null) || "".equals(username)) || (password == null)) {
@@ -143,9 +142,9 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
      * @param passwordExt3         face ID data of the account
      * @param authoritiesSet       authorities of the account
      * @param fileSystemMainEntity fileSystem entity of the account
-     * @param settingsMainEntity    settingMain Entity of the account
+     * @param settingsMainEntity   settingMain Entity of the account
      */
-    public AccountEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity,  SettingsMainEntity settingsMainEntity) {
+    public AccountEntity(String username, String password, String passwordExt1, String passwordExt2, String passwordExt3, Set<PhssGrantedAuthority> authoritiesSet, FileSystemMainEntity fileSystemMainEntity, SettingsMainEntity settingsMainEntity) {
         if (((username == null) || "".equals(username)) || (password == null)) {
             throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
@@ -233,7 +232,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     }
 
     public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
+        this.isEnabled = enabled;
     }
 
     public Boolean getAccountNonExpired() {
@@ -241,7 +240,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     }
 
     public void setAccountNonExpired(Boolean accountNonExpired) {
-        isAccountNonExpired = accountNonExpired;
+        this.isAccountNonExpired = accountNonExpired;
     }
 
     public Boolean getAccountNonLocked() {
@@ -249,7 +248,7 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     }
 
     public void setAccountNonLocked(Boolean accountNonLocked) {
-        isAccountNonLocked = accountNonLocked;
+        this.isAccountNonLocked = accountNonLocked;
     }
 
     public Set<PhssGrantedAuthority> getAuthorities() {
