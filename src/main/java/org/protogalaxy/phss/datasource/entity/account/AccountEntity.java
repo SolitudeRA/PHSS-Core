@@ -288,24 +288,29 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.setPassword("7355608");
     }
 
-    public void enableAccount() {
+    public AccountEntity enableAccount() {
         this.setEnabled(true);
+        return this;
     }
 
-    public void disableAccount() {
+    public AccountEntity disableAccount() {
         this.setEnabled(false);
+        return this;
     }
 
-    public void lockAccount() {
+    public AccountEntity lockAccount() {
         this.setAccountNonLocked(false);
+        return this;
     }
 
-    public void unlockAccount() {
+    public AccountEntity unlockAccount() {
         this.setAccountNonLocked(true);
+        return this;
     }
 
-    public void expireAccount() {
+    public AccountEntity expireAccount() {
         this.setAccountNonExpired(false);
+        return this;
     }
 
     public LocalDateTime getDateCreated() {

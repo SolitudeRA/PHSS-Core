@@ -12,14 +12,13 @@ import java.util.UUID;
 
 @RepositoryRestResource(collectionResourceRel = "accounts", path = "accounts")
 public interface AccountRepository extends JpaRepository<AccountEntity, UUID>, CrudRepository<AccountEntity, UUID> {
+    Boolean existsByUuid(UUID uuid);
+
+    Boolean existsByUsername(String username);
 
     Optional<AccountEntity> findByUsername(String username);
 
     Optional<AccountEntity> findByUuid(UUID uuid);
 
     void deleteByUuid(UUID uuid);
-
-    @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    List<AccountEntity> findAll();
 }

@@ -38,13 +38,15 @@ public class AccountControllerTest {
 
     @Test
     public void accountTest_2_login() throws Exception {
-        RequestBuilder requestBuilder = formLogin().loginProcessingUrl("/account/login").user("test").password("123456");
+        RequestBuilder requestBuilder = formLogin()
+                .loginProcessingUrl("/account/login")
+                .user("test").password("123456");
         this.mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "userDetailsService")
     public void accountTest_3_retrieveAccount() throws Exception {
         this.mockMvc.perform(get("/account/test"))
                 .andExpect(status().isOk())
@@ -52,35 +54,35 @@ public class AccountControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "userDetailsService")
     public void accountTest_4_disableAccount() throws Exception {
         this.mockMvc.perform(patch("/account/test/enable"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "userDetailsService")
     public void accountTest_5_enableAccount() throws Exception {
         this.mockMvc.perform(patch("/account/test/disable"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "userDetailsService")
     public void accountTest_6_unlockAccount() throws Exception {
         this.mockMvc.perform(patch("/account/test/unlock"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "userDetailsService")
     public void accountTest_7_lockAccount() throws Exception {
         this.mockMvc.perform(patch("/account/test/lock"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithUserDetails(value = "test", userDetailsServiceBeanName = "accountService")
+    @WithUserDetails(value = "test", userDetailsServiceBeanName = "userDetailsService")
     public void accountTest_8_expireAccount() throws Exception {
         this.mockMvc.perform(patch("/account/test/expire"))
                 .andExpect(status().isOk());

@@ -1,13 +1,12 @@
 package org.protogalaxy.phss.security.config;
 
+import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
 import org.protogalaxy.phss.security.authentication.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.authentication.AjaxAuthSuccessHandler;
-import org.protogalaxy.phss.service.interfaces.account.AccountService;
 import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.RememberMeAuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,7 +33,7 @@ import java.util.Collections;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
-    private final UserDetailsService userDetailsService;
+    private final AccountRepository accountRepository;
     private final AjaxAuthSuccessHandler ajaxAuthSuccessHandler;
     private final AjaxAuthFailHandler ajaxAuthFailHandler;
     private final ClientRegistrationRepository clientRegistrationRepository;
@@ -45,7 +44,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
     private final OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient;
 
     @Autowired
-    public MainSecurityConfig(AccountServiceImpl accountService,
+    public MainSecurityConfig(AccountRepository accountRepository,
                               AjaxAuthSuccessHandler ajaxAuthSuccessHandler,
                               AjaxAuthFailHandler ajaxAuthFailHandler,
                               ClientRegistrationRepository clientRegistrationRepository,
@@ -54,7 +53,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
                               AuthorizationRequestRepository<OAuth2AuthorizationRequest> oAuth2AuthorizationRequestRepository,
                               OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver,
                               OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient) {
-        this.userDetailsService = accountService;
+        this.accountRepository = accountRepository;
         this.ajaxAuthSuccessHandler = ajaxAuthSuccessHandler;
         this.ajaxAuthFailHandler = ajaxAuthFailHandler;
         this.clientRegistrationRepository = clientRegistrationRepository;
@@ -106,7 +105,6 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
 
                 //------------------------Remember-me config----------------------------//
                 .rememberMe()
-                .userDetailsService(userDetailsService)
                 .useSecureCookie(true)
                 .and()
 
@@ -136,7 +134,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new AccountServiceImpl();
+        return new AccountServiceImpl(accountRepository, this.passwordEncoder());
     }
 
     @Bean
