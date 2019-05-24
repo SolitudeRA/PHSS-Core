@@ -27,8 +27,8 @@ import javax.sql.DataSource;
 @EnableJpaAuditing
 @EnableSpringDataWebSupport
 @EnableTransactionManagement
-@EnableJpaRepositories("org.protogalaxy.phss.datasource.repository.jpa")
-@EnableMongoRepositories("org.protogalaxy.phss.datasource.repository.mongodb")
+@EnableJpaRepositories(value = "org.protogalaxy.phss.datasource.repository.jpa")
+@EnableMongoRepositories(value = "org.protogalaxy.phss.datasource.repository.mongodb")
 public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {

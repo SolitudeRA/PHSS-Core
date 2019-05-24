@@ -4,6 +4,7 @@ import org.protogalaxy.phss.datasource.entity.filesystem.FileSystemMainEntity;
 import org.protogalaxy.phss.datasource.entity.setting.SettingsMainEntity;
 import org.protogalaxy.phss.datasource.entity.account.AccountEntity;
 import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
+import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResource;
 import org.protogalaxy.phss.exception.application.base.account.AccountServiceException;
 import org.protogalaxy.phss.exception.application.base.account.PhssErrorCodeApplicationBaseAccountService;
 import org.protogalaxy.phss.service.interfaces.account.AccountService;
@@ -34,7 +35,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
             AccountEntity accountEntity = new AccountEntity(username, passwordEncoder.encode(password));
             accountEntity.setFileSystemMainEntity(new FileSystemMainEntity(accountEntity));
             accountEntity.setSettingsMainEntity(new SettingsMainEntity(accountEntity));
-            return accountRepository.saveAndFlush(accountEntity);
+            return accountRepository.save(accountEntity);
         }
     }
 
@@ -69,18 +70,31 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
-    public AccountEntity modifyAccount(AccountEntity accountEntity) throws AccountServiceException {
-        if (!accountRepository.existsByUuid(accountEntity.getUuid())) {
+    public AccountEntity updateAccount(AccountResource accountResource) throws AccountServiceException {
+        Optional<AccountEntity> accountEntityContainer = accountRepository.findByUuid(accountResource.getUuid());
+        if (accountEntityContainer.isPresent()) {
+            AccountEntity accountEntity = accountEntityContainer.get();
+            accountEntity.setUsername(accountResource.getUsername());
+            return accountRepository.save(accountEntity);
+        } else {
             throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_ID);
         }
-        return accountRepository.saveAndFlush(accountEntity);
+    }
+
+    @Override
+    public AccountEntity updateAccount(AccountEntity accountEntity) throws AccountServiceException {
+        if (!accountRepository.existsByUuid(accountEntity.getUuid())) {
+            throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_ID);
+        } else {
+            return accountRepository.save(accountEntity);
+        }
     }
 
     @Override
     public void enableAccount(String username) throws AccountServiceException {
         Optional<AccountEntity> accountEntityContainer = accountRepository.findByUsername(username);
         if (accountEntityContainer.isPresent()) {
-            accountRepository.saveAndFlush(accountEntityContainer.get().enableAccount());
+            accountRepository.save(accountEntityContainer.get().enableAccount());
         } else {
             throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_USERNAME_OR_PASSWORD);
         }
@@ -90,7 +104,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     public void disableAccount(String username) throws AccountServiceException {
         Optional<AccountEntity> accountEntityContainer = accountRepository.findByUsername(username);
         if (accountEntityContainer.isPresent()) {
-            accountRepository.saveAndFlush(accountEntityContainer.get().disableAccount());
+            accountRepository.save(accountEntityContainer.get().disableAccount());
         } else {
             throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_USERNAME_OR_PASSWORD);
         }
@@ -100,7 +114,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     public void lockAccount(String username) throws AccountServiceException {
         Optional<AccountEntity> accountEntityContainer = accountRepository.findByUsername(username);
         if (accountEntityContainer.isPresent()) {
-            accountRepository.saveAndFlush(accountEntityContainer.get().lockAccount());
+            accountRepository.save(accountEntityContainer.get().lockAccount());
         } else {
             throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_USERNAME_OR_PASSWORD);
         }
@@ -110,7 +124,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     public void unlockAccount(String username) throws AccountServiceException {
         Optional<AccountEntity> accountEntityContainer = accountRepository.findByUsername(username);
         if (accountEntityContainer.isPresent()) {
-            accountRepository.saveAndFlush(accountEntityContainer.get().unlockAccount());
+            accountRepository.save(accountEntityContainer.get().unlockAccount());
         } else {
             throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_USERNAME_OR_PASSWORD);
         }
@@ -120,7 +134,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     public void expireAccount(String username) throws AccountServiceException {
         Optional<AccountEntity> accountEntityContainer = accountRepository.findByUsername(username);
         if (accountEntityContainer.isPresent()) {
-            accountRepository.saveAndFlush(accountEntityContainer.get().expireAccount());
+            accountRepository.save(accountEntityContainer.get().expireAccount());
         } else {
             throw new AccountServiceException(PhssErrorCodeApplicationBaseAccountService.ACCOUNT_INVALID_USERNAME_OR_PASSWORD);
         }

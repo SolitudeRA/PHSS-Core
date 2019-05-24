@@ -27,7 +27,6 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<AccountResource> register(@Param("username") String username, @Param("password") String password) throws AccountServiceException {
         return new ResponseEntity<>(accountResourceAssembler.toResource(accountService.register(username, password)), HttpStatus.OK);
@@ -35,8 +34,14 @@ public class AccountController {
 
     @PreAuthorize("isFullyAuthenticated()&&(#username==principal.username)")
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ResponseEntity<AccountResource> getUser(@PathVariable String username) throws AccountServiceException {
+    public ResponseEntity<AccountResource> getAccount(@PathVariable String username) throws AccountServiceException {
         return new ResponseEntity<>(accountResourceAssembler.toResource(accountService.getAccount(username)), HttpStatus.OK);
+    }
+
+    @PreAuthorize("isFullyAuthenticated()&&(#username==principal.username)")
+    @RequestMapping(value = "/{username}/update", method = RequestMethod.PUT)
+    public ResponseEntity<AccountResource> updateAccount(@PathVariable String username, AccountResource accountResource) throws AccountServiceException {
+        return new ResponseEntity<>(accountResourceAssembler.toResource(accountService.updateAccount(accountResource)), HttpStatus.OK);
     }
 
     @PreAuthorize("isFullyAuthenticated()&&(#username==principal.username)")

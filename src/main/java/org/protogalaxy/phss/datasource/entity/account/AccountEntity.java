@@ -64,13 +64,13 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     private String authorities;
 
     @Column(name = "isEnabled")
-    private Boolean isEnabled;
+    private boolean isEnabled;
 
     @Column(name = "isAccountNonExpired")
-    private Boolean isAccountNonExpired;
+    private boolean isAccountNonExpired;
 
     @Column(name = "isAccountNonLocked")
-    private Boolean isAccountNonLocked;
+    private boolean isAccountNonLocked;
 
     @CreatedDate
     @Column(name = "date_created")
@@ -227,27 +227,27 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
         this.avatar = avatar;
     }
 
-    private Boolean getEnabled() {
+    private boolean getEnabled() {
         return isEnabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.isEnabled = enabled;
     }
 
-    public Boolean getAccountNonExpired() {
+    public boolean getAccountNonExpired() {
         return isAccountNonExpired;
     }
 
-    public void setAccountNonExpired(Boolean accountNonExpired) {
+    public void setAccountNonExpired(boolean accountNonExpired) {
         this.isAccountNonExpired = accountNonExpired;
     }
 
-    public Boolean getAccountNonLocked() {
+    public boolean getAccountNonLocked() {
         return isAccountNonLocked;
     }
 
-    public void setAccountNonLocked(Boolean accountNonLocked) {
+    public void setAccountNonLocked(boolean accountNonLocked) {
         this.isAccountNonLocked = accountNonLocked;
     }
 
@@ -289,27 +289,27 @@ public class AccountEntity implements UserDetails, CredentialsContainer {
     }
 
     public AccountEntity enableAccount() {
-        this.setEnabled(true);
+        this.isEnabled = true;
         return this;
     }
 
     public AccountEntity disableAccount() {
-        this.setEnabled(false);
+        this.isEnabled = false;
         return this;
     }
 
     public AccountEntity lockAccount() {
-        this.setAccountNonLocked(false);
+        this.isAccountNonLocked = false;
         return this;
     }
 
     public AccountEntity unlockAccount() {
-        this.setAccountNonLocked(true);
+        this.isAccountNonLocked = true;
         return this;
     }
 
     public AccountEntity expireAccount() {
-        this.setAccountNonExpired(false);
+        this.isAccountNonExpired = false;
         return this;
     }
 
