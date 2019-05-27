@@ -8,7 +8,11 @@ import org.protogalaxy.phss.datasource.resource.main.entity.account.AccountResou
 import org.protogalaxy.phss.exception.application.base.account.AccountServiceException;
 import org.protogalaxy.phss.exception.application.base.account.PhssErrorCodeApplicationBaseAccountService;
 import org.protogalaxy.phss.service.interfaces.account.AccountService;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 import java.util.UUID;
 
-public class AccountServiceImpl implements AccountService, UserDetailsService {
+public class AccountServiceImpl implements AccountService, UserDetailsService, UserDetailsPasswordService {
 
     private AccountRepository accountRepository;
 
@@ -88,6 +92,11 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
         } else {
             return accountRepository.save(accountEntity);
         }
+    }
+
+    @Override
+    public UserDetails updatePassword(UserDetails user, String newPassword) {
+        return null;
     }
 
     @Override

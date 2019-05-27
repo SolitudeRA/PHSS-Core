@@ -1,20 +1,13 @@
 package org.protogalaxy.phss.security.config;
 
-import org.protogalaxy.phss.datasource.repository.jpa.account.AccountRepository;
 import org.protogalaxy.phss.security.authentication.AjaxAuthFailHandler;
 import org.protogalaxy.phss.security.authentication.AjaxAuthSuccessHandler;
-import org.protogalaxy.phss.service.main.account.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
@@ -33,7 +26,6 @@ import java.util.Collections;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
-    private final AccountRepository accountRepository;
     private final AjaxAuthSuccessHandler ajaxAuthSuccessHandler;
     private final AjaxAuthFailHandler ajaxAuthFailHandler;
     private final ClientRegistrationRepository clientRegistrationRepository;
@@ -44,8 +36,7 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
     private final OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient;
 
     @Autowired
-    public MainSecurityConfig(AccountRepository accountRepository,
-                              AjaxAuthSuccessHandler ajaxAuthSuccessHandler,
+    public MainSecurityConfig(AjaxAuthSuccessHandler ajaxAuthSuccessHandler,
                               AjaxAuthFailHandler ajaxAuthFailHandler,
                               ClientRegistrationRepository clientRegistrationRepository,
                               OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository,
@@ -53,7 +44,6 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
                               AuthorizationRequestRepository<OAuth2AuthorizationRequest> oAuth2AuthorizationRequestRepository,
                               OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver,
                               OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> oAuth2AccessTokenResponseClient) {
-        this.accountRepository = accountRepository;
         this.ajaxAuthSuccessHandler = ajaxAuthSuccessHandler;
         this.ajaxAuthFailHandler = ajaxAuthFailHandler;
         this.clientRegistrationRepository = clientRegistrationRepository;
@@ -130,23 +120,5 @@ public class MainSecurityConfig extends WebSecurityConfigurerAdapter implements 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new AccountServiceImpl(accountRepository, this.passwordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userDetailsService());
-        return daoAuthenticationProvider;
     }
 }

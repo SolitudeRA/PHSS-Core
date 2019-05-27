@@ -68,7 +68,7 @@
         <spring-security.version>5.1.4.RELEASE</spring-security.version>
         <spring-restdocs.version>2.0.3.RELEASE</spring-restdocs.version>
         <!--Junit version-->
-        <junit.jupiter.version>5.5.0-M1</junit.jupiter.version>
+        <junit.jupiter.version>5.4.2</junit.jupiter.version>
         <jdbc-connector.version>5.1.47</jdbc-connector.version>
         <!--Tool version-->
         <scribejava.version>6.0.0</scribejava.version>
@@ -258,14 +258,14 @@
             <artifactId>spring-data-rest-hal-browser</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.jupiter.version}</version>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.4.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
+            <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
@@ -290,6 +290,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.0</version>
             </plugin>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
@@ -340,10 +352,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
             </plugin>
         </plugins>
     </build>

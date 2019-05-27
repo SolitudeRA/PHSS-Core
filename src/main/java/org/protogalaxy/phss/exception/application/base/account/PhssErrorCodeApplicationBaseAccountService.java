@@ -15,11 +15,11 @@ public enum PhssErrorCodeApplicationBaseAccountService implements PhssErrorCode 
 
     ACCOUNT_INVALID_USERNAME_OR_PASSWORD(0x003, "Invalid username or password"),
 
-    ACCOUNT_NOT_ENABLED(0x004, "Account not enabled"),
+    ACCOUNT_DISABLED(0x004, "Account not enabled"),
 
-    ACCOUNT_IS_LOCKED(0x005, "Account is locked"),
+    ACCOUNT_LOCKED(0x005, "Account is locked"),
 
-    ACCOUNT_IS_EXPIRED(0x006, "Account is expired"),
+    ACCOUNT_EXPIRED(0x006, "Account is expired"),
 
     ACCOUNT_AUTHORITIES_NOT_ALLOWED(0x007, "Account authorities not allowed");
 
