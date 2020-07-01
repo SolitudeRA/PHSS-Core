@@ -69,7 +69,7 @@
         <spring-restdocs.version>2.0.3.RELEASE</spring-restdocs.version>
         <!--Junit version-->
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
-        <jdbc-connector.version>5.1.47</jdbc-connector.version>
+        <jdbc-connector.version>8.0.16</jdbc-connector.version>
         <!--Tool version-->
         <scribejava.version>6.0.0</scribejava.version>
     </properties>
