@@ -55,7 +55,7 @@
         <!--Metadata reader version-->
         <javacv.version>1.4.4</javacv.version>
         <apache-tika.version>1.23</apache-tika.version>
-        <apache-poi.version>4.0.1</apache-poi.version>
+        <apache-poi.version>5.2.1</apache-poi.version>
         <apache-pdfbox.version>2.0.15</apache-pdfbox.version>
         <epublib.version>3.1</epublib.version>
         <sqlite-jdbc.version>3.27.2.1</sqlite-jdbc.version>
